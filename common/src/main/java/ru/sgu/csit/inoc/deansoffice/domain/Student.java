@@ -1,6 +1,6 @@
 package ru.sgu.csit.inoc.deansoffice.domain;
 
-import javax.persistence.Entity;
+import javax.persistence.*;
 
 /**
  * .
@@ -15,9 +15,18 @@ public class Student extends Person {
      */
     private String studentIdNumber;
 
+    @ManyToOne(cascade = CascadeType.MERGE)
+    @PrimaryKeyJoinColumn
     private Group group;
+
+    @ManyToOne(cascade = CascadeType.MERGE)
+    @PrimaryKeyJoinColumn
     private Speciality speciality;
+
     private StudyForm studyForm;
+
+    @ManyToOne(cascade = CascadeType.MERGE)
+    @PrimaryKeyJoinColumn
     private Order enrollmentOrder;
 
     public String getStudentIdNumber() {

@@ -1,6 +1,6 @@
 package ru.sgu.csit.inoc.deansoffice.domain;
 
-import javax.persistence.Entity;
+import javax.persistence.*;
 
 /**
  * .
@@ -11,6 +11,9 @@ import javax.persistence.Entity;
 @Entity
 public class Faculty extends PersistentItem {
     private String name;
+
+    @ManyToOne(cascade = CascadeType.MERGE)
+    @PrimaryKeyJoinColumn
     private Dean dean;
 
     public String getName() {

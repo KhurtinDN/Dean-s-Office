@@ -5,6 +5,7 @@
         <groupId>${DeansOffice.groupId}</groupId>
         <version>${DeansOffice.version}</version>
     </parent>
+
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>${DeansOffice.groupId}</groupId>
@@ -22,12 +23,19 @@
     <build>
         <finalName>${DeansOffice.artifactId}-${pom.artifactId}</finalName>
     </build>
-    
+
     <dependencies>
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-entitymanager</artifactId>
-            <version>3.4.0.GA</version>
+            <version>3.5.1-Final</version>
+        </dependency>
+
+        <!-- This first dependency includes all the JPA implementations for the DAOs -->
+        <dependency>
+            <groupId>com.trg</groupId>
+            <artifactId>trg-dao-hibernate</artifactId>
+            <version>0.5.1</version>
         </dependency>
     </dependencies>
 </project>
