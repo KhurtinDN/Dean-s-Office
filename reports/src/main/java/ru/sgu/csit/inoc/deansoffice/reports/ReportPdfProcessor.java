@@ -23,7 +23,7 @@ public enum ReportPdfProcessor {
         return INSTANCE;
     }
 
-    private void generateReportFromXml(Document document, Student student) {
+    private void generateReportFromXml(Document document) {
         SAXParserFactory factory = SAXParserFactory.newInstance();
 
         factory.setNamespaceAware(false); // Выключить пространство имен
@@ -44,10 +44,10 @@ public enum ReportPdfProcessor {
         }
     }
 
-    public void generate(Document document, Student student) {
+    public void generate(Document document) {
         switch (document.getPrintTemplate().getType()) {
             case XML:
-                generateReportFromXml(document, student);
+                generateReportFromXml(document);
                 break;
             default:
                 break;

@@ -72,6 +72,6 @@ public class AppTest
 
         ref.setPrintTemplate(new Template(templName));
         ref.build(student);
-        ReportPdfProcessor.getInstance().generate(ref, student);
+        ReportPdfProcessor.getInstance().generate(ref);
     }
 }
