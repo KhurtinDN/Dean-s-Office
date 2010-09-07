@@ -167,15 +167,15 @@ public class XmlToPdfReportProcessorHandler extends DefaultHandler {
     }
 
     //=======================================================
-    // Обработчики событий. Методы интерфейса DefaultHandler
+    // РћР±СЂР°Р±РѕС‚С‡РёРєРё СЃРѕР±С‹С‚РёР№. РњРµС‚РѕРґС‹ РёРЅС‚РµСЂС„РµР№СЃР° DefaultHandler
     //=======================================================
 
-    // Начало документа
+    // РќР°С‡Р°Р»Рѕ РґРѕРєСѓРјРµРЅС‚Р°
     public void startDocument() {
         ;
     }
 
-    // Конец документа
+    // РљРѕРЅРµС† РґРѕРєСѓРјРµРЅС‚Р°
     public void endDocument() {
         //out.Flush();
         document.close();
@@ -183,7 +183,7 @@ public class XmlToPdfReportProcessorHandler extends DefaultHandler {
         printWriter.flush();
     }
 
-    // Встретился открывающий тэг элемента
+    // Р’СЃС‚СЂРµС‚РёР»СЃСЏ РѕС‚РєСЂС‹РІР°СЋС‰РёР№ С‚СЌРі СЌР»РµРјРµРЅС‚Р°
     public void startElement(String uri, String localName, String qName, Attributes attributes) {
         elements++;
         if (attributes != null) {
@@ -405,7 +405,7 @@ public class XmlToPdfReportProcessorHandler extends DefaultHandler {
         }
     }
 
-    // Встретился закрывающий тэг элемента
+    // Р’СЃС‚СЂРµС‚РёР»СЃСЏ Р·Р°РєСЂС‹РІР°СЋС‰РёР№ С‚СЌРі СЌР»РµРјРµРЅС‚Р°
     public void endElement(String uri, String localName, String qName) {
         if ("p".equals(qName)) {
             try {
@@ -455,7 +455,7 @@ public class XmlToPdfReportProcessorHandler extends DefaultHandler {
         }
     }
 
-    // Текстовые символы
+    // РўРµРєСЃС‚РѕРІС‹Рµ СЃРёРјРІРѕР»С‹
     public void characters(char ch[], int start, int length) {
         if (!stackElements.isEmpty()) {
             String strChunk = new String(ch, start, length);
@@ -465,12 +465,12 @@ public class XmlToPdfReportProcessorHandler extends DefaultHandler {
         characters += length;
     }
 
-    // Необрабатываемые символы(например, содержимое секции CDATA)
+    // РќРµРѕР±СЂР°Р±Р°С‚С‹РІР°РµРјС‹Рµ СЃРёРјРІРѕР»С‹(РЅР°РїСЂРёРјРµСЂ, СЃРѕРґРµСЂР¶РёРјРѕРµ СЃРµРєС†РёРё CDATA)
     public void ignorableWhitespace(char ch[], int start, int length) {
         characters(ch, start, length);
     }
 
-    // Инструкции XML-процессору
+    // РРЅСЃС‚СЂСѓРєС†РёРё XML-РїСЂРѕС†РµСЃСЃРѕСЂСѓ
     public void processingInstruction(String target, String data) {
         printWriter.print("<?");
         printWriter.print(target);
@@ -482,9 +482,9 @@ public class XmlToPdfReportProcessorHandler extends DefaultHandler {
     }
 
     //===================================================
-    // Методы интерфейса ErrorHandler
+    // РњРµС‚РѕРґС‹ РёРЅС‚РµСЂС„РµР№СЃР° ErrorHandler
     //===================================================
-    // Последнее предупреждение
+    // РџРѕСЃР»РµРґРЅРµРµ РїСЂРµРґСѓРїСЂРµР¶РґРµРЅРёРµ
     public void warning(SAXParseException ex) {
         System.err.println("Warning at " +
                 ex.getLineNumber() + " . " +
@@ -492,7 +492,7 @@ public class XmlToPdfReportProcessorHandler extends DefaultHandler {
                 ex.getMessage());
     }
 
-    // Произошла ошибка
+    // РџСЂРѕРёР·РѕС€Р»Р° РѕС€РёР±РєР°
     public void error(SAXParseException ex) {
         System.err.println("Error at {" +
                 ex.getLineNumber() + " . " +
@@ -500,7 +500,7 @@ public class XmlToPdfReportProcessorHandler extends DefaultHandler {
                 ex.getMessage());
     }
 
-    // Такие ошибки исправить уже нельзя
+    // РўР°РєРёРµ РѕС€РёР±РєРё РёСЃРїСЂР°РІРёС‚СЊ СѓР¶Рµ РЅРµР»СЊР·СЏ
     public void fatalError(SAXParseException ex) throws SAXException {
         System.err.println("Fatal error at {" +
                 ex.getLineNumber() + " . " +
@@ -510,15 +510,15 @@ public class XmlToPdfReportProcessorHandler extends DefaultHandler {
     }
 
     //=======================================================
-    // Вывести информацию о документе
+    // Р’С‹РІРµСЃС‚Рё РёРЅС„РѕСЂРјР°С†РёСЋ Рѕ РґРѕРєСѓРјРµРЅС‚Рµ
     //=======================================================
     public void printInfo() {
         System.out.println();
 
-        System.out.println("Документ " + url + " был успешно обработан");
+        System.out.println("Р”РѕРєСѓРјРµРЅС‚ " + url + " Р±С‹Р» СѓСЃРїРµС€РЅРѕ РѕР±СЂР°Р±РѕС‚Р°РЅ");
 
-        System.out.println("Элементов : " + elements);
-        System.out.println("Атрибутов : " + attributes);
-        System.out.println("Символов  : " + characters);
+        System.out.println("Р­Р»РµРјРµРЅС‚РѕРІ : " + elements);
+        System.out.println("РђС‚СЂРёР±СѓС‚РѕРІ : " + attributes);
+        System.out.println("РЎРёРјРІРѕР»РѕРІ  : " + characters);
     }
 }

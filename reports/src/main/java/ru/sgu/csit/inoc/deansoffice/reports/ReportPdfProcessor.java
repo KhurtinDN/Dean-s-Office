@@ -26,7 +26,7 @@ public enum ReportPdfProcessor {
     private void generateReportFromXml(Document document, Student student) {
         SAXParserFactory factory = SAXParserFactory.newInstance();
 
-        factory.setNamespaceAware(false); // Выключить пространство имен
+        factory.setNamespaceAware(false); // Р’С‹РєР»СЋС‡РёС‚СЊ РїСЂРѕСЃС‚СЂР°РЅСЃС‚РІРѕ РёРјРµРЅ
         try {
             /*SchemaFactory shemaFactory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
 

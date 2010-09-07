@@ -48,27 +48,29 @@ public class AppTest
 
         Faculty csit = new Faculty();
 
-        csit.setFullName("факультет компьютерных наук и информационных технологий");
-        csit.setShortName("КНиИТ");
+        csit.setFullName("С„Р°РєСѓР»СЊС‚РµС‚ РєРѕРјРїСЊСЋС‚РµСЂРЅС‹С… РЅР°СѓРє Рё РёРЅС„РѕСЂРјР°С†РёРѕРЅРЅС‹С… С‚РµС…РЅРѕР»РѕРіРёР№");
+        csit.setShortName("РљРќРёРРў");
         csit.setDean(new Dean());
-        csit.getDean().setFirstName("Антонина");
-        csit.getDean().setMiddleName("Гавриловна");
-        csit.getDean().setLastName("Фёдорова");
+        csit.getDean().setFirstName("РђРЅС‚РѕРЅРёРЅР°");
+        csit.getDean().setMiddleName("Р“Р°РІСЂРёР»РѕРІРЅР°");
+        csit.getDean().setLastName("Р¤С‘РґРѕСЂРѕРІР°");
 
         student.setCource(1);
         student.setDivision(Student.Division.INTRAMURAL);
         student.setEnrollmentOrder(enrolOrder);
-        student.setFirstName("Александр");
-        student.setFirstNameDative("Александру");
-        student.setLastName("Заслоновский");
-        student.setLastNameDative("Заслоновскому");
-        student.setMiddleName("Александрович");
-        student.setMiddleNameDative("Александровичу");
+        student.setFirstName("РђР»РµРєСЃР°РЅРґСЂ");
+        student.setFirstNameDative("РђР»РµРєСЃР°РЅРґСЂСѓ");
+        student.setLastName("Р—Р°СЃР»РѕРЅРѕРІСЃРєРёР№");
+        student.setLastNameDative("Р—Р°СЃР»РѕРЅРѕРІСЃРєРѕРјСѓ");
+        student.setMiddleName("РђР»РµРєСЃР°РЅРґСЂРѕРІРёС‡");
+        student.setMiddleNameDative("РђР»РµРєСЃР°РЅРґСЂРѕРІРёС‡Сѓ");
         student.setSpeciality(new Speciality());
         student.getSpeciality().setFaculty(csit);
         student.setStudyForm(Student.StudyForm.BUDGET);
 
-        ref.setPrintTemplate(new Template("template.xml"));
+        String templName = "template.xml";
+
+        ref.setPrintTemplate(new Template(templName));
         ref.build(student);
         ReportPdfProcessor.getInstance().generate(ref, student);
     }
