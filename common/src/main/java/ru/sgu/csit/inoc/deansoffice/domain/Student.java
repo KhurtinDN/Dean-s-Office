@@ -15,8 +15,10 @@ public class Student extends Person {
      */
     private String studentIdNumber;
 
+    private Integer cource;
     private Group group;
     private Speciality speciality;
+    private Division division;
     private StudyForm studyForm;
     private Order enrollmentOrder;
 
@@ -26,6 +28,14 @@ public class Student extends Person {
 
     public void setStudentIdNumber(String studentIdNumber) {
         this.studentIdNumber = studentIdNumber;
+    }
+
+    public Integer getCource() {
+        return cource;
+    }
+
+    public void setCource(Integer cource) {
+        this.cource = cource;
     }
 
     public Group getGroup() {
@@ -44,6 +54,14 @@ public class Student extends Person {
         this.speciality = speciality;
     }
 
+    public Division getDivision() {
+        return division;
+    }
+
+    public void setDivision(Division division) {
+        this.division = division;
+    }
+
     public StudyForm getStudyForm() {
         return studyForm;
     }
@@ -60,7 +78,11 @@ public class Student extends Person {
         this.enrollmentOrder = enrollmentOrder;
     }
 
-    enum StudyForm {
-        INTRAMURAL, EXTRAMURAL
+    public enum Division {
+        INTRAMURAL, EXTRAMURAL, EVENINGSTUDY
+    }
+
+    public enum StudyForm {
+        BUDGET, COMMERCIAL
     }
 }

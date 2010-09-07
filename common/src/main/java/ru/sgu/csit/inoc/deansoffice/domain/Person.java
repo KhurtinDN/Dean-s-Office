@@ -11,6 +11,22 @@ public abstract class Person extends PersistentItem {
     protected String middleName;
     protected String lastName;
 
+    protected String firstNameDative;
+    protected String middleNameDative;
+    protected String lastNameDative;
+
+    public String generateShortName(boolean directOrder) {
+        String shortName = lastName;
+        String initials = firstName.substring(0,1) + "." + middleName.substring(0,1) + ".";
+
+        if (directOrder) {
+            shortName = initials + " " + shortName;
+        } else {
+            shortName = shortName + " " + initials;
+        }
+        return shortName;
+    }
+
     public String getFirstName() {
         return firstName;
     }
@@ -33,5 +49,29 @@ public abstract class Person extends PersistentItem {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public String getFirstNameDative() {
+        return firstNameDative;
+    }
+
+    public void setFirstNameDative(String firstNameDative) {
+        this.firstNameDative = firstNameDative;
+    }
+
+    public String getMiddleNameDative() {
+        return middleNameDative;
+    }
+
+    public void setMiddleNameDative(String middleNameDative) {
+        this.middleNameDative = middleNameDative;
+    }
+
+    public String getLastNameDative() {
+        return lastNameDative;
+    }
+
+    public void setLastNameDative(String lastNameDative) {
+        this.lastNameDative = lastNameDative;
     }
 }

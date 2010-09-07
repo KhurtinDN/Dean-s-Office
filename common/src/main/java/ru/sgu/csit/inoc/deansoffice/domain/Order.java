@@ -1,6 +1,8 @@
 package ru.sgu.csit.inoc.deansoffice.domain;
 
 import javax.persistence.Entity;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * .
@@ -10,4 +12,13 @@ import javax.persistence.Entity;
  */
 @Entity
 public class Order extends Document {
+    private Map<String, Object> orderData = new HashMap<String, Object>();
+
+    public void addData(String keyWord, Object data) {
+        orderData.put(keyWord, data);
+    }
+
+    public Object getData(String keyWord) {
+        return orderData.get(keyWord);
+    }
 }
