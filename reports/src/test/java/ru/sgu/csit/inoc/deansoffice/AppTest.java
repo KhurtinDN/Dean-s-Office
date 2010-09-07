@@ -68,8 +68,10 @@ public class AppTest
         student.getSpeciality().setFaculty(csit);
         student.setStudyForm(Student.StudyForm.BUDGET);
 
-        String templName = "template.xml";
+        String templName = AppTest.class.getResource("/template.xml").getFile();
 
+        templName = templName.replace("%20", " ");
+        System.out.println(templName);
         ref.setPrintTemplate(new Template(templName));
         ref.build(student);
         ReportPdfProcessor.getInstance().generate(ref);
