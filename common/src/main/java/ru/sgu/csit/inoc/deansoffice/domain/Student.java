@@ -14,6 +14,8 @@ public class Student extends Person {
      *  This is number of student ticket.
      */
     private String studentIdNumber;
+    
+    private Integer cource;
 
     @ManyToOne(cascade = CascadeType.MERGE)
     @PrimaryKeyJoinColumn
@@ -22,7 +24,7 @@ public class Student extends Person {
     @ManyToOne(cascade = CascadeType.MERGE)
     @PrimaryKeyJoinColumn
     private Speciality speciality;
-
+    private Division division;
     private StudyForm studyForm;
 
     @ManyToOne(cascade = CascadeType.MERGE)
@@ -35,6 +37,14 @@ public class Student extends Person {
 
     public void setStudentIdNumber(String studentIdNumber) {
         this.studentIdNumber = studentIdNumber;
+    }
+
+    public Integer getCource() {
+        return cource;
+    }
+
+    public void setCource(Integer cource) {
+        this.cource = cource;
     }
 
     public Group getGroup() {
@@ -53,6 +63,14 @@ public class Student extends Person {
         this.speciality = speciality;
     }
 
+    public Division getDivision() {
+        return division;
+    }
+
+    public void setDivision(Division division) {
+        this.division = division;
+    }
+
     public StudyForm getStudyForm() {
         return studyForm;
     }
@@ -69,7 +87,11 @@ public class Student extends Person {
         this.enrollmentOrder = enrollmentOrder;
     }
 
-    enum StudyForm {
-        INTRAMURAL, EXTRAMURAL
+    public enum Division {
+        INTRAMURAL, EXTRAMURAL, EVENINGSTUDY
+    }
+
+    public enum StudyForm {
+        BUDGET, COMMERCIAL
     }
 }

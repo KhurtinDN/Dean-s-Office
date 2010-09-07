@@ -10,18 +10,27 @@ import javax.persistence.*;
  */
 @Entity
 public class Faculty extends PersistentItem {
-    private String name;
-
+    private String fullName;
+    private String shortName;
+                         
     @ManyToOne(cascade = CascadeType.MERGE)
     @PrimaryKeyJoinColumn
     private Dean dean;
 
-    public String getName() {
-        return name;
+    public String getFullName() {
+        return fullName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
+
+    public String getShortName() {
+        return shortName;
+    }
+
+    public void setShortName(String shortName) {
+        this.shortName = shortName;
     }
 
     public Dean getDean() {

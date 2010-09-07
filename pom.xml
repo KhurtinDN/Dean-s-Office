@@ -7,8 +7,52 @@
     <version>${DeansOffice.version}</version>
     <packaging>pom</packaging>
 
-    <name>DeansOffice</name>
-    <url>http://maven.apache.org</url>
+    <name>Dean's Office</name>
+    <description>Dean's Office for faculty CSIT of SSU</description>
+    <inceptionYear>2010</inceptionYear>
+    <url>http://inoc-it.sgu.ru</url>
+
+    <organization>
+        <name>INOC-IT of Saratov State University</name>
+        <url>http://inoc-it.sgu.ru</url>
+    </organization>
+
+    <developers>
+        <developer>
+            <id>xx</id>
+            <name>Mesheryakov Alexander</name>
+            <email>xx.freecoder:a:gmail.com</email>
+            <organization>${organization.name}</organization>
+            <organizationUrl>${organization.url}</organizationUrl>
+            <roles>
+                <role>Project Manager</role>
+                <role>Developer</role>
+                <role>Reporter</role>
+                <role>Tester</role>
+            </roles>
+            <timezone>+3</timezone>
+        </developer>
+        <developer>
+            <id>hd</id>
+            <name>Khurtin Denis</name>
+            <email>KhurtinDN:a:gmail.com</email>
+            <organization>${organization.name}</organization>
+            <organizationUrl>${organization.url}</organizationUrl>
+            <roles>
+                <role>Project Manager</role>
+                <role>Developer</role>
+                <role>Interface Designer</role>
+                <role>Tester</role>
+            </roles>
+            <timezone>+3</timezone>
+        </developer>
+    </developers>
+
+    <!--<scm>
+        <developerConnection>https://dynamic.svn.beanstalkapp.com/schedulercourses/</developerConnection>
+        <tag>HEAD</tag>
+        <url>https://dynamic.beanstalkapp.com/schedulercourses</url>
+    </scm>-->
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -17,7 +61,7 @@
 
         <DeansOffice.groupId>ru.sgu.csit.inoc</DeansOffice.groupId>
         <DeansOffice.artifactId>DeansOffice</DeansOffice.artifactId>
-        <DeansOffice.version>1.0</DeansOffice.version>
+        <DeansOffice.version>1.0-SNAPSHOT</DeansOffice.version>
     </properties>
 
     <modules>
@@ -73,7 +117,7 @@
                 </configuration>
             </plugin>
 
-            <plugin>
+            <!--<plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-idea-plugin</artifactId>
                 <configuration>
@@ -112,7 +156,7 @@
                         </configuration>
                     </execution>
                 </executions>
-            </plugin>
+            </plugin>-->
 
         </plugins>
     </build>
