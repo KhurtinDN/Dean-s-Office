@@ -1,6 +1,9 @@
 package ru.sgu.csit.inoc.deansoffice.domain;
 
+import org.hibernate.annotations.CollectionOfElements;
+
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import java.util.HashMap;
 import java.util.Map;
 

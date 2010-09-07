@@ -20,7 +20,7 @@ public class TextDescriptor {
 
     static {
         for (int i = 0; i < FONT_LSERIF.length; ++i) {
-            FONT_LSERIF[i] = FONT_LSERIF[i].replace("%20", " ").substring(1);
+            FONT_LSERIF[i] = FONT_LSERIF[i].replace("%20", " ");
         }
     }
 }
