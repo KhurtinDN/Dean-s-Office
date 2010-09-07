@@ -68,7 +68,9 @@ public class AppTest
         student.getSpeciality().setFaculty(csit);
         student.setStudyForm(Student.StudyForm.BUDGET);
 
-        ref.setPrintTemplate(new Template("template.xml"));
+        String templName = "template.xml";
+
+        ref.setPrintTemplate(new Template(templName));
         ref.build(student);
         ReportPdfProcessor.getInstance().generate(ref, student);
     }

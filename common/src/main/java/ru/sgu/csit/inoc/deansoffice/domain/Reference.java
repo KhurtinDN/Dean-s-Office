@@ -12,13 +12,13 @@ import java.util.GregorianCalendar;
 public class Reference extends Document {    
     public void build(Student student) {
         clear();
-        TEXT.put("FACULTY_FULLNAME", student.getSpeciality().getFaculty().getFullName()); // "факультет компьютерных наук и информационных технологий"
-        TEXT.put("FACULTY_SHORTNAME", student.getSpeciality().getFaculty().getShortName()); // "КНиИТ"
+        TEXT.put("FACULTY_FULLNAME", student.getSpeciality().getFaculty().getFullName());
+        TEXT.put("FACULTY_SHORTNAME", student.getSpeciality().getFaculty().getShortName());
 
-        TEXT.put("FACULTY_DEAN", student.getSpeciality().getFaculty().getDean().generateShortName(true)); // "А.Г. Федорова"
+        TEXT.put("FACULTY_DEAN", student.getSpeciality().getFaculty().getDean().generateShortName(true));
 
         TEXT.put("Student.fullName_dat", student.getLastNameDative() + " "
-                + student.getFirstNameDative() + " " + student.getMiddleNameDative()); // "Петрову Ивану Васильевичу"
+                + student.getFirstNameDative() + " " + student.getMiddleNameDative());
         TEXT.put("Student.courseNumber", student.getCource().toString());
 
         Order order = student.getEnrollmentOrder();
@@ -57,6 +57,6 @@ public class Reference extends Document {
                 studyForm = "коммерческая";
                 break;
         }
-        TEXT.put("Student.studyForm", studyForm); // "бюджетная"
+        TEXT.put("Student.studyForm", studyForm);
     }
 }
