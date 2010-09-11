@@ -9,15 +9,12 @@ import com.google.gwt.user.client.ui.RootPanel;
  * Entry point classes define <code>onModuleLoad()</code>.
  */
 public class Application
-    implements EntryPoint
-{
+        implements EntryPoint {
 
-  /**
-   * This is the entry point method.
-   */
-  public void onModuleLoad()
-  {
-     final Label label = new Label ( "gwt-maven-plugin Archetype :: Project org.codehaus.mojo.gwt-maven-plugin" );
-     RootPanel.get().add( label );
-  }
+    /**
+     * This is the entry point method.
+     */
+    public void onModuleLoad() {
+        RootPanel.get().add(new HelloWorldExample());
+    }
 }

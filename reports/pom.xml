@@ -19,15 +19,14 @@
     </properties>
 
     <build>
-        <resources>
+        <!--<resources>
             <resource>
                 <directory>src/main/resources</directory>
-                <!-- <filtering>true</filtering>
-                -->
+                <filtering>true</filtering>
             </resource>
-        </resources>
+        </resources>-->
 
-        <finalName>${DeansOffice.artifactId}-${pom.artifactId}</finalName>
+        <!--<finalName>${DeansOffice.artifactId}-${pom.artifactId}</finalName>-->
     </build>
 
     <dependencies>

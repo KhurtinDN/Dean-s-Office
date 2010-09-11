@@ -1,6 +1,5 @@
 package ru.sgu.csit.inoc.deansoffice.dao;
 
-import com.trg.dao.hibernate.GenericDAO;
 import ru.sgu.csit.inoc.deansoffice.domain.Student;
 
 /**
@@ -9,6 +8,6 @@ import ru.sgu.csit.inoc.deansoffice.domain.Student;
  * Date: Sep 3, 2010
  * Time: 10:57:21 AM
  */
-public interface StudentDAO extends GenericDAO<Student, Long> {
+public interface StudentDAO extends BaseDAO<Student, Long> {
     
 }

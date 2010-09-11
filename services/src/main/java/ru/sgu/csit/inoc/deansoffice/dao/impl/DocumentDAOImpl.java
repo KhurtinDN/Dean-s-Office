@@ -11,5 +11,5 @@ import ru.sgu.csit.inoc.deansoffice.domain.Document;
  * Time: 10:55:27 AM
  */
 @Repository
-public class DocumentDAOImpl extends BaseDAO<Document, Long> implements DocumentDAO {
+public class DocumentDAOImpl extends BaseDAOImpl<Document, Long> implements DocumentDAO {
 }

@@ -11,5 +11,5 @@ import ru.sgu.csit.inoc.deansoffice.domain.Faculty;
  * Time: 10:53:02 AM
  */
 @Repository
-public class FacultyDAOImpl extends BaseDAO<Faculty, Long> implements FacultyDAO {
+public class FacultyDAOImpl extends BaseDAOImpl<Faculty, Long> implements FacultyDAO {
 }

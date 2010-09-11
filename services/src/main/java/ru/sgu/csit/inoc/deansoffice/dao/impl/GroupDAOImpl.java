@@ -11,5 +11,5 @@ import ru.sgu.csit.inoc.deansoffice.domain.Group;
  * Time: 10:50:53 AM
  */
 @Repository
-public class GroupDAOImpl extends BaseDAO<Group, Long> implements GroupDAO {
+public class GroupDAOImpl extends BaseDAOImpl<Group, Long> implements GroupDAO {
 }

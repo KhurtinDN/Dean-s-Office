@@ -1,6 +1,6 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-     <parent>
+    <parent>
         <artifactId>${DeansOffice.artifactId}</artifactId>
         <groupId>${DeansOffice.groupId}</groupId>
         <version>${DeansOffice.version}</version>
@@ -16,6 +16,7 @@
     <url>http://maven.apache.org</url>
 
     <properties>
+        <!-- Framework Versions -->
         <org.springframework.version>3.0.4.RELEASE</org.springframework.version>
     </properties>
 
@@ -27,9 +28,9 @@
             </resource>
         </resources>
 
-        <finalName>${DeansOffice.artifactId}-${pom.artifactId}</finalName>
+        <!--<finalName>${DeansOffice.artifactId}-${pom.artifactId}</finalName>-->
     </build>
-    
+
     <dependencies>
         <dependency>
             <groupId>${DeansOffice.groupId}</groupId>
@@ -38,7 +39,36 @@
             <scope>compile</scope>
         </dependency>
 
+        <dependency>
+            <groupId>${DeansOffice.groupId}</groupId>
+            <artifactId>reports</artifactId>
+            <version>${DeansOffice.version}</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <!--PSQL-->
+        <dependency>
+            <groupId>postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>8.4-701.jdbc4</version>
+        </dependency>
+
         <!-- Spring -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-core</artifactId>
+            <version>${org.springframework.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+            <version>${org.springframework.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-orm</artifactId>
+            <version>${org.springframework.version}</version>
+        </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-beans</artifactId>
@@ -50,6 +80,11 @@
             <version>${org.springframework.version}</version>
         </dependency>
 
-        
+        <dependency>
+            <groupId>commons-dbcp</groupId>
+            <artifactId>commons-dbcp</artifactId>
+            <version>1.4</version>
+        </dependency>
+
     </dependencies>
 </project>

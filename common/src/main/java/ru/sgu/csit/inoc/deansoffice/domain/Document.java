@@ -1,5 +1,6 @@
 package ru.sgu.csit.inoc.deansoffice.domain;
 
+import javax.persistence.*;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -10,10 +11,16 @@ import java.util.Map;
  * Date: Aug 27, 2010
  * Time: 12:26:27 PM
  */
+@MappedSuperclass
 public class Document extends PersistentItem {
     private String number;
     private Date signedDate;
+
+    @OneToOne(cascade = CascadeType.MERGE)
+    @PrimaryKeyJoinColumn
     private Template printTemplate;
+
+    @ElementCollection(fetch = FetchType.EAGER)
     public Map<String, String> TEXT = new HashMap<String, String>();
 
     public void clear() {

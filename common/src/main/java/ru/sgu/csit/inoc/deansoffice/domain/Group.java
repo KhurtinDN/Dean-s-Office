@@ -9,6 +9,7 @@ import javax.persistence.*;
  * Time: 11:58:49 AM
  */
 @Entity
+@Table(name = "`Group`")
 public class Group extends PersistentItem {
     private String name;
     private Integer course;

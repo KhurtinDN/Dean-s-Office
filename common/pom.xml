@@ -21,7 +21,7 @@
     </properties>
 
     <build>
-        <finalName>${DeansOffice.artifactId}-${pom.artifactId}</finalName>
+        <!--<finalName>${DeansOffice.artifactId}-${pom.artifactId}</finalName>-->
     </build>
 
     <dependencies>
@@ -32,10 +32,10 @@
         </dependency>
 
         <!-- This first dependency includes all the JPA implementations for the DAOs -->
-        <dependency>
+        <!--<dependency>
             <groupId>com.trg</groupId>
             <artifactId>trg-dao-hibernate</artifactId>
             <version>0.5.1</version>
-        </dependency>
+        </dependency>-->
     </dependencies>
 </project>

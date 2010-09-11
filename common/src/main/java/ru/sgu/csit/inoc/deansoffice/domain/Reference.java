@@ -1,14 +1,15 @@
 package ru.sgu.csit.inoc.deansoffice.domain;
 
+import javax.persistence.Entity;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.GregorianCalendar;
 
 /**
  * Created by XX (MesheryakovAV)
  * Date: 07.09.2010
  * Time: 9:18:30
  */
+@Entity
 public class Reference extends Document {    
     public void build(Student student) {
         clear();
@@ -21,7 +22,7 @@ public class Reference extends Document {
                 + student.getFirstNameDative() + " " + student.getMiddleNameDative());
         TEXT.put("Student.courseNumber", student.getCource().toString());
 
-        Order order = student.getEnrollmentOrder();
+        EnrollmentOrder order = student.getEnrollmentOrder();
         String division = "неизвестного";
 
         switch (student.getDivision()) {
@@ -38,11 +39,11 @@ public class Reference extends Document {
         TEXT.put("Student.division_rad", division);
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
-        Date date = (Date)order.getData("EnrollmentDate");
+        Date date = order.getEnrollmentDate();
 
         TEXT.put("Student.startDate", dateFormat.format(date)); // "01.09.2007"
 
-        date = (Date)order.getData("ReleaseDate");
+        date = order.getReleaseDate();
         TEXT.put("Student.endDate", dateFormat.format(date)); // "01.07.2012"
         TEXT.put("Student.order.number", order.getNumber()); // "22-0107"
         TEXT.put("Student.order.date", dateFormat.format(order.getSignedDate())); // "12.08.2007"

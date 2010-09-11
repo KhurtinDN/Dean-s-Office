@@ -66,8 +66,8 @@
 
     <modules>
         <module>common</module>
-        <module>services</module>
         <module>reports</module>
+        <module>services</module>
         <module>web</module>
     </modules>
 

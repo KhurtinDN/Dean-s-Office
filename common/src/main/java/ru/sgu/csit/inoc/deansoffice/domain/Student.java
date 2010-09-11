@@ -29,7 +29,7 @@ public class Student extends Person {
 
     @ManyToOne(cascade = CascadeType.MERGE)
     @PrimaryKeyJoinColumn
-    private Order enrollmentOrder;
+    private EnrollmentOrder enrollmentOrder;
 
     public String getStudentIdNumber() {
         return studentIdNumber;
@@ -79,11 +79,11 @@ public class Student extends Person {
         this.studyForm = studyForm;
     }
 
-    public Order getEnrollmentOrder() {
+    public EnrollmentOrder getEnrollmentOrder() {
         return enrollmentOrder;
     }
 
-    public void setEnrollmentOrder(Order enrollmentOrder) {
+    public void setEnrollmentOrder(EnrollmentOrder enrollmentOrder) {
         this.enrollmentOrder = enrollmentOrder;
     }
 

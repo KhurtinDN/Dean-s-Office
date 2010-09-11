@@ -11,5 +11,5 @@ import ru.sgu.csit.inoc.deansoffice.domain.Order;
  * Time: 10:56:51 AM
  */
 @Repository
-public class OrderDAOImpl extends BaseDAO<Order, Long> implements OrderDAO {
+public class OrderDAOImpl extends BaseDAOImpl<Order, Long> implements OrderDAO {
 }

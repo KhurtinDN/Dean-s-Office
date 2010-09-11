@@ -39,12 +39,12 @@ public class AppTest
     public void testPdfGenerate() {
         Student student = new Student();
         Reference ref = new Reference();
-        Order enrolOrder = new Order();
+        EnrollmentOrder enrolOrder = new EnrollmentOrder();
 
         enrolOrder.setNumber("22-0107");
         enrolOrder.setSignedDate(new Date());
-        enrolOrder.addData("EnrollmentDate", new Date(110, 8, 1));
-        enrolOrder.addData("ReleaseDate", new Date(115, 6, 1));
+        enrolOrder.setEnrollmentDate(new Date(110, 8, 1));
+        enrolOrder.setReleaseDate(new Date(115, 6, 1));
 
         Faculty csit = new Faculty();
 

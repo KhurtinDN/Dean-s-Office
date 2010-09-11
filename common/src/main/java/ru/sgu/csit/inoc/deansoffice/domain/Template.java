@@ -1,11 +1,14 @@
 package ru.sgu.csit.inoc.deansoffice.domain;
 
+import javax.persistence.Entity;
+
 /**
  * Created by XX (MesheryakovAV)
  * Date: 03.09.2010
  * Time: 10:51:53
  */
-public class Template {
+@Entity
+public class Template extends PersistentItem {
     private String fileName;
     private TemplType type = TemplType.XML;
 
