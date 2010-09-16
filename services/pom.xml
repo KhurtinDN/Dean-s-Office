@@ -38,7 +38,6 @@
             <version>${DeansOffice.version}</version>
             <scope>compile</scope>
         </dependency>
-
         <dependency>
             <groupId>${DeansOffice.groupId}</groupId>
             <artifactId>reports</artifactId>
@@ -46,11 +45,18 @@
             <scope>compile</scope>
         </dependency>
 
-        <!--PSQL-->
+        <!-- PSQL -->
         <dependency>
             <groupId>postgresql</groupId>
             <artifactId>postgresql</artifactId>
             <version>8.4-701.jdbc4</version>
+        </dependency>
+
+        <!-- Hibernate -->
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-entitymanager</artifactId>
+            <version>3.5.1-Final</version>
         </dependency>
 
         <!-- Spring -->
