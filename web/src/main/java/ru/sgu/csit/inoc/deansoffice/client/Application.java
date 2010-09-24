@@ -8,8 +8,7 @@ import ru.sgu.csit.inoc.deansoffice.client.gxt.MainLayoutContainer;
 /**
  * Entry point classes define <code>onModuleLoad()</code>.
  */
-public class Application
-        implements EntryPoint {
+public class Application implements EntryPoint {
 
     /**
      * This is the entry point method.

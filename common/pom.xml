@@ -30,12 +30,5 @@
             <artifactId>hibernate-entitymanager</artifactId>
             <version>3.5.1-Final</version>
         </dependency>
-
-        <!-- This first dependency includes all the JPA implementations for the DAOs -->
-        <!--<dependency>
-            <groupId>com.trg</groupId>
-            <artifactId>trg-dao-hibernate</artifactId>
-            <version>0.5.1</version>
-        </dependency>-->
     </dependencies>
 </project>

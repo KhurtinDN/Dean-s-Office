@@ -9,4 +9,5 @@ import ru.sgu.csit.inoc.deansoffice.domain.Speciality;
  * Time: 9:58:57 AM
  */
 public interface SpecialityDAO extends BaseDAO<Speciality, Long> {
+
 }

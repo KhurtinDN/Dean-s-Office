@@ -1,6 +1,7 @@
 package ru.sgu.csit.inoc.deansoffice.dao;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * .
@@ -10,4 +11,6 @@ import java.io.Serializable;
  */
 public interface BaseDAO<T, ID extends Serializable> {
     void save(T entity);
+
+    List<T> findAll(Class<T> aClass);
 }

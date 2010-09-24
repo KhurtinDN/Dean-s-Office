@@ -82,11 +82,6 @@
             <name>JBoss repository</name>
             <url>http://repository.jboss.org/maven2</url>
         </repository>
-        <repository>
-                <id>trg-dao-repo</id>
-                <name>Repository for The Revere Group's Hibernate Generic DAO framework</name>
-                <url>http://hibernate-generic-dao.googlecode.com/svn/trunk/maven-repo/</url>
-        </repository>
     </repositories>
 
     <dependencies>

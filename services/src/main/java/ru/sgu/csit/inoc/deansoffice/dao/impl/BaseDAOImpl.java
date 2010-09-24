@@ -6,6 +6,7 @@ import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 import ru.sgu.csit.inoc.deansoffice.dao.BaseDAO;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * .
@@ -22,5 +23,10 @@ public class BaseDAOImpl<T, ID extends Serializable> extends HibernateDaoSupport
     @Override
     public void save(T entity) {
         getHibernateTemplate().save(entity);
+    }
+
+    @Override
+    public List<T> findAll(Class<T> aClass) {
+        return (List<T>)getHibernateTemplate().find("from " + aClass.getName());
     }
 }

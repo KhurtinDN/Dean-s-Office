@@ -65,12 +65,15 @@
                     <execution>
                         <goals>
                             <goal>compile</goal>
-                            <goal>generateAsync</goal>
+                            <!--<goal>generateAsync</goal>-->
                             <goal>test</goal>
                         </goals>
                     </execution>
                 </executions>
                 <configuration>
+                    <hostedWebapp>
+                        ${project.build.directory}/${project.build.finalName}
+                    </hostedWebapp>
                     <runTarget>ru.sgu.csit.inoc.deansoffice.Application/Application.html</runTarget>
                 </configuration>
             </plugin>

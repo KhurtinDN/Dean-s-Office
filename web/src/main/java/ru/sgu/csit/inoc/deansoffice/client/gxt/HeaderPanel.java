@@ -37,4 +37,6 @@ public class HeaderPanel extends ContentPanel {
 
         setTopComponent( menuBar );
     }
+
+
 }
