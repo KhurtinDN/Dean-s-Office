@@ -12,7 +12,7 @@ import java.util.Map;
  * Date: Sep 16, 2010
  * Time: 10:51:38 PM
  */
-@RemoteServiceRelativePath("menu")
+@RemoteServiceRelativePath("menuService")
 public interface MenuService extends RemoteService {
     Map<Long, String> downloadSpecialityName();
 

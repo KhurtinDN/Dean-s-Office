@@ -27,6 +27,7 @@ public class MenuServiceImpl extends RemoteServiceServlet implements MenuService
 
     @Override
     public Map<Long, String> downloadSpecialityName() { // Map<Long, String>
+        System.out.println("!!!WARNING!!! specialityDAO = " + specialityDAO );
         List<Speciality> specialityList = specialityDAO.findAll(Speciality.class);
         Map<Long, String> result = new HashMap<Long, String>();
 

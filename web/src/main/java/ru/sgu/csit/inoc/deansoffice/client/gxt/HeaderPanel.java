@@ -2,7 +2,6 @@ package ru.sgu.csit.inoc.deansoffice.client.gxt;
 
 import com.extjs.gxt.ui.client.widget.ContentPanel;
 import com.extjs.gxt.ui.client.widget.menu.*;
-import com.google.gwt.user.client.Element;
 
 /**
  * .
@@ -37,6 +36,4 @@ public class HeaderPanel extends ContentPanel {
 
         setTopComponent( menuBar );
     }
-
-
 }
