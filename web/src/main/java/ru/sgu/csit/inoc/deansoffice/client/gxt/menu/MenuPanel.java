@@ -4,7 +4,6 @@ import com.extjs.gxt.ui.client.data.BaseModelData;
 import com.extjs.gxt.ui.client.data.ModelData;
 import com.extjs.gxt.ui.client.store.TreeStore;
 import com.extjs.gxt.ui.client.widget.ContentPanel;
-import com.extjs.gxt.ui.client.widget.Info;
 import com.extjs.gxt.ui.client.widget.layout.AccordionLayout;
 import com.extjs.gxt.ui.client.widget.layout.FitLayout;
 import com.extjs.gxt.ui.client.widget.treepanel.TreePanel;
@@ -33,53 +32,6 @@ public class MenuPanel extends ContentPanel {
         setLayout(new AccordionLayout());
 
         MenuService.App.getInstance().downloadMenuData(new MenuLoader());
-
-        /*for (int course = 1; course <= 6; ++course) {
-            final ContentPanel courseContentPanel = new ContentPanel(new FitLayout());
-            courseContentPanel.setAnimCollapse(false);
-            courseContentPanel.setHeading(course + " курс");
-
-            MenuService.App.getInstance().downloadSpecialityName(new AsyncCallback<Map<Long, String>>() {
-                @Override
-                public void onFailure(Throwable caught) {
-                    Window.alert(caught.toString());
-                }
-
-                @Override
-                public void onSuccess(Map<Long, String> result) {
-                    final TreeStore<ModelData> treeStore = new TreeStore<ModelData>();
-                    TreePanel<ModelData> treePanel = new TreePanel<ModelData>(treeStore);
-                    treePanel.setDisplayProperty("name");
-
-                    for (Map.Entry<Long, String> entry : result.entrySet()) {
-                        final ModelData modelData = createModelData(entry.getValue(), null);
-                        treeStore.add(modelData, false);
-
-                        MenuService.App.getInstance().downloadGroupName(entry.getKey(),
-                                new AsyncCallback<Map<Long, String>>() {
-                                    @Override
-                                    public void onFailure(Throwable caught) {
-                                        Window.alert(caught.toString());
-                                    }
-
-                                    @Override
-                                    public void onSuccess(Map<Long, String> result) {
-                                        for (Map.Entry<Long, String> entry : result.entrySet()) {
-                                            treeStore.add(modelData, createModelData(entry.getValue(), null), false);
-                                        }
-                                    }
-                                });
-
-                        treePanel.setExpanded(modelData, true);
-                    }
-
-                    courseContentPanel.add(treePanel);
-
-                }
-            });
-
-            add(courseContentPanel);
-        }*/
     }
 
     private ModelData createModelData(String name, String icon) {
