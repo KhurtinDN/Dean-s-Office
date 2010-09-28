@@ -4,6 +4,7 @@ import com.extjs.gxt.ui.client.data.BaseModelData;
 import com.extjs.gxt.ui.client.data.ModelData;
 import com.extjs.gxt.ui.client.store.TreeStore;
 import com.extjs.gxt.ui.client.widget.ContentPanel;
+import com.extjs.gxt.ui.client.widget.Layout;
 import com.extjs.gxt.ui.client.widget.layout.AccordionLayout;
 import com.extjs.gxt.ui.client.widget.layout.FitLayout;
 import com.extjs.gxt.ui.client.widget.treepanel.TreePanel;
@@ -31,7 +32,7 @@ public class MenuPanel extends ContentPanel {
         setHeading("Структура факультета");
         setLayout(new AccordionLayout());
 
-        MenuService.App.getInstance().downloadMenuData(new MenuLoader());
+        MenuService.App.getInstance().downloadMenuData(new MenuLoader(this));
     }
 
     private ModelData createModelData(String name, String icon) {
@@ -42,6 +43,11 @@ public class MenuPanel extends ContentPanel {
     }
 
     private class MenuLoader implements AsyncCallback<ArrayList< Map<SpecialityDto, List<GroupDto>>>> {
+        private ContentPanel panel;
+        public MenuLoader(ContentPanel panel) {
+            this.panel = panel;
+        }
+
         @Override
         public void onFailure(Throwable caught) {
             Window.alert(caught.toString());
@@ -73,6 +79,7 @@ public class MenuPanel extends ContentPanel {
 
                 add(courseContentPanel);
             }
+            panel.getLayout().layout();
         }
     }
 }
