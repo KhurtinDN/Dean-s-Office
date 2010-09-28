@@ -26,6 +26,13 @@
 
     <dependencies>
         <dependency>
+            <groupId>${DeansOffice.groupId}</groupId>
+            <artifactId>reports</artifactId>
+            <version>${DeansOffice.version}</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-entitymanager</artifactId>
             <version>3.5.1-Final</version>

@@ -1,5 +1,7 @@
 package ru.sgu.csit.inoc.deansoffice.domain;
 
+import ru.sgu.csit.inoc.deansoffice.reports.reportsutil.TemplType;
+
 import javax.persistence.Entity;
 
 /**
@@ -33,9 +35,5 @@ public class Template extends PersistentItem {
 
     public void setType(TemplType type) {
         this.type = type;
-    }
-
-    public static enum TemplType {
-        XML
     }
 }

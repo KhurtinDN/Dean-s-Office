@@ -29,12 +29,12 @@
                     </td>
 					
 					<td colspan="2" align="center">Дана</td>
-					<td colspan="9" align="center" border="2"><var name="Student.fullName_dat" /></td>
+					<td colspan="9" align="center" border="2"><var name="Student.lastName_dat" /></td>
 					
 					<td colspan="2" align="center"></td>
 					<td colspan="9" align="center" padding="0"><font size="8">(Ф.И.О.)</font></td>
 					
-					<td colspan="11" align="center" border="2"> </td>
+					<td colspan="11" align="center" border="2"><var name="Student.firstName_dat" /> <var name="Student.middleName_dat" /></td>
 					
 					<td colspan="8" align="center">в том, что он(а) является студентом(кой)</td>
 					<td colspan="2" align="center" border="2"><var name="Student.courseNumber" /></td>
