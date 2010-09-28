@@ -1,8 +1,7 @@
 package ru.sgu.csit.inoc.deansoffice.reports;
 
 import org.xml.sax.SAXException;
-import ru.sgu.csit.inoc.deansoffice.domain.Document;
-import ru.sgu.csit.inoc.deansoffice.domain.Student;
+import ru.sgu.csit.inoc.deansoffice.reports.reportsutil.Report;
 import ru.sgu.csit.inoc.deansoffice.reports.xml.XmlToPdfReportProcessorHandler;
 
 import javax.xml.parsers.ParserConfigurationException;
@@ -23,7 +22,7 @@ public enum ReportPdfProcessor {
         return INSTANCE;
     }
 
-    private void generateReportFromXml(Document document) {
+    private void generateReportFromXml(Report report) {
         SAXParserFactory factory = SAXParserFactory.newInstance();
 
         factory.setNamespaceAware(false); // Выключить пространство имен
@@ -32,9 +31,9 @@ public enum ReportPdfProcessor {
 
             factory.setSchema(shemaFactory.newSchema(new File("document.xsd")));*/
             SAXParser parser = factory.newSAXParser();
-            String fileName = document.getPrintTemplate().getFileName();
+            String fileName = report.getTemplateFileName();
 
-            parser.parse(new File(fileName), new XmlToPdfReportProcessorHandler(fileName, document));
+            parser.parse(new File(fileName), new XmlToPdfReportProcessorHandler(fileName, report));
         } catch (ParserConfigurationException e) {
             throw new RuntimeException("Parser configuration exception.", e);
         } catch (SAXException e) {
@@ -44,10 +43,10 @@ public enum ReportPdfProcessor {
         }
     }
 
-    public void generate(Document document) {
-        switch (document.getPrintTemplate().getType()) {
+    public void generate(Report report) {
+        switch (report.getTemplateType()) {
             case XML:
-                generateReportFromXml(document);
+                generateReportFromXml(report);
                 break;
             default:
                 break;

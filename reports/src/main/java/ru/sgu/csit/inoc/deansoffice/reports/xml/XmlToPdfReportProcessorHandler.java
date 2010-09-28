@@ -9,11 +9,7 @@ import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 import org.xml.sax.helpers.DefaultHandler;
-import ru.sgu.csit.inoc.deansoffice.domain.*;
-import ru.sgu.csit.inoc.deansoffice.reports.reportsutil.FontCollector;
-import ru.sgu.csit.inoc.deansoffice.reports.reportsutil.MyCell;
-import ru.sgu.csit.inoc.deansoffice.reports.reportsutil.MyTable;
-import ru.sgu.csit.inoc.deansoffice.reports.reportsutil.TextDescriptor;
+import ru.sgu.csit.inoc.deansoffice.reports.reportsutil.*;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -40,11 +36,11 @@ public class XmlToPdfReportProcessorHandler extends DefaultHandler {
     private Stack<MyCell> stackCells = new Stack<MyCell>();
 
     private Document document;
-    ru.sgu.csit.inoc.deansoffice.domain.Document doc;
+    Report report;
 
-    public XmlToPdfReportProcessorHandler(String url, ru.sgu.csit.inoc.deansoffice.domain.Document doc) {
+    public XmlToPdfReportProcessorHandler(String url, Report report) {
         this.url = url;
-        this.doc = doc;
+        this.report = report;
 
         try {
             printWriter = new PrintWriter(new OutputStreamWriter(System.out, "UTF-8"));
@@ -229,7 +225,7 @@ public class XmlToPdfReportProcessorHandler extends DefaultHandler {
                     String attributeValue = attributes.getValue(i);
 
                     if ("name".equals(attributeName)) {
-                        String strChunk = doc.TEXT.get(attributeValue);
+                        String strChunk = report.getVariableValue(attributeValue);
 
                         if (!stackElements.isEmpty()) {
                             ((Phrase) stackElements.peek()).add(new Chunk(strChunk, fontCollector.getCurrentFont()));

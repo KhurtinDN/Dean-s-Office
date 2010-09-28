@@ -5,6 +5,9 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import ru.sgu.csit.inoc.deansoffice.reports.reportsutil.Report;
+import ru.sgu.csit.inoc.deansoffice.reports.reportsutil.TemplType;
+
 /**
  * .
  * User: hd (KhurtinDN(a)gmail.com)
@@ -12,7 +15,7 @@ import java.util.Map;
  * Time: 12:26:27 PM
  */
 @MappedSuperclass
-public class Document extends PersistentItem {
+public class Document extends PersistentItem implements Report {
     private String number;
     private Date signedDate;
 
@@ -54,5 +57,20 @@ public class Document extends PersistentItem {
 
     public void setPrintTemplate(Template printTemplate) {
         this.printTemplate = printTemplate;
+    }
+
+    @Override
+    public String getVariableValue(String variableName) {
+        return TEXT.get(variableName);
+    }
+
+    @Override
+    public TemplType getTemplateType() {
+        return printTemplate.getType();
+    }
+
+    @Override
+    public String getTemplateFileName() {
+        return printTemplate.getFileName();
     }
 }
