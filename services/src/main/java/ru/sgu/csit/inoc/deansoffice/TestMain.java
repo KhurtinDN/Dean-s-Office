@@ -52,18 +52,21 @@ public class TestMain {
 
             Speciality speciality = new Speciality();
             speciality.setName("Прикладная математика и информатика");
+            speciality.setShortName("ПМИ");
             speciality.setCode("1");
             speciality.setFaculty(faculty);
             specialityDAO.save(speciality);
 
             speciality = new Speciality();
             speciality.setName("Вычислительные машины, комплексы, системы, сети");
+            speciality.setShortName("ВМ");
             speciality.setCode("2");
             speciality.setFaculty(faculty);
             specialityDAO.save(speciality);
 
             speciality = new Speciality();
             speciality.setName("Компьютерная безопасность");
+            speciality.setShortName("КБ");
             speciality.setCode("3");
             speciality.setFaculty(faculty);
             specialityDAO.save(speciality);

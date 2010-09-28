@@ -11,6 +11,7 @@ import javax.persistence.*;
 @Entity
 public class Speciality extends PersistentItem {
     private String name;
+    private String shortName;
     private String code;
 
     @ManyToOne(cascade = CascadeType.MERGE)
@@ -23,6 +24,14 @@ public class Speciality extends PersistentItem {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getShortName() {
+        return shortName;
+    }
+
+    public void setShortName(String shortName) {
+        this.shortName = shortName;
     }
 
     public String getCode() {

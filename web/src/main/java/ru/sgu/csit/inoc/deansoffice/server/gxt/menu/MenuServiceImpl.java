@@ -65,10 +65,10 @@ public class MenuServiceImpl implements MenuService {
 
         Integer courseCount = faculty.getCourseCount();
         ArrayList<Map<SpecialityDto, List<GroupDto>>> result =
-                new ArrayList< Map< SpecialityDto, List<GroupDto> > >(courseCount);
+                new ArrayList<Map<SpecialityDto, List<GroupDto>>>(courseCount);
 
         for (int course = 1; course <= courseCount; ++course) {
-            Map<SpecialityDto,  List<GroupDto>> specialityGroupMap =
+            Map<SpecialityDto, List<GroupDto>> specialityGroupMap =
                     new LinkedHashMap<SpecialityDto, List<GroupDto>>();
 
             List<Speciality> specialityList = specialityDAO.findAll(Speciality.class); // todo: find by facultyId
@@ -93,27 +93,11 @@ public class MenuServiceImpl implements MenuService {
                     groupDtoList.add(new GroupDto(group.getId(), group.getName()));
                 }
 
-                specialityGroupMap.put(new SpecialityDto(speciality.getId(), speciality.getName()), groupDtoList);
+                specialityGroupMap.put(new SpecialityDto(speciality.getId(), speciality.getShortName()), groupDtoList);
             }
 
             result.add(specialityGroupMap);
         }
-
-        System.out.println("--MY-DEBUG---------------------------------------------------------------------");
-        int k = 1;
-        for (Map<SpecialityDto,  List<GroupDto>> specialityGroupMap : result) {
-            System.out.println("Course: " + k++);
-            for (Map.Entry<SpecialityDto,  List<GroupDto>> entry : specialityGroupMap.entrySet()) {
-                System.out.println("\tSpecId: " + entry.getKey().getId());
-                System.out.println("\tSpecName: " + entry.getKey().getName());
-                System.out.println("\tGroups:");
-                for (GroupDto group : entry.getValue()) {
-                    System.out.println("\t\tGroupId: " + group.getId());
-                    System.out.println("\t\tGroupName: " + group.getName());
-                }
-            }
-        }
-        System.out.println("--MY-DEBUG----------------------------------------------------------------------");
 
         return result;
     }

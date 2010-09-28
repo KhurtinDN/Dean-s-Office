@@ -1,11 +1,14 @@
 package ru.sgu.csit.inoc.deansoffice.domain;
 
+import javax.persistence.MappedSuperclass;
+
 /**
  * .
  * User: hd (KhurtinDN(a)gmail.com)
  * Date: Aug 27, 2010
  * Time: 11:30:09 AM
  */
+@MappedSuperclass
 public abstract class Person extends PersistentItem {
     protected String firstName;
     protected String middleName;
