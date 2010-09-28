@@ -14,19 +14,17 @@
      </context-param>
 
     <listener>
-         <listener-class>
-             org.springframework.web.context.ContextLoaderListener
-         </listener-class>
+         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
      </listener>
     
     <servlet>
-        <servlet-name>MenuService</servlet-name>
-        <servlet-class>ru.sgu.csit.inoc.deansoffice.server.gxt.menu.MenuServiceImpl</servlet-class>
+        <servlet-name>SpringGwtRemoteServiceServlet</servlet-name>
+        <servlet-class>ru.sgu.csit.inoc.deansoffice.server.SpringGwtRemoteServiceServlet</servlet-class>
     </servlet>
     
     <servlet-mapping>
-        <servlet-name>MenuService</servlet-name>
-        <url-pattern>/ru.sgu.csit.inoc.deansoffice.Application/menuService</url-pattern>
+        <servlet-name>SpringGwtRemoteServiceServlet</servlet-name>
+        <url-pattern>/ru.sgu.csit.inoc.deansoffice.Application/GWTServices/*</url-pattern>
     </servlet-mapping>
 
     <welcome-file-list>

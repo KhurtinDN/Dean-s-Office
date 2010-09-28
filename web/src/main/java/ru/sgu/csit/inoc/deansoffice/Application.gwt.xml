@@ -18,5 +18,7 @@
     <!-- Specify the application specific style sheet.              -->
     <stylesheet src='Application.css'/>
 
-    <servlet path="/menu" class="ru.sgu.csit.inoc.deansoffice.server.gxt.menu.MenuServiceImpl"/>
+    <source path='ru.sgu.csit.inoc.deansoffice.client'/>
+    <source path='ru.sgu.csit.inoc.deansoffice.domain'/>
+
 </module>

@@ -12,6 +12,7 @@ import javax.persistence.*;
 public class Faculty extends PersistentItem {
     private String fullName;
     private String shortName;
+    private Integer courseCount;
                          
     @ManyToOne(cascade = CascadeType.MERGE)
     @PrimaryKeyJoinColumn
@@ -39,5 +40,13 @@ public class Faculty extends PersistentItem {
 
     public void setDean(Dean dean) {
         this.dean = dean;
+    }
+
+    public Integer getCourseCount() {
+        return courseCount;
+    }
+
+    public void setCourseCount(Integer courseCount) {
+        this.courseCount = courseCount;
     }
 }

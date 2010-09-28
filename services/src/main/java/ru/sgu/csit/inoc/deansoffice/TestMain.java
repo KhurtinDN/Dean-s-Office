@@ -41,6 +41,7 @@ public class TestMain {
         faculty.setFullName("Компьютерные науки и информационные технологии");
         faculty.setShortName("КНиИТ");
         faculty.setDean(dean);
+        faculty.setCourseCount(6);
         facultyDAO.save(faculty);
     }
 

@@ -10,7 +10,11 @@ import com.extjs.gxt.ui.client.widget.treepanel.TreePanel;
 import com.google.gwt.user.client.Element;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import ru.sgu.csit.inoc.deansoffice.domain.Group;
+import ru.sgu.csit.inoc.deansoffice.domain.Speciality;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -27,7 +31,11 @@ public class MenuPanel extends ContentPanel {
         setHeading("Структура факультета");
         setLayout(new AccordionLayout());
 
-        for (int course = 1; course <= 6; ++course) {
+        ArrayList<Map<Speciality, List<Group>>> list = new ArrayList<Map<Speciality, List<Group>>>();
+
+//        MenuService.App.getInstance().downloadMenuData(new MenuLoader());
+
+        /*for (int course = 1; course <= 6; ++course) {
             final ContentPanel courseContentPanel = new ContentPanel(new FitLayout());
             courseContentPanel.setAnimCollapse(false);
             courseContentPanel.setHeading(course + " курс");
@@ -72,7 +80,7 @@ public class MenuPanel extends ContentPanel {
             });
 
             add(courseContentPanel);
-        }
+        }*/
     }
 
     private ModelData createModelData(String name, String icon) {
@@ -81,4 +89,39 @@ public class MenuPanel extends ContentPanel {
         modelData.set("icon", icon);
         return modelData;
     }
+
+    /*private class MenuLoader implements AsyncCallback<ArrayList<Map<Speciality, List<Group>>>> {
+        @Override
+        public void onFailure(Throwable caught) {
+            Window.alert(caught.toString());
+        }
+
+        @Override
+        public void onSuccess(ArrayList<Map<Speciality, List<Group>>> resultList) {
+            for (int course = 1; course <= resultList.size(); ++course) {
+                ContentPanel courseContentPanel = new ContentPanel(new FitLayout());
+                courseContentPanel.setAnimCollapse(false);
+                courseContentPanel.setHeading(course + " курс");
+
+                Map<Speciality, List<Group>> specialityGroupMap = resultList.get(course);
+
+                TreeStore<ModelData> treeStore = new TreeStore<ModelData>();
+                TreePanel<ModelData> treePanel = new TreePanel<ModelData>(treeStore);
+                treePanel.setDisplayProperty("name");
+
+                for (Map.Entry<Speciality, List<Group>> entry : specialityGroupMap.entrySet()) {
+                    ModelData modelData = createModelData(entry.getKey().getName(), null);
+                    treeStore.add(modelData, false);
+
+                    for (Group group : entry.getValue()) {
+                        treeStore.add(modelData, createModelData(group.getName(), null), false);
+                    }
+                    treePanel.setExpanded(modelData, true);
+                }
+                courseContentPanel.add(treePanel);
+
+                add(courseContentPanel);
+            }
+        }
+    }*/
 }
