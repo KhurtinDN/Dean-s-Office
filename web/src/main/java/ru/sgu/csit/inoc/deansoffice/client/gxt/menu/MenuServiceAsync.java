@@ -1,8 +1,8 @@
 package ru.sgu.csit.inoc.deansoffice.client.gxt.menu;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
-import ru.sgu.csit.inoc.deansoffice.domain.Group;
-import ru.sgu.csit.inoc.deansoffice.domain.Speciality;
+import ru.sgu.csit.inoc.deansoffice.shared.dto.GroupDto;
+import ru.sgu.csit.inoc.deansoffice.shared.dto.SpecialityDto;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,5 +19,5 @@ public interface MenuServiceAsync {
 
     void downloadGroupName(Long specialityId, AsyncCallback<Map<Long, String>> async);
 
-//    void downloadMenuData(AsyncCallback<ArrayList<Map<Speciality, List<Group>>>> async);
+    void downloadMenuData(AsyncCallback<ArrayList<Map<SpecialityDto, List<GroupDto>>>> async);
 }

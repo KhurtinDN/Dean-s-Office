@@ -9,6 +9,8 @@ import ru.sgu.csit.inoc.deansoffice.dao.SpecialityDAO;
 import ru.sgu.csit.inoc.deansoffice.domain.Faculty;
 import ru.sgu.csit.inoc.deansoffice.domain.Group;
 import ru.sgu.csit.inoc.deansoffice.domain.Speciality;
+import ru.sgu.csit.inoc.deansoffice.shared.dto.GroupDto;
+import ru.sgu.csit.inoc.deansoffice.shared.dto.SpecialityDto;
 
 import java.util.*;
 
@@ -53,8 +55,8 @@ public class MenuServiceImpl implements MenuService {
         return result;
     }
 
-//    @Override
-    public ArrayList<Map<Speciality, List<Group>>> downloadMenuData() {
+    @Override
+    public ArrayList<Map<SpecialityDto, List<GroupDto>>> downloadMenuData() {
         List<Faculty> facultyList = facultyDAO.findAll(Faculty.class);     // todo: find strict ONE object
         if (facultyList == null || facultyList.size() != 1) {
             throw new RuntimeException("Faculty must be one object!");
@@ -62,10 +64,12 @@ public class MenuServiceImpl implements MenuService {
         Faculty faculty = facultyList.get(0);
 
         Integer courseCount = faculty.getCourseCount();
-        ArrayList<Map<Speciality, List<Group>>> result = new ArrayList<Map<Speciality, List<Group>>>(courseCount);
+        ArrayList<Map<SpecialityDto, List<GroupDto>>> result =
+                new ArrayList< Map< SpecialityDto, List<GroupDto> > >(courseCount);
 
         for (int course = 1; course <= courseCount; ++course) {
-            Map<Speciality,  List<Group>> specialityGroupMap = new LinkedHashMap<Speciality, List<Group>>();
+            Map<SpecialityDto,  List<GroupDto>> specialityGroupMap =
+                    new LinkedHashMap<SpecialityDto, List<GroupDto>>();
 
             List<Speciality> specialityList = specialityDAO.findAll(Speciality.class); // todo: find by facultyId
             for (Iterator<Speciality> iterator = specialityList.iterator(); iterator.hasNext();) {
@@ -84,11 +88,32 @@ public class MenuServiceImpl implements MenuService {
                     }
                 }
 
-                specialityGroupMap.put(speciality, groupList);
+                List<GroupDto> groupDtoList = new ArrayList<GroupDto>(groupList.size());
+                for (Group group : groupList) {
+                    groupDtoList.add(new GroupDto(group.getId(), group.getName()));
+                }
+
+                specialityGroupMap.put(new SpecialityDto(speciality.getId(), speciality.getName()), groupDtoList);
             }
 
             result.add(specialityGroupMap);
         }
+
+        System.out.println("--MY-DEBUG---------------------------------------------------------------------");
+        int k = 1;
+        for (Map<SpecialityDto,  List<GroupDto>> specialityGroupMap : result) {
+            System.out.println("Course: " + k++);
+            for (Map.Entry<SpecialityDto,  List<GroupDto>> entry : specialityGroupMap.entrySet()) {
+                System.out.println("\tSpecId: " + entry.getKey().getId());
+                System.out.println("\tSpecName: " + entry.getKey().getName());
+                System.out.println("\tGroups:");
+                for (GroupDto group : entry.getValue()) {
+                    System.out.println("\t\tGroupId: " + group.getId());
+                    System.out.println("\t\tGroupName: " + group.getName());
+                }
+            }
+        }
+        System.out.println("--MY-DEBUG----------------------------------------------------------------------");
 
         return result;
     }

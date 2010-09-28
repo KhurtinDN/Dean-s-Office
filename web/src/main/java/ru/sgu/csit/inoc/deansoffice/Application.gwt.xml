@@ -18,7 +18,7 @@
     <!-- Specify the application specific style sheet.              -->
     <stylesheet src='Application.css'/>
 
-    <source path='ru.sgu.csit.inoc.deansoffice.client'/>
-    <source path='ru.sgu.csit.inoc.deansoffice.domain'/>
+    <source path='client'/>
+    <source path='shared'/>
 
 </module>

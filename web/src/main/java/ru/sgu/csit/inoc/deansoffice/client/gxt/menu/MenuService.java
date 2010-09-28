@@ -3,8 +3,8 @@ package ru.sgu.csit.inoc.deansoffice.client.gxt.menu;
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 import com.google.gwt.core.client.GWT;
-import ru.sgu.csit.inoc.deansoffice.domain.Group;
-import ru.sgu.csit.inoc.deansoffice.domain.Speciality;
+import ru.sgu.csit.inoc.deansoffice.shared.dto.GroupDto;
+import ru.sgu.csit.inoc.deansoffice.shared.dto.SpecialityDto;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +22,7 @@ public interface MenuService extends RemoteService {
 
     Map<Long, String> downloadGroupName(Long specialityId);
 
-//    ArrayList< Map< Speciality, List<Group> > > downloadMenuData();
+    ArrayList< Map<SpecialityDto, List<GroupDto> > > downloadMenuData();
 
     /**
      * Utility/Convenience class.

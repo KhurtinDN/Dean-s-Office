@@ -73,8 +73,9 @@ public class TestMain {
     private void createGroups() {
         List<Speciality> specialityList = specialityDAO.findAll(Speciality.class);
         for (Speciality speciality : specialityList) {
+            int courseCount = speciality.getFaculty().getCourseCount();
             for (int groupCount = 1; groupCount <= 2; ++groupCount) {
-                for (int course = 1; course < 6; ++course) {
+                for (int course = 1; course <= courseCount; ++course) {
                     Group group = new Group();
                     group.setName(course + speciality.getCode() + groupCount);
                     group.setCourse(course);

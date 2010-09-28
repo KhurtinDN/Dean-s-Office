@@ -4,14 +4,15 @@ import com.extjs.gxt.ui.client.data.BaseModelData;
 import com.extjs.gxt.ui.client.data.ModelData;
 import com.extjs.gxt.ui.client.store.TreeStore;
 import com.extjs.gxt.ui.client.widget.ContentPanel;
+import com.extjs.gxt.ui.client.widget.Info;
 import com.extjs.gxt.ui.client.widget.layout.AccordionLayout;
 import com.extjs.gxt.ui.client.widget.layout.FitLayout;
 import com.extjs.gxt.ui.client.widget.treepanel.TreePanel;
 import com.google.gwt.user.client.Element;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
-import ru.sgu.csit.inoc.deansoffice.domain.Group;
-import ru.sgu.csit.inoc.deansoffice.domain.Speciality;
+import ru.sgu.csit.inoc.deansoffice.shared.dto.GroupDto;
+import ru.sgu.csit.inoc.deansoffice.shared.dto.SpecialityDto;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,9 +32,7 @@ public class MenuPanel extends ContentPanel {
         setHeading("Структура факультета");
         setLayout(new AccordionLayout());
 
-        ArrayList<Map<Speciality, List<Group>>> list = new ArrayList<Map<Speciality, List<Group>>>();
-
-//        MenuService.App.getInstance().downloadMenuData(new MenuLoader());
+        MenuService.App.getInstance().downloadMenuData(new MenuLoader());
 
         /*for (int course = 1; course <= 6; ++course) {
             final ContentPanel courseContentPanel = new ContentPanel(new FitLayout());
@@ -90,30 +89,30 @@ public class MenuPanel extends ContentPanel {
         return modelData;
     }
 
-    /*private class MenuLoader implements AsyncCallback<ArrayList<Map<Speciality, List<Group>>>> {
+    private class MenuLoader implements AsyncCallback<ArrayList< Map<SpecialityDto, List<GroupDto>>>> {
         @Override
         public void onFailure(Throwable caught) {
             Window.alert(caught.toString());
         }
 
         @Override
-        public void onSuccess(ArrayList<Map<Speciality, List<Group>>> resultList) {
+        public void onSuccess(ArrayList<Map<SpecialityDto, List<GroupDto>>> resultList) {
             for (int course = 1; course <= resultList.size(); ++course) {
                 ContentPanel courseContentPanel = new ContentPanel(new FitLayout());
                 courseContentPanel.setAnimCollapse(false);
                 courseContentPanel.setHeading(course + " курс");
 
-                Map<Speciality, List<Group>> specialityGroupMap = resultList.get(course);
+                Map<SpecialityDto, List<GroupDto>> specialityGroupMap = resultList.get(course - 1);
 
                 TreeStore<ModelData> treeStore = new TreeStore<ModelData>();
                 TreePanel<ModelData> treePanel = new TreePanel<ModelData>(treeStore);
                 treePanel.setDisplayProperty("name");
 
-                for (Map.Entry<Speciality, List<Group>> entry : specialityGroupMap.entrySet()) {
+                for (Map.Entry<SpecialityDto, List<GroupDto>> entry : specialityGroupMap.entrySet()) {
                     ModelData modelData = createModelData(entry.getKey().getName(), null);
                     treeStore.add(modelData, false);
 
-                    for (Group group : entry.getValue()) {
+                    for (GroupDto group : entry.getValue()) {
                         treeStore.add(modelData, createModelData(group.getName(), null), false);
                     }
                     treePanel.setExpanded(modelData, true);
@@ -123,5 +122,5 @@ public class MenuPanel extends ContentPanel {
                 add(courseContentPanel);
             }
         }
-    }*/
+    }
 }
