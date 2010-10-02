@@ -10,7 +10,9 @@ import java.util.List;
  * Time: 10:36:13 AM
  */
 public interface BaseDAO<T, ID extends Serializable> {
-    void save(T entity);
-
+    ID save(T entity);
+    void update(T transientObject);
+    void delete(T persistentObject);
+    T findById(ID id);
     List<T> findAll(Class<T> aClass);
 }

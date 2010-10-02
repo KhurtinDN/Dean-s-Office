@@ -24,10 +24,19 @@ public class TestMain {
 
     public static void main(String[] args) {
         TestMain testMain = new TestMain();
+
         testMain.createFaculty();
         testMain.createSpecialities();
         testMain.createGroups();
         testMain.createStudents();
+    }
+
+    private Long addDean() {
+        Dean dean = new Dean();
+        dean.setFirstName("Сергей");
+        dean.setMiddleName("Владимирович");
+        dean.setLastName("Миронов");
+        return deanDAO.save(dean);
     }
 
     private void createFaculty() {
