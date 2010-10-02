@@ -25,17 +25,23 @@ public class BaseDAOImpl<T, ID extends Serializable> extends HibernateDaoSupport
     }
 
     public Class getPersistentClass() {
-        return (Class) ((ParameterizedType)getClass().getGenericSuperclass()).getActualTypeArguments()[0];
+        return (Class) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
     }
 
-    protected DetachedCriteria newCriteriaForPersistentClass(SimpleExpression expression) {
-        return DetachedCriteria.forClass(getPersistentClass()).add(expression);
+    protected DetachedCriteria createCriteriaForPersistentClass(SimpleExpression... expressions) {
+        DetachedCriteria criteria = DetachedCriteria.forClass(getPersistentClass());
+
+        for (SimpleExpression expression : expressions) {
+            criteria.add(expression);
+        }
+
+        return criteria;
     }
 
     @Override
     @SuppressWarnings("unchecked")
     public ID save(T entity) {
-        return (ID)getHibernateTemplate().save(entity);
+        return (ID) getHibernateTemplate().save(entity);
     }
 
     @Override
@@ -51,13 +57,13 @@ public class BaseDAOImpl<T, ID extends Serializable> extends HibernateDaoSupport
     @Override
     @SuppressWarnings("unchecked")
     public T findById(ID id) {
-        DetachedCriteria criteria = newCriteriaForPersistentClass(Restrictions.eq("id", id));
-        return (T)getHibernateTemplate().findByCriteria(criteria, 0, 1).get(0);
+        DetachedCriteria criteria = createCriteriaForPersistentClass(Restrictions.eq("id", id));
+        return (T) getHibernateTemplate().findByCriteria(criteria, 0, 1).get(0);
     }
 
     @Override
     @SuppressWarnings("unchecked")
     public List<T> findAll() {
-        return (List<T>)getHibernateTemplate().find("from " + getPersistentClass().getName());
+        return (List<T>) getHibernateTemplate().find("from " + getPersistentClass().getName());
     }
 }

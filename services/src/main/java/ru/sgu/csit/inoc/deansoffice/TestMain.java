@@ -25,10 +25,23 @@ public class TestMain {
     public static void main(String[] args) {
         TestMain testMain = new TestMain();
 
-        testMain.createFaculty();
-        testMain.createSpecialities();
-        testMain.createGroups();
-        testMain.createStudents();
+//        testMain.createFaculty();
+//        testMain.createSpecialities();
+//        testMain.createGroups();
+//        testMain.createStudents();
+        List<Faculty> faculties = testMain.facultyDAO.findByShortName("КНиИТ");
+        for (Faculty faculty : faculties) {
+            System.out.println(faculty.getShortName());
+        }
+
+        List<Speciality> specs = testMain.specialityDAO.findByFacultyId(faculties.get(0).getId());
+        System.out.println(specs.size());
+        System.out.println(specs.get(0).getShortName());
+
+        List<Group> groups = testMain.groupDAO.findByCourseAndSpeciality(1, specs.get(0));
+        for (Group group : groups) {
+            System.out.println(group.getName());
+        }
     }
 
     private Long addDean() {
@@ -55,7 +68,7 @@ public class TestMain {
     }
 
     private void createSpecialities() {
-        List<Faculty> facultyList = facultyDAO.findAll(Faculty.class);
+        List<Faculty> facultyList = facultyDAO.findAll();
 
         for (Faculty faculty : facultyList) {
 
@@ -83,7 +96,7 @@ public class TestMain {
     }
 
     private void createGroups() {
-        List<Speciality> specialityList = specialityDAO.findAll(Speciality.class);
+        List<Speciality> specialityList = specialityDAO.findAll();
         for (Speciality speciality : specialityList) {
             int courseCount = speciality.getFaculty().getCourseCount();
             for (int groupCount = 1; groupCount <= 2; ++groupCount) {
@@ -99,7 +112,7 @@ public class TestMain {
     }
 
     private void createStudents() {
-        List<Group> groupList = groupDAO.findAll(Group.class);
+        List<Group> groupList = groupDAO.findAll();
 
         for (Group group : groupList) {
             for (int studentCount = 1; studentCount <= 20; ++studentCount) {
