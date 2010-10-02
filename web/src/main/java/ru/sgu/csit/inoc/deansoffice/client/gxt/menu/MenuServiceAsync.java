@@ -15,9 +15,5 @@ import java.util.Map;
  * Time: 10:51:39 PM
  */
 public interface MenuServiceAsync {
-    void downloadSpecialityName(AsyncCallback<Map<Long, String>> asyncCallback);
-
-    void downloadGroupName(Long specialityId, AsyncCallback<Map<Long, String>> async);
-
     void downloadMenuData(AsyncCallback<ArrayList<Map<SpecialityDto, List<GroupDto>>>> async);
 }

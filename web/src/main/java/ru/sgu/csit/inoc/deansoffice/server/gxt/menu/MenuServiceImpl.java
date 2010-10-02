@@ -32,30 +32,6 @@ public class MenuServiceImpl implements MenuService {
     private GroupDAO groupDAO;
 
     @Override
-    public Map<Long, String> downloadSpecialityName() { // Map<Long, String>
-        List<Speciality> specialityList = specialityDAO.findAll(Speciality.class);
-        Map<Long, String> result = new HashMap<Long, String>();
-
-        for (Speciality speciality : specialityList) {
-            result.put(speciality.getId(), speciality.getName());
-        }
-
-        return result;
-    }
-
-    @Override
-    public Map<Long, String> downloadGroupName(Long specialityId) {
-        List<Group> groupList = groupDAO.findAll(Group.class);
-        Map<Long, String> result = new HashMap<Long, String>();
-
-        for (Group group : groupList) {
-            result.put(group.getId(), group.getName());
-        }
-
-        return result;
-    }
-
-    @Override
     public ArrayList<Map<SpecialityDto, List<GroupDto>>> downloadMenuData() {
         List<Faculty> facultyList = facultyDAO.findAll(Faculty.class);     // todo: find strict ONE object
         if (facultyList == null || facultyList.size() != 1) {

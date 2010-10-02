@@ -18,9 +18,6 @@ import java.util.Map;
  */
 @RemoteServiceRelativePath("GWTServices/menuService")
 public interface MenuService extends RemoteService {
-    Map<Long, String> downloadSpecialityName();
-
-    Map<Long, String> downloadGroupName(Long specialityId);
 
     ArrayList< Map<SpecialityDto, List<GroupDto> > > downloadMenuData();
 

@@ -21,7 +21,7 @@
         <servlet-name>SpringGwtRemoteServiceServlet</servlet-name>
         <servlet-class>ru.sgu.csit.inoc.deansoffice.server.SpringGwtRemoteServiceServlet</servlet-class>
     </servlet>
-    
+
     <servlet-mapping>
         <servlet-name>SpringGwtRemoteServiceServlet</servlet-name>
         <url-pattern>/ru.sgu.csit.inoc.deansoffice.Application/GWTServices/*</url-pattern>
