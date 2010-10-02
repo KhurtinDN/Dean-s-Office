@@ -33,7 +33,7 @@ public class MenuServiceImpl implements MenuService {
 
     @Override
     public Map<Long, String> downloadSpecialityName() { // Map<Long, String>
-        List<Speciality> specialityList = specialityDAO.findAll(Speciality.class);
+        List<Speciality> specialityList = specialityDAO.findAll();
         Map<Long, String> result = new HashMap<Long, String>();
 
         for (Speciality speciality : specialityList) {
@@ -45,7 +45,7 @@ public class MenuServiceImpl implements MenuService {
 
     @Override
     public Map<Long, String> downloadGroupName(Long specialityId) {
-        List<Group> groupList = groupDAO.findAll(Group.class);
+        List<Group> groupList = groupDAO.findAll();
         Map<Long, String> result = new HashMap<Long, String>();
 
         for (Group group : groupList) {
@@ -57,7 +57,7 @@ public class MenuServiceImpl implements MenuService {
 
     @Override
     public ArrayList<Map<SpecialityDto, List<GroupDto>>> downloadMenuData() {
-        List<Faculty> facultyList = facultyDAO.findAll(Faculty.class);     // todo: find strict ONE object
+        List<Faculty> facultyList = facultyDAO.findAll();     // todo: find strict ONE object
         if (facultyList == null || facultyList.size() != 1) {
             throw new RuntimeException("Faculty must be one object!");
         }
@@ -71,7 +71,7 @@ public class MenuServiceImpl implements MenuService {
             Map<SpecialityDto, List<GroupDto>> specialityGroupMap =
                     new LinkedHashMap<SpecialityDto, List<GroupDto>>();
 
-            List<Speciality> specialityList = specialityDAO.findAll(Speciality.class); // todo: find by facultyId
+            List<Speciality> specialityList = specialityDAO.findAll(); // todo: find by facultyId
             for (Iterator<Speciality> iterator = specialityList.iterator(); iterator.hasNext();) {
                 Speciality speciality = iterator.next();
                 if (!speciality.getFaculty().getId().equals(faculty.getId())) {
@@ -80,7 +80,7 @@ public class MenuServiceImpl implements MenuService {
             }
 
             for (Speciality speciality : specialityList) {
-                List<Group> groupList = groupDAO.findAll(Group.class); // todo: find by course, specialityId
+                List<Group> groupList = groupDAO.findAll(); // todo: find by course, specialityId
                 for (Iterator<Group> iterator = groupList.iterator(); iterator.hasNext();) {
                     Group group = iterator.next();
                     if (group.getCourse() != course || !group.getSpeciality().getId().equals(speciality.getId())) {

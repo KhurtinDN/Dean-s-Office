@@ -57,7 +57,7 @@ public class BaseDAOImpl<T, ID extends Serializable> extends HibernateDaoSupport
 
     @Override
     @SuppressWarnings("unchecked")
-    public List<T> findAll(Class<T> aClass) {
-        return (List<T>)getHibernateTemplate().find("from " + aClass.getName());
+    public List<T> findAll() {
+        return (List<T>)getHibernateTemplate().find("from " + getPersistentClass().getName());
     }
 }
