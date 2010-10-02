@@ -1,8 +1,13 @@
 package ru.sgu.csit.inoc.deansoffice.dao.impl;
 
+import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 import ru.sgu.csit.inoc.deansoffice.dao.StudentDAO;
+import ru.sgu.csit.inoc.deansoffice.domain.Group;
 import ru.sgu.csit.inoc.deansoffice.domain.Student;
+
+import java.util.List;
 
 /**
  * .
@@ -12,4 +17,17 @@ import ru.sgu.csit.inoc.deansoffice.domain.Student;
  */
 @Repository
 public class StudentDAOImpl extends BaseDAOImpl<Student, Long> implements StudentDAO {
+    @Override
+    @SuppressWarnings("unchecked")
+    public List<Student> findByGroup(Group group) {
+        DetachedCriteria criteria = createCriteriaForPersistentClass(Restrictions.eq("group", group));
+        return (List<Student>) getHibernateTemplate().findByCriteria(criteria);
+    }
+
+    @Override
+    @SuppressWarnings("unchecked")
+    public List<Student> findByGroupId(Long groupId) {
+        DetachedCriteria criteria = createCriteriaForPersistentClass(Restrictions.eq("group.id", groupId));
+        return (List<Student>) getHibernateTemplate().findByCriteria(criteria);
+    }
 }

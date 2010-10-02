@@ -33,7 +33,7 @@ public class MenuServiceImpl implements MenuService {
 
     @Override
     public ArrayList<Map<SpecialityDto, List<GroupDto>>> downloadMenuData() {
-        List<Faculty> facultyList = facultyDAO.findAll(Faculty.class);     // todo: find strict ONE object
+        List<Faculty> facultyList = facultyDAO.findAll();     // todo: find strict ONE object
         if (facultyList == null || facultyList.size() != 1) {
             throw new RuntimeException("Faculty must be one object!");
         }
@@ -44,25 +44,12 @@ public class MenuServiceImpl implements MenuService {
                 new ArrayList<Map<SpecialityDto, List<GroupDto>>>(courseCount);
 
         for (int course = 1; course <= courseCount; ++course) {
-            Map<SpecialityDto, List<GroupDto>> specialityGroupMap =
-                    new LinkedHashMap<SpecialityDto, List<GroupDto>>();
+            Map<SpecialityDto, List<GroupDto>> specialityGroupMap = new LinkedHashMap<SpecialityDto, List<GroupDto>>();
 
-            List<Speciality> specialityList = specialityDAO.findAll(Speciality.class); // todo: find by facultyId
-            for (Iterator<Speciality> iterator = specialityList.iterator(); iterator.hasNext();) {
-                Speciality speciality = iterator.next();
-                if (!speciality.getFaculty().getId().equals(faculty.getId())) {
-                    iterator.remove();
-                }
-            }
+            List<Speciality> specialityList = specialityDAO.findByFaculty(faculty); // todo: find by facultyId
 
             for (Speciality speciality : specialityList) {
-                List<Group> groupList = groupDAO.findAll(Group.class); // todo: find by course, specialityId
-                for (Iterator<Group> iterator = groupList.iterator(); iterator.hasNext();) {
-                    Group group = iterator.next();
-                    if (group.getCourse() != course || !group.getSpeciality().getId().equals(speciality.getId())) {
-                        iterator.remove();
-                    }
-                }
+                List<Group> groupList = groupDAO.findByCourseAndSpeciality(course, speciality); // todo: find by course, specialityId
 
                 List<GroupDto> groupDtoList = new ArrayList<GroupDto>(groupList.size());
                 for (Group group : groupList) {

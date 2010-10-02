@@ -1,8 +1,13 @@
 package ru.sgu.csit.inoc.deansoffice.dao.impl;
 
+import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 import ru.sgu.csit.inoc.deansoffice.dao.GroupDAO;
 import ru.sgu.csit.inoc.deansoffice.domain.Group;
+import ru.sgu.csit.inoc.deansoffice.domain.Speciality;
+
+import java.util.List;
 
 /**
  * .
@@ -12,4 +17,19 @@ import ru.sgu.csit.inoc.deansoffice.domain.Group;
  */
 @Repository
 public class GroupDAOImpl extends BaseDAOImpl<Group, Long> implements GroupDAO {
+    @Override
+    @SuppressWarnings("unchecked")
+    public List<Group> findByCourseAndSpeciality(Integer course, Speciality speciality) {
+        DetachedCriteria criteria = createCriteriaForPersistentClass(
+                Restrictions.eq("course", course), Restrictions.eq("speciality", speciality));
+        return (List<Group>) getHibernateTemplate().findByCriteria(criteria);
+    }
+
+    @Override
+    @SuppressWarnings("unchecked")
+    public List<Group> findByCourseAndSpecialityId(Integer course, Long specialityId) {
+        DetachedCriteria criteria = createCriteriaForPersistentClass(
+                Restrictions.eq("course", course), Restrictions.eq("speciality.id", specialityId));
+        return (List<Group>) getHibernateTemplate().findByCriteria(criteria);
+    }
 }
