@@ -1,10 +1,5 @@
 package ru.sgu.csit.inoc.deansoffice.shared.dto;
 
-import com.extjs.gxt.ui.client.data.BaseModel;
-import com.extjs.gxt.ui.client.data.ModelData;
-
-import java.util.Map;
-
 /**
  * User: hd (KhurtinDN(a)gmail.com)
  * Date: Oct 2, 2010

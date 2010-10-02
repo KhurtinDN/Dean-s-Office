@@ -24,7 +24,7 @@ public class StudentServiceImpl implements StudentService {
     public List<StudentDto> downloadStudents(Long groupId) {
         List<StudentDto> result = new ArrayList<StudentDto>();
 
-        List<Student> studentList = studentDAO.findAll(Student.class);  // todo: find by groupId
+        List<Student> studentList = studentDAO.findByGroupId(groupId);
         for (Student student : studentList) {
             if (student.getGroup().getId().equals(groupId)) {
                 StudentDto studentDto = new StudentDto();

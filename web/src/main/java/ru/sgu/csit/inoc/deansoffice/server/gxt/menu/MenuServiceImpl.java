@@ -33,7 +33,7 @@ public class MenuServiceImpl implements MenuService {
 
     @Override
     public ArrayList<Map<SpecialityDto, List<GroupDto>>> downloadMenuData() {
-        List<Faculty> facultyList = facultyDAO.findAll();     // todo: find strict ONE object
+        List<Faculty> facultyList = facultyDAO.findAll();     // todo: how to get strict ONE object
         if (facultyList == null || facultyList.size() != 1) {
             throw new RuntimeException("Faculty must be one object!");
         }
@@ -46,10 +46,10 @@ public class MenuServiceImpl implements MenuService {
         for (int course = 1; course <= courseCount; ++course) {
             Map<SpecialityDto, List<GroupDto>> specialityGroupMap = new LinkedHashMap<SpecialityDto, List<GroupDto>>();
 
-            List<Speciality> specialityList = specialityDAO.findByFaculty(faculty); // todo: find by facultyId
+            List<Speciality> specialityList = specialityDAO.findByFaculty(faculty);
 
             for (Speciality speciality : specialityList) {
-                List<Group> groupList = groupDAO.findByCourseAndSpeciality(course, speciality); // todo: find by course, specialityId
+                List<Group> groupList = groupDAO.findByCourseAndSpeciality(course, speciality);
 
                 List<GroupDto> groupDtoList = new ArrayList<GroupDto>(groupList.size());
                 for (Group group : groupList) {
