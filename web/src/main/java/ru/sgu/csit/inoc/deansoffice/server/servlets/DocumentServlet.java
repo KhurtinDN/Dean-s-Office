@@ -12,7 +12,9 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.net.URL;
 
 /**
@@ -61,7 +63,9 @@ public class DocumentServlet extends HttpServlet {
             reference.build(student);
 
             response.setContentType("application/pdf");
-            ReportPdfProcessor.getInstance().generate(reference, response.getOutputStream());
+            OutputStream outputStream = response.getOutputStream();
+            ReportPdfProcessor.getInstance().generate(reference, outputStream);
+            outputStream.flush();
         } else {
             response.sendError(HttpServletResponse.SC_NOT_FOUND);
         }

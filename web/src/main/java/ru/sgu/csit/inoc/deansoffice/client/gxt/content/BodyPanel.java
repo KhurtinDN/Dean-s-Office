@@ -28,6 +28,7 @@ import java.util.List;
  * Time: 10:03:41 PM
  */
 public class BodyPanel extends ContentPanel {
+    private Grid<StudentItem> studentsGrid;
 
     @Override
     protected void onRender(Element parent, int index) {
@@ -39,8 +40,8 @@ public class BodyPanel extends ContentPanel {
 
         Long nn = 1L;
         for (StudentDto student : studentDtoList) {
-            StudentItem studentItem = new StudentItem(nn++, student.getName(), student.getStudentIdNumber(),
-                    student.getDivision(), student.getStudyForm());
+            StudentItem studentItem = new StudentItem(student.getId(), nn++, student.getName(),
+                    student.getStudentIdNumber(), student.getDivision(), student.getStudyForm());
             studentItem.set("groupName", groupName);
             listStore.add(studentItem);
         }
@@ -98,7 +99,8 @@ public class BodyPanel extends ContentPanel {
         formPanel.add(new Button("Справка #1", new SelectionListener<ButtonEvent>() {
             @Override
             public void componentSelected(ButtonEvent ce) {
-                String url = "/documents/reference?document=reference-1&studentId=";
+                String studentId = studentsGrid.getSelectionModel().getSelectedItem().get("studentId");
+                String url = "/documents/reference?document=reference-1&studentId=" + studentId;
                 Window.open(url, "_blank", "");
             }
         }));
@@ -129,7 +131,7 @@ public class BodyPanel extends ContentPanel {
                 FormPanel formPanel = createFormPanel();
                 final FormBinding formBinding = new FormBinding(formPanel, true);
 
-                Grid<StudentItem> studentsGrid = createStudentsGrid(groupName, studentDtoList);
+                studentsGrid = createStudentsGrid(groupName, studentDtoList);
                 studentsGrid.getSelectionModel().addListener(Events.SelectionChange,
                         new Listener<SelectionChangedEvent<StudentItem>>() {
                             @Override
@@ -141,6 +143,7 @@ public class BodyPanel extends ContentPanel {
                                 }
                             }
                         });
+
                 add(studentsGrid, new RowData(0.6, 1));
                 add(formPanel, new RowData(0.4, 1));
 
