@@ -55,6 +55,11 @@ public class AppTest
         csit.getDean().setFirstName("Антонина");
         csit.getDean().setMiddleName("Гавриловна");
         csit.getDean().setLastName("Фёдорова");
+        csit.setRector(new Rector());
+        csit.getRector().setFirstName("Леонид");
+        csit.getRector().setMiddleName("Юрьевич");
+        csit.getRector().setLastName("Коссович");
+        csit.getRector().setDegree("д.ф.-м.н., профессор");
 
         student.setCource(1);
         student.setDivision(Student.Division.INTRAMURAL);
@@ -69,7 +74,7 @@ public class AppTest
         student.getSpeciality().setFaculty(csit);
         student.setStudyForm(Student.StudyForm.BUDGET);
 
-        String templName = AppTest.class.getResource("/reference-1.xml").getFile();
+        String templName = AppTest.class.getResource("/reference-2.xml").getFile();
 
         templName = templName.replace("%20", " ");
         System.out.println(templName);

@@ -18,6 +18,10 @@ public class Faculty extends PersistentItem {
     @PrimaryKeyJoinColumn
     private Dean dean;
 
+    @ManyToOne(cascade = CascadeType.MERGE)
+    @PrimaryKeyJoinColumn
+    private Rector rector;
+
     public String getFullName() {
         return fullName;
     }
@@ -40,6 +44,14 @@ public class Faculty extends PersistentItem {
 
     public void setDean(Dean dean) {
         this.dean = dean;
+    }
+
+    public Rector getRector() {
+        return rector;
+    }
+
+    public void setRector(Rector rector) {
+        this.rector = rector;
     }
 
     public Integer getCourseCount() {
