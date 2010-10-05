@@ -10,6 +10,7 @@ import ru.sgu.csit.inoc.deansoffice.dao.impl.StudentDAOImpl;
 import ru.sgu.csit.inoc.deansoffice.domain.*;
 import ru.sgu.csit.inoc.deansoffice.reports.ReportPdfProcessor;
 
+import java.io.*;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
@@ -81,12 +82,18 @@ public class AppTest
         student.getSpeciality().setFaculty(csit);
         student.setStudyForm(Student.StudyForm.BUDGET);
         */
+        FileOutputStream outputStream = null;
+        try {
+            outputStream = new FileOutputStream(new File("test.pdf"));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
         String templName = AppTest.class.getResource("/reference-2.xml").getFile();
 
         templName = templName.replace("%20", " ");
         System.out.println(templName);
         ref.setPrintTemplate(new Template(templName));
         ref.build(student);
-        ReportPdfProcessor.getInstance().generate(ref, null);
+        ReportPdfProcessor.getInstance().generate(ref, outputStream);
     }
 }

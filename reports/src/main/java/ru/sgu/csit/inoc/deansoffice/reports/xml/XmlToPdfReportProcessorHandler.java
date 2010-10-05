@@ -22,6 +22,7 @@ import java.util.Stack;
  * Time: 11:10:52
  */
 public class XmlToPdfReportProcessorHandler extends DefaultHandler {
+    private PdfWriter pdfWriter;
     private PrintWriter printWriter;
 
     private int elements;
@@ -42,6 +43,7 @@ public class XmlToPdfReportProcessorHandler extends DefaultHandler {
     public XmlToPdfReportProcessorHandler(String url, Report report, OutputStream outputStream) {
         this.url = url;
         this.report = report;
+        this.outputStream = outputStream;
 
         try {
             printWriter = new PrintWriter(new OutputStreamWriter(System.out, "UTF-8"));
@@ -52,14 +54,14 @@ public class XmlToPdfReportProcessorHandler extends DefaultHandler {
 
     public void initDocument(String outputFileName, Rectangle pageSize) {
         document = new Document();
-        if (outputFileName.isEmpty()) {
+        if (outputFileName == null || outputFileName.isEmpty()) {
             outputFileName = "document.pdf";
         }
         try {
             if (outputStream == null) {
                 outputStream = new FileOutputStream(outputFileName);
             }
-            PdfWriter.getInstance(document, outputStream);
+            pdfWriter = PdfWriter.getInstance(document, outputStream);
         } catch (DocumentException e) {
             throw new RuntimeException("Document exception.", e);
         } catch (FileNotFoundException e) {
@@ -179,6 +181,7 @@ public class XmlToPdfReportProcessorHandler extends DefaultHandler {
     public void endDocument() {
         //out.Flush();
         document.close();
+        pdfWriter.close();
         printInfo();
         printWriter.flush();
     }
