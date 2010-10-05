@@ -99,17 +99,28 @@ public class BodyPanel extends ContentPanel {
         formPanel.add(new Button("Справка #1", new SelectionListener<ButtonEvent>() {
             @Override
             public void componentSelected(ButtonEvent ce) {
-                String studentId = studentsGrid.getSelectionModel().getSelectedItem().get("studentId");
-                String url = "/documents/reference?document=reference-1&studentId=" + studentId;
-                Window.open(url, "_blank", "");
+                StudentItem selectedStudentItem = studentsGrid.getSelectionModel().getSelectedItem();
+                if (selectedStudentItem != null) {
+                    Long studentId = selectedStudentItem.get("studentId");
+                    String url = "/documents/reference-1.pdf?studentId=" + studentId;
+                    Window.open(url, "_blank", "");
+                } else {
+                    Window.alert("Выберите, пожалуйста, студента");
+                }
             }
         }));
 
         formPanel.add(new Button("Справка #2", new SelectionListener<ButtonEvent>() {
             @Override
             public void componentSelected(ButtonEvent ce) {
-                String url = "/documents/reference?document=reference-2&studentId=";
-                Window.open(url, "_blank", "");
+                StudentItem selectedStudentItem = studentsGrid.getSelectionModel().getSelectedItem();
+                if (selectedStudentItem != null) {
+                    Long studentId = selectedStudentItem.get("studentId");
+                    String url = "/documents/reference-2.pdf?studentId=" + studentId;
+                    Window.open(url, "_blank", "");
+                } else {
+                    Window.alert("Выберите, пожалуйста, студента");
+                }
             }
         }));
 

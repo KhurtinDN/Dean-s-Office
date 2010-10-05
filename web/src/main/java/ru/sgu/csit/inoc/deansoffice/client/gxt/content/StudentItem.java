@@ -10,7 +10,7 @@ import com.extjs.gxt.ui.client.data.BaseModel;
 public class StudentItem extends BaseModel {
 
     public StudentItem(Long studentId, Long nn, String name, String studentIdNumber, String division, String studyForm) {
-        set("id", studentId);
+        set("studentId", studentId);
         set("nn", nn);
         set("name", name);
         set("studentIdNumber", studentIdNumber);

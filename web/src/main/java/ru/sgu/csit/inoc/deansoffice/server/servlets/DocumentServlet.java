@@ -12,7 +12,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.URL;
@@ -32,7 +31,7 @@ public class DocumentServlet extends HttpServlet {
 
         String documentType = request.getRequestURI().substring("/documents/".length());
 
-        if ("reference".equalsIgnoreCase(documentType)) {
+        if (documentType.startsWith("reference")) {
 
             Long studentId;
             try {
@@ -42,7 +41,7 @@ public class DocumentServlet extends HttpServlet {
                 return;
             }
 
-            String documentName = request.getParameter("document");
+            String documentName = documentType.substring(0, documentType.lastIndexOf(".pdf"));
 
             URL url = DocumentServlet.class.getResource("/templates/" + documentName + ".xml");
             if (url == null) {
