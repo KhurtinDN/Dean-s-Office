@@ -5,7 +5,6 @@ import com.extjs.gxt.ui.client.binding.FormBinding;
 import com.extjs.gxt.ui.client.event.*;
 import com.extjs.gxt.ui.client.store.ListStore;
 import com.extjs.gxt.ui.client.widget.ContentPanel;
-import com.extjs.gxt.ui.client.widget.Info;
 import com.extjs.gxt.ui.client.widget.button.Button;
 import com.extjs.gxt.ui.client.widget.form.*;
 import com.extjs.gxt.ui.client.widget.grid.ColumnConfig;
@@ -38,15 +37,18 @@ public class BodyPanel extends ContentPanel {
     private Grid<StudentItem> createStudentsGrid(String groupName, List<StudentDto> studentDtoList) {
         ListStore<StudentItem> listStore = new ListStore<StudentItem>();
 
+        Long nn = 1L;
         for (StudentDto student : studentDtoList) {
-            StudentItem studentItem = new StudentItem(student.getName(), student.getStudentIdNumber(),
+            StudentItem studentItem = new StudentItem(nn++, student.getName(), student.getStudentIdNumber(),
                     student.getDivision(), student.getStudyForm());
             studentItem.set("groupName", groupName);
             listStore.add(studentItem);
         }
 
         List<ColumnConfig> columnConfigList = new ArrayList<ColumnConfig>();
-        columnConfigList.add(new ColumnConfig("name", "Имя", 400));
+        columnConfigList.add(new ColumnConfig("nn", "N", 40));
+        columnConfigList.add(new ColumnConfig("name", "Имя", 500));
+        columnConfigList.add(new ColumnConfig("studyForm", "Форма обучения", 100));
 
         ColumnModel columnModel = new ColumnModel(columnConfigList);
 
@@ -96,14 +98,16 @@ public class BodyPanel extends ContentPanel {
         formPanel.add(new Button("Справка #1", new SelectionListener<ButtonEvent>() {
             @Override
             public void componentSelected(ButtonEvent ce) {
-                Info.display("Справки", "Справка #1");
+                String url = "/documents/reference?document=reference-1&studentId=";
+                Window.open(url, "_blank", "");
             }
         }));
 
         formPanel.add(new Button("Справка #2", new SelectionListener<ButtonEvent>() {
             @Override
             public void componentSelected(ButtonEvent ce) {
-                Info.display("Справки", "Справка #2");
+                String url = "/documents/reference?document=reference-2&studentId=";
+                Window.open(url, "_blank", "");
             }
         }));
 

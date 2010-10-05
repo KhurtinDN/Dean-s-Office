@@ -42,7 +42,7 @@ public class DocumentServlet extends HttpServlet {
 
             String documentName = request.getParameter("document");
 
-            URL url = DocumentServlet.class.getResource("/" + documentName + ".xml");
+            URL url = DocumentServlet.class.getResource("/templates/" + documentName + ".xml");
             if (url == null) {
                 response.sendError(HttpServletResponse.SC_NOT_FOUND);
                 return;
@@ -50,13 +50,18 @@ public class DocumentServlet extends HttpServlet {
             String templateName = url.getFile().replace("%20", " ");
 
             Student student = studentDAO.findById(studentId);
+
+            if (student == null) {
+                response.sendError(HttpServletResponse.SC_NOT_FOUND);
+                return;
+            }
             
             Reference reference = new Reference();
             reference.setPrintTemplate(new Template(templateName));
             reference.build(student);
 
             response.setContentType("application/pdf");
-            ReportPdfProcessor.getInstance().generate(reference);
+            ReportPdfProcessor.getInstance().generate(reference, response.getOutputStream());
         } else {
             response.sendError(HttpServletResponse.SC_NOT_FOUND);
         }
