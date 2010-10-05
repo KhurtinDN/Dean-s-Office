@@ -75,7 +75,7 @@ public class BodyPanel extends ContentPanel {
 
         LabelField divisionLabelField = new LabelField();
         divisionLabelField.setName("division");
-        divisionLabelField.setFieldLabel("Дивизия:");
+        divisionLabelField.setFieldLabel("Отделение:");
         divisionLabelField.setLabelStyle("width: 150px");
         divisionLabelField.setAutoWidth(true);
         formPanel.add(divisionLabelField);

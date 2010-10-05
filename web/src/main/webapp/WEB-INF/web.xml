@@ -22,9 +22,20 @@
         <servlet-class>ru.sgu.csit.inoc.deansoffice.server.SpringGwtRemoteServiceServlet</servlet-class>
     </servlet>
 
+    <servlet>
+        <servlet-name>DocumentServlet</servlet-name>
+        <servlet-class>ru.sgu.csit.inoc.deansoffice.server.servlets.DocumentServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+
     <servlet-mapping>
         <servlet-name>SpringGwtRemoteServiceServlet</servlet-name>
         <url-pattern>/ru.sgu.csit.inoc.deansoffice.Application/GWTServices/*</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>DocumentServlet</servlet-name>
+        <url-pattern>/documents/*</url-pattern>
     </servlet-mapping>
 
     <welcome-file-list>
