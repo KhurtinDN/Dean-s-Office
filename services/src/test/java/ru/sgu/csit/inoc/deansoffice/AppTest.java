@@ -3,6 +3,10 @@ package ru.sgu.csit.inoc.deansoffice;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+import ru.sgu.csit.inoc.deansoffice.dao.StudentDAO;
+import ru.sgu.csit.inoc.deansoffice.dao.impl.StudentDAOImpl;
 import ru.sgu.csit.inoc.deansoffice.domain.*;
 import ru.sgu.csit.inoc.deansoffice.reports.ReportPdfProcessor;
 
@@ -37,10 +41,13 @@ public class AppTest
         assertTrue(true);
     }
 
+    private static ApplicationContext applicationContext = new ClassPathXmlApplicationContext("ApplicationContext.xml");
+    private static StudentDAO studentDAO = applicationContext.getBean(StudentDAOImpl.class);
+
     public void testPdfGenerate() {
-        Student student = new Student();
+        Student student = studentDAO.findAll().get(0);//new Student();
         Reference ref = new Reference();
-        EnrollmentOrder enrolOrder = new EnrollmentOrder();
+        /*EnrollmentOrder enrolOrder = new EnrollmentOrder();
 
         enrolOrder.setNumber("22-0107");
         enrolOrder.setSignedDate(new GregorianCalendar().getTime());
@@ -55,6 +62,11 @@ public class AppTest
         csit.getDean().setFirstName("Антонина");
         csit.getDean().setMiddleName("Гавриловна");
         csit.getDean().setLastName("Фёдорова");
+        csit.setRector(new Rector());
+        csit.getRector().setFirstName("Леонид");
+        csit.getRector().setMiddleName("Юрьевич");
+        csit.getRector().setLastName("Коссович");
+        csit.getRector().setDegree("д.ф.-м.н., профессор");
 
         student.setCource(1);
         student.setDivision(Student.Division.INTRAMURAL);
@@ -68,8 +80,8 @@ public class AppTest
         student.setSpeciality(new Speciality());
         student.getSpeciality().setFaculty(csit);
         student.setStudyForm(Student.StudyForm.BUDGET);
-
-        String templName = AppTest.class.getResource("/reference-1.xml").getFile();
+        */
+        String templName = AppTest.class.getResource("/reference-2.xml").getFile();
 
         templName = templName.replace("%20", " ");
         System.out.println(templName);

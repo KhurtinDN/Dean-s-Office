@@ -5,7 +5,7 @@
 <document
 	 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	 xsi:noNamespaceSchemaLocation="document.xsd"
-	 type="PDF" name="spravka1.pdf" format="A5" orientation="landscape">
+	 type="PDF" name="spravka2.pdf" format="A5" orientation="landscape">
 	<table widths="4 30 8 24 8 4 6 7 10 25 5 4 5 13 5 7 15" width="100" align="center" border="0">
 		<tr>
 			<td colspan="6" align="center"><font size="10">
@@ -81,12 +81,12 @@
 			
 			<td align="center"></td>
 			<td colspan="4" align="center" border="2">
-				Декан факультета <var name="FACULTY_SHORTNAME" /></td>
+				Ректор, <var name="RECTOR_DEGREE" /></td>
 			<td align="center"></td>
 			<td colspan="5" align="center" border="2"></td>
 			<td align="center"></td>
 			<td colspan="5" align="center" border="2">
-				<var name="FACULTY_DEAN" /></td>
+				<var name="RECTOR" /></td>
 			
 		<font size="8">
 			<td align="center"></td>
@@ -96,8 +96,25 @@
 			<td align="center"></td>
 			<td colspan="5" align="center">(инициалы, фамилия)</td>
 		</font>
-			<td colspan="17" align="center">
-				М.П.</td>
+			<td colspan="17" align="center">М.П.</td>
+
+            <td align="center"></td>
+			<td colspan="4" align="center" border="2">
+				Декан факультета <var name="FACULTY_SHORTNAME" /></td>
+			<td align="center"></td>
+			<td colspan="5" align="center" border="2"></td>
+			<td align="center"></td>
+			<td colspan="5" align="center" border="2">
+				<var name="FACULTY_DEAN" /></td>
+
+		<font size="8">
+			<td align="center"></td>
+			<td colspan="4" align="center">(директор института, декан)</td>
+			<td align="center"></td>
+			<td colspan="5" align="center">(подпись, дата)</td>
+			<td align="center"></td>
+			<td colspan="5" align="center">(инициалы, фамилия)</td>
+		</font>
 		</tr>
 	</table>
 </document>

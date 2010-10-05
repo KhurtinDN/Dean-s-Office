@@ -20,6 +20,9 @@ public class Reference extends Document {
 
         reference.TEXT.put("FACULTY_DEAN", student.getSpeciality().getFaculty().getDean().generateShortName(true));
 
+        reference.TEXT.put("RECTOR", student.getSpeciality().getFaculty().getRector().generateShortName(true));
+        reference.TEXT.put("RECTOR_DEGREE", student.getSpeciality().getFaculty().getRector().getDegree());
+
         reference.TEXT.put("Student.fullName_dat", student.getLastNameDative() + " "
                 + student.getFirstNameDative() + " " + student.getMiddleNameDative());
         reference.TEXT.put("Student.lastName_dat", student.getLastNameDative());
