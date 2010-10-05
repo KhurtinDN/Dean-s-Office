@@ -48,7 +48,7 @@ public class TestMain {
         rectorDAO.save(rector);
 
         Faculty faculty = new Faculty();
-        faculty.setFullName("Компьютерные науки и информационные технологии");
+        faculty.setFullName("Компьютерных наук и информационных технологий");
         faculty.setShortName("КНиИТ");
         faculty.setDean(dean);
         faculty.setRector(rector);
@@ -119,6 +119,7 @@ public class TestMain {
 
                 student.setCource(group.getCourse());
                 student.setGroup(group);
+                student.setSpeciality(group.getSpeciality());
                 student.setEnrollmentOrder(orders.get(group.getCourse() - 1));
 
                 studentDAO.save(student);
