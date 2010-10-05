@@ -1,7 +1,8 @@
 package ru.sgu.csit.inoc.deansoffice.dao.impl;
 
 import org.springframework.stereotype.Repository;
-import ru.sgu.csit.inoc.deansoffice.dao.OrderDAO;
+import ru.sgu.csit.inoc.deansoffice.dao.EnrollmentOrderDAO;
+import ru.sgu.csit.inoc.deansoffice.domain.EnrollmentOrder;
 import ru.sgu.csit.inoc.deansoffice.domain.Order;
 
 /**
@@ -11,5 +12,5 @@ import ru.sgu.csit.inoc.deansoffice.domain.Order;
  * Time: 10:56:51 AM
  */
 @Repository
-public class OrderDAOImpl extends BaseDAOImpl<Order, Long> implements OrderDAO {
+public class EnrollmentOrderDAOImpl extends BaseDAOImpl<EnrollmentOrder, Long> implements EnrollmentOrderDAO {
 }

@@ -10,7 +10,7 @@ import java.util.Map;
  * Date: Aug 27, 2010
  * Time: 12:28:25 PM
  */
-@Entity
+@MappedSuperclass
 @Table(name = "`Order`")
 public class Order extends Document {
 }
