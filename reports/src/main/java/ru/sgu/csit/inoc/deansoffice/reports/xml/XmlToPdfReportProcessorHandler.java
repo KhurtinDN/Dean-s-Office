@@ -36,9 +36,10 @@ public class XmlToPdfReportProcessorHandler extends DefaultHandler {
     private Stack<MyCell> stackCells = new Stack<MyCell>();
 
     private Document document;
+    private OutputStream outputStream = null;
     Report report;
 
-    public XmlToPdfReportProcessorHandler(String url, Report report) {
+    public XmlToPdfReportProcessorHandler(String url, Report report, OutputStream outputStream) {
         this.url = url;
         this.report = report;
 
@@ -55,7 +56,10 @@ public class XmlToPdfReportProcessorHandler extends DefaultHandler {
             outputFileName = "document.pdf";
         }
         try {
-            PdfWriter.getInstance(document, new FileOutputStream(outputFileName));
+            if (outputStream == null) {
+                outputStream = new FileOutputStream(outputFileName);
+            }
+            PdfWriter.getInstance(document, outputStream);
         } catch (DocumentException e) {
             throw new RuntimeException("Document exception.", e);
         } catch (FileNotFoundException e) {
