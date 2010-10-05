@@ -9,6 +9,7 @@ import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 import java.io.File;
 import java.io.IOException;
+import java.io.OutputStream;
 
 /**
  * Created by XX (MesheryakovAV)
@@ -22,7 +23,7 @@ public enum ReportPdfProcessor {
         return INSTANCE;
     }
 
-    private void generateReportFromXml(Report report) {
+    private void generateReportFromXml(Report report, OutputStream outputStream) {
         SAXParserFactory factory = SAXParserFactory.newInstance();
 
         factory.setNamespaceAware(false); // Выключить пространство имен
@@ -33,7 +34,8 @@ public enum ReportPdfProcessor {
             SAXParser parser = factory.newSAXParser();
             String fileName = report.getTemplateFileName();
 
-            parser.parse(new File(fileName), new XmlToPdfReportProcessorHandler(fileName, report));
+            parser.parse(new File(fileName),
+                    new XmlToPdfReportProcessorHandler(fileName, report, outputStream));
         } catch (ParserConfigurationException e) {
             throw new RuntimeException("Parser configuration exception.", e);
         } catch (SAXException e) {
@@ -43,10 +45,10 @@ public enum ReportPdfProcessor {
         }
     }
 
-    public void generate(Report report) {
+    public void generate(Report report, OutputStream outputStream) {
         switch (report.getTemplateType()) {
             case XML:
-                generateReportFromXml(report);
+                generateReportFromXml(report, outputStream);
                 break;
             default:
                 break;
