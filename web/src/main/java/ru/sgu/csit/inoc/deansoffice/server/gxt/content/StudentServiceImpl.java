@@ -29,7 +29,7 @@ public class StudentServiceImpl implements StudentService {
             if (student.getGroup().getId().equals(groupId)) {
                 StudentDto studentDto = new StudentDto();
                 studentDto.setId(student.getId());
-                studentDto.setName(student.getFirstName() + " " + student.getMiddleName() + " " + student.getLastName());
+                studentDto.setName(student.getLastName() + " " + student.getFirstName() + " " + student.getMiddleName());
                 studentDto.setStudentIdNumber(student.getStudentIdNumber());
 
                 String division = "";

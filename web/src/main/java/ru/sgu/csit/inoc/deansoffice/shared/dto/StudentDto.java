@@ -1,62 +1,58 @@
 package ru.sgu.csit.inoc.deansoffice.shared.dto;
 
+import com.extjs.gxt.ui.client.data.BaseModel;
+
 /**
  * User: hd (KhurtinDN(a)gmail.com)
  * Date: Oct 2, 2010
  * Time: 12:51:17 PM
  */
-public class StudentDto implements java.io.Serializable {
-    private Long id;
-    private String name;
-    private String studentIdNumber;
-    private String division;
-    private String studyForm;
-
+public class StudentDto extends BaseModel {
     public StudentDto() {
     }
 
     public StudentDto(Long id, String name) {
-        this.id = id;
-        this.name = name;
+        setId(id);
+        setName(name);
     }
 
     public Long getId() {
-        return id;
+        return get("id");
     }
 
     public void setId(Long id) {
-        this.id = id;
+        set("id", id);
     }
 
     public String getName() {
-        return name;
+        return get("name");
     }
 
     public void setName(String name) {
-        this.name = name;
+        set("name", name);
     }
 
     public String getStudentIdNumber() {
-        return studentIdNumber;
+        return get("studentIdNumber");
     }
 
     public void setStudentIdNumber(String studentIdNumber) {
-        this.studentIdNumber = studentIdNumber;
+        set("studentIdNumber", studentIdNumber);
     }
 
     public String getDivision() {
-        return division;
+        return get("division");
     }
 
     public void setDivision(String division) {
-        this.division = division;
+        set("division", division);
     }
 
     public String getStudyForm() {
-        return studyForm;
+        return get("studyForm");
     }
 
     public void setStudyForm(String studyForm) {
-        this.studyForm = studyForm;
+        set("studyForm", studyForm);
     }
 }

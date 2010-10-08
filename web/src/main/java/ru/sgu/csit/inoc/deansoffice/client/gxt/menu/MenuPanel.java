@@ -27,6 +27,9 @@ import java.util.Map;
  */
 public class MenuPanel extends ContentPanel {
     private BodyPanel bodyPanel;
+
+    private final MenuSelectHandler menuSelectHandler = new MenuSelectHandler();
+
     public MenuPanel(BodyPanel bodyPanel) {
         this.bodyPanel = bodyPanel;
     }
@@ -67,15 +70,18 @@ public class MenuPanel extends ContentPanel {
                 treePanel.setDisplayProperty("name");
 
                 for (Map.Entry<SpecialityDto, List<GroupDto>> entry : specialityGroupMap.entrySet()) {
-                    ModelData modelData = createModelData(entry.getKey().getName(), null);
-                    treeStore.add(modelData, false);
+                    SpecialityDto specialityDto = entry.getKey();
+                    ModelData specialityModelData = createModelData(specialityDto.getId(), "speciality",
+                            specialityDto.getName(), null);
+                    treeStore.add(specialityModelData, false);
 
-                    for (GroupDto group : entry.getValue()) {
-                        treeStore.add(modelData, createGroupModelData(group), false);
+                    for (GroupDto groupDto : entry.getValue()) {
+                        ModelData groupModelData = createModelData(groupDto.getId(), "group", groupDto.getName(), null);
+                        treeStore.add(specialityModelData, groupModelData, false);
                     }
-                    treePanel.setExpanded(modelData, true);
+                    treePanel.setExpanded(specialityModelData, true);
                 }
-                treePanel.getSelectionModel().addSelectionChangedListener(new GroupSelectHandler());
+                treePanel.getSelectionModel().addSelectionChangedListener(menuSelectHandler);
                 courseContentPanel.add(treePanel);
 
                 add(courseContentPanel);
@@ -83,26 +89,27 @@ public class MenuPanel extends ContentPanel {
             panel.getLayout().layout();
         }
 
-        private ModelData createGroupModelData(GroupDto groupDto) {
-            ModelData groupModelData = createModelData(groupDto.getName(), null);
-            groupModelData.set("groupId", groupDto.getId());
-            return groupModelData;
-        }
-
-        private ModelData createModelData(String name, String icon) {
+        private ModelData createModelData(Long id, String type, String name, String icon) {
             ModelData modelData = new BaseModelData();
+            modelData.set("id", id);
+            modelData.set("type", type);
             modelData.set("name", name);
             modelData.set("icon", icon);
             return modelData;
         }
     }
 
-    private class GroupSelectHandler extends SelectionChangedListener<ModelData> {
+    private class MenuSelectHandler extends SelectionChangedListener<ModelData> {
         @Override
         public void selectionChanged(SelectionChangedEvent<ModelData> se) {
-            Long groupId = se.getSelectedItem().get("groupId");
+            Long id = se.getSelectedItem().get("id");
+            String type = se.getSelectedItem().get("type");
             String name = se.getSelectedItem().get("name");
-            bodyPanel.showGroup(groupId, name);
+            if ("group".equals(type)) {
+                bodyPanel.showGroup(id, name);
+            } else if ("speciality".equals(type)) {
+                bodyPanel.showSpeciality(id, name);
+            }
         }
     }
 }
