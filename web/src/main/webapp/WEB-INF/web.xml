@@ -10,8 +10,19 @@
          <param-name>contextConfigLocation</param-name>
          <param-value>
              classpath:ApplicationContext.xml
+             WEB-INF/ApplicationContext-security.xml
          </param-value>  
      </context-param>
+
+    <filter>
+        <filter-name>springSecurityFilterChain</filter-name>
+        <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>springSecurityFilterChain</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
 
     <listener>
          <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
@@ -22,16 +33,16 @@
         <servlet-class>ru.sgu.csit.inoc.deansoffice.server.SpringGwtRemoteServiceServlet</servlet-class>
     </servlet>
 
+    <servlet-mapping>
+        <servlet-name>SpringGwtRemoteServiceServlet</servlet-name>
+        <url-pattern>/ru.sgu.csit.inoc.deansoffice.Application/GWTServices/*</url-pattern>
+    </servlet-mapping>
+
     <servlet>
         <servlet-name>DocumentServlet</servlet-name>
         <servlet-class>ru.sgu.csit.inoc.deansoffice.server.servlets.DocumentServlet</servlet-class>
         <load-on-startup>1</load-on-startup>
     </servlet>
-
-    <servlet-mapping>
-        <servlet-name>SpringGwtRemoteServiceServlet</servlet-name>
-        <url-pattern>/ru.sgu.csit.inoc.deansoffice.Application/GWTServices/*</url-pattern>
-    </servlet-mapping>
 
     <servlet-mapping>
         <servlet-name>DocumentServlet</servlet-name>
@@ -41,5 +52,15 @@
     <welcome-file-list>
         <welcome-file>index.html</welcome-file>
     </welcome-file-list>
+
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>Login and Restricted Space URLs</web-resource-name>
+            <url-pattern>/*</url-pattern>
+        </web-resource-collection>
+        <user-data-constraint>
+            <transport-guarantee>CONFIDENTIAL</transport-guarantee>
+        </user-data-constraint>
+    </security-constraint>
     
 </web-app>

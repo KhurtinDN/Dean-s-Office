@@ -22,13 +22,18 @@ import java.net.URL;
  * Time: 9:11:09 AM
  */
 public class DocumentServlet extends HttpServlet {
+    private StudentDAO studentDAO;
+
+    @Override
+    public void init() throws ServletException {
+        WebApplicationContext applicationContext = WebApplicationContextUtils
+				.getWebApplicationContext(getServletContext());
+        studentDAO = applicationContext.getBean(StudentDAO.class);
+    }
+
     @Override
     protected void service(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        WebApplicationContext applicationContext = WebApplicationContextUtils
-				.getWebApplicationContext(getServletContext());
-        StudentDAO studentDAO = applicationContext.getBean(StudentDAO.class);
-
         String documentType = request.getRequestURI().substring("/documents/".length());
 
         if (documentType.startsWith("reference")) {
