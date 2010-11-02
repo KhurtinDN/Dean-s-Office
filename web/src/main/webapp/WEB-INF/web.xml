@@ -4,13 +4,13 @@
          xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
          version="2.5">
 
-    <display-name>Archetype Created Web Application</display-name>
+    <display-name>Dean's Office</display-name>
 
     <context-param>
          <param-name>contextConfigLocation</param-name>
          <param-value>
              classpath:ApplicationContext.xml
-             WEB-INF/ApplicationContext-security.xml
+             classpath:ApplicationContext-security.xml
          </param-value>  
      </context-param>
 
@@ -35,7 +35,7 @@
 
     <servlet-mapping>
         <servlet-name>SpringGwtRemoteServiceServlet</servlet-name>
-        <url-pattern>/ru.sgu.csit.inoc.deansoffice.Application/GWTServices/*</url-pattern>
+        <url-pattern>/csit/GWTServices/*</url-pattern>
     </servlet-mapping>
 
     <servlet>
