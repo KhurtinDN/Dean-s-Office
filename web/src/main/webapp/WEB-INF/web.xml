@@ -30,7 +30,7 @@
     
     <servlet>
         <servlet-name>SpringGwtRemoteServiceServlet</servlet-name>
-        <servlet-class>ru.sgu.csit.inoc.deansoffice.server.SpringGwtRemoteServiceServlet</servlet-class>
+        <servlet-class>ru.sgu.csit.inoc.deansoffice.servlets.SpringGwtRemoteServiceServlet</servlet-class>
     </servlet>
 
     <servlet-mapping>
@@ -40,7 +40,7 @@
 
     <servlet>
         <servlet-name>DocumentServlet</servlet-name>
-        <servlet-class>ru.sgu.csit.inoc.deansoffice.server.servlets.DocumentServlet</servlet-class>
+        <servlet-class>ru.sgu.csit.inoc.deansoffice.servlets.DocumentServlet</servlet-class>
         <load-on-startup>1</load-on-startup>
     </servlet>
 
