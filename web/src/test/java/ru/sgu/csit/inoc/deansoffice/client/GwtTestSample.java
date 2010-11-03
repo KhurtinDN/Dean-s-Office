@@ -9,7 +9,7 @@ public class GwtTestSample extends GWTTestCase
 
    public String getModuleName()
    {
-      return "ru.sgu.csit.inoc.Application";
+      return "ru.sgu.csit.inoc.Office";
    }
 
    public void testSomething()
