@@ -21,6 +21,8 @@ public interface MenuService extends RemoteService {
 
     ArrayList< Map<SpecialityDto, List<GroupDto> > > downloadMenuData();
 
+    void generateBase();
+
     /**
      * Utility/Convenience class.
      * Use MenuService.App.getInstance() to access static instance of MenuServiceAsync

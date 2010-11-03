@@ -7,21 +7,18 @@
        http://www.springframework.org/schema/security
        http://www.springframework.org/schema/security/spring-security.xsd">
 
-    <!-- Spring security -->
     <security:http auto-config="true" >
-        <!--<security:intercept-url pattern="/login.html" filters="none"/>-->
+        <security:intercept-url pattern="/gxt-resources/**" filters="none"/>
+        <security:intercept-url pattern="/login/**" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
         <security:intercept-url pattern="/**" access="ROLE_USER"/>
-        <!--<security:form-login login-page="/login.html" default-target-url="/"/>-->
-        <security:form-login default-target-url="/" always-use-default-target="true"/>
-        <security:logout/>
-        <!--<security:http-basic />-->
+        <security:form-login login-page="/login/" />
+        <security:logout logout-success-url="/login/" />
     </security:http>
 
 
     <security:authentication-manager >
         <security:authentication-provider>
             <security:password-encoder hash="sha"/>
-            <!--<security:jdbc-user-service data-source-ref="myDataSource" />-->
             <security:user-service>
                 <security:user name="hd"
                                password="b1b3773a05c0ed0176787a4f1574ff0075f7521e"

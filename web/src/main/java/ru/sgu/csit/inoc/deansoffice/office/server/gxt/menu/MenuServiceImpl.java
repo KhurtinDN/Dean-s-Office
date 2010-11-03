@@ -2,6 +2,7 @@ package ru.sgu.csit.inoc.deansoffice.office.server.gxt.menu;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import ru.sgu.csit.inoc.deansoffice.TestMain;
 import ru.sgu.csit.inoc.deansoffice.office.client.gxt.menu.MenuService;
 import ru.sgu.csit.inoc.deansoffice.dao.FacultyDAO;
 import ru.sgu.csit.inoc.deansoffice.dao.GroupDAO;
@@ -63,5 +64,10 @@ public class MenuServiceImpl implements MenuService {
         }
 
         return result;
+    }
+
+    @Override
+    public void generateBase() {
+        TestMain.main(null);
     }
 }

@@ -16,4 +16,6 @@ import java.util.Map;
  */
 public interface MenuServiceAsync {
     void downloadMenuData(AsyncCallback<ArrayList<Map<SpecialityDto, List<GroupDto>>>> async);
+
+    void generateBase(AsyncCallback<Void> async);
 }

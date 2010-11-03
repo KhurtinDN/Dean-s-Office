@@ -5,6 +5,7 @@ import com.extjs.gxt.ui.client.event.ButtonEvent;
 import com.extjs.gxt.ui.client.event.SelectionListener;
 import com.extjs.gxt.ui.client.util.Margins;
 import com.extjs.gxt.ui.client.widget.ContentPanel;
+import com.extjs.gxt.ui.client.widget.MessageBox;
 import com.extjs.gxt.ui.client.widget.button.Button;
 import com.extjs.gxt.ui.client.widget.layout.*;
 import com.google.gwt.user.client.Element;
@@ -39,7 +40,13 @@ public class StudentActionPanel extends ContentPanel {
                     String url = "/documents/reference-1.pdf?studentId=" + studentId;
                     Window.open(url, "_blank", "");
                 } else {
-                    Window.alert("Выберите, пожалуйста, студента");
+                    MessageBox messageBox = new MessageBox();
+                    messageBox.setButtons(MessageBox.OK);
+                    messageBox.setTitle("Внимание!");
+                    messageBox.setMessage("Выберите, пожалуйста, студента.");
+                    messageBox.show();
+                    
+//                    Window.alert("Выберите, пожалуйста, студента");
                 }
             }
         });
@@ -53,7 +60,13 @@ public class StudentActionPanel extends ContentPanel {
                     String url = "/documents/reference-2.pdf?studentId=" + studentId;
                     Window.open(url, "_blank", "");
                 } else {
-                    Window.alert("Выберите, пожалуйста, студента");
+                    MessageBox messageBox = new MessageBox();
+                    messageBox.setButtons(MessageBox.OK);
+                    messageBox.setTitle("Внимание!");
+                    messageBox.setMessage("Выберите, пожалуйста, студента.");
+                    messageBox.show();
+                    
+//                    Window.alert("Выберите, пожалуйста, студента");
                 }
             }
         });

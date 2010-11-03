@@ -4,18 +4,11 @@
 
 <module rename-to="office">
 
-    <!-- Inherit the core Web Toolkit stuff.                        -->
     <inherits name='com.google.gwt.user.User'/>
-
-    <!--  inherit css based theme -->
-    <!--<inherits name='com.google.gwt.user.theme.standard.Standard'/>-->
-
     <inherits name='com.extjs.gxt.ui.GXT'/>
 
-    <!-- Specify the app entry point class.                         -->
     <entry-point class='ru.sgu.csit.inoc.deansoffice.office.client.Office'/>
 
-    <!-- Specify the application specific style sheet.              -->
     <stylesheet src='style.css'/>
 
     <source path='client'/>

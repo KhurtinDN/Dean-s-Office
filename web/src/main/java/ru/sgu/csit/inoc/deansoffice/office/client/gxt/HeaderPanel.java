@@ -1,7 +1,13 @@
 package ru.sgu.csit.inoc.deansoffice.office.client.gxt;
 
+import com.extjs.gxt.ui.client.event.MenuEvent;
+import com.extjs.gxt.ui.client.event.SelectionListener;
 import com.extjs.gxt.ui.client.widget.ContentPanel;
+import com.extjs.gxt.ui.client.widget.Info;
 import com.extjs.gxt.ui.client.widget.menu.*;
+import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.rpc.AsyncCallback;
+import ru.sgu.csit.inoc.deansoffice.office.client.gxt.menu.MenuService;
 
 /**
  * .
@@ -15,16 +21,39 @@ public class HeaderPanel extends ContentPanel {
         this.setAutoHeight(true);
 
         Menu fileMenu = new Menu();
-        fileMenu.add(new MenuItem("Open file"));
-        fileMenu.add(new MenuItem("Exit"));
+
+        MenuItem logoutMenuItem = new MenuItem("Выход", new SelectionListener<MenuEvent>() {
+            @Override
+            public void componentSelected(MenuEvent menuEvent) {
+                Window.open("j_spring_security_logout", "_self", "");
+            }
+        });
+
+        fileMenu.add(logoutMenuItem);
 
         Menu editMenu = new Menu();
-        editMenu.add(new MenuItem("Copy"));
-        editMenu.add(new MenuItem("Cut"));
-        editMenu.add(new MenuItem("Paste"));
+
+        MenuItem generateBaseMenuItem = new MenuItem("Сгенерить базу", new SelectionListener<MenuEvent>() {
+            @Override
+            public void componentSelected(MenuEvent ce) {
+                MenuService.App.getInstance().generateBase(new AsyncCallback<Void>() {
+                    @Override
+                    public void onFailure(Throwable caught) {
+                        Info.display("Сообщение от сервера", "Все упало :(");
+                    }
+
+                    @Override
+                    public void onSuccess(Void result) {
+                        Info.display("Сообщение от сервера", "База была успешно создана!");
+                    }
+                });
+            }
+        });
+
+        editMenu.add(generateBaseMenuItem);
 
         Menu helpMenu = new Menu();
-        helpMenu.add(new MenuItem("Help"));
+        helpMenu.add(new MenuItem("Помощь"));
 
         MenuBar menuBar = new MenuBar();
         menuBar.setBorders(true);

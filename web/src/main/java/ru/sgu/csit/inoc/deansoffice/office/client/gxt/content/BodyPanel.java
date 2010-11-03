@@ -2,10 +2,10 @@ package ru.sgu.csit.inoc.deansoffice.office.client.gxt.content;
 
 import com.extjs.gxt.ui.client.Style;
 import com.extjs.gxt.ui.client.widget.ContentPanel;
+import com.extjs.gxt.ui.client.widget.Info;
 import com.extjs.gxt.ui.client.widget.layout.RowData;
 import com.extjs.gxt.ui.client.widget.layout.RowLayout;
 import com.google.gwt.user.client.Element;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import ru.sgu.csit.inoc.deansoffice.office.shared.dto.StudentDto;
 
@@ -35,7 +35,8 @@ public class BodyPanel extends ContentPanel {
         StudentService.App.getInstance().downloadStudents(groupId, new AsyncCallback<List<StudentDto>>() {
             @Override
             public void onFailure(Throwable caught) {
-                Window.alert(caught.toString());
+//                Window.alert(caught.toString());
+                Info.display("Сообщение от сервера", "Запрашиваемый сервис не доступен!");
             }
 
             @Override

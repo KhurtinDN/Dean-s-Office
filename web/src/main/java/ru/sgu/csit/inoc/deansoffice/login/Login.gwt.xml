@@ -1,0 +1,15 @@
+<!DOCTYPE module PUBLIC "-//Google Inc.//DTD Google Web Toolkit 2.0//EN"
+        "http://google-web-toolkit.googlecode.com/svn/releases/2.0/distro-source/core/src/gwt-module.dtd">
+<module rename-to="login">
+
+    <inherits name='com.google.gwt.user.User'/>
+    <inherits name='com.extjs.gxt.ui.GXT'/>
+
+    <entry-point class='ru.sgu.csit.inoc.deansoffice.login.client.Login'/>
+
+    <stylesheet src='style.css'/>
+
+    <source path='client'/>
+    <source path='shared'/>
+
+</module>

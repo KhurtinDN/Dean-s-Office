@@ -98,7 +98,7 @@
                     <hostedWebapp>
                         ${project.build.directory}/${project.build.finalName}
                     </hostedWebapp>
-                    <runTarget>csit/index.html</runTarget>
+                    <runTarget>index.html</runTarget>
                 </configuration>
             </plugin>
             <!--

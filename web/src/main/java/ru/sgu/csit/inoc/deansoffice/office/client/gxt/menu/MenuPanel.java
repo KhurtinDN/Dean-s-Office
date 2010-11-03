@@ -5,11 +5,11 @@ import com.extjs.gxt.ui.client.data.ModelData;
 import com.extjs.gxt.ui.client.event.*;
 import com.extjs.gxt.ui.client.store.TreeStore;
 import com.extjs.gxt.ui.client.widget.ContentPanel;
+import com.extjs.gxt.ui.client.widget.Info;
 import com.extjs.gxt.ui.client.widget.layout.AccordionLayout;
 import com.extjs.gxt.ui.client.widget.layout.FitLayout;
 import com.extjs.gxt.ui.client.widget.treepanel.TreePanel;
 import com.google.gwt.user.client.Element;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import ru.sgu.csit.inoc.deansoffice.office.client.gxt.content.BodyPanel;
 import ru.sgu.csit.inoc.deansoffice.office.shared.dto.GroupDto;
@@ -53,7 +53,8 @@ public class MenuPanel extends ContentPanel {
 
         @Override
         public void onFailure(Throwable caught) {
-            Window.alert(caught.toString());
+//            Window.alert(caught.toString());
+            Info.display("Сообщение от сервера", "Запрашиваемый сервис не доступен!");
         }
 
         @Override
