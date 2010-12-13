@@ -2,9 +2,9 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>${DeansOffice.groupId}</groupId>
-    <artifactId>${DeansOffice.artifactId}</artifactId>
-    <version>${DeansOffice.version}</version>
+    <groupId>ru.sgu.csit.inoc</groupId>
+    <artifactId>DeansOffice</artifactId>
+    <version>1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <name>Dean's Office</name>
@@ -22,8 +22,8 @@
             <id>xx</id>
             <name>Mesheryakov Alexander</name>
             <email>xx.freecoder:a:gmail.com</email>
-            <organization>${organization.name}</organization>
-            <organizationUrl>${organization.url}</organizationUrl>
+            <organization>${project.organization.name}</organization>
+            <organizationUrl>${project.organization.url}</organizationUrl>
             <roles>
                 <role>Project Manager</role>
                 <role>Developer</role>
@@ -36,8 +36,8 @@
             <id>hd</id>
             <name>Khurtin Denis</name>
             <email>KhurtinDN:a:gmail.com</email>
-            <organization>${organization.name}</organization>
-            <organizationUrl>${organization.url}</organizationUrl>
+            <organization>${project.organization.name}</organization>
+            <organizationUrl>${project.organization.url}</organizationUrl>
             <roles>
                 <role>Project Manager</role>
                 <role>Developer</role>
@@ -58,10 +58,6 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>1.6</maven.compiler.source>
         <maven.compiler.target>1.6</maven.compiler.target>
-
-        <DeansOffice.groupId>ru.sgu.csit.inoc</DeansOffice.groupId>
-        <DeansOffice.artifactId>DeansOffice</DeansOffice.artifactId>
-        <DeansOffice.version>1.0-SNAPSHOT</DeansOffice.version>
     </properties>
 
     <modules>

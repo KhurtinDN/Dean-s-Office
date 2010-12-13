@@ -11,8 +11,6 @@ import ru.sgu.csit.inoc.deansoffice.domain.*;
 import ru.sgu.csit.inoc.deansoffice.reports.ReportPdfProcessor;
 
 import java.io.*;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
 
 /**
  * Unit test for simple App.
@@ -45,7 +43,7 @@ public class AppTest
     private static ApplicationContext applicationContext = new ClassPathXmlApplicationContext("ApplicationContext.xml");
     private static StudentDAO studentDAO = applicationContext.getBean(StudentDAOImpl.class);
 
-    public void testPdfGenerate() {
+    public void skip_testPdfGenerate() {
         Student student = studentDAO.findAll().get(0);//new Student();
         Reference ref = new Reference();
         /*EnrollmentOrder enrolOrder = new EnrollmentOrder();

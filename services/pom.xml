@@ -1,16 +1,14 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>${DeansOffice.artifactId}</artifactId>
-        <groupId>${DeansOffice.groupId}</groupId>
-        <version>${DeansOffice.version}</version>
+        <groupId>ru.sgu.csit.inoc</groupId>
+        <artifactId>DeansOffice</artifactId>
+        <version>1.0-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>${DeansOffice.groupId}</groupId>
     <artifactId>services</artifactId>
     <packaging>jar</packaging>
-    <version>${DeansOffice.version}</version>
 
     <name>services</name>
     <url>http://maven.apache.org</url>
@@ -33,15 +31,15 @@
 
     <dependencies>
         <dependency>
-            <groupId>${DeansOffice.groupId}</groupId>
+            <groupId>ru.sgu.csit.inoc</groupId>
             <artifactId>common</artifactId>
-            <version>${DeansOffice.version}</version>
+            <version>1.0-SNAPSHOT</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
-            <groupId>${DeansOffice.groupId}</groupId>
+            <groupId>ru.sgu.csit.inoc</groupId>
             <artifactId>reports</artifactId>
-            <version>${DeansOffice.version}</version>
+            <version>1.0-SNAPSHOT</version>
             <scope>compile</scope>
         </dependency>
 
