@@ -4,6 +4,7 @@ import org.hibernate.annotations.LazyToOne;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 /**
  * .
@@ -35,6 +36,7 @@ public class Student extends Person {
     @PrimaryKeyJoinColumn
     private EnrollmentOrder enrollmentOrder;
 
+    @OneToOne(fetch = FetchType.LAZY)
     private AdditionalData additionalData;
 
     public String getStudentIdNumber() {
@@ -103,12 +105,21 @@ public class Student extends Person {
 
     @Entity
     public static class AdditionalData extends PersistentItem {
-        //@LazyToOne()
+        @OneToOne(fetch = FetchType.LAZY)
         private Photo photo;
 
         private Date birthday;
         private String birthPlace;
         private String citizenship;
         private String education;
+        private String workInfo;
+
+        private List<Passport> passports;
+
+        private String maritalStatus;
+        private String childrenInfo;
+
+        private Parent father;
+        private Parent mather;
     }
 }
