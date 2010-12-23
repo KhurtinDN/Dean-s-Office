@@ -12,4 +12,5 @@ import java.util.Date;
 @Entity
 public class Parent extends Person {
     private Date birthday;
+    private Address adress;
 }

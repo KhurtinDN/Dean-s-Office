@@ -1,7 +1,5 @@
 package ru.sgu.csit.inoc.deansoffice.domain;
 
-import org.hibernate.annotations.LazyToOne;
-
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
@@ -95,6 +93,14 @@ public class Student extends Person {
         this.enrollmentOrder = enrollmentOrder;
     }
 
+    public AdditionalData getAdditionalData() {
+        return additionalData;
+    }
+
+    public void setAdditionalData(AdditionalData additionalData) {
+        this.additionalData = additionalData;
+    }
+
     public enum Division {
         INTRAMURAL, EXTRAMURAL, EVENINGSTUDY
     }
@@ -106,20 +112,34 @@ public class Student extends Person {
     @Entity
     public static class AdditionalData extends PersistentItem {
         @OneToOne(fetch = FetchType.LAZY)
+        @PrimaryKeyJoinColumn
         private Photo photo;
 
         private Date birthday;
         private String birthPlace;
-        private String citizenship;
         private String education;
         private String workInfo;
 
+        @ElementCollection(fetch = FetchType.EAGER)
         private List<Passport> passports;
 
         private String maritalStatus;
         private String childrenInfo;
 
+        @ManyToOne(cascade = CascadeType.MERGE)
+        @PrimaryKeyJoinColumn
         private Parent father;
+
+        @ManyToOne(cascade = CascadeType.MERGE)
+        @PrimaryKeyJoinColumn
         private Parent mather;
+
+        @ManyToOne(cascade = CascadeType.MERGE)
+        @PrimaryKeyJoinColumn
+        private Address oldAddress;
+
+        @ManyToOne(cascade = CascadeType.MERGE)
+        @PrimaryKeyJoinColumn
+        private Address actualAddress;
     }
 }

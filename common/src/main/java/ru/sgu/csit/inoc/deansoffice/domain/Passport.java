@@ -16,6 +16,9 @@ public class Passport extends Person {
     private String issuingOrganization;
     private Date issuedDate;
 
+    private String citizenship;
+    private Address address;
+
     public String getSeries() {
         return series;
     }
@@ -46,5 +49,21 @@ public class Passport extends Person {
 
     public void setIssuedDate(Date issuedDate) {
         this.issuedDate = issuedDate;
+    }
+
+    public String getCitizenship() {
+        return citizenship;
+    }
+
+    public void setCitizenship(String citizenship) {
+        this.citizenship = citizenship;
+    }
+
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
     }
 }
