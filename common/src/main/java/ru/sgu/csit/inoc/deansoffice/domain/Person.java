@@ -10,6 +10,8 @@ import javax.persistence.MappedSuperclass;
  */
 @MappedSuperclass
 public abstract class Person extends PersistentItem {
+    protected Sex sex;
+
     protected String firstName;
     protected String middleName;
     protected String lastName;
@@ -76,5 +78,9 @@ public abstract class Person extends PersistentItem {
 
     public void setLastNameDative(String lastNameDative) {
         this.lastNameDative = lastNameDative;
+    }
+
+    public enum Sex {
+        MALE, FEMALE
     }
 }

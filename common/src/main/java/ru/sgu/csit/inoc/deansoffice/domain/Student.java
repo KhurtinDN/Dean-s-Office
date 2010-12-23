@@ -1,6 +1,9 @@
 package ru.sgu.csit.inoc.deansoffice.domain;
 
+import org.hibernate.annotations.LazyToOne;
+
 import javax.persistence.*;
+import java.util.Date;
 
 /**
  * .
@@ -24,12 +27,15 @@ public class Student extends Person {
     @ManyToOne(cascade = CascadeType.MERGE)
     @PrimaryKeyJoinColumn
     private Speciality speciality;
+
     private Division division;
     private StudyForm studyForm;
 
     @ManyToOne(cascade = CascadeType.MERGE)
     @PrimaryKeyJoinColumn
     private EnrollmentOrder enrollmentOrder;
+
+    private AdditionalData additionalData;
 
     public String getStudentIdNumber() {
         return studentIdNumber;
@@ -93,5 +99,16 @@ public class Student extends Person {
 
     public enum StudyForm {
         BUDGET, COMMERCIAL
+    }
+
+    @Entity
+    public static class AdditionalData extends PersistentItem {
+        //@LazyToOne()
+        private Photo photo;
+
+        private Date birthday;
+        private String birthPlace;
+        private String citizenship;
+        private String education;
     }
 }
