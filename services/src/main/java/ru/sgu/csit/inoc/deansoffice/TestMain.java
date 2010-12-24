@@ -4,8 +4,11 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import ru.sgu.csit.inoc.deansoffice.dao.*;
 import ru.sgu.csit.inoc.deansoffice.domain.*;
+import ru.sgu.csit.inoc.deansoffice.services.PhotoService;
+import ru.sgu.csit.inoc.deansoffice.services.impl.PhotoServiceImpl;
 
 import javax.naming.MalformedLinkException;
+import java.io.IOException;
 import java.util.*;
 
 /**
@@ -246,7 +249,17 @@ public class TestMain {
             additionalData.setMather(getRandomParent(Person.Sex.FEMALE));
             parentDAO.save(additionalData.getFather());
             parentDAO.save(additionalData.getMather());
-            //additionalData.setPhoto();
+
+            PhotoService photoService = new PhotoServiceImpl();
+            Photo photo;
+            try {
+                photo = photoService.loadFromFile("C:/temp/photo.jpg");
+            } catch (IOException e) {
+                throw new RuntimeException("Photo not found!!!", e);
+            }
+
+            photoDAO.save(photo);
+            additionalData.setPhoto(photo);
 
             return additionalData;
         }

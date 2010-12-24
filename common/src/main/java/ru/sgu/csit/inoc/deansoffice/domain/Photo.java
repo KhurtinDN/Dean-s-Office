@@ -1,5 +1,7 @@
 package ru.sgu.csit.inoc.deansoffice.domain;
 
+import org.hibernate.annotations.Type;
+
 import javax.persistence.Entity;
 import javax.persistence.Lob;
 
@@ -12,6 +14,7 @@ import javax.persistence.Lob;
 @Entity
 public class Photo extends PersistentItem {
     @Lob
+    @Type(type = "org.hibernate.type.BinaryType")//"org.hibernate.type.PrimitiveByteArrayBlobType")
     private byte[] data;
 
     public byte[] getData() {
