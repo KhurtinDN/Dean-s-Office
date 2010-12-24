@@ -35,7 +35,7 @@ public class Student extends Person {
     private EnrollmentOrder enrollmentOrder;
 
     @OneToOne(fetch = FetchType.LAZY)
-    private AdditionalData additionalData;
+    private AdditionalStudentData additionalData;
 
     public String getStudentIdNumber() {
         return studentIdNumber;
@@ -93,11 +93,11 @@ public class Student extends Person {
         this.enrollmentOrder = enrollmentOrder;
     }
 
-    public AdditionalData getAdditionalData() {
+    public AdditionalStudentData getAdditionalData() {
         return additionalData;
     }
 
-    public void setAdditionalData(AdditionalData additionalData) {
+    public void setAdditionalData(AdditionalStudentData additionalData) {
         this.additionalData = additionalData;
     }
 
@@ -110,7 +110,7 @@ public class Student extends Person {
     }
 
     @Entity
-    public static class AdditionalData extends PersistentItem {
+    public static class AdditionalStudentData extends PersistentItem {
         @OneToOne(fetch = FetchType.LAZY)
         @PrimaryKeyJoinColumn
         private Photo photo;
