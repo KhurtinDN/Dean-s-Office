@@ -1,7 +1,10 @@
 package ru.sgu.csit.inoc.deansoffice.reports.reportsutil;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Properties;
 
 /**
  * Created by XX (MesheryakovAV)
@@ -11,20 +14,25 @@ import java.util.Map;
 public class TextDescriptor {
     public final static int firstLineIndent = 40;
 
-    public final static String[] FONT_LSERIF = {
-            /*TextDescriptor.class.getResource("/liberation-fonts/LiberationSerif-Regular.ttf").getFile(),
-            TextDescriptor.class.getResource("/liberation-fonts/LiberationSerif-Bold.ttf").getFile(),
-            TextDescriptor.class.getResource("/liberation-fonts/LiberationSerif-Italic.ttf").getFile(),
-            TextDescriptor.class.getResource("/liberation-fonts/LiberationSerif-BoldItalic.ttf").getFile()*/
-            "/home/hd/liberation-fonts/LiberationSerif-Regular.ttf",
-            "/home/hd/liberation-fonts/LiberationSerif-Bold.ttf",
-            "/home/hd/liberation-fonts/LiberationSerif-Italic.ttf",
-            "/home/hd/liberation-fonts/LiberationSerif-BoldItalic.ttf"
-    };
+    public static String[] FONT_LSERIF = null;
 
     static {
-        for (int i = 0; i < FONT_LSERIF.length; ++i) {
-            FONT_LSERIF[i] = FONT_LSERIF[i].replace("%20", " ");
+        Properties properties = new Properties();
+
+        InputStream propertiesInputStream = TextDescriptor.class.getResourceAsStream("/fonts.properties");
+        if (propertiesInputStream != null) {
+            try {
+                properties.load(propertiesInputStream);
+            } catch (IOException e) {
+                throw new RuntimeException();
+            }
         }
+
+        FONT_LSERIF = new String[] {
+                properties.getProperty("Regular", "/home/hd/liberation-fonts/LiberationSerif-Regular.ttf"),
+                properties.getProperty("Bold", "/home/hd/liberation-fonts/LiberationSerif-Bold.ttf"),
+                properties.getProperty("Italic", "/home/hd/liberation-fonts/LiberationSerif-Italic.ttf"),
+                properties.getProperty("BoldItalic", "/home/hd/liberation-fonts/LiberationSerif-BoldItalic.ttf")
+        };
     }
 }
