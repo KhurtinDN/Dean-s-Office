@@ -2,7 +2,7 @@ package ru.sgu.csit.inoc.deansoffice.dao.impl;
 
 import org.springframework.stereotype.Repository;
 import ru.sgu.csit.inoc.deansoffice.dao.ParentDAO;
-import ru.sgu.csit.inoc.deansoffice.domain.Dean;
+import ru.sgu.csit.inoc.deansoffice.domain.Parent;
 
 /**
  * Created by IntelliJ IDEA.
@@ -11,5 +11,5 @@ import ru.sgu.csit.inoc.deansoffice.domain.Dean;
  * Time: 9:26
  */
 @Repository
-public class ParentDAOImpl extends BaseDAOImpl<Dean, Long> implements ParentDAO {
+public class ParentDAOImpl extends BaseDAOImpl<Parent, Long> implements ParentDAO {
 }

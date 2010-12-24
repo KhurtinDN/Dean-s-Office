@@ -1,6 +1,6 @@
 package ru.sgu.csit.inoc.deansoffice.dao;
 
-import ru.sgu.csit.inoc.deansoffice.domain.Dean;
+import ru.sgu.csit.inoc.deansoffice.domain.Passport;
 
 /**
  * Created by IntelliJ IDEA.
@@ -8,5 +8,5 @@ import ru.sgu.csit.inoc.deansoffice.domain.Dean;
  * Date: 24.12.10
  * Time: 9:23
  */
-public interface PassportDAO extends BaseDAO<Dean, Long> {
+public interface PassportDAO extends BaseDAO<Passport, Long> {
 }

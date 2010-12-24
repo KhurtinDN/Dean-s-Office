@@ -29,6 +29,17 @@ public class Address extends PersistentItem {
     // Улица, дом, квартира
     private String streetAddress;
 
+    public Address() {
+    }
+
+    public Address(String country, String region, String district, String town, String streetAddress) {
+        this.country = country;
+        this.region = region;
+        this.district = district;
+        this.town = town;
+        this.streetAddress = streetAddress;
+    }
+
     public Integer getPostalCode() {
         return postalCode;
     }

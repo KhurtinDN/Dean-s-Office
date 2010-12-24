@@ -21,6 +21,22 @@ public class Passport extends Person {
     @PrimaryKeyJoinColumn
     private Address address;
 
+    public Passport() {
+    }
+
+    public Passport(Person person) {
+        // ????
+        setSex(person.getSex());
+
+        setFirstName(person.getFirstName());
+        setMiddleName(person.getMiddleName());
+        setLastName(person.getLastName());
+
+        setFirstNameDative(person.getFirstNameDative());
+        setMiddleNameDative(person.getMiddleNameDative());
+        setLastNameDative(person.getLastNameDative());
+    }
+
     public String getSeries() {
         return series;
     }

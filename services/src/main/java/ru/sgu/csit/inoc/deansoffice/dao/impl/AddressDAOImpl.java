@@ -2,7 +2,7 @@ package ru.sgu.csit.inoc.deansoffice.dao.impl;
 
 import org.springframework.stereotype.Repository;
 import ru.sgu.csit.inoc.deansoffice.dao.AddressDAO;
-import ru.sgu.csit.inoc.deansoffice.domain.Dean;
+import ru.sgu.csit.inoc.deansoffice.domain.Address;
 
 /**
  * Created by IntelliJ IDEA.
@@ -11,5 +11,5 @@ import ru.sgu.csit.inoc.deansoffice.domain.Dean;
  * Time: 9:25
  */
 @Repository
-public class AddressDAOImpl extends BaseDAOImpl<Dean, Long> implements AddressDAO {
+public class AddressDAOImpl extends BaseDAOImpl<Address, Long> implements AddressDAO {
 }

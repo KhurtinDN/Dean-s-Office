@@ -80,6 +80,14 @@ public abstract class Person extends PersistentItem {
         this.lastNameDative = lastNameDative;
     }
 
+    public Sex getSex() {
+        return sex;
+    }
+
+    public void setSex(Sex sex) {
+        this.sex = sex;
+    }
+
     public enum Sex {
         MALE, FEMALE
     }

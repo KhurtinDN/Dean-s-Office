@@ -1,6 +1,6 @@
 package ru.sgu.csit.inoc.deansoffice.dao;
 
-import ru.sgu.csit.inoc.deansoffice.domain.Dean;
+import ru.sgu.csit.inoc.deansoffice.domain.Address;
 
 /**
  * Created by IntelliJ IDEA.
@@ -8,5 +8,5 @@ import ru.sgu.csit.inoc.deansoffice.domain.Dean;
  * Date: 24.12.10
  * Time: 9:22
  */
-public interface AddressDAO extends BaseDAO<Dean, Long> {
+public interface AddressDAO extends BaseDAO<Address, Long> {
 }

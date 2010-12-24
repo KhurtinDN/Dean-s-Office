@@ -1,6 +1,7 @@
 package ru.sgu.csit.inoc.deansoffice.domain;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -188,6 +189,9 @@ public class Student extends Person {
         }
 
         public void addPassport(Passport passport) {
+            if (this.passports == null) {
+                this.passports = new ArrayList<Passport>();
+            }
             this.passports.add(passport);
         }
 

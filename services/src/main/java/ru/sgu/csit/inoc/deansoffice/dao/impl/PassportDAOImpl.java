@@ -2,7 +2,7 @@ package ru.sgu.csit.inoc.deansoffice.dao.impl;
 
 import org.springframework.stereotype.Repository;
 import ru.sgu.csit.inoc.deansoffice.dao.PassportDAO;
-import ru.sgu.csit.inoc.deansoffice.domain.Dean;
+import ru.sgu.csit.inoc.deansoffice.domain.Passport;
 
 /**
  * Created by IntelliJ IDEA.
@@ -11,5 +11,5 @@ import ru.sgu.csit.inoc.deansoffice.domain.Dean;
  * Time: 9:27
  */
 @Repository
-public class PassportDAOImpl extends BaseDAOImpl<Dean, Long> implements PassportDAO {
+public class PassportDAOImpl extends BaseDAOImpl<Passport, Long> implements PassportDAO {
 }

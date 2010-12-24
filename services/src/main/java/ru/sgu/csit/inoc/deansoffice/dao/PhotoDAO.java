@@ -1,6 +1,6 @@
 package ru.sgu.csit.inoc.deansoffice.dao;
 
-import ru.sgu.csit.inoc.deansoffice.domain.Dean;
+import ru.sgu.csit.inoc.deansoffice.domain.Photo;
 
 /**
  * Created by IntelliJ IDEA.
@@ -8,5 +8,5 @@ import ru.sgu.csit.inoc.deansoffice.domain.Dean;
  * Date: 24.12.10
  * Time: 9:24
  */
-public interface PhotoDAO extends BaseDAO<Dean, Long> {
+public interface PhotoDAO extends BaseDAO<Photo, Long> {
 }
