@@ -11,7 +11,7 @@ import com.extjs.gxt.ui.client.widget.layout.FitLayout;
 import com.extjs.gxt.ui.client.widget.treepanel.TreePanel;
 import com.google.gwt.user.client.Element;
 import com.google.gwt.user.client.rpc.AsyncCallback;
-import ru.sgu.csit.inoc.deansoffice.office.client.gxt.content.BodyPanel;
+import ru.sgu.csit.inoc.deansoffice.office.client.gxt.content.ReferenceBodyPanel;
 import ru.sgu.csit.inoc.deansoffice.office.shared.dto.GroupDto;
 import ru.sgu.csit.inoc.deansoffice.office.shared.dto.SpecialityDto;
 
@@ -26,12 +26,12 @@ import java.util.Map;
  * Time: 9:59:46 PM
  */
 public class MenuPanel extends ContentPanel {
-    private BodyPanel bodyPanel;
+    private ReferenceBodyPanel referenceBodyPanel;
 
     private final MenuSelectHandler menuSelectHandler = new MenuSelectHandler();
 
-    public MenuPanel(BodyPanel bodyPanel) {
-        this.bodyPanel = bodyPanel;
+    public MenuPanel(ReferenceBodyPanel referenceBodyPanel) {
+        this.referenceBodyPanel = referenceBodyPanel;
     }
 
     @Override
@@ -107,10 +107,14 @@ public class MenuPanel extends ContentPanel {
             String type = se.getSelectedItem().get("type");
             String name = se.getSelectedItem().get("name");
             if ("group".equals(type)) {
-                bodyPanel.showGroup(id, name);
+                referenceBodyPanel.showGroup(id, name);
             } else if ("speciality".equals(type)) {
-                bodyPanel.showSpeciality(id, name);
+                referenceBodyPanel.showSpeciality(id, name);
             }
+        }
+
+        public void processGroup() {
+            ;
         }
     }
 }

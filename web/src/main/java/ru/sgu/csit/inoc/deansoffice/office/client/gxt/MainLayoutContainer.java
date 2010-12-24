@@ -7,7 +7,7 @@ import com.extjs.gxt.ui.client.widget.Viewport;
 import com.extjs.gxt.ui.client.widget.layout.BorderLayout;
 import com.extjs.gxt.ui.client.widget.layout.BorderLayoutData;
 import com.google.gwt.user.client.Element;
-import ru.sgu.csit.inoc.deansoffice.office.client.gxt.content.BodyPanel;
+import ru.sgu.csit.inoc.deansoffice.office.client.gxt.content.ReferenceBodyPanel;
 import ru.sgu.csit.inoc.deansoffice.office.client.gxt.menu.MenuPanel;
 
 /**
@@ -43,13 +43,13 @@ public class MainLayoutContainer extends Viewport {
         westData.setSplit(true);
         westData.setMargins(new Margins(0, 3, 0, 0));
 
-        BodyPanel bodyPanel = new BodyPanel();
+        ReferenceBodyPanel referenceBodyPanel = new ReferenceBodyPanel();
 
         BorderLayoutData centralData = new BorderLayoutData(Style.LayoutRegion.CENTER);
         centralData.setMargins(new Margins(0));
 
         add(header);
-        add(new MenuPanel(bodyPanel), westData);
-        add(bodyPanel, centralData);
+        add(new MenuPanel(referenceBodyPanel), westData);
+        add(referenceBodyPanel, centralData);
     }
 }

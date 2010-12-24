@@ -18,7 +18,7 @@ import java.util.List;
  * Date: Sep 12, 2010
  * Time: 10:03:41 PM
  */
-public class BodyPanel extends ContentPanel {
+public class ReferenceBodyPanel extends ContentPanel {
     private StudentGrid studentsGrid;
     private StudentInfoPanel studentInfoPanel;
 //    private Grid<SpecialityDto> specialitiesGrid;
@@ -43,13 +43,13 @@ public class BodyPanel extends ContentPanel {
             public void onSuccess(List<StudentDto> studentDtoList) {
                 studentsGrid.update(groupName, studentDtoList);
 
-                BodyPanel.this.removeAll();
-                BodyPanel.this.setLayout(new RowLayout(Style.Orientation.HORIZONTAL));
+                ReferenceBodyPanel.this.removeAll();
+                ReferenceBodyPanel.this.setLayout(new RowLayout(Style.Orientation.HORIZONTAL));
 
                 add(studentsGrid, new RowData(0.6, 1));
                 add(studentInfoPanel, new RowData(0.4, 1));
 
-                BodyPanel.this.getLayout().layout();
+                ReferenceBodyPanel.this.getLayout().layout();
             }
         });
     }
