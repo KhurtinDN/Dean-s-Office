@@ -1,12 +1,16 @@
 package ru.sgu.csit.inoc.deansoffice.domain;
 
+import javax.persistence.Embeddable;
+import javax.persistence.Entity;
+
 /**
  * Created by IntelliJ IDEA.
  * User: MesheryakovAV
  * Date: 23.12.10
  * Time: 15:03
  */
-public class Address {
+@Entity
+public class Address extends PersistentItem {
     // Почтовый индекс или zip-код
     private Integer postalCode;
 
@@ -23,7 +27,7 @@ public class Address {
     private String town;
 
     // Улица, дом, квартира
-    private String address;
+    private String streetAddress;
 
     public Integer getPostalCode() {
         return postalCode;
@@ -65,11 +69,11 @@ public class Address {
         this.town = town;
     }
 
-    public String getAddress() {
-        return address;
+    public String getStreetAddress() {
+        return streetAddress;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
+    public void setStreetAddress(String streetAddress) {
+        this.streetAddress = streetAddress;
     }
 }

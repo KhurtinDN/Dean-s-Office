@@ -1,6 +1,6 @@
 package ru.sgu.csit.inoc.deansoffice.domain;
 
-import javax.persistence.Entity;
+import javax.persistence.*;
 import java.util.Date;
 
 /**
@@ -15,8 +15,10 @@ public class Passport extends Person {
     private String number;
     private String issuingOrganization;
     private Date issuedDate;
-
     private String citizenship;
+
+    @ManyToOne(cascade = CascadeType.MERGE)
+    @PrimaryKeyJoinColumn
     private Address address;
 
     public String getSeries() {

@@ -141,5 +141,102 @@ public class Student extends Person {
         @ManyToOne(cascade = CascadeType.MERGE)
         @PrimaryKeyJoinColumn
         private Address actualAddress;
+
+        public Photo getPhoto() {
+            return photo;
+        }
+
+        public void setPhoto(Photo photo) {
+            this.photo = photo;
+        }
+
+        public Date getBirthday() {
+            return birthday;
+        }
+
+        public void setBirthday(Date birthday) {
+            this.birthday = birthday;
+        }
+
+        public String getBirthPlace() {
+            return birthPlace;
+        }
+
+        public void setBirthPlace(String birthPlace) {
+            this.birthPlace = birthPlace;
+        }
+
+        public String getEducation() {
+            return education;
+        }
+
+        public void setEducation(String education) {
+            this.education = education;
+        }
+
+        public String getWorkInfo() {
+            return workInfo;
+        }
+
+        public void setWorkInfo(String workInfo) {
+            this.workInfo = workInfo;
+        }
+
+        @ElementCollection
+        public List<Passport> getPassports() {
+            return passports;
+        }
+
+        public void addPassport(Passport passport) {
+            this.passports.add(passport);
+        }
+
+        public String getMaritalStatus() {
+            return maritalStatus;
+        }
+
+        public void setMaritalStatus(String maritalStatus) {
+            this.maritalStatus = maritalStatus;
+        }
+
+        public String getChildrenInfo() {
+            return childrenInfo;
+        }
+
+        public void setChildrenInfo(String childrenInfo) {
+            this.childrenInfo = childrenInfo;
+        }
+
+        public Parent getFather() {
+            return father;
+        }
+
+        public void setFather(Parent father) {
+            this.father = father;
+        }
+
+        public Parent getMather() {
+            return mather;
+        }
+
+        public void setMather(Parent mather) {
+            this.mather = mather;
+        }
+
+        public Address getOldAddress() {
+            return oldAddress;
+        }
+
+        public void setOldAddress(Address oldAddress) {
+            this.oldAddress = oldAddress;
+        }
+
+        public Address getActualAddress() {
+            return actualAddress;
+        }
+
+        public void setActualAddress(Address actualAddress) {
+            this.actualAddress = actualAddress;
+        }
     }
 }
