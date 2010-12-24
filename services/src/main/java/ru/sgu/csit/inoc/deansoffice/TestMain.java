@@ -5,6 +5,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import ru.sgu.csit.inoc.deansoffice.dao.*;
 import ru.sgu.csit.inoc.deansoffice.domain.*;
 
+import javax.naming.MalformedLinkException;
 import java.util.*;
 
 /**
@@ -23,6 +24,12 @@ public class TestMain {
     private DeanDAO deanDAO = applicationContext.getBean(DeanDAO.class);
     private RectorDAO rectorDAO = applicationContext.getBean(RectorDAO.class);
     private EnrollmentOrderDAO enrollmentOrderDAO = applicationContext.getBean(EnrollmentOrderDAO.class);
+
+    private static AddressDAO addressDAO = applicationContext.getBean(AddressDAO.class);
+    private static ParentDAO parentDAO = applicationContext.getBean(ParentDAO.class);
+    private static PhotoDAO photoDAO = applicationContext.getBean(PhotoDAO.class);
+    private static PassportDAO passportDAO = applicationContext.getBean(PassportDAO.class);
+    private static AdditionalStudentDataDAO additionalDataDAO = applicationContext.getBean(AdditionalStudentDataDAO.class);
 
     public static void main(String[] args) {
         TestMain testMain = new TestMain();
@@ -176,12 +183,12 @@ public class TestMain {
             return enrolOrder;
         }
 
-
         public static Student getRandomStudent() {
             Student student = new Student();
             int sex = generator.nextInt(2);
             Integer nameIndex = generator.nextInt(firstNames[sex].length);
 
+            student.setSex(sex == 0 ? Person.Sex.MALE : Person.Sex.FEMALE);
             student.setFirstName(firstNames[sex][nameIndex]);
             student.setFirstNameDative(firstNamesDative[sex][nameIndex]);
 
@@ -197,6 +204,9 @@ public class TestMain {
             student.setStudentIdNumber("" + ((int) (Math.random() * 100000)));
             student.setDivision(Student.Division.INTRAMURAL);
 
+            student.setAdditionalData(getRandomAdditionalData(student));
+            additionalDataDAO.save(student.getAdditionalData());
+
             return student;
         }
 
@@ -206,6 +216,63 @@ public class TestMain {
                     return Student.StudyForm.COMMERCIAL;
             }
             return Student.StudyForm.BUDGET;
-        }        
+        }
+
+        public static Student.AdditionalStudentData getRandomAdditionalData(Student student) {
+            Student.AdditionalStudentData additionalData = new Student.AdditionalStudentData();
+            Passport passport = new Passport(student);
+            Address address = new Address("Российская Федерация", "", "",
+                    "г. Саратов", "ул. Астраханская, д. 77, кв. 13");
+
+            addressDAO.save(address);
+            additionalData.setBirthday(new GregorianCalendar().getTime());
+            additionalData.setBirthPlace("г. Саратов");
+            additionalData.setEducation("Средняя школа");
+            additionalData.setWorkInfo("Грузчик");
+
+            passport.setSeries("63 04");
+            passport.setNumber("" + generator.nextInt(10) + generator.nextInt(10) + generator.nextInt(10)
+                    + generator.nextInt(10) + generator.nextInt(10) + generator.nextInt(10));
+            passport.setCitizenship("РФ");
+            passport.setIssuedDate(new GregorianCalendar().getTime());
+            passport.setIssuingOrganization("УВД Заводского р-на г. Саратова");
+            passport.setAddress(address);
+            passportDAO.save(passport);
+            additionalData.addPassport(passport);
+
+            additionalData.setActualAddress(address);
+            additionalData.setOldAddress(address);
+            additionalData.setFather(getRandomParent(Person.Sex.MALE));
+            additionalData.setMather(getRandomParent(Person.Sex.FEMALE));
+            parentDAO.save(additionalData.getFather());
+            parentDAO.save(additionalData.getMather());
+            //additionalData.setPhoto();
+
+            return additionalData;
+        }
+
+        public static Parent getRandomParent(Person.Sex sexValue) {
+            Parent parent = new Parent();
+
+            int sex = sexValue == Person.Sex.MALE ? 0 : 1;
+            Integer nameIndex = generator.nextInt(firstNames[sex].length);
+
+            parent.setSex(sex == 0 ? Person.Sex.MALE : Person.Sex.FEMALE);
+            parent.setFirstName(firstNames[sex][nameIndex]);
+            parent.setFirstNameDative(firstNamesDative[sex][nameIndex]);
+
+            nameIndex = generator.nextInt(lastNames[sex].length);
+            parent.setLastName(lastNames[sex][nameIndex]);
+            parent.setLastNameDative(lastNamesDative[sex][nameIndex]);
+
+            nameIndex = generator.nextInt(middleNames[sex].length);
+            parent.setMiddleName(middleNames[sex][nameIndex]);
+            parent.setMiddleNameDative(middleNamesDative[sex][nameIndex]);
+
+            parent.setBirthday(new GregorianCalendar().getTime());
+            parent.setPhoneNumbers("02, 03, 89875858888");
+
+            return parent;
+        }
     }
 }
