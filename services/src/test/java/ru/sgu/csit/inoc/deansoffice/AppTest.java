@@ -43,9 +43,9 @@ public class AppTest
     private static ApplicationContext applicationContext = new ClassPathXmlApplicationContext("ApplicationContext.xml");
     private static StudentDAO studentDAO = applicationContext.getBean(StudentDAOImpl.class);
 
-    public void skip_testPdfGenerate() {
+    public void /*skip_*/ testPdfGenerate() {
         Student student = studentDAO.findAll().get(0);//new Student();
-        Reference ref = new Reference();
+        //Reference ref = new Reference();
         /*EnrollmentOrder enrolOrder = new EnrollmentOrder();
 
         enrolOrder.setNumber("22-0107");
@@ -80,18 +80,19 @@ public class AppTest
         student.getSpeciality().setFaculty(csit);
         student.setStudyForm(Student.StudyForm.BUDGET);
         */
+        StudentDossier dossier = new StudentDossier();
         FileOutputStream outputStream = null;
         try {
             outputStream = new FileOutputStream(new File("test.pdf"));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-        String templName = AppTest.class.getResource("/reference-2.xml").getFile();
+        String templName = AppTest.class.getResource("/dossier.xml").getFile();
 
         templName = templName.replace("%20", " ");
         System.out.println(templName);
-        ref.setPrintTemplate(new Template(templName));
-        ref.build(student);
-        ReportPdfProcessor.getInstance().generate(ref, outputStream);
+        dossier.setPrintTemplate(new Template(templName));
+        dossier.build(student);
+        ReportPdfProcessor.getInstance().generate(dossier, outputStream);
     }
 }

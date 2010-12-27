@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<!-- <fonts>
+	<font name="" style="" path="" />
+</fonts> -->
+<document
+	 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	 xsi:noNamespaceSchemaLocation="document.xsd"
+	 type="PDF" name="uchcard.pdf" format="A4" orientation="landscape">
+	<table columns="1" width="100" align="center" border="15">
+		<tr>
+            <td><table columns="2" widths="1 8" width="100" align="center" border="0">
+                <tr>
+                    <td><image src="C:/temp/photo.jpg" /></td>
+                    <td align="center">
+                        <font size="18" style="bold">Учетная карточка студента</font>
+
+                        <font size="12" style="bold">ГОУ ВПО "<var name="SSU" />"</font>
+                    </td>
+                </tr>
+            </table></td>
+		</tr>
+	</table>
+</document>

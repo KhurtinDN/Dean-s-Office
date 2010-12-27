@@ -240,6 +240,52 @@ public class XmlToPdfReportProcessorHandler extends DefaultHandler {
                     }
                 }
             }
+        } else if ("var".equals(qName)) {
+            if (attributes != null) {
+                for (int i = 0, n = attributes.getLength(); i < n; ++i) {
+                    String attributeName = attributes.getLocalName(i);
+                    String attributeValue = attributes.getValue(i);
+
+                    if ("name".equals(attributeName)) {
+                        String strChunk = report.getVariableValue(attributeValue);
+
+                        if (!stackElements.isEmpty()) {
+                            ((Phrase) stackElements.peek()).add(new Chunk(strChunk, fontCollector.getCurrentFont()));
+                        }
+                    }
+                }
+            }
+        } else if ("image".equals(qName)) {
+            String imgFileName = null;
+            String imgFormat = "jpg";
+
+            if (attributes != null) {
+                for (int i = 0, n = attributes.getLength(); i < n; ++i) {
+                    String attributeName = attributes.getLocalName(i);
+                    String attributeValue = attributes.getValue(i);
+
+                    if (attributeValue.length() > 0) {
+                        if ("src".equals(attributeName)) {
+                            imgFileName = attributeValue;
+                        } else if ("format".equals(attributeName)) {
+                            imgFormat = attributeValue;
+                        }
+                    }
+                }
+            }
+            if (imgFileName != null) {
+                Image image;
+
+                try {
+                    image = Image.getInstance(imgFileName);
+                } catch (BadElementException e) {
+                    throw new RuntimeException("Image bad element.", e);
+                } catch (IOException e) {
+                    throw new RuntimeException("Image file " + imgFileName + " not found.", e);
+                }
+                //image.scaleAbsoluteWidth(20);
+                stackElements.push(image);
+            }
         } else if ("p".equals(qName)) {
             Paragraph paragraph = new Paragraph();
 
@@ -410,7 +456,24 @@ public class XmlToPdfReportProcessorHandler extends DefaultHandler {
 
     // Встретился закрывающий тэг элемента
     public void endElement(String uri, String localName, String qName) {
-        if ("p".equals(qName)) {
+        if ("image".equals(qName)) {
+            try {
+                Image image = (Image) stackElements.pop();
+                Paragraph paragraph = new Paragraph();
+
+                paragraph.add(new Chunk(image, 0, 0));
+                if (stackCells.isEmpty()) {
+                    document.add(paragraph);
+                } else {
+                    if (!stackCells.peek().containsTable) {
+                        ((Phrase) stackElements.peek()).add(paragraph);
+                    }
+                }
+                //document.add(paragraph);
+            } catch (Exception e) {
+                throw new RuntimeException("EndElement error.", e);
+            }
+        } if ("p".equals(qName)) {
             try {
                 Phrase phrase = (Phrase) stackElements.pop();
                 Paragraph paragraph = (Paragraph) stackElements.pop();

@@ -33,6 +33,9 @@ public class Document extends PersistentItem implements Report {
         TEXT.put("SSU_ONLY", "Саратовский государственный университет");
         TEXT.put("SSU_ONLY_GEN", "Саратовского государственного университета");
         TEXT.put("SSU_BY", "имени Н. Г. Чернышевского");
+
+        TEXT.put("SSU", "Саратовский государственный университет имени Н. Г. Чернышевского");
+        TEXT.put("SSU_HEADER", "САРАТОВСКИЙ ГОСУДАРСТВЕННЫЙ УНИВЕРСИТЕТ ИМЕНИ Н. Г. ЧЕРНЫШЕВСКОГО");
     }
 
     public String getNumber() {
