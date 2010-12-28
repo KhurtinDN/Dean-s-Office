@@ -29,7 +29,8 @@ public class StudentInfoPanel extends ContentPanel {
     protected void onRender(Element parent, int pos) {
         super.onRender(parent, pos);
 
-        getHeader().hide();
+//        getHeader().hide();
+        setHeading("Свойства");
         setLayout(new RowLayout(Style.Orientation.VERTICAL));
 
         final FormPanel formPanel = createFormPanel();

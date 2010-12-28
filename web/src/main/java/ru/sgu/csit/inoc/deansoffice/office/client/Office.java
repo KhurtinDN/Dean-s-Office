@@ -1,6 +1,7 @@
 package ru.sgu.csit.inoc.deansoffice.office.client;
 
 import com.google.gwt.core.client.EntryPoint;
+import com.google.gwt.user.client.ui.RootLayoutPanel;
 import com.google.gwt.user.client.ui.RootPanel;
 import ru.sgu.csit.inoc.deansoffice.office.client.gxt.MainLayoutContainer;
 
@@ -15,6 +16,6 @@ public class Office implements EntryPoint {
      */
     public void onModuleLoad() {
         MainLayoutContainer mainLayoutContainer = new MainLayoutContainer();
-        RootPanel.get().add(mainLayoutContainer);
+        RootLayoutPanel.get().add(mainLayoutContainer);
     }
 }

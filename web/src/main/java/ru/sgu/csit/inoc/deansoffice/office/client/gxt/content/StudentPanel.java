@@ -7,54 +7,44 @@ import com.extjs.gxt.ui.client.widget.layout.RowData;
 import com.extjs.gxt.ui.client.widget.layout.RowLayout;
 import com.google.gwt.user.client.Element;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import ru.sgu.csit.inoc.deansoffice.office.client.gxt.content.StudentGrid;
+import ru.sgu.csit.inoc.deansoffice.office.client.gxt.content.StudentService;
 import ru.sgu.csit.inoc.deansoffice.office.shared.dto.StudentDto;
 
 import java.util.List;
 
-
 /**
- * .
- * User: hd (KhurtinDN(a)gmail.com)
- * Date: Sep 12, 2010
- * Time: 10:03:41 PM
+ * User: KhurtinDN ( KhurtinDN@gmail.com )
+ * Date: 12/27/10
+ * Time: 12:45 PM
  */
-public class ReferenceBodyPanel extends ContentPanel {
-    private StudentGrid studentsGrid;
-    private StudentInfoPanel studentInfoPanel;
-//    private Grid<SpecialityDto> specialitiesGrid;
+public class StudentPanel extends ContentPanel {
+    private StudentGrid studentGrid = new StudentGrid();
 
     @Override
-    protected void onRender(Element parent, int index) {
-        super.onRender(parent, index);
+    protected void onRender(Element parent, int pos) {
+        super.onRender(parent, pos);
 
-//        studentsGrid = new StudentGrid();
-//        studentInfoPanel = new StudentInfoPanel(studentsGrid);
+        setHeading("Студенты");
+        setLayout(new RowLayout(Style.Orientation.HORIZONTAL));
+        add(studentGrid, new RowData(1, 1));
+    }
+
+    public StudentGrid getStudentGrid() {
+        return studentGrid;
     }
 
     public void showGroup(Long groupId, final String groupName) {
         StudentService.App.getInstance().downloadStudents(groupId, new AsyncCallback<List<StudentDto>>() {
             @Override
             public void onFailure(Throwable caught) {
-//                Window.alert(caught.toString());
                 Info.display("Сообщение от сервера", "Запрашиваемый сервис не доступен!");
             }
 
             @Override
             public void onSuccess(List<StudentDto> studentDtoList) {
-                studentsGrid.update(groupName, studentDtoList);
-
-                ReferenceBodyPanel.this.removeAll();
-                ReferenceBodyPanel.this.setLayout(new RowLayout(Style.Orientation.HORIZONTAL));
-
-                add(studentsGrid, new RowData(0.6, 1));
-                add(studentInfoPanel, new RowData(0.4, 1));
-
-                ReferenceBodyPanel.this.getLayout().layout();
+                studentGrid.update(groupName, studentDtoList);
             }
         });
-    }
-
-    public void showSpeciality(Long id, String name) {
-        // todo
     }
 }

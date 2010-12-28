@@ -15,6 +15,8 @@ import java.util.List;
  * Time: 11:53:33 PM
  */
 public class StudentGrid extends Grid<StudentDto> {
+    private static ColumnModel columnModel = createGridColumnModel();
+
     private static ColumnModel createGridColumnModel() {
         List<ColumnConfig> columnConfigList = new ArrayList<ColumnConfig>();
         columnConfigList.add(new ColumnConfig("nn", "N", 40));
@@ -24,10 +26,10 @@ public class StudentGrid extends Grid<StudentDto> {
         return new ColumnModel(columnConfigList);
     }
 
-    static ColumnModel columnModel = createGridColumnModel();
+    private static ListStore<StudentDto> listStore = new ListStore<StudentDto>();
 
-    protected StudentGrid() {
-        super(new ListStore<StudentDto>(), columnModel);
+    public StudentGrid() {
+        super(listStore, columnModel);
     }
 
     public void update(String groupName, List<StudentDto> studentDtoList) {

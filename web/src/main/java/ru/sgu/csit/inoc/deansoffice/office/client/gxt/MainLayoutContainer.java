@@ -1,14 +1,19 @@
 package ru.sgu.csit.inoc.deansoffice.office.client.gxt;
 
 import com.extjs.gxt.ui.client.Style;
+import com.extjs.gxt.ui.client.data.ModelData;
 import com.extjs.gxt.ui.client.event.*;
 import com.extjs.gxt.ui.client.util.Margins;
+import com.extjs.gxt.ui.client.widget.Info;
 import com.extjs.gxt.ui.client.widget.Viewport;
 import com.extjs.gxt.ui.client.widget.layout.BorderLayout;
 import com.extjs.gxt.ui.client.widget.layout.BorderLayoutData;
 import com.google.gwt.user.client.Element;
-import ru.sgu.csit.inoc.deansoffice.office.client.gxt.content.ReferenceBodyPanel;
+import ru.sgu.csit.inoc.deansoffice.office.client.gxt.content.StudentInfoPanel;
+import ru.sgu.csit.inoc.deansoffice.office.client.gxt.content.StudentPanel;
 import ru.sgu.csit.inoc.deansoffice.office.client.gxt.menu.MenuPanel;
+import ru.sgu.csit.inoc.deansoffice.office.client.gxt.util.SelectionListener;
+import ru.sgu.csit.inoc.deansoffice.office.client.gxt.util.ContentType;
 
 /**
  * .
@@ -25,6 +30,7 @@ public class MainLayoutContainer extends Viewport {
         final HeaderPanel header = new HeaderPanel();
         header.addListener(Events.Attach, new Listener<BaseEvent>() {
             private boolean build = false;
+
             @Override
             public void handleEvent(BaseEvent be) {
                 if (!build) {
@@ -38,18 +44,44 @@ public class MainLayoutContainer extends Viewport {
             }
         });
 
+        final StudentPanel studentPanel = new StudentPanel();
+
+        MenuPanel menuPanel = new MenuPanel();
+        menuPanel.addMenuSelectionListener(new SelectionListener() {
+            @Override
+            public void selectionChanged(ModelData data) {
+                Long id = data.get("id");
+                ContentType type = data.get("type");
+                String name = data.get("name");
+
+                if (id != null && type != null && name != null) {
+                    if (type.equals(ContentType.GROUP)) {
+                        studentPanel.showGroup(id, name);
+                    }
+                } else {
+                    Info.display("Тревожное сообщение", "Нет достаточных данных о выделенном объекте.");
+                }
+            }
+        });
+
+        StudentInfoPanel studentInfoPanel = new StudentInfoPanel(studentPanel.getStudentGrid());
+
         BorderLayoutData westData = new BorderLayoutData(Style.LayoutRegion.WEST);
         westData.setCollapsible(true);
         westData.setSplit(true);
         westData.setMargins(new Margins(0, 3, 0, 0));
 
-        ReferenceBodyPanel referenceBodyPanel = new ReferenceBodyPanel();
-
         BorderLayoutData centralData = new BorderLayoutData(Style.LayoutRegion.CENTER);
         centralData.setMargins(new Margins(0));
 
+        BorderLayoutData eastData = new BorderLayoutData(Style.LayoutRegion.EAST, 400);
+        eastData.setCollapsible(true);
+        eastData.setSplit(true);
+        eastData.setMargins(new Margins(0, 0, 0, 3));
+
         add(header);
-        add(new MenuPanel(referenceBodyPanel), westData);
-        add(referenceBodyPanel, centralData);
+        add(menuPanel, westData);
+        add(studentPanel, centralData);
+        add(studentInfoPanel, eastData);
     }
 }

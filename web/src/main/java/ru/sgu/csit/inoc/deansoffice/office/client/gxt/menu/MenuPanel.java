@@ -11,11 +11,12 @@ import com.extjs.gxt.ui.client.widget.layout.FitLayout;
 import com.extjs.gxt.ui.client.widget.treepanel.TreePanel;
 import com.google.gwt.user.client.Element;
 import com.google.gwt.user.client.rpc.AsyncCallback;
-import ru.sgu.csit.inoc.deansoffice.office.client.gxt.content.ReferenceBodyPanel;
+import ru.sgu.csit.inoc.deansoffice.office.client.gxt.util.*;
 import ru.sgu.csit.inoc.deansoffice.office.shared.dto.GroupDto;
 import ru.sgu.csit.inoc.deansoffice.office.shared.dto.SpecialityDto;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -26,13 +27,9 @@ import java.util.Map;
  * Time: 9:59:46 PM
  */
 public class MenuPanel extends ContentPanel {
-    private ReferenceBodyPanel referenceBodyPanel;
+    private List<ru.sgu.csit.inoc.deansoffice.office.client.gxt.util.SelectionListener> listeners = new LinkedList<ru.sgu.csit.inoc.deansoffice.office.client.gxt.util.SelectionListener>();
 
     private final MenuSelectHandler menuSelectHandler = new MenuSelectHandler();
-
-    public MenuPanel(ReferenceBodyPanel referenceBodyPanel) {
-        this.referenceBodyPanel = referenceBodyPanel;
-    }
 
     @Override
     protected void onRender(Element parent, int index) {
@@ -72,12 +69,13 @@ public class MenuPanel extends ContentPanel {
 
                 for (Map.Entry<SpecialityDto, List<GroupDto>> entry : specialityGroupMap.entrySet()) {
                     SpecialityDto specialityDto = entry.getKey();
-                    ModelData specialityModelData = createModelData(specialityDto.getId(), "speciality",
+                    ModelData specialityModelData = createModelData(specialityDto.getId(), ContentType.SPECIALITY,
                             specialityDto.getName(), null);
                     treeStore.add(specialityModelData, false);
 
                     for (GroupDto groupDto : entry.getValue()) {
-                        ModelData groupModelData = createModelData(groupDto.getId(), "group", groupDto.getName(), null);
+                        ModelData groupModelData = createModelData(groupDto.getId(), ContentType.GROUP,
+                                groupDto.getName(), null);
                         treeStore.add(specialityModelData, groupModelData, false);
                     }
                     treePanel.setExpanded(specialityModelData, true);
@@ -90,7 +88,7 @@ public class MenuPanel extends ContentPanel {
             panel.getLayout().layout();
         }
 
-        private ModelData createModelData(Long id, String type, String name, String icon) {
+        private ModelData createModelData(Long id, ContentType type, String name, String icon) {
             ModelData modelData = new BaseModelData();
             modelData.set("id", id);
             modelData.set("type", type);
@@ -100,21 +98,18 @@ public class MenuPanel extends ContentPanel {
         }
     }
 
+    public void addMenuSelectionListener(ru.sgu.csit.inoc.deansoffice.office.client.gxt.util.SelectionListener listener) {
+        listeners.add(listener);
+    }
+
     private class MenuSelectHandler extends SelectionChangedListener<ModelData> {
         @Override
         public void selectionChanged(SelectionChangedEvent<ModelData> se) {
-            Long id = se.getSelectedItem().get("id");
-            String type = se.getSelectedItem().get("type");
-            String name = se.getSelectedItem().get("name");
-            if ("group".equals(type)) {
-                referenceBodyPanel.showGroup(id, name);
-            } else if ("speciality".equals(type)) {
-                referenceBodyPanel.showSpeciality(id, name);
-            }
-        }
+            ModelData data = se.getSelectedItem();
 
-        public void processGroup() {
-            ;
+            for (ru.sgu.csit.inoc.deansoffice.office.client.gxt.util.SelectionListener listener : listeners) {
+                listener.selectionChanged(data);
+            }
         }
     }
 }
