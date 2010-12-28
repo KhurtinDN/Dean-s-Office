@@ -18,10 +18,10 @@ import ru.sgu.csit.inoc.deansoffice.office.shared.dto.StudentDto;
  * Date: Oct 7, 2010
  * Time: 11:54:52 PM
  */
-public class StudentInfoPanel extends ContentPanel {
+public class InfoPanel extends ContentPanel {
     private StudentGrid studentGrid;
 
-    public StudentInfoPanel(StudentGrid studentGrid) {
+    public InfoPanel(StudentGrid studentGrid) {
         this.studentGrid = studentGrid;
     }
 
@@ -48,10 +48,10 @@ public class StudentInfoPanel extends ContentPanel {
                     }
                 });
 
-        StudentActionPanel studentActionPanel = new StudentActionPanel(studentGrid);
+        ActionPanel actionPanel = new ActionPanel(studentGrid);
 
         add(formPanel, new RowData(1, 0.5));
-        add(studentActionPanel, new RowData(1, 0.5));
+        add(actionPanel, new RowData(1, 0.5));
     }
 
     private FormPanel createFormPanel() {

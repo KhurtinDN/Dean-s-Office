@@ -17,10 +17,10 @@ import ru.sgu.csit.inoc.deansoffice.office.shared.dto.StudentDto;
  * Date: Oct 7, 2010
  * Time: 11:56:34 PM
  */
-public class StudentActionPanel extends ContentPanel {
+public class ActionPanel extends ContentPanel {
     private StudentGrid studentGrid;
 
-    public StudentActionPanel(StudentGrid studentGrid) {
+    public ActionPanel(StudentGrid studentGrid) {
         this.studentGrid = studentGrid;
     }
 

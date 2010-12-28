@@ -9,7 +9,7 @@ import com.extjs.gxt.ui.client.widget.Viewport;
 import com.extjs.gxt.ui.client.widget.layout.BorderLayout;
 import com.extjs.gxt.ui.client.widget.layout.BorderLayoutData;
 import com.google.gwt.user.client.Element;
-import ru.sgu.csit.inoc.deansoffice.office.client.gxt.content.StudentInfoPanel;
+import ru.sgu.csit.inoc.deansoffice.office.client.gxt.content.InfoPanel;
 import ru.sgu.csit.inoc.deansoffice.office.client.gxt.content.StudentPanel;
 import ru.sgu.csit.inoc.deansoffice.office.client.gxt.menu.MenuPanel;
 import ru.sgu.csit.inoc.deansoffice.office.client.gxt.util.SelectionListener;
@@ -64,7 +64,7 @@ public class MainLayoutContainer extends Viewport {
             }
         });
 
-        StudentInfoPanel studentInfoPanel = new StudentInfoPanel(studentPanel.getStudentGrid());
+        InfoPanel infoPanel = new InfoPanel(studentPanel.getStudentGrid());
 
         BorderLayoutData westData = new BorderLayoutData(Style.LayoutRegion.WEST);
         westData.setCollapsible(true);
@@ -82,6 +82,6 @@ public class MainLayoutContainer extends Viewport {
         add(header);
         add(menuPanel, westData);
         add(studentPanel, centralData);
-        add(studentInfoPanel, eastData);
+        add(infoPanel, eastData);
     }
 }
