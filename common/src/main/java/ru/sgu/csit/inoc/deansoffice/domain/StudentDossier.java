@@ -21,13 +21,15 @@ public class StudentDossier extends Document {
         TEXT.put("RECTOR", student.getSpeciality().getFaculty().getRector().generateShortName(true));
         TEXT.put("RECTOR_DEGREE", student.getSpeciality().getFaculty().getRector().getDegree());
 
-        TEXT.put("Student.fullName_dat", student.getLastNameDative() + " "
-                + student.getFirstNameDative() + " " + student.getMiddleNameDative());
-        TEXT.put("Student.lastName_dat", student.getLastNameDative());
-        TEXT.put("Student.firstName_dat", student.getFirstNameDative());
-        TEXT.put("Student.middleName_dat", student.getMiddleNameDative());
+        TEXT.put("Student.fullName", student.getLastName() + " "
+                + student.getFirstName() + " " + student.getMiddleName());
+        TEXT.put("Student.lastName", student.getLastName());
+        TEXT.put("Student.firstName", student.getFirstName());
+        TEXT.put("Student.middleName", student.getMiddleName());
 
         TEXT.put("Student.courseNumber", student.getCource().toString());
+        TEXT.put("Student.speciality", student.getSpeciality().getShortName());
+        TEXT.put("Student.specialityCode", student.getSpeciality().getCode());
 
         EnrollmentOrder order = student.getEnrollmentOrder();
         String division = "неизвестного";
@@ -46,9 +48,14 @@ public class StudentDossier extends Document {
         TEXT.put("Student.division_rad", division);
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
+        SimpleDateFormat dateFormatYear = new SimpleDateFormat("yyyy");
         Date date = order.getEnrollmentDate();
 
+        TEXT.put("Student.birthday", dateFormat.format(student.getAdditionalData().getBirthday()));
+        TEXT.put("Student.birthPlace", dateFormat.format(student.getAdditionalData().getBirthPlace()));
+
         TEXT.put("Student.startDate", dateFormat.format(date)); // "01.09.2007"
+        TEXT.put("Student.startYear", dateFormatYear.format(date));
 
         date = order.getReleaseDate();
         TEXT.put("Student.endDate", dateFormat.format(date)); // "01.07.2012"
