@@ -20,6 +20,7 @@
 
     <!-- Configure a Hibernate SessionFactory -->
     <bean id="sessionFactory" class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
+        <!-- <property name="lobHandler" ref="defaultLobHandler" /> -->
         <property name="dataSource" ref="dataSource"/>
         <property name="packagesToScan">
             <list>
@@ -35,6 +36,11 @@
                 <prop key="connection.pool_size">1</prop>
             </props>
         </property>
+    </bean>
+
+    <bean id="defaultLobHandler" class="org.springframework.jdbc.support.lob.DefaultLobHandler">
+        <property name="wrapAsLob" value="true" />
+        <property name="streamAsLob" value="true" />
     </bean>
 
     <!-- Transaction manager for a single Hibernate SessionFactory (alternative to JTA) -->

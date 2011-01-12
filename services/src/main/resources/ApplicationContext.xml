@@ -9,7 +9,7 @@
 
     <!-- In this file we configure Hibernate and transactional behavior -->
     <import resource="ApplicationContext-persistence.xml"/>
-    
+
     <!-- Exception translation bean post processor -->
     <!--<bean class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor"/>-->
 
