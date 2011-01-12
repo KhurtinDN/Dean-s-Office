@@ -34,6 +34,8 @@ public class TestMain {
     private static PassportDAO passportDAO = applicationContext.getBean(PassportDAO.class);
     private static AdditionalStudentDataDAO additionalDataDAO = applicationContext.getBean(AdditionalStudentDataDAO.class);
 
+    private final Integer COUNT_STUDENTS_IN_GROUP = 10;
+
     public static void main(String[] args) {
         TestMain testMain = new TestMain();
 
@@ -124,7 +126,7 @@ public class TestMain {
         }
 
         for (Group group : groupList) {
-            for (int studentCount = 1; studentCount <= 20; ++studentCount) {
+            for (int studentCount = 1; studentCount <= COUNT_STUDENTS_IN_GROUP; ++studentCount) {
                 Student student = StudentGenerator.getRandomStudent();
 
                 student.setCource(group.getCourse());
@@ -253,7 +255,7 @@ public class TestMain {
             PhotoService photoService = new PhotoServiceImpl();
             Photo photo;
             try {
-                photo = photoService.loadFromFile("C:/temp/photo.jpg");
+                photo = photoService.loadFromFile("C:/temp/images/photo.jpg");
             } catch (IOException e) {
                 throw new RuntimeException("Photo not found!!!", e);
             }

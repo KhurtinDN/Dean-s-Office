@@ -232,7 +232,7 @@ public class XmlToPdfReportProcessorHandler extends DefaultHandler {
                     String attributeValue = attributes.getValue(i);
 
                     if ("name".equals(attributeName)) {
-                        String strChunk = report.getVariableValue(attributeValue);
+                        String strChunk = report.getVariableValue(attributeValue).toString();
 
                         if (!stackElements.isEmpty()) {
                             ((Phrase) stackElements.peek()).add(new Chunk(strChunk, fontCollector.getCurrentFont()));
@@ -247,7 +247,7 @@ public class XmlToPdfReportProcessorHandler extends DefaultHandler {
                     String attributeValue = attributes.getValue(i);
 
                     if ("name".equals(attributeName)) {
-                        String strChunk = report.getVariableValue(attributeValue);
+                        String strChunk = report.getVariableValue(attributeValue).toString();
 
                         if (!stackElements.isEmpty()) {
                             ((Phrase) stackElements.peek()).add(new Chunk(strChunk, fontCollector.getCurrentFont()));
@@ -257,6 +257,7 @@ public class XmlToPdfReportProcessorHandler extends DefaultHandler {
             }
         } else if ("image".equals(qName)) {
             String imgFileName = null;
+            byte[] imgData = null;
             String imgFormat = "jpg";
             Float imgWidth = -1.0f;
             Float imgHeight = -1.0f;
@@ -269,6 +270,8 @@ public class XmlToPdfReportProcessorHandler extends DefaultHandler {
                     if (attributeValue.length() > 0) {
                         if ("src".equals(attributeName)) {
                             imgFileName = attributeValue;
+                        } else if ("var".equals(attributeName)) {
+                            imgData = (byte[]) report.getVariableValue(attributeValue);
                         } else if ("format".equals(attributeName)) {
                             imgFormat = attributeValue;
                         } else if ("width".equals(attributeName)) {
@@ -279,15 +282,25 @@ public class XmlToPdfReportProcessorHandler extends DefaultHandler {
                     }
                 }
             }
-            if (imgFileName != null) {
+            if (imgFileName != null || imgData != null) {
                 Image image;
 
-                try {
-                    image = Image.getInstance(imgFileName);
-                } catch (BadElementException e) {
-                    throw new RuntimeException("Image bad element.", e);
-                } catch (IOException e) {
-                    throw new RuntimeException("Image file " + imgFileName + " not found.", e);
+                if (imgFileName != null) {
+                    try {
+                        image = Image.getInstance(imgFileName);
+                    } catch (BadElementException e) {
+                        throw new RuntimeException("Image bad element.", e);
+                    } catch (IOException e) {
+                        throw new RuntimeException("Image file " + imgFileName + " not found.", e);
+                    }
+                } else {
+                    try {
+                        image = Image.getInstance(imgData);
+                    } catch (BadElementException e) {
+                        throw new RuntimeException("Image bad element.", e);
+                    } catch (IOException e) {
+                        throw new RuntimeException("Image byte data not found.", e);
+                    }
                 }
 
                 float scale = 1.0f;

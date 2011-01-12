@@ -6,7 +6,7 @@ package ru.sgu.csit.inoc.deansoffice.reports.reportsutil;
  * Time: 13:29:38
  */
 public interface Report {
-    String getVariableValue(String variableName);
+    Object getVariableValue(String variableName);
     TemplType getTemplateType();
     String getTemplateFileName();
 }

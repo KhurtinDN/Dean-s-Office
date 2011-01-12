@@ -23,8 +23,9 @@ public class Document extends PersistentItem implements Report {
     @PrimaryKeyJoinColumn
     private Template printTemplate;
 
-    @ElementCollection(fetch = FetchType.EAGER)
-    public Map<String, String> TEXT = new HashMap<String, String>();
+    //@ElementCollection(fetch = FetchType.EAGER)
+    @Transient
+    public Map<String, Object> TEXT = new HashMap<String, Object>();
 
     public void clear() {
         TEXT.clear();
@@ -63,7 +64,7 @@ public class Document extends PersistentItem implements Report {
     }
 
     @Override
-    public String getVariableValue(String variableName) {
+    public Object getVariableValue(String variableName) {
         return TEXT.get(variableName);
     }
 
