@@ -51,8 +51,20 @@ public class StudentDossier extends Document {
         SimpleDateFormat dateFormatYear = new SimpleDateFormat("yyyy");
         Date date = order.getEnrollmentDate();
 
+        // Борьба с ленивой загрузкой
+        // http://forum.vingrad.ru/forum/topic-258355.html
+        // http://www.javalobby.org/java/forums/t62077.html
+        // .initialize(student.getAdditionalData());
+        //Hibernate.initialize(student.getAdditionalData().getPhoto());
+
+        if (student.getAdditionalData().getBirthPlace() == null) {
+            throw new RuntimeException("AdditionalData.BirthPlace is null!!! ");
+        }
         TEXT.put("Student.birthday", dateFormat.format(student.getAdditionalData().getBirthday()));
-        TEXT.put("Student.birthPlace", dateFormat.format(student.getAdditionalData().getBirthPlace()));
+        TEXT.put("Student.birthPlace", student.getAdditionalData().getBirthPlace());
+
+        System.out.println(student.getAdditionalData().getPhoto().getData().length);
+        TEXT.put("Student.photoData", student.getAdditionalData().getPhoto().getData());
 
         TEXT.put("Student.startDate", dateFormat.format(date)); // "01.09.2007"
         TEXT.put("Student.startYear", dateFormatYear.format(date));
