@@ -63,7 +63,6 @@ public class StudentDossier extends Document {
         TEXT.put("Student.birthday", dateFormat.format(student.getAdditionalData().getBirthday()));
         TEXT.put("Student.birthPlace", student.getAdditionalData().getBirthPlace());
 
-        System.out.println(student.getAdditionalData().getPhoto().getData().length);
         TEXT.put("Student.photoData", student.getAdditionalData().getPhoto().getData());
 
         TEXT.put("Student.startDate", dateFormat.format(date)); // "01.09.2007"
