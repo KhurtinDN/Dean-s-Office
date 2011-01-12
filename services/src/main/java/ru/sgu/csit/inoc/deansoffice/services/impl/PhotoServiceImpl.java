@@ -32,6 +32,9 @@ public class PhotoServiceImpl implements PhotoService {
 
     @Override
     public void saveToFile(Photo photo, String fileName) throws IOException {
+        if (fileName == null) {
+            fileName = photo.getFileName();
+        }
         OutputStream outputStream = new FileOutputStream(fileName);
 
         outputStream.write(photo.getData());
@@ -40,7 +43,16 @@ public class PhotoServiceImpl implements PhotoService {
 
     @Override
     public Photo loadFromFile(String fileName) throws IOException {
-        File photoFile = new File(fileName);
+        Photo photo = new Photo();
+
+        photo.setFileName(fileName);
+        loadData(photo);
+
+        return photo;
+    }
+
+    public void loadData(Photo photo) throws IOException {
+        File photoFile = new File(photo.getFileName());
         InputStream inputStream = new FileInputStream(photoFile);
 
         int lengthFile = (int) photoFile.length();
@@ -49,10 +61,6 @@ public class PhotoServiceImpl implements PhotoService {
         for (int len = 1, off = 0; len > 0 && off < lengthFile; off += len) {
             len = inputStream.read(data, off, lengthFile - off);
         }
-
-        Photo photo = new Photo();
         photo.setData(data);
-
-        return photo;
     }
 }
