@@ -13,8 +13,12 @@ import ru.sgu.csit.inoc.deansoffice.dao.impl.PhotoDAOImpl;
 import ru.sgu.csit.inoc.deansoffice.dao.impl.StudentDAOImpl;
 import ru.sgu.csit.inoc.deansoffice.domain.*;
 import ru.sgu.csit.inoc.deansoffice.reports.ReportPdfProcessor;
+import ru.sgu.csit.inoc.deansoffice.reports.reportsutil.Report;
+import ru.sgu.csit.inoc.deansoffice.services.DocumentService;
 import ru.sgu.csit.inoc.deansoffice.services.PhotoService;
+import ru.sgu.csit.inoc.deansoffice.services.StudentDossierService;
 import ru.sgu.csit.inoc.deansoffice.services.impl.PhotoServiceImpl;
+import ru.sgu.csit.inoc.deansoffice.services.impl.StudentDossierServiceImpl;
 
 import java.io.*;
 
@@ -128,7 +132,10 @@ public class AppTest
         templName = templName.replace("%20", " ");
         System.out.println(templName);
         dossier.setPrintTemplate(new Template(templName));
-        dossier.build(student);
-        ReportPdfProcessor.getInstance().generate(dossier, outputStream);
+
+        StudentDossierService dossierService = new StudentDossierServiceImpl(dossier);
+
+        dossierService.build(student);
+        ReportPdfProcessor.getInstance().generate((Report) dossierService, outputStream);
     }
 }

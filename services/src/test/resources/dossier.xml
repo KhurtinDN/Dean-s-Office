@@ -23,7 +23,7 @@
                             <td />
                             <td align="left"><font size="12">
 Ф.И.О.: <b><var name="Student.fullName" /></b>
-Специальность (направление): <var name="Student.speciality" />, <var name="Student.startYear" /> г. п., шифр (по ОКСО): <var name="Student.specialityCode" /></font></td>
+Специальность (направление): <var name="Student.speciality" />, <var name="Student.startYear" /> г. п. Шифр (по ОКСО): <var name="Student.specialityCode" /></font></td>
                         </tr>
                     </table></td>
                 </tr>
@@ -35,7 +35,7 @@
                     <td><table columns="2" width="100" align="center" border="15">
                         <tr>
                             <td padding="4">1. Пол</td>
-                            <td></td>
+                            <td><var name="Student.sex" /></td>
                         </tr>
                         <tr>
                             <td padding="4">2. Дата рождения</td>
@@ -47,11 +47,37 @@
                         </tr>
                         <tr>
                             <td padding="4">4. Гражданство</td>
-                            <td></td>
+                            <td><var name="Student.citizenship" /></td>
                         </tr>
                         <tr>
                             <td padding="4">5. Образование (какое учебное заведение окончил, когда и где)</td>
-                            <td></td>
+                            <td><var name="Student.education" /></td>
+                        </tr>
+                        <tr>
+                            <td padding="4">6. Выполняемая работа (учёба) до поступления в ВУЗ (где и в качестве кого), стаж работы</td>
+                            <td><var name="Student.workInfo" /></td>
+                        </tr>
+                        <tr>
+                            <td padding="4">7. Паспортные данные
+
+ФИО: <var name="Student.firstPassport.fullName" />
+№: <var name="Student.firstPassport.number" /> Серия: <var name="Student.firstPassport.series" />
+Кем и когда выдан: <var name="Student.firstPassport.issuingOrganization" /> <var name="Student.firstPassport.issuedDate" /></td>
+                            <td padding="4">Данные после смены паспорта
+
+ФИО: <var name="Student.lastPassport.fullName" />
+№: <var name="Student.lastPassport.number" /> Серия: <var name="Student.lastPassport.series" />
+Кем и когда выдан: <var name="Student.lastPassport.issuingOrganization" /> <var name="Student.lastPassport.issuedDate" /></td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" padding="4">8. Семейное положение, местожительство жены (мужа)
+<var name="Student.maritalStatus" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" padding="4">9. Сведения о детях (пол, дата рождения)
+<var name="Student.childrenInfo" />
+                            </td>
                         </tr>
                     </table></td>
                     <td></td>
