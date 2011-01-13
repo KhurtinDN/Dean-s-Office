@@ -1,9 +1,7 @@
 package ru.sgu.csit.inoc.deansoffice.services.impl;
 
-import ru.sgu.csit.inoc.deansoffice.domain.Document;
-import ru.sgu.csit.inoc.deansoffice.domain.EnrollmentOrder;
-import ru.sgu.csit.inoc.deansoffice.domain.Passport;
-import ru.sgu.csit.inoc.deansoffice.domain.Student;
+import ru.sgu.csit.inoc.deansoffice.domain.*;
+import ru.sgu.csit.inoc.deansoffice.services.AddressService;
 import ru.sgu.csit.inoc.deansoffice.services.StudentDossierService;
 
 import java.text.SimpleDateFormat;
@@ -138,5 +136,31 @@ public class StudentDossierServiceImpl extends DocumentServiceImpl implements St
         TEXT.put("Student.lastPassport.issuedDate", lastPassport.getIssuedDate() == null ? "" :
                 dateFormat.format(lastPassport.getIssuedDate()));
         TEXT.put("Student.lastPassport.issuingOrganization", lastPassport.getIssuingOrganization());
+
+        AddressService addressService = new AddressServiceImpl();
+        Parent father = student.getAdditionalData().getFather();
+        Parent mather = student.getAdditionalData().getMather();
+
+        TEXT.put("Student.father.fullName", father.getLastName() + " "
+                + father.getFirstName() + " " + father.getMiddleName());
+        TEXT.put("Student.father.birthday", dateFormat.format(father.getBirthday()));
+        TEXT.put("Student.father.address", addressService.toSimpleAddressString(father.getAddress()));
+        TEXT.put("Student.father.workInfo",  father.getWorkInfo());
+        TEXT.put("Student.father.phoneNumbers", father.getPhoneNumbers());
+
+        TEXT.put("Student.mather.fullName", mather.getLastName() + " "
+                + mather.getFirstName() + " " + mather.getMiddleName());
+        TEXT.put("Student.mather.birthday", dateFormat.format(mather.getBirthday()));
+        TEXT.put("Student.mather.address", addressService.toSimpleAddressString(mather.getAddress()));
+        TEXT.put("Student.mather.workInfo",  mather.getWorkInfo());
+        TEXT.put("Student.mather.phoneNumbers", mather.getPhoneNumbers());
+
+        TEXT.put("Student.oldAddress", addressService.toSimpleAddressString(
+                student.getAdditionalData().getOldAddress()));
+        TEXT.put("Student.actualAddress", addressService.toSimpleAddressString(
+                student.getAdditionalData().getActualAddress()));
+        TEXT.put("Student.passportAddress", student.getAdditionalData().getPassports().size() > 1 ?
+                addressService.toSimpleAddressString(lastPassport.getAddress()) :
+                addressService.toSimpleAddressString(firstPassport.getAddress()));
     }
 }

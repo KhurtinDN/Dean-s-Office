@@ -226,7 +226,7 @@ public class TestMain {
         public static Student.AdditionalStudentData getRandomAdditionalData(Student student) {
             Student.AdditionalStudentData additionalData = new Student.AdditionalStudentData();
             Passport passport = new Passport(student);
-            Address address = new Address("Российская Федерация", "", "",
+            Address address = new Address("Российская Федерация", null, null,
                     "г. Саратов", "ул. Астраханская, д. 77, кв. 13");
 
             addressDAO.save(address);
@@ -249,6 +249,8 @@ public class TestMain {
             additionalData.setOldAddress(address);
             additionalData.setFather(getRandomParent(Person.Sex.MALE));
             additionalData.setMather(getRandomParent(Person.Sex.FEMALE));
+            additionalData.getFather().setAddress(address);
+            additionalData.getMather().setAddress(address);
             parentDAO.save(additionalData.getFather());
             parentDAO.save(additionalData.getMather());
 
@@ -286,6 +288,7 @@ public class TestMain {
 
             parent.setBirthday(new GregorianCalendar().getTime());
             parent.setPhoneNumbers("02, 03, 89875858888");
+            parent.setWorkInfo("ООО \"Машиностроитель\", системный программист");
 
             return parent;
         }
