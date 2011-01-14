@@ -21,101 +21,252 @@
                         </tr>
                         <tr>
                             <td />
-                            <td align="left"><font size="12"><b>Ф.И.О.:</b>  <font size="14"><var name="Student.fullName" /></font>
+                            <td align="left"><font size="12">Ф.И.О.:  <font size="14" type="sans"><var name="Student.fullName" /></font>
 
-<b>Специальность (направление):</b> <var name="Student.speciality" />, <var name="Student.startYear" /> г. п. <b>Шифр (по ОКСО):</b> <var name="Student.specialityCode" /></font></td>
+Специальность (направление): <font type="sans"><var name="Student.speciality" />, <var name="Student.startYear" /> г. п.</font> Шифр (по ОКСО): <font type="sans"><var name="Student.specialityCode" /></font></font></td>
                         </tr>
                     </table></td>
                 </tr>
             </table></td>
 		</tr>
         <tr>
-            <td><table columns="2" width="100" align="center" border="15">
+            <td><table columns="2" width="100" align="center" border="0">
                 <tr>
-                    <td><table columns="2" width="100" align="center" border="15">
+                    <td border="8"><table columns="2" width="100" align="center" border="2">
                         <tr>
-                            <td padding="4"><b>1. Пол</b></td>
-                            <td><var name="Student.sex" /></td>
+                            <td padding="4">1. Пол</td>
+                            <td padding="4"><font type="sans"><var name="Student.sex" /></font></td>
                         </tr>
                         <tr>
-                            <td padding="4"><b>2. Дата рождения</b></td>
-                            <td><var name="Student.birthday" /></td>
+                            <td padding="4">2. Дата рождения</td>
+                            <td padding="4"><font type="sans"><var name="Student.birthday" /></font></td>
                         </tr>
                         <tr>
-                            <td padding="4"><b>3. Место рождения</b></td>
-                            <td><var name="Student.birthPlace" /></td>
+                            <td padding="4">3. Место рождения</td>
+                            <td padding="4"><font type="sans"><var name="Student.birthPlace" /></font></td>
                         </tr>
                         <tr>
-                            <td padding="4"><b>4. Гражданство</b></td>
-                            <td><var name="Student.citizenship" /></td>
+                            <td padding="4">4. Гражданство</td>
+                            <td padding="4"><font type="sans"><var name="Student.citizenship" /></font></td>
                         </tr>
                         <tr>
-                            <td padding="4"><b>5. Образование (какое учебное заведение окончил, когда и где)</b></td>
-                            <td><var name="Student.education" /></td>
+                            <td padding="4">5. Образование (какое учебное заведение окончил, когда и где)</td>
+                            <td padding="4"><font type="sans"><var name="Student.education" /></font></td>
                         </tr>
                         <tr>
-                            <td padding="4"><b>6. Выполняемая работа (учёба) до поступления в ВУЗ (где и в качестве кого), стаж работы</b></td>
-                            <td><var name="Student.workInfo" /></td>
+                            <td padding="4">6. Выполняемая работа (учёба) до поступления в ВУЗ (где и в качестве кого), стаж работы</td>
+                            <td padding="4"><font type="sans"><var name="Student.workInfo" /></font></td>
                         </tr>
                         <tr>
-                            <td padding="4"><b>7. Паспортные данные</b>
+                            <td padding="4" border="10">7. Паспортные данные
 
-<b>Ф.И.О.:</b> <var name="Student.firstPassport.fullName" />
-<b>Серия:</b> <var name="Student.firstPassport.series" /> <b>№:</b> <var name="Student.firstPassport.number" />
-<b>Кем и когда выдан:</b> <var name="Student.firstPassport.issuingOrganization" /> <var name="Student.firstPassport.issuedDate" /></td>
-                            <td padding="4"><b>Данные после смены паспорта</b>
+Ф.И.О.: <font type="sans"><var name="Student.firstPassport.fullName" /></font>
+Серия: <font type="sans"><var name="Student.firstPassport.series" /></font> №: <font type="sans"><var name="Student.firstPassport.number" /></font>
+Кем и когда выдан: <font type="sans"><var name="Student.firstPassport.issuingOrganization" /> <var name="Student.firstPassport.issuedDate" /></font></td>
+                            <td padding="4">Данные после смены паспорта
 
-<b>Ф.И.О.:</b> <var name="Student.lastPassport.fullName" />
-<b>Серия:</b> <var name="Student.lastPassport.series" /> <b>№:</b> <var name="Student.lastPassport.number" />
-<b>Кем и когда выдан:</b> <var name="Student.lastPassport.issuingOrganization" /> <var name="Student.lastPassport.issuedDate" /></td>
+Ф.И.О.: <font type="sans"><var name="Student.lastPassport.fullName" /></font>
+Серия: <font type="sans"><var name="Student.lastPassport.series" /></font> №: <font type="sans"><var name="Student.lastPassport.number" /></font>
+Кем и когда выдан: <font type="sans"><var name="Student.lastPassport.issuingOrganization" /> <var name="Student.lastPassport.issuedDate" /></font></td>
                         </tr>
                         <tr>
-                            <td colspan="2" padding="4"><b>8. Семейное положение, местожительство жены (мужа)</b>
-<var name="Student.maritalStatus" />
+                            <td colspan="2" padding="4">8. Семейное положение, местожительство жены (мужа)
+<font type="sans"><var name="Student.maritalStatus" /></font>
                             </td>
                         </tr>
                         <tr>
-                            <td colspan="2" padding="4"><b>9. Сведения о детях (пол, дата рождения)</b>
-<var name="Student.childrenInfo" />
+                            <td colspan="2" padding="4" border="0">9. Сведения о детях (пол, дата рождения)
+<font type="sans"><var name="Student.childrenInfo" /></font>
                             </td>
                         </tr>
                     </table></td>
-                    <td><table columns="1" width="100" align="center" border="15">
+                    <td><table columns="1" width="100" align="center" border="2">
                         <tr>
                             <td padding="4">10. Сведения о родителях
 
     Отец
-Ф.И.О.: <var name="Student.father.fullName" />
-Дата рождения: <var name="Student.father.birthday" />
-Адрес: <var name="Student.father.address" />
-Сведения о работе: <var name="Student.father.workInfo" />
-Тел.: <var name="Student.father.phoneNumbers" />
+Ф.И.О.: <font type="sans"><var name="Student.father.fullName" /></font>
+Дата рождения: <font type="sans"><var name="Student.father.birthday" /></font>
+Адрес: <font type="sans"><var name="Student.father.address" /></font>
+Сведения о работе: <font type="sans"><var name="Student.father.workInfo" /></font>
+Тел.: <font type="sans"><var name="Student.father.phoneNumbers" /></font>
 
     Мать
-Ф.И.О.: <var name="Student.mather.fullName" />
-Дата рождения: <var name="Student.mather.birthday" />
-Адрес: <var name="Student.mather.address" />
-Сведения о работе: <var name="Student.mather.workInfo" />
-Тел.: <var name="Student.mather.phoneNumbers" />
+Ф.И.О.: <font type="sans"><var name="Student.mather.fullName" /></font>
+Дата рождения: <font type="sans"><var name="Student.mather.birthday" /></font>
+Адрес: <font type="sans"><var name="Student.mather.address" /></font>
+Сведения о работе: <font type="sans"><var name="Student.mather.workInfo" /></font>
+Тел.: <font type="sans"><var name="Student.mather.phoneNumbers" /></font>
                                 </td>
                         </tr>
                         <tr>
                             <td padding="4">11. Домашний адрес
 
-До поступления: <var name="Student.oldAddress" />
+До поступления: <font type="sans"><var name="Student.oldAddress" /></font>
 
-По паспорту: <var name="Student.passportAddress" />
+По паспорту: <font type="sans"><var name="Student.passportAddress" /></font>
 
-Фактический: <var name="Student.actualAddress" />
+Фактический: <font type="sans"><var name="Student.actualAddress" /></font>
 
 </td>
                         </tr>
                         <tr>
-                            <td padding="8" align="right" valign="bottom">"___"___________20___г.     Личная подпись ______________</td>
+                            <td padding="8" align="right" valign="bottom" border="0">"___"___________20___г.     Личная подпись ______________</td>
                         </tr>
                     </table></td>
                 </tr>
             </table></td>
         </tr>
 	</table>
+<newpage /><table columns="1" width="100" align="center" border="15">
+		<tr>
+            <td><table columns="6" width="100" widths="1 1 3 2 4 3" align="center" border="15">
+		<tr>
+            <td colspan="6" padding="5" align="center"><b>Регистрация прохождения учёбы</b></td>
+        </tr>
+        <tr>
+            <td padding="4" align="center">Курс</td>
+            <td padding="4" align="center">Семестр</td>
+            <td padding="4" align="center">Факультет</td>
+            <td padding="4" align="center">Размер стипендии</td>
+            <td padding="4" align="center">№ и дата приказа о зачислении и переводе на следующий курс</td>
+            <td padding="4" align="center">Примечание</td>
+        </tr>
+        <tr>
+            <td rowspan="2" padding="4" align="center" valign="middle"><b>I</b></td>
+            <td padding="4" align="center"> </td>
+            <td padding="4"> </td>
+            <td padding="4"> </td>
+            <td padding="4"> </td>
+            <td padding="4"> </td>
+        </tr>
+        <tr>
+            <td padding="4" align="center"> </td>
+            <td padding="4"> </td>
+            <td padding="4"> </td>
+            <td padding="4"> </td>
+            <td padding="4"> </td>
+        </tr>
+        <tr>
+            <td rowspan="2" padding="4" align="center" valign="middle"><b>II</b></td>
+            <td padding="4" align="center"> </td>
+            <td padding="4"> </td>
+            <td padding="4"> </td>
+            <td padding="4"> </td>
+            <td padding="4"> </td>
+        </tr>
+        <tr>
+            <td padding="4" align="center"> </td>
+            <td padding="4"> </td>
+            <td padding="4"> </td>
+            <td padding="4"> </td>
+            <td padding="4"> </td>
+        </tr>
+        <tr>
+            <td rowspan="2" padding="4" align="center" valign="middle"><b>III</b></td>
+            <td padding="4" align="center"> </td>
+            <td padding="4"> </td>
+            <td padding="4"> </td>
+            <td padding="4"> </td>
+            <td padding="4"> </td>
+        </tr>
+        <tr>
+            <td padding="4" align="center"> </td>
+            <td padding="4"> </td>
+            <td padding="4"> </td>
+            <td padding="4"> </td>
+            <td padding="4"> </td>
+        </tr>
+        <tr>
+            <td rowspan="2" padding="4" align="center" valign="middle"><b>IV</b></td>
+            <td padding="4" align="center"> </td>
+            <td padding="4"> </td>
+            <td padding="4"> </td>
+            <td padding="4"> </td>
+            <td padding="4"> </td>
+        </tr>
+        <tr>
+            <td padding="4" align="center"> </td>
+            <td padding="4"> </td>
+            <td padding="4"> </td>
+            <td padding="4"> </td>
+            <td padding="4"> </td>
+        </tr>
+        <tr>
+            <td rowspan="2" padding="4" align="center" valign="middle"><b>V</b></td>
+            <td padding="4" align="center"> </td>
+            <td padding="4"> </td>
+            <td padding="4"> </td>
+            <td padding="4"> </td>
+            <td padding="4"> </td>
+        </tr>
+        <tr>
+            <td padding="4" align="center"> </td>
+            <td padding="4"> </td>
+            <td padding="4"> </td>
+            <td padding="4"> </td>
+            <td padding="4"> </td>
+        </tr>
+        <tr>
+            <td rowspan="2" padding="4" align="center" valign="middle"><b>VI</b></td>
+            <td padding="4" align="center"> </td>
+            <td padding="4"> </td>
+            <td padding="4"> </td>
+            <td padding="4"> </td>
+            <td padding="4"> </td>
+        </tr>
+        <tr>
+            <td padding="4" align="center"> </td>
+            <td padding="4"> </td>
+            <td padding="4"> </td>
+            <td padding="4"> </td>
+            <td padding="4"> </td>
+        </tr>
+	</table></td>
+    </tr>
+    <tr>
+        <td><table columns="6" width="100" widths="9 5 3 7 4 5" align="center" border="15">
+		<tr>
+            <td colspan="6" align="center" padding="8" border="0">
+<b>Отметки о поощрениях и взысканиях</b>
+</td>
+        </tr>
+        <tr>
+            <td  colspan="6" border="0">Когда, за что и какое объявлено поощрение или наложено взыскание и когда взыскание снято:</td>
+        </tr>
+        <tr>
+            <td  colspan="6" border="2"> </td>
+        </tr>
+        <tr>
+            <td  colspan="6" border="2"> </td>
+        </tr>
+        <tr>
+            <td border="0" align="right">Дата окончания учебного заведения</td>
+            <td border="2"> </td>
+            <td border="0" align="right">№ диплома</td>
+            <td border="2"> </td>
+            <td border="0" align="right">№ приказа, дата</td>
+            <td border="2"> </td>
+        </tr>
+        <tr>
+            <td colspan="3" border="0"> </td>
+            <td align="center" border="0"><font size="8">(по основной специальности)</font></td>
+            <td colspan="2" border="0"> </td>
+        </tr>
+        <tr>
+            <td border="0"> </td>
+            <td border="0"> </td>
+            <td border="0" align="right">№ диплома</td>
+            <td border="2"> </td>
+            <td border="0" align="right">№ приказа, дата</td>
+            <td border="2"> </td>
+        </tr>
+        <tr>
+            <td colspan="3" border="0"> </td>
+            <td align="center" border="0"><font size="8">(по дополнительному образованию)</font></td>
+            <td colspan="2" border="0"> </td>
+        </tr>
+        </table></td>
+    </tr>
+    </table>
 </document>

@@ -37,6 +37,7 @@ public class XmlToPdfReportProcessorHandler extends DefaultHandler {
     private Stack<MyCell> stackCells = new Stack<MyCell>();
 
     private Document document;
+    private Rectangle pageSize;
     private OutputStream outputStream = null;
     Report report;
 
@@ -52,7 +53,7 @@ public class XmlToPdfReportProcessorHandler extends DefaultHandler {
         }
     }
 
-    public void initDocument(String outputFileName, Rectangle pageSize) {
+    public void initDocument(String outputFileName) {
         document = new Document();
         if (outputFileName == null || outputFileName.isEmpty()) {
             outputFileName = "document.pdf";
@@ -157,6 +158,7 @@ public class XmlToPdfReportProcessorHandler extends DefaultHandler {
         targetCell.setHorizontalAlignment(sourceCell.getHorizontalAlignment());
         targetCell.setVerticalAlignment(sourceCell.getVerticalAlignment());
         targetCell.setColspan(sourceCell.getColspan());
+        targetCell.setRowspan(sourceCell.getRowspan());
         targetCell.setPaddingBottom(sourceCell.getPaddingBottom());
         targetCell.setPaddingLeft(sourceCell.getPaddingLeft());
         targetCell.setPaddingRight(sourceCell.getPaddingRight());
@@ -195,7 +197,7 @@ public class XmlToPdfReportProcessorHandler extends DefaultHandler {
         if ("document".equals(qName)) {
             String outputFileName = null;
             boolean pdfFlag = false;
-            Rectangle format = PageSize.A4;
+            pageSize = PageSize.A4;
             String orientation = "portrait";
 
             if (attributes != null) {
@@ -211,7 +213,7 @@ public class XmlToPdfReportProcessorHandler extends DefaultHandler {
                         } else if ("name".equals(attributeName)) {
                             outputFileName = attributeValue;
                         } else if ("format".equals(attributeName)) {
-                            format = rectangleByName(attributeValue);
+                            pageSize = rectangleByName(attributeValue);
                         } else if ("orientation".equals(attributeName)) {
                             orientation = attributeValue;
                         }
@@ -222,24 +224,12 @@ public class XmlToPdfReportProcessorHandler extends DefaultHandler {
                 throw new RuntimeException("Document [" + url + "] is not contains definition PDF type.");
             }
             if ("landscape".equals(orientation)) {
-                format = format.rotate();
+                pageSize = pageSize.rotate();
             }
-            initDocument(outputFileName, format);
-        } else if ("var".equals(qName)) {
-            if (attributes != null) {
-                for (int i = 0, n = attributes.getLength(); i < n; ++i) {
-                    String attributeName = attributes.getLocalName(i);
-                    String attributeValue = attributes.getValue(i);
-
-                    if ("name".equals(attributeName)) {
-                        String strChunk = report.getVariableValue(attributeValue).toString();
-
-                        if (!stackElements.isEmpty()) {
-                            ((Phrase) stackElements.peek()).add(new Chunk(strChunk, fontCollector.getCurrentFont()));
-                        }
-                    }
-                }
-            }
+            initDocument(outputFileName);
+        } else if ("newpage".equals(qName)) {
+            document.newPage();
+            document.setPageSize(pageSize);
         } else if ("var".equals(qName)) {
             if (attributes != null) {
                 for (int i = 0, n = attributes.getLength(); i < n; ++i) {
@@ -416,6 +406,8 @@ public class XmlToPdfReportProcessorHandler extends DefaultHandler {
                             cell.setVerticalAlignment(alignElementVerticalByName(attributeValue));
                         } else if ("colspan".equals(attributeName)) {
                             cell.setColspan(Integer.valueOf(attributeValue));
+                        } else if ("rowspan".equals(attributeName)) {
+                            cell.setRowspan(Integer.valueOf(attributeValue));
                         } else if ("padding".equals(attributeName)) {
                             cell.setPadding(Float.valueOf(attributeValue));
                         } else if ("paddingBottom".equals(attributeName)) {
