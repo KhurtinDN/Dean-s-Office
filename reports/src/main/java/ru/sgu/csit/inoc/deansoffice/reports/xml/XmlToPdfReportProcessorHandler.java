@@ -446,23 +446,27 @@ public class XmlToPdfReportProcessorHandler extends DefaultHandler {
         } else if ("b".equals(qName)) {
             Font font = fontCollector.getCurrentFont();
             int style = fontCollector.getCurrentStyle();
+            String[] fontFileNames = fontCollector.getCurrentFontFileNames();
 
-            fontCollector.setNewFont(font.getSize(), style | Font.BOLD);
+            fontCollector.setNewFont(font.getSize(), style | Font.BOLD, fontFileNames);
         } else if ("i".equals(qName)) {
             Font font = fontCollector.getCurrentFont();
             int style = fontCollector.getCurrentStyle();
+            String[] fontFileNames = fontCollector.getCurrentFontFileNames();
 
-            fontCollector.setNewFont(font.getSize(), style | Font.ITALIC);
+            fontCollector.setNewFont(font.getSize(), style | Font.ITALIC, fontFileNames);
         } else if ("u".equals(qName)) {
             Font font = fontCollector.getCurrentFont();
             int style = fontCollector.getCurrentStyle();
+            String[] fontFileNames = fontCollector.getCurrentFontFileNames();
 
-            fontCollector.setNewFont(font.getSize(), style | Font.UNDERLINE);
+            fontCollector.setNewFont(font.getSize(), style | Font.UNDERLINE, fontFileNames);
         } else if ("font".equals(qName)) {
             Font font = fontCollector.getCurrentFont();
             Float size = font.getSize();
             int style = fontCollector.getCurrentStyle();
             boolean setStyle = false;
+            String[] fontFileNames = fontCollector.getCurrentFontFileNames();
 
             if (attributes != null) {
                 for (int i = 0, n = attributes.getLength(); i < n; ++i) {
@@ -483,11 +487,19 @@ public class XmlToPdfReportProcessorHandler extends DefaultHandler {
                         } else if ("underline".equals(attributeValue)) {
                             style |= Font.UNDERLINE;
                         }
+                    }  else if ("type".equals(attributeName)) {
+                        if ("serif".equals(attributeValue)) {
+                            fontFileNames = FontDescriptor.FONT_LSERIF;
+                        } else if ("sans".equals(attributeValue)) {
+                            fontFileNames = FontDescriptor.FONT_LSANS;
+                        } else if ("mono".equals(attributeValue)) {
+                            fontFileNames = FontDescriptor.FONT_LMONO;
+                        }
                     }
                 }
             }
 
-            fontCollector.setNewFont(size, style);
+            fontCollector.setNewFont(size, style, fontFileNames);
         }
     }
 

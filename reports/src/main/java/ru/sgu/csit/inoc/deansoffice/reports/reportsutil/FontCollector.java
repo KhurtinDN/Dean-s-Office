@@ -23,8 +23,8 @@ public class FontCollector {
     private void setFontBase() {
         try {
             BaseFont baseFont =
-                    BaseFont.createFont(TextDescriptor.FONT_LSERIF[0], BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED);
-            currentFont = new MyFont(new Font(baseFont, Font.DEFAULTSIZE, Font.NORMAL), 0);
+                    BaseFont.createFont(FontDescriptor.FONT_LSERIF[0], BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED);
+            currentFont = new MyFont(new Font(baseFont, Font.DEFAULTSIZE, Font.NORMAL), 0, FontDescriptor.FONT_LSERIF);
         } catch (DocumentException e) {
             throw new RuntimeException("Document exception.", e);
         } catch (IOException e) {
@@ -32,12 +32,15 @@ public class FontCollector {
         }
     }
 
-    public Font setNewFont(float size, int style) {
+    public Font setNewFont(float size, int style, String[] arrayFontFileNames) {
+        if (arrayFontFileNames == null) {
+            arrayFontFileNames = FontDescriptor.FONT_LSERIF;
+        }
         stackFonts.push(currentFont);
         try {
-            BaseFont baseFont = BaseFont.createFont(TextDescriptor.FONT_LSERIF[style & 3],
+            BaseFont baseFont = BaseFont.createFont(arrayFontFileNames[style & 3],
                     BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED);
-            currentFont = new MyFont(new Font(baseFont, size, Font.UNDERLINE & style), style);
+            currentFont = new MyFont(new Font(baseFont, size, Font.UNDERLINE & style), style, arrayFontFileNames);
         } catch (DocumentException e) {
             throw new RuntimeException("Document exception.", e);
         } catch (IOException e) {
@@ -55,6 +58,10 @@ public class FontCollector {
         return currentFont.style;
     }
 
+    public String[] getCurrentFontFileNames() {
+        return currentFont.fontFileNames;
+    }
+
     public void resetFont() {
         if (!stackFonts.isEmpty()) {
             currentFont = stackFonts.pop();
@@ -66,13 +73,15 @@ public class FontCollector {
     private class MyFont {
         public Font font;
         public int style;
+        public String[] fontFileNames;
 
         public MyFont() {
         }
 
-        public MyFont(Font font, int style) {
+        public MyFont(Font font, int style, String[] fontFileNames) {
             this.font = font;
             this.style = style;
+            this.fontFileNames = fontFileNames;
         }
     }
 }
