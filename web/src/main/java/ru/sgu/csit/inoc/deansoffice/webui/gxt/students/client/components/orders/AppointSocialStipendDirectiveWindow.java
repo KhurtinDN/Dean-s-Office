@@ -50,7 +50,7 @@ public class AppointSocialStipendDirectiveWindow extends AbstractDirectiveWindow
         final EditorGrid<StudentModel> studentGrid = createStudentGrid();
 
         ContentPanel captainsContentPanel = new ContentPanel(new FitLayout());
-        captainsContentPanel.setHeading("Студенты на степендию");
+        captainsContentPanel.setHeading("Студенты на стипендию");
         captainsContentPanel.setHeight(400);
         captainsContentPanel.add(studentGrid);
         captainsContentPanel.addButton(new Button("Изменить начальную дату", new SelectionListener<ButtonEvent>() {
@@ -66,7 +66,7 @@ public class AppointSocialStipendDirectiveWindow extends AbstractDirectiveWindow
                 }
             }
         }));
-        captainsContentPanel.addButton(new Button("Изменить сонечную дату", new SelectionListener<ButtonEvent>() {
+        captainsContentPanel.addButton(new Button("Изменить конечную дату", new SelectionListener<ButtonEvent>() {
             @Override
             public void componentSelected(ButtonEvent ce) {
                 StudentModel studentModel = studentGrid.getSelectionModel().getSelectedItem();

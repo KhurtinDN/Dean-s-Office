@@ -238,7 +238,7 @@ public class OrderDialog extends Window {
 
         // todo: delete after testing
         DirectiveModel directiveModel = new DirectiveModel();
-        directiveModel.set("name", "Распредесление по группам");
+        directiveModel.set("name", "Распределение по группам");
         directiveListStore.add(directiveModel);
 
         PersonModel personModel = new PersonModel();
