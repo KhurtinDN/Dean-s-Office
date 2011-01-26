@@ -1,9 +1,9 @@
-package ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.controllers;
+package ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.mvc.controllers;
 
 import com.extjs.gxt.ui.client.mvc.AppEvent;
 import com.extjs.gxt.ui.client.mvc.Controller;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.mvc.events.AppEvents;
-import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.views.NavigationView;
+import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.mvc.views.NavigationView;
 
 /**
  * User: Khurtin Denis (KhurtinDN@gmail.com)
