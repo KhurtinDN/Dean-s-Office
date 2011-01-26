@@ -31,7 +31,7 @@ public class ActionPanel extends ContentPanel {
         setLayout(new RowLayout(Style.Orientation.HORIZONTAL));
         setHeading("Документы");
 
-        Button reference1Button = new Button("Справка #1", new SelectionListener<ButtonEvent>() {
+        final Button reference1Button = new Button("Справка #1", new SelectionListener<ButtonEvent>() {
             @Override
             public void componentSelected(ButtonEvent ce) {
                 StudentDto selectedStudentItem = studentGrid.getSelectionModel().getSelectedItem();
@@ -51,7 +51,7 @@ public class ActionPanel extends ContentPanel {
             }
         });
 
-        Button reference2Button = new Button("Справка #2", new SelectionListener<ButtonEvent>() {
+        final Button reference2Button = new Button("Справка #2", new SelectionListener<ButtonEvent>() {
             @Override
             public void componentSelected(ButtonEvent ce) {
                 StudentDto selectedStudentItem = studentGrid.getSelectionModel().getSelectedItem();
@@ -63,7 +63,7 @@ public class ActionPanel extends ContentPanel {
                     MessageBox messageBox = new MessageBox();
                     messageBox.setButtons(MessageBox.OK);
                     messageBox.setTitle("Внимание!");
-                    messageBox.setMessage("Выберите, пожалуйста, студента.");
+                    messageBox.setMessage("Выберите пожалуйста студента.");
                     messageBox.show();
                     
 //                    Window.alert("Выберите, пожалуйста, студента");
@@ -71,9 +71,29 @@ public class ActionPanel extends ContentPanel {
             }
         });
 
+//        final StudentAccountWindow studentAccountWindow2 = new StudentAccountWindow();
+
+        final Button viewStudentAccountButton = new Button("Посмотреть учетную карточку студента",
+                new SelectionListener<ButtonEvent>() {
+                    StudentAccountWindow studentAccountWindow;
+                    @Override
+                    public void componentSelected(ButtonEvent ce) {
+                        getStudentAccountWindow().show();
+//                        studentAccountWindow2.show();
+                    }
+
+                    private StudentAccountWindow getStudentAccountWindow() {
+                        if (studentAccountWindow == null) {
+                            studentAccountWindow = new StudentAccountWindow();
+                        }
+                        return studentAccountWindow;
+                    }
+                });
+
         RowData rowData = new RowData();
         rowData.setMargins(new Margins(10, 0, 0, 10));
         add(reference1Button, rowData);
         add(reference2Button, rowData);
+        add(viewStudentAccountButton, rowData);
     }
 }

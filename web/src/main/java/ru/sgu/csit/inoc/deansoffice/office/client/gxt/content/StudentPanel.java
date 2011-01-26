@@ -1,14 +1,11 @@
 package ru.sgu.csit.inoc.deansoffice.office.client.gxt.content;
 
-import com.extjs.gxt.ui.client.Style;
 import com.extjs.gxt.ui.client.widget.ContentPanel;
 import com.extjs.gxt.ui.client.widget.Info;
-import com.extjs.gxt.ui.client.widget.layout.RowData;
-import com.extjs.gxt.ui.client.widget.layout.RowLayout;
+import com.extjs.gxt.ui.client.widget.layout.FitData;
+import com.extjs.gxt.ui.client.widget.layout.FitLayout;
 import com.google.gwt.user.client.Element;
 import com.google.gwt.user.client.rpc.AsyncCallback;
-import ru.sgu.csit.inoc.deansoffice.office.client.gxt.content.StudentGrid;
-import ru.sgu.csit.inoc.deansoffice.office.client.gxt.content.StudentService;
 import ru.sgu.csit.inoc.deansoffice.office.shared.dto.StudentDto;
 
 import java.util.List;
@@ -26,8 +23,8 @@ public class StudentPanel extends ContentPanel {
         super.onRender(parent, pos);
 
         setHeading("Студенты");
-        setLayout(new RowLayout(Style.Orientation.HORIZONTAL));
-        add(studentGrid, new RowData(1, 1));
+        setLayout(new FitLayout());
+        add(studentGrid, new FitData(3));
     }
 
     public StudentGrid getStudentGrid() {
