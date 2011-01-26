@@ -4,6 +4,7 @@ import com.extjs.gxt.ui.client.Style;
 import com.extjs.gxt.ui.client.event.EventType;
 import com.extjs.gxt.ui.client.mvc.AppEvent;
 import com.extjs.gxt.ui.client.mvc.View;
+import com.extjs.gxt.ui.client.widget.Component;
 import com.extjs.gxt.ui.client.widget.ContentPanel;
 import com.extjs.gxt.ui.client.widget.Viewport;
 import com.extjs.gxt.ui.client.widget.layout.BorderLayout;
@@ -39,6 +40,8 @@ public class AppView extends View {
 
         if (eventType.equals(AppEvents.Init)) {
             onInit(event);
+        } else if (eventType.equals(AppEvents.NavigationPanelReady)) {
+            onNavigationPanelReady(event);
         } else if (eventType.equals(AppEvents.UIReady)) {
             onUIReady(event);
         } else if (eventType.equals(AppEvents.Error)) {
@@ -54,6 +57,15 @@ public class AppView extends View {
 
         mainPanel.setHeaderVisible(false);
         viewport.add(mainPanel, centerLayoutData);
+    }
+
+    private void onNavigationPanelReady(AppEvent event) {
+        BorderLayoutData westLayoutData = new BorderLayoutData(Style.LayoutRegion.WEST, 200, 150, 300);
+        westLayoutData.setCollapsible(true);
+        westLayoutData.setSplit(true);
+
+        Component component = event.getData();
+        viewport.add(component, westLayoutData);
     }
 
     private void onUIReady(AppEvent event) {

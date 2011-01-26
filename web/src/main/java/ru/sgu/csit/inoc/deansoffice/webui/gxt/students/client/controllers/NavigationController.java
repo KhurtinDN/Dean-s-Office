@@ -3,31 +3,29 @@ package ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.controllers;
 import com.extjs.gxt.ui.client.mvc.AppEvent;
 import com.extjs.gxt.ui.client.mvc.Controller;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.mvc.events.AppEvents;
-import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.views.AppView;
+import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.views.NavigationView;
 
 /**
  * User: Khurtin Denis (KhurtinDN@gmail.com)
  * Date: 1/26/11
- * Time: 2:25 PM
+ * Time: 5:34 PM
  */
-public class AppController extends Controller {
-    private AppView appView;
+public class NavigationController extends Controller {
+    private NavigationView navigationView;
 
-    public AppController() {
+    public NavigationController() {
         registerEventTypes(AppEvents.Init);
-        registerEventTypes(AppEvents.NavigationPanelReady);
-        registerEventTypes(AppEvents.Error);
     }
 
     @Override
     protected void initialize() {
         super.initialize();
 
-        appView = new AppView(this);
+        navigationView = new NavigationView(this);
     }
 
     @Override
     public void handleEvent(AppEvent event) {
-        forwardToView(appView, event);
+        forwardToView(navigationView, event);
     }
 }
