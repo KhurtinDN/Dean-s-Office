@@ -15,8 +15,9 @@ public class AppController extends Controller {
 
     public AppController() {
         registerEventTypes(AppEvents.Init);
-        registerEventTypes(AppEvents.NavigationPanelReady);
         registerEventTypes(AppEvents.Error);
+        registerEventTypes(AppEvents.UIReady);
+        registerEventTypes(AppEvents.NavigationPanelReady);
     }
 
     @Override

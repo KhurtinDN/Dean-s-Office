@@ -12,6 +12,7 @@ import com.extjs.gxt.ui.client.widget.treepanel.TreePanel;
 import com.google.gwt.user.client.Element;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import ru.sgu.csit.inoc.deansoffice.office.client.gxt.util.*;
+import ru.sgu.csit.inoc.deansoffice.office.client.gxt.util.SelectionListener;
 import ru.sgu.csit.inoc.deansoffice.office.shared.dto.GroupDto;
 import ru.sgu.csit.inoc.deansoffice.office.shared.dto.SpecialityDto;
 
@@ -27,7 +28,7 @@ import java.util.Map;
  * Time: 9:59:46 PM
  */
 public class MenuPanel extends ContentPanel {
-    private List<ru.sgu.csit.inoc.deansoffice.office.client.gxt.util.SelectionListener> listeners = new LinkedList<ru.sgu.csit.inoc.deansoffice.office.client.gxt.util.SelectionListener>();
+    private List<SelectionListener> listeners = new LinkedList<SelectionListener>();
 
     private final MenuSelectHandler menuSelectHandler = new MenuSelectHandler();
 
@@ -98,7 +99,7 @@ public class MenuPanel extends ContentPanel {
         }
     }
 
-    public void addMenuSelectionListener(ru.sgu.csit.inoc.deansoffice.office.client.gxt.util.SelectionListener listener) {
+    public void addMenuSelectionListener(SelectionListener listener) {
         listeners.add(listener);
     }
 
@@ -107,7 +108,7 @@ public class MenuPanel extends ContentPanel {
         public void selectionChanged(SelectionChangedEvent<ModelData> se) {
             ModelData data = se.getSelectedItem();
 
-            for (ru.sgu.csit.inoc.deansoffice.office.client.gxt.util.SelectionListener listener : listeners) {
+            for (SelectionListener listener : listeners) {
                 listener.selectionChanged(data);
             }
         }
