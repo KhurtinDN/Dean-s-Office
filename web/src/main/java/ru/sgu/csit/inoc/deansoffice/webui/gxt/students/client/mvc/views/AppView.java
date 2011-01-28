@@ -47,12 +47,17 @@ public class AppView extends View {
             onError(event);
         } else if (eventType.equals(AppEvents.NavigationPanelReady)) {
             onNavigationPanelReady(event);
+        } else if (eventType.equals(AppEvents.MenuBarReady)) {
+            onMenuBarReady(event);
+        } else if (eventType.equals(AppEvents.StatusBarReady)) {
+            onStatusBarReady(event);
         } else if (eventType.equals(AppEvents.UIReady)) {
             onUIReady(event);
         }
     }
 
     private void onInit(AppEvent event) {
+        viewportPanel.setHeaderVisible(false);
         viewportPanel.setLayout(new BorderLayout());
 
         BorderLayoutData centerLayoutData = new BorderLayoutData(Style.LayoutRegion.CENTER);
@@ -66,18 +71,35 @@ public class AppView extends View {
         viewport.add(viewportPanel);
     }
 
-    private void onNavigationPanelReady(AppEvent event) {
-        BorderLayoutData westLayoutData = new BorderLayoutData(Style.LayoutRegion.WEST, 300, 200, 400);
-        westLayoutData.setCollapsible(true);
-        westLayoutData.setSplit(true);
+    private void onError(AppEvent event) {}
 
+    private void onNavigationPanelReady(AppEvent event) {
         Component component = event.getData();
-        viewport.add(component, westLayoutData);
+
+        if (component != null) {
+            BorderLayoutData westLayoutData = new BorderLayoutData(Style.LayoutRegion.WEST, 200, 150, 400);
+            westLayoutData.setCollapsible(true);
+            westLayoutData.setSplit(true);
+
+            viewportPanel.add(component, westLayoutData);
+        }
+    }
+
+    private void onMenuBarReady(AppEvent event) {
+        Component component = event.getData();
+        if (component != null) {
+            viewportPanel.setTopComponent(component);
+        }
+    }
+
+    private void onStatusBarReady(AppEvent event) {
+        Component component = event.getData();
+        if (component != null) {
+            viewportPanel.setBottomComponent(component);
+        }
     }
 
     private void onUIReady(AppEvent event) {
         RootLayoutPanel.get().add(viewport);
     }
-
-    private void onError(AppEvent event) {}
 }

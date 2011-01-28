@@ -3,7 +3,9 @@ package ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client;
 import com.extjs.gxt.ui.client.mvc.Dispatcher;
 import com.google.gwt.core.client.EntryPoint;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.mvc.controllers.AppController;
+import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.mvc.controllers.MenuBarController;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.mvc.controllers.NavigationController;
+import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.mvc.controllers.StatusBarController;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.mvc.events.AppEvents;
 
 /**
@@ -16,6 +18,8 @@ public class Students implements EntryPoint {
         Dispatcher dispatcher = Dispatcher.get();
         dispatcher.addController(new AppController());
         dispatcher.addController(new NavigationController());
+        dispatcher.addController(new MenuBarController());
+        dispatcher.addController(new StatusBarController());
         dispatcher.dispatch(AppEvents.Init);
         dispatcher.dispatch(AppEvents.UIReady);
     }

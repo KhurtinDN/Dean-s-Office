@@ -1,7 +1,6 @@
 package ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client;
 
 import com.extjs.gxt.ui.client.data.*;
-import com.extjs.gxt.ui.client.event.ComponentEvent;
 import com.extjs.gxt.ui.client.event.SelectionChangedEvent;
 import com.extjs.gxt.ui.client.event.SelectionChangedListener;
 import com.extjs.gxt.ui.client.mvc.Dispatcher;
@@ -11,7 +10,7 @@ import com.extjs.gxt.ui.client.widget.Info;
 import com.extjs.gxt.ui.client.widget.LayoutContainer;
 import com.extjs.gxt.ui.client.widget.layout.AccordionLayout;
 import com.extjs.gxt.ui.client.widget.layout.FitLayout;
-import com.extjs.gxt.ui.client.widget.layout.FlowLayout;
+import com.extjs.gxt.ui.client.widget.layout.VBoxLayout;
 import com.extjs.gxt.ui.client.widget.treepanel.TreePanel;
 import com.google.gwt.user.client.Element;
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -33,16 +32,19 @@ public class NavigationPanel extends ContentPanel {
         super.onRender(parent, pos);
 
         setHeading("Структура факультета");
-        setLayout(new FlowLayout());
+
+        VBoxLayout vBoxLayout = new VBoxLayout();
+        vBoxLayout.setVBoxLayoutAlign(VBoxLayout.VBoxLayoutAlign.STRETCH);
+        setLayout(vBoxLayout);
 
         StudentService.App.getInstance().getCourseCount(new AsyncCallback<Integer>() {
             @Override
             public void onSuccess(Integer courseCount) {
                 LayoutContainer navigationContainer = new LayoutContainer(new AccordionLayout() {
-                    @Override
+                    /*@Override
                     protected void onExpand(ComponentEvent ce) {
                         layoutContainer();
-                    }
+                    }*/
                 });
 
                 ContentPanel firstPanel = new ContentPanel(); // for normal fly expanding
@@ -66,7 +68,7 @@ public class NavigationPanel extends ContentPanel {
                             }
                         }
                     });
-//                    treePanel.setAutoExpand(true);
+                    treePanel.setAutoExpand(true);
 
                     loader.load();
 
@@ -93,7 +95,7 @@ public class NavigationPanel extends ContentPanel {
         RpcProxy<List<BaseModel>> proxy = new RpcProxy<List<BaseModel>>() {
             @Override
             protected void load(Object loadConfig, AsyncCallback<List<BaseModel>> listAsyncCallback) {
-                BaseModel parent = (BaseModel)loadConfig;
+                BaseModel parent = (BaseModel) loadConfig;
                 StudentService.App.getInstance().loadNavigationTree(course, parent, listAsyncCallback);
             }
         };

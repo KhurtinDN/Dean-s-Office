@@ -3,34 +3,33 @@ package ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.mvc.controllers;
 import com.extjs.gxt.ui.client.mvc.AppEvent;
 import com.extjs.gxt.ui.client.mvc.Controller;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.mvc.events.AppEvents;
-import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.mvc.views.AppView;
+import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.mvc.views.StatusBarView;
 
 /**
  * User: Khurtin Denis (KhurtinDN@gmail.com)
- * Date: 1/26/11
- * Time: 2:25 PM
+ * Date: 1/28/11
+ * Time: 11:18 AM
  */
-public class AppController extends Controller {
-    private AppView appView;
+public class StatusBarController extends Controller {
+    private StatusBarView statusBarView;
 
-    public AppController() {
+    public StatusBarController() {
         registerEventTypes(AppEvents.Init);
-        registerEventTypes(AppEvents.Error);
         registerEventTypes(AppEvents.UIReady);
-        registerEventTypes(AppEvents.MenuBarReady);
-        registerEventTypes(AppEvents.StatusBarReady);
-        registerEventTypes(AppEvents.NavigationPanelReady);
+        registerEventTypes(AppEvents.SpecialitySelected);
+        registerEventTypes(AppEvents.GroupSelected);
+        registerEventTypes(AppEvents.StudentSelected);
     }
 
     @Override
     protected void initialize() {
         super.initialize();
 
-        appView = new AppView(this);
+        statusBarView = new StatusBarView(this);
     }
 
     @Override
     public void handleEvent(AppEvent event) {
-        forwardToView(appView, event);
+        forwardToView(statusBarView, event);
     }
 }
