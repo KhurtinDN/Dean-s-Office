@@ -22,14 +22,12 @@
     </build>
 
     <dependencies>
-        <!--
         <dependency>
             <groupId>ru.sgu.csit.inoc</groupId>
             <artifactId>reports</artifactId>
             <version>1.0-SNAPSHOT</version>
             <scope>compile</scope>
         </dependency>
-        -->
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-entitymanager</artifactId>

@@ -7,6 +7,9 @@ import ru.sgu.csit.inoc.deansoffice.domain.Reference;
 import ru.sgu.csit.inoc.deansoffice.domain.Student;
 import ru.sgu.csit.inoc.deansoffice.domain.Template;
 import ru.sgu.csit.inoc.deansoffice.reports.ReportPdfProcessor;
+import ru.sgu.csit.inoc.deansoffice.reports.reportsutil.Report;
+import ru.sgu.csit.inoc.deansoffice.services.ReferenceService;
+import ru.sgu.csit.inoc.deansoffice.services.impl.ReferenceServiceImpl;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -64,11 +67,13 @@ public class DocumentServlet extends HttpServlet {
             
             Reference reference = new Reference();
             reference.setPrintTemplate(new Template(templateName));
-            reference.build(student);
+
+            ReferenceService referenceService = new ReferenceServiceImpl(reference);
+            referenceService.build(student);
 
             response.setContentType("application/pdf");
             OutputStream outputStream = response.getOutputStream();
-            ReportPdfProcessor.getInstance().generate(reference, outputStream);
+            ReportPdfProcessor.getInstance().generate((Report) referenceService, outputStream);
             outputStream.flush();
         } else {
             response.sendError(HttpServletResponse.SC_NOT_FOUND);

@@ -2,11 +2,6 @@ package ru.sgu.csit.inoc.deansoffice.domain;
 
 import javax.persistence.*;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-
-import ru.sgu.csit.inoc.deansoffice.reports.reportsutil.Report;
-import ru.sgu.csit.inoc.deansoffice.reports.reportsutil.TemplType;
 
 /**
  * .
