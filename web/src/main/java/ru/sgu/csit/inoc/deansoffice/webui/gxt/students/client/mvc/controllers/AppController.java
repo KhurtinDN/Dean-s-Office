@@ -16,10 +16,12 @@ public class AppController extends Controller {
     public AppController() {
         registerEventTypes(AppEvents.Init);
         registerEventTypes(AppEvents.Error);
+        registerEventTypes(AppEvents.NavigationPanelReady);
+        registerEventTypes(AppEvents.StudentsPanelReady);
+        registerEventTypes(AppEvents.InformationPanelReady);
         registerEventTypes(AppEvents.UIReady);
         registerEventTypes(AppEvents.MenuBarReady);
         registerEventTypes(AppEvents.StatusBarReady);
-        registerEventTypes(AppEvents.NavigationPanelReady);
     }
 
     @Override

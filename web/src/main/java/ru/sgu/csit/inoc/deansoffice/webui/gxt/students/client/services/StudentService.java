@@ -6,6 +6,7 @@ import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 import com.google.gwt.core.client.GWT;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.shared.model.GroupModel;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.shared.model.SpecialityModel;
+import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.shared.model.StudentModel;
 
 import java.util.List;
 
@@ -19,7 +20,10 @@ public interface StudentService extends RemoteService {
     Integer getCourseCount();
     List<SpecialityModel> loadSpecialityList();
     List<GroupModel> loadGroupList(Integer course, Long specialityId);
+    List<StudentModel> loadStudentList(Long groupId);
     List<BaseModel> loadNavigationTree(Integer course, BaseModel parent);
+
+    List<StudentModel> loadStudentListBySpecialityIdAndCourse(Long specialityId, Integer course);
 
     public static class App {
         private static final StudentServiceAsync ourInstance = GWT.create(StudentService.class);

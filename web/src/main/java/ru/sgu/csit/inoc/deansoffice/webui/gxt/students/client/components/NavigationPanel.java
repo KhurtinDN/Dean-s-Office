@@ -1,8 +1,9 @@
-package ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client;
+package ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.components;
 
 import com.extjs.gxt.ui.client.data.*;
 import com.extjs.gxt.ui.client.event.SelectionChangedEvent;
 import com.extjs.gxt.ui.client.event.SelectionChangedListener;
+import com.extjs.gxt.ui.client.mvc.AppEvent;
 import com.extjs.gxt.ui.client.mvc.Dispatcher;
 import com.extjs.gxt.ui.client.store.TreeStore;
 import com.extjs.gxt.ui.client.widget.ContentPanel;
@@ -56,13 +57,17 @@ public class NavigationPanel extends ContentPanel {
                     TreeStore<BaseModel> treeStore = new TreeStore<BaseModel>(loader);
                     TreePanel<BaseModel> treePanel = new TreePanel<BaseModel>(treeStore);
                     treePanel.setDisplayProperty("name");
+
+                    final Integer finalCourse = course;
                     treePanel.getSelectionModel().addSelectionChangedListener(new SelectionChangedListener<BaseModel>() {
                         @Override
                         public void selectionChanged(SelectionChangedEvent<BaseModel> se) {
                             BaseModel baseModel = se.getSelectedItem();
 
                             if (baseModel instanceof SpecialityModel) {
-                                Dispatcher.forwardEvent(AppEvents.SpecialitySelected, baseModel);
+                                AppEvent appEvent = new AppEvent(AppEvents.SpecialitySelected, baseModel);
+                                appEvent.setData("course", finalCourse);
+                                Dispatcher.forwardEvent(appEvent);
                             } else if (baseModel instanceof GroupModel) {
                                 Dispatcher.forwardEvent(AppEvents.GroupSelected, baseModel);
                             }

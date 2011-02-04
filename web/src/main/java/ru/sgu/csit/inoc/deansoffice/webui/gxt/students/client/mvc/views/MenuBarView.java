@@ -6,6 +6,7 @@ import com.extjs.gxt.ui.client.event.SelectionListener;
 import com.extjs.gxt.ui.client.mvc.AppEvent;
 import com.extjs.gxt.ui.client.mvc.Dispatcher;
 import com.extjs.gxt.ui.client.mvc.View;
+import com.extjs.gxt.ui.client.widget.Info;
 import com.extjs.gxt.ui.client.widget.menu.Menu;
 import com.extjs.gxt.ui.client.widget.menu.MenuBar;
 import com.extjs.gxt.ui.client.widget.menu.MenuBarItem;
@@ -45,7 +46,7 @@ public class MenuBarView extends View {
         MenuItem helpMenuItem = new MenuItem("Справка", new SelectionListener<MenuEvent>() {
             @Override
             public void componentSelected(MenuEvent ce) {
-                // not implemented
+                Info.display("Интересное сообщение", "Справочная информация находится в разработке.");
             }
         });
         helpMenu.add(helpMenuItem);

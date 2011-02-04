@@ -35,7 +35,7 @@
 
     <servlet-mapping>
         <servlet-name>SpringGwtRemoteServiceServlet</servlet-name>
-        <url-pattern>/office/GWTServices/*</url-pattern>
+        <url-pattern>/students/GWTServices/*</url-pattern>
     </servlet-mapping>
 
     <servlet>
@@ -50,7 +50,7 @@
     </servlet-mapping>
 
     <welcome-file-list>
-        <welcome-file>index.html</welcome-file>
+        <welcome-file>DeansOffice.html</welcome-file>
     </welcome-file-list>
 
     <!--<security-constraint>

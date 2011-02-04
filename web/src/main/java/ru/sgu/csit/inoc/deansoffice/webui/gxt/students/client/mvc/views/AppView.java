@@ -22,7 +22,6 @@ import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.mvc.events.AppEven
 public class AppView extends View {
     private Viewport viewport;
     private ContentPanel viewportPanel;
-    private ContentPanel centralPanel;
 
     public AppView(AppController controller) {
         super(controller);
@@ -34,7 +33,6 @@ public class AppView extends View {
 
         viewport = new Viewport();
         viewportPanel = new ContentPanel();
-        centralPanel = new ContentPanel();
     }
 
     @Override
@@ -47,6 +45,10 @@ public class AppView extends View {
             onError(event);
         } else if (eventType.equals(AppEvents.NavigationPanelReady)) {
             onNavigationPanelReady(event);
+        } else if (eventType.equals(AppEvents.StudentsPanelReady)) {
+            onStudentsPanelReady(event);
+        } else if (eventType.equals(AppEvents.InformationPanelReady)) {
+            onInformationPanelReady(event);
         } else if (eventType.equals(AppEvents.MenuBarReady)) {
             onMenuBarReady(event);
         } else if (eventType.equals(AppEvents.StatusBarReady)) {
@@ -59,13 +61,6 @@ public class AppView extends View {
     private void onInit(AppEvent event) {
         viewportPanel.setHeaderVisible(false);
         viewportPanel.setLayout(new BorderLayout());
-
-        BorderLayoutData centerLayoutData = new BorderLayoutData(Style.LayoutRegion.CENTER);
-        centerLayoutData.setCollapsible(false);
-
-        centralPanel.setHeaderVisible(false);
-
-        viewportPanel.add(centralPanel, centerLayoutData);
 
         viewport.setLayout(new FitLayout());
         viewport.add(viewportPanel);
@@ -82,6 +77,28 @@ public class AppView extends View {
             westLayoutData.setSplit(true);
 
             viewportPanel.add(component, westLayoutData);
+        }
+    }
+
+    private void onStudentsPanelReady(AppEvent event) {
+        Component component = event.getData();
+
+        if (component != null) {
+            BorderLayoutData centerLayoutData = new BorderLayoutData(Style.LayoutRegion.CENTER);
+
+            viewportPanel.add(component, centerLayoutData);
+        }
+    }
+
+    private void onInformationPanelReady(AppEvent event) {
+        Component component = event.getData();
+
+        if (component != null) {
+            BorderLayoutData eastLayoutData = new BorderLayoutData(Style.LayoutRegion.EAST, 400, 200, 500);
+            eastLayoutData.setCollapsible(true);
+            eastLayoutData.setSplit(true);
+
+            viewportPanel.add(component, eastLayoutData);
         }
     }
 

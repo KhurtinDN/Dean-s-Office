@@ -13,6 +13,8 @@ public class AppEvents {
 
     public static final EventType UIReady = new EventType();
     public static final EventType NavigationPanelReady = new EventType();
+    public static final EventType StudentsPanelReady = new EventType();
+    public static final EventType InformationPanelReady = new EventType();
     public static final EventType MenuBarReady = new EventType();
     public static final EventType StatusBarReady = new EventType();
 
