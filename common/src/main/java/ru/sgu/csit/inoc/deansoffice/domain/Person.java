@@ -89,6 +89,6 @@ public abstract class Person extends PersistentItem {
     }
 
     public enum Sex {
-        MALE, FEMALE
+        MALE, FEMALE, UNKNOWN
     }
 }

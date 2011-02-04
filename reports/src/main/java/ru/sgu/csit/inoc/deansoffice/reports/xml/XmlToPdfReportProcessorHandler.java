@@ -37,6 +37,7 @@ public class XmlToPdfReportProcessorHandler extends DefaultHandler {
     private Stack<MyCell> stackCells = new Stack<MyCell>();
 
     private Document document;
+    private Rectangle pageSize;
     private OutputStream outputStream = null;
     Report report;
 
@@ -52,7 +53,7 @@ public class XmlToPdfReportProcessorHandler extends DefaultHandler {
         }
     }
 
-    public void initDocument(String outputFileName, Rectangle pageSize) {
+    public void initDocument(String outputFileName) {
         document = new Document();
         if (outputFileName == null || outputFileName.isEmpty()) {
             outputFileName = "document.pdf";
@@ -157,6 +158,7 @@ public class XmlToPdfReportProcessorHandler extends DefaultHandler {
         targetCell.setHorizontalAlignment(sourceCell.getHorizontalAlignment());
         targetCell.setVerticalAlignment(sourceCell.getVerticalAlignment());
         targetCell.setColspan(sourceCell.getColspan());
+        targetCell.setRowspan(sourceCell.getRowspan());
         targetCell.setPaddingBottom(sourceCell.getPaddingBottom());
         targetCell.setPaddingLeft(sourceCell.getPaddingLeft());
         targetCell.setPaddingRight(sourceCell.getPaddingRight());
@@ -195,7 +197,7 @@ public class XmlToPdfReportProcessorHandler extends DefaultHandler {
         if ("document".equals(qName)) {
             String outputFileName = null;
             boolean pdfFlag = false;
-            Rectangle format = PageSize.A4;
+            pageSize = PageSize.A4;
             String orientation = "portrait";
 
             if (attributes != null) {
@@ -211,7 +213,7 @@ public class XmlToPdfReportProcessorHandler extends DefaultHandler {
                         } else if ("name".equals(attributeName)) {
                             outputFileName = attributeValue;
                         } else if ("format".equals(attributeName)) {
-                            format = rectangleByName(attributeValue);
+                            pageSize = rectangleByName(attributeValue);
                         } else if ("orientation".equals(attributeName)) {
                             orientation = attributeValue;
                         }
@@ -222,9 +224,12 @@ public class XmlToPdfReportProcessorHandler extends DefaultHandler {
                 throw new RuntimeException("Document [" + url + "] is not contains definition PDF type.");
             }
             if ("landscape".equals(orientation)) {
-                format = format.rotate();
+                pageSize = pageSize.rotate();
             }
-            initDocument(outputFileName, format);
+            initDocument(outputFileName);
+        } else if ("newpage".equals(qName)) {
+            document.newPage();
+            document.setPageSize(pageSize);
         } else if ("var".equals(qName)) {
             if (attributes != null) {
                 for (int i = 0, n = attributes.getLength(); i < n; ++i) {
@@ -232,13 +237,82 @@ public class XmlToPdfReportProcessorHandler extends DefaultHandler {
                     String attributeValue = attributes.getValue(i);
 
                     if ("name".equals(attributeName)) {
-                        String strChunk = report.getVariableValue(attributeValue);
+                        String strChunk = report.getVariableValue(attributeValue).toString();
 
                         if (!stackElements.isEmpty()) {
                             ((Phrase) stackElements.peek()).add(new Chunk(strChunk, fontCollector.getCurrentFont()));
                         }
                     }
                 }
+            }
+        } else if ("image".equals(qName)) {
+            String imgFileName = null;
+            byte[] imgData = null;
+            String imgFormat = "jpg";
+            Float imgWidth = -1.0f;
+            Float imgHeight = -1.0f;
+
+            if (attributes != null) {
+                for (int i = 0, n = attributes.getLength(); i < n; ++i) {
+                    String attributeName = attributes.getLocalName(i);
+                    String attributeValue = attributes.getValue(i);
+
+                    if (attributeValue.length() > 0) {
+                        if ("src".equals(attributeName)) {
+                            imgFileName = attributeValue;
+                        } else if ("var".equals(attributeName)) {
+                            imgData = (byte[]) report.getVariableValue(attributeValue);
+                        } else if ("format".equals(attributeName)) {
+                            imgFormat = attributeValue;
+                        } else if ("width".equals(attributeName)) {
+                            imgWidth = Float.valueOf(attributeValue);
+                        } else if ("height".equals(attributeName)) {
+                            imgHeight = Float.valueOf(attributeValue);
+                        }
+                    }
+                }
+            }
+            if (imgFileName != null || imgData != null) {
+                Image image;
+
+                if (imgFileName != null) {
+                    try {
+                        image = Image.getInstance(imgFileName);
+                    } catch (BadElementException e) {
+                        throw new RuntimeException("Image bad element.", e);
+                    } catch (IOException e) {
+                        throw new RuntimeException("Image file " + imgFileName + " not found.", e);
+                    }
+                } else {
+                    try {
+                        image = Image.getInstance(imgData);
+                    } catch (BadElementException e) {
+                        throw new RuntimeException("Image bad element.", e);
+                    } catch (IOException e) {
+                        throw new RuntimeException("Image byte data not found.", e);
+                    }
+                }
+
+                float scale = 1.0f;
+                if (!(imgWidth < 0 && imgHeight < 0)) {
+                    if (imgWidth >= 0 && imgHeight >= 0) {
+                        image.scaleAbsoluteWidth(imgWidth > 0 ? imgWidth : image.getWidth() * scale);
+                        image.scaleAbsoluteHeight(imgHeight > 0 ? imgHeight : image.getHeight() * scale);
+                    } else {
+                        if (imgWidth < 0) {
+                            if (imgHeight > 0) {
+                                scale = imgHeight / image.getHeight();
+                            }
+                        } else if (imgHeight < 0) {
+                            if (imgWidth > 0) {
+                                scale = imgWidth / image.getWidth();
+                            }
+                        }
+                        image.scaleAbsoluteWidth(image.getWidth() * scale);
+                        image.scaleAbsoluteHeight(image.getHeight() * scale);
+                    }
+                }
+                stackElements.push(image);
             }
         } else if ("p".equals(qName)) {
             Paragraph paragraph = new Paragraph();
@@ -332,6 +406,8 @@ public class XmlToPdfReportProcessorHandler extends DefaultHandler {
                             cell.setVerticalAlignment(alignElementVerticalByName(attributeValue));
                         } else if ("colspan".equals(attributeName)) {
                             cell.setColspan(Integer.valueOf(attributeValue));
+                        } else if ("rowspan".equals(attributeName)) {
+                            cell.setRowspan(Integer.valueOf(attributeValue));
                         } else if ("padding".equals(attributeName)) {
                             cell.setPadding(Float.valueOf(attributeValue));
                         } else if ("paddingBottom".equals(attributeName)) {
@@ -350,8 +426,7 @@ public class XmlToPdfReportProcessorHandler extends DefaultHandler {
                             cell.setBorder(Integer.valueOf(attributeValue));
                         } else if ("borderWidth".equals(attributeName)) {
                             cell.setBorderWidth(Float.valueOf(attributeValue));
-                        }
-                        else if ("rotation".equals(attributeName)) {
+                        } else if ("rotation".equals(attributeName)) {
                             cell.setRotation(Integer.valueOf(attributeValue));
                         }
                     }
@@ -363,23 +438,27 @@ public class XmlToPdfReportProcessorHandler extends DefaultHandler {
         } else if ("b".equals(qName)) {
             Font font = fontCollector.getCurrentFont();
             int style = fontCollector.getCurrentStyle();
+            String[] fontFileNames = fontCollector.getCurrentFontFileNames();
 
-            fontCollector.setNewFont(font.getSize(), style | Font.BOLD);
+            fontCollector.setNewFont(font.getSize(), style | Font.BOLD, fontFileNames);
         } else if ("i".equals(qName)) {
             Font font = fontCollector.getCurrentFont();
             int style = fontCollector.getCurrentStyle();
+            String[] fontFileNames = fontCollector.getCurrentFontFileNames();
 
-            fontCollector.setNewFont(font.getSize(), style | Font.ITALIC);
+            fontCollector.setNewFont(font.getSize(), style | Font.ITALIC, fontFileNames);
         } else if ("u".equals(qName)) {
             Font font = fontCollector.getCurrentFont();
             int style = fontCollector.getCurrentStyle();
+            String[] fontFileNames = fontCollector.getCurrentFontFileNames();
 
-            fontCollector.setNewFont(font.getSize(), style | Font.UNDERLINE);
+            fontCollector.setNewFont(font.getSize(), style | Font.UNDERLINE, fontFileNames);
         } else if ("font".equals(qName)) {
             Font font = fontCollector.getCurrentFont();
             Float size = font.getSize();
             int style = fontCollector.getCurrentStyle();
             boolean setStyle = false;
+            String[] fontFileNames = fontCollector.getCurrentFontFileNames();
 
             if (attributes != null) {
                 for (int i = 0, n = attributes.getLength(); i < n; ++i) {
@@ -400,16 +479,42 @@ public class XmlToPdfReportProcessorHandler extends DefaultHandler {
                         } else if ("underline".equals(attributeValue)) {
                             style |= Font.UNDERLINE;
                         }
+                    }  else if ("type".equals(attributeName)) {
+                        if ("serif".equals(attributeValue)) {
+                            fontFileNames = FontDescriptor.FONT_LSERIF;
+                        } else if ("sans".equals(attributeValue)) {
+                            fontFileNames = FontDescriptor.FONT_LSANS;
+                        } else if ("mono".equals(attributeValue)) {
+                            fontFileNames = FontDescriptor.FONT_LMONO;
+                        }
                     }
                 }
             }
 
-            fontCollector.setNewFont(size, style);
+            fontCollector.setNewFont(size, style, fontFileNames);
         }
     }
 
     // Встретился закрывающий тэг элемента
     public void endElement(String uri, String localName, String qName) {
+        if ("image".equals(qName)) {
+            try {
+                Image image = (Image) stackElements.pop();
+                Paragraph paragraph = new Paragraph();
+
+                paragraph.add(new Chunk(image, 0, 0));
+                if (stackCells.isEmpty()) {
+                    document.add(paragraph);
+                } else {
+                    if (!stackCells.peek().containsTable) {
+                        ((Phrase) stackElements.peek()).add(paragraph);
+                    }
+                }
+                //document.add(paragraph);
+            } catch (Exception e) {
+                throw new RuntimeException("EndElement error.", e);
+            }
+        }
         if ("p".equals(qName)) {
             try {
                 Phrase phrase = (Phrase) stackElements.pop();
@@ -418,7 +523,7 @@ public class XmlToPdfReportProcessorHandler extends DefaultHandler {
                 paragraph.add(phrase);
                 if (stackCells.isEmpty()) {
                     document.add(paragraph);
-               } else {
+                } else {
                     if (!stackCells.peek().containsTable) {
                         ((Phrase) stackElements.peek()).add(paragraph);
                     }
@@ -426,7 +531,8 @@ public class XmlToPdfReportProcessorHandler extends DefaultHandler {
             } catch (Exception e) {
                 throw new RuntimeException("EndElement error.", e);
             }
-        } if ("table".equals(qName)) {
+        }
+        if ("table".equals(qName)) {
             try {
                 PdfPTable table = stackTables.pop().table;
 
@@ -436,7 +542,8 @@ public class XmlToPdfReportProcessorHandler extends DefaultHandler {
             } catch (Exception e) {
                 throw new RuntimeException("EndElement error.", e);
             }
-        } if ("td".equals(qName)) {
+        }
+        if ("td".equals(qName)) {
             Phrase phrase = (Phrase) stackElements.pop();
 
             if (!stackTables.isEmpty()) {

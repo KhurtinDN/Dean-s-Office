@@ -5,10 +5,10 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
- * Created by XX (MesheryakovAV)
- * Date: 07.09.2010
- * Time: 9:18:30
+ * User: XX (freecoder.xx@gmail.com)
+ * Date: 27.12.10
+ * Time: 10:56
  */
 @Entity
-public class Reference extends Document {
+public class StudentDossier extends Document {
 }

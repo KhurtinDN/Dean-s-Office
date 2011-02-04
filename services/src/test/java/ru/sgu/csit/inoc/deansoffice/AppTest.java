@@ -3,12 +3,22 @@ package ru.sgu.csit.inoc.deansoffice;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import org.hibernate.Hibernate;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.orm.hibernate3.HibernateTemplate;
+import ru.sgu.csit.inoc.deansoffice.dao.PhotoDAO;
 import ru.sgu.csit.inoc.deansoffice.dao.StudentDAO;
+import ru.sgu.csit.inoc.deansoffice.dao.impl.PhotoDAOImpl;
 import ru.sgu.csit.inoc.deansoffice.dao.impl.StudentDAOImpl;
 import ru.sgu.csit.inoc.deansoffice.domain.*;
 import ru.sgu.csit.inoc.deansoffice.reports.ReportPdfProcessor;
+import ru.sgu.csit.inoc.deansoffice.reports.reportsutil.Report;
+import ru.sgu.csit.inoc.deansoffice.services.DocumentService;
+import ru.sgu.csit.inoc.deansoffice.services.PhotoService;
+import ru.sgu.csit.inoc.deansoffice.services.StudentDossierService;
+import ru.sgu.csit.inoc.deansoffice.services.impl.PhotoServiceImpl;
+import ru.sgu.csit.inoc.deansoffice.services.impl.StudentDossierServiceImpl;
 
 import java.io.*;
 
@@ -43,9 +53,38 @@ public class AppTest
     private static ApplicationContext applicationContext = new ClassPathXmlApplicationContext("ApplicationContext.xml");
     private static StudentDAO studentDAO = applicationContext.getBean(StudentDAOImpl.class);
 
-    public void skip_testPdfGenerate() {
-        Student student = studentDAO.findAll().get(0);//new Student();
-        Reference ref = new Reference();
+    private static PhotoDAO photoDAO = applicationContext.getBean(PhotoDAOImpl.class);
+
+    public void /*skip_*/ testPdfGenerate() {
+        PhotoService photoService = new PhotoServiceImpl();
+
+        /* // Отладка загрузки фотографий
+        Photo photo;
+        try {
+            photo = photoService.loadFromFile("C:/temp/images/photo.jpg");
+        } catch (IOException e) {
+            throw new RuntimeException("Photo not found!!!", e);
+        }
+
+        System.out.println("Photo size: " + photo.getData().length);
+        Long idPhoto = photoDAO.save(photo);
+
+        Photo newPhoto = photoDAO.findById(idPhoto);
+        try {
+            photoService.loadData(newPhoto);
+        } catch (IOException e) {
+            throw new RuntimeException("Photo data not found!!!", e);
+        }
+        System.out.println("New Photo size: " + newPhoto.getData().length);
+        */
+
+        Student student = studentDAO.findById(55L);//findAll().get(0);//new Student();
+        try {
+            photoService.loadData(student.getAdditionalData().getPhoto());
+        } catch (IOException e) {
+            throw new RuntimeException("Photo data not found!!!", e);
+        }
+        //Reference ref = new Reference();
         /*EnrollmentOrder enrolOrder = new EnrollmentOrder();
 
         enrolOrder.setNumber("22-0107");
@@ -80,18 +119,23 @@ public class AppTest
         student.getSpeciality().setFaculty(csit);
         student.setStudyForm(Student.StudyForm.BUDGET);
         */
+        //studentDAO.initialize(student.getAdditionalData());
+        StudentDossier dossier = new StudentDossier();
         FileOutputStream outputStream = null;
         try {
             outputStream = new FileOutputStream(new File("test.pdf"));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-        String templName = AppTest.class.getResource("/reference-2.xml").getFile();
+        String templName = AppTest.class.getResource("/dossier.xml").getFile();
 
         templName = templName.replace("%20", " ");
         System.out.println(templName);
-        ref.setPrintTemplate(new Template(templName));
-        ref.build(student);
-        ReportPdfProcessor.getInstance().generate(ref, outputStream);
+        dossier.setPrintTemplate(new Template(templName));
+
+        StudentDossierService dossierService = new StudentDossierServiceImpl(dossier);
+
+        dossierService.build(student);
+        ReportPdfProcessor.getInstance().generate((Report) dossierService, outputStream);
     }
 }

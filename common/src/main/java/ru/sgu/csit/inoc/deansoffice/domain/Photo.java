@@ -1,7 +1,11 @@
 package ru.sgu.csit.inoc.deansoffice.domain;
 
+import org.hibernate.annotations.Type;
+
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Lob;
+import javax.persistence.Transient;
 
 /**
  * Created by IntelliJ IDEA.
@@ -11,7 +15,13 @@ import javax.persistence.Lob;
  */
 @Entity
 public class Photo extends PersistentItem {
-    @Lob
+    private String fileName;
+    //@Lob
+    //@Type(type = "org.hibernate.type.BinaryType")//"org.hibernate.type.PrimitiveByteArrayBlobType")
+    //@Column(columnDefinition = "bytea")
+    //@Type(type="org.hibernate.type.PrimitiveByteArrayBlobType")
+    //@Type(type = "org.springframework.orm.hibernate3.support.BlobByteArrayType")
+    @Transient
     private byte[] data;
 
     public byte[] getData() {
@@ -20,5 +30,13 @@ public class Photo extends PersistentItem {
 
     public void setData(byte[] data) {
         this.data = data;
+    }
+
+    public String getFileName() {
+        return fileName;
+    }
+
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
     }
 }

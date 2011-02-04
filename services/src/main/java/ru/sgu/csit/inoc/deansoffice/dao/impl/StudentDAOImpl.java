@@ -30,4 +30,9 @@ public class StudentDAOImpl extends BaseDAOImpl<Student, Long> implements Studen
         DetachedCriteria criteria = createCriteriaForPersistentClass(Restrictions.eq("group.id", groupId));
         return (List<Student>) getHibernateTemplate().findByCriteria(criteria);
     }
+
+    @Override
+    public void initialize(Object proxy) {
+        getHibernateTemplate().initialize(proxy);
+    }
 }

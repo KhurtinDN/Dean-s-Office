@@ -35,7 +35,9 @@ public class Student extends Person {
     @PrimaryKeyJoinColumn
     private EnrollmentOrder enrollmentOrder;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    //@OneToOne(fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.MERGE)
+    @PrimaryKeyJoinColumn
     private AdditionalStudentData additionalData;
 
     public String getStudentIdNumber() {
@@ -112,7 +114,8 @@ public class Student extends Person {
 
     @Entity
     public static class AdditionalStudentData extends PersistentItem {
-        @OneToOne(fetch = FetchType.LAZY)
+        //@OneToOne(fetch = FetchType.LAZY)
+        @ManyToOne(cascade = CascadeType.MERGE)
         @PrimaryKeyJoinColumn
         private Photo photo;
 

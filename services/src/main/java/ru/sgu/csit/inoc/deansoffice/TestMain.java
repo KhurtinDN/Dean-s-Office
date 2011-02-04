@@ -4,8 +4,11 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import ru.sgu.csit.inoc.deansoffice.dao.*;
 import ru.sgu.csit.inoc.deansoffice.domain.*;
+import ru.sgu.csit.inoc.deansoffice.services.PhotoService;
+import ru.sgu.csit.inoc.deansoffice.services.impl.PhotoServiceImpl;
 
 import javax.naming.MalformedLinkException;
+import java.io.IOException;
 import java.util.*;
 
 /**
@@ -30,6 +33,8 @@ public class TestMain {
     private static PhotoDAO photoDAO = applicationContext.getBean(PhotoDAO.class);
     private static PassportDAO passportDAO = applicationContext.getBean(PassportDAO.class);
     private static AdditionalStudentDataDAO additionalDataDAO = applicationContext.getBean(AdditionalStudentDataDAO.class);
+
+    private final Integer COUNT_STUDENTS_IN_GROUP = 10;
 
     public static void main(String[] args) {
         TestMain testMain = new TestMain();
@@ -121,7 +126,7 @@ public class TestMain {
         }
 
         for (Group group : groupList) {
-            for (int studentCount = 1; studentCount <= 20; ++studentCount) {
+            for (int studentCount = 1; studentCount <= COUNT_STUDENTS_IN_GROUP; ++studentCount) {
                 Student student = StudentGenerator.getRandomStudent();
 
                 student.setCource(group.getCourse());
@@ -221,7 +226,7 @@ public class TestMain {
         public static Student.AdditionalStudentData getRandomAdditionalData(Student student) {
             Student.AdditionalStudentData additionalData = new Student.AdditionalStudentData();
             Passport passport = new Passport(student);
-            Address address = new Address("Российская Федерация", "", "",
+            Address address = new Address("Российская Федерация", null, null,
                     "г. Саратов", "ул. Астраханская, д. 77, кв. 13");
 
             addressDAO.save(address);
@@ -244,9 +249,21 @@ public class TestMain {
             additionalData.setOldAddress(address);
             additionalData.setFather(getRandomParent(Person.Sex.MALE));
             additionalData.setMather(getRandomParent(Person.Sex.FEMALE));
+            additionalData.getFather().setAddress(address);
+            additionalData.getMather().setAddress(address);
             parentDAO.save(additionalData.getFather());
             parentDAO.save(additionalData.getMather());
-            //additionalData.setPhoto();
+
+            PhotoService photoService = new PhotoServiceImpl();
+            Photo photo;
+            try {
+                photo = photoService.loadFromFile("C:/temp/images/photo.jpg");
+            } catch (IOException e) {
+                throw new RuntimeException("Photo not found!!!", e);
+            }
+
+            photoDAO.save(photo);
+            additionalData.setPhoto(photo);
 
             return additionalData;
         }
@@ -271,6 +288,7 @@ public class TestMain {
 
             parent.setBirthday(new GregorianCalendar().getTime());
             parent.setPhoneNumbers("02, 03, 89875858888");
+            parent.setWorkInfo("ООО \"Машиностроитель\", системный программист");
 
             return parent;
         }

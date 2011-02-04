@@ -14,4 +14,5 @@ public interface PhotoService {
     String getFormat(Photo photo);
     void saveToFile(Photo photo, String fileName) throws IOException;
     Photo loadFromFile(String fileName) throws IOException;
+    void loadData(Photo photo) throws IOException;
 }

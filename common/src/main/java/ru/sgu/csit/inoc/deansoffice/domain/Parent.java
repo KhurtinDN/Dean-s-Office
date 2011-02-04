@@ -15,8 +15,9 @@ public class Parent extends Person {
 
     @ManyToOne(cascade = CascadeType.MERGE)
     @PrimaryKeyJoinColumn
-    private Address adress;
+    private Address address;
 
+    private String workInfo;
     private String phoneNumbers;
 
     public Date getBirthday() {
@@ -27,12 +28,12 @@ public class Parent extends Person {
         this.birthday = birthday;
     }
 
-    public Address getAdress() {
-        return adress;
+    public Address getAddress() {
+        return address;
     }
 
-    public void setAdress(Address adress) {
-        this.adress = adress;
+    public void setAddress(Address address) {
+        this.address = address;
     }
 
     public String getPhoneNumbers() {
@@ -41,5 +42,13 @@ public class Parent extends Person {
 
     public void setPhoneNumbers(String phoneNumbers) {
         this.phoneNumbers = phoneNumbers;
+    }
+
+    public String getWorkInfo() {
+        return workInfo;
+    }
+
+    public void setWorkInfo(String workInfo) {
+        this.workInfo = workInfo;
     }
 }
