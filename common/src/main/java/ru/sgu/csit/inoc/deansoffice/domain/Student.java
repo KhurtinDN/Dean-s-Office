@@ -2,7 +2,6 @@ package ru.sgu.csit.inoc.deansoffice.domain;
 
 import javax.persistence.*;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -119,7 +118,6 @@ public class Student extends Person {
         @PrimaryKeyJoinColumn
         private Photo photo;
 
-        private Date birthday;
         private String birthPlace;
         private String education;
         private String workInfo;
@@ -152,14 +150,6 @@ public class Student extends Person {
 
         public void setPhoto(Photo photo) {
             this.photo = photo;
-        }
-
-        public Date getBirthday() {
-            return birthday;
-        }
-
-        public void setBirthday(Date birthday) {
-            this.birthday = birthday;
         }
 
         public String getBirthPlace() {

@@ -1,6 +1,7 @@
 package ru.sgu.csit.inoc.deansoffice.domain;
 
 import javax.persistence.MappedSuperclass;
+import java.util.Date;
 
 /**
  * .
@@ -10,6 +11,7 @@ import javax.persistence.MappedSuperclass;
  */
 @MappedSuperclass
 public abstract class Person extends PersistentItem {
+    protected Date birthday;
     protected Sex sex;
 
     protected String firstName;
@@ -30,6 +32,14 @@ public abstract class Person extends PersistentItem {
             shortName = shortName + " " + initials;
         }
         return shortName;
+    }
+
+    public Date getBirthday() {
+        return birthday;
+    }
+
+    public void setBirthday(Date birthday) {
+        this.birthday = birthday;
     }
 
     public String getFirstName() {

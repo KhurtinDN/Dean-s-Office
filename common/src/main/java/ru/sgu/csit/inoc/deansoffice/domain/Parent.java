@@ -1,7 +1,6 @@
 package ru.sgu.csit.inoc.deansoffice.domain;
 
 import javax.persistence.*;
-import java.util.Date;
 
 /**
  * Created by IntelliJ IDEA.
@@ -11,22 +10,12 @@ import java.util.Date;
  */
 @Entity
 public class Parent extends Person {
-    private Date birthday;
-
     @ManyToOne(cascade = CascadeType.MERGE)
     @PrimaryKeyJoinColumn
     private Address address;
 
     private String workInfo;
     private String phoneNumbers;
-
-    public Date getBirthday() {
-        return birthday;
-    }
-
-    public void setBirthday(Date birthday) {
-        this.birthday = birthday;
-    }
 
     public Address getAddress() {
         return address;
