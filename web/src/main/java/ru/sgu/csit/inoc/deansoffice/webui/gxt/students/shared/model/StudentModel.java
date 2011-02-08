@@ -1,36 +1,26 @@
 package ru.sgu.csit.inoc.deansoffice.webui.gxt.students.shared.model;
 
-import com.extjs.gxt.ui.client.data.BaseModel;
-
 /**
  * User: Khurtin Denis (KhurtinDN@gmail.com)
  * Date: 1/27/11
  * Time: 2:02 PM
  */
-public class StudentModel extends BaseModel {
+public class StudentModel extends PersonModel {
 
-    public StudentModel() {
+    public SpecialityModel getSpeciality() {
+        return get("speciality");
     }
 
-    public StudentModel(Long id, String name) {
-        setId(id);
-        setName(name);
+    public void setSpeciality(SpecialityModel specialityModel) {
+        set("speciality", specialityModel);
     }
 
-    public Long getId() {
-        return get("id");
+    public GroupModel getGroup() {
+        return get("group");
     }
 
-    public void setId(Long id) {
-        set("id", id);
-    }
-
-    public String getName() {
-        return get("name");
-    }
-
-    public void setName(String name) {
-        set("name", name);
+    public void setGroup(GroupModel groupModel) {
+        set("group", groupModel);
     }
 
     public String getStudentIdNumber() {
@@ -56,4 +46,5 @@ public class StudentModel extends BaseModel {
     public void setStudyForm(String studyForm) {
         set("studyForm", studyForm);
     }
+
 }

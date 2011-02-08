@@ -63,7 +63,7 @@ public class StudentDossierServiceImpl extends DocumentServiceImpl implements St
         // .initialize(student.getAdditionalData());
         //Hibernate.initialize(student.getAdditionalData().getPhoto());
 
-        TEXT.put("Student.birthday", dateFormat.format(student.getAdditionalData().getBirthday()));
+        TEXT.put("Student.birthday", dateFormat.format(student.getBirthday()));
         TEXT.put("Student.birthPlace", student.getAdditionalData().getBirthPlace());
 
         TEXT.put("Student.photoData", student.getAdditionalData().getPhoto().getData());

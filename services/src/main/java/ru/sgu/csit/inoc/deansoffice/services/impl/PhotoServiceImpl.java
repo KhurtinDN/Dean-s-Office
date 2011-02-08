@@ -51,6 +51,7 @@ public class PhotoServiceImpl implements PhotoService {
         return photo;
     }
 
+    @Override
     public void loadData(Photo photo) throws IOException {
         File photoFile = new File(photo.getFileName());
         InputStream inputStream = new FileInputStream(photoFile);
@@ -62,5 +63,18 @@ public class PhotoServiceImpl implements PhotoService {
             len = inputStream.read(data, off, lengthFile - off);
         }
         photo.setData(data);
+    }
+
+    @Override
+    public void loadDataToOutputStream(String photoFileName, OutputStream outputStream) throws IOException {
+        File photoFile = new File(photoFileName);
+        InputStream inputStream = new FileInputStream(photoFile);
+
+        byte[] buffer = new byte[4 * 1024];
+
+        int nRead;
+        while ((nRead = inputStream.read(buffer)) > 0) {
+            outputStream.write(buffer, 0, nRead);
+        }
     }
 }

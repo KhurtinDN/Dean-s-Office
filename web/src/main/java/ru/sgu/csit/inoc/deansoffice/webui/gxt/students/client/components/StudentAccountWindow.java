@@ -2,6 +2,7 @@ package ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.components;
 
 import com.extjs.gxt.ui.client.event.ButtonEvent;
 import com.extjs.gxt.ui.client.event.SelectionListener;
+import com.extjs.gxt.ui.client.widget.Html;
 import com.extjs.gxt.ui.client.widget.TabItem;
 import com.extjs.gxt.ui.client.widget.TabPanel;
 import com.extjs.gxt.ui.client.widget.Window;
@@ -9,6 +10,7 @@ import com.extjs.gxt.ui.client.widget.button.Button;
 import com.extjs.gxt.ui.client.widget.layout.FitData;
 import com.extjs.gxt.ui.client.widget.layout.FitLayout;
 import com.google.gwt.user.client.Element;
+import com.google.gwt.user.client.ui.HTML;
 
 /**
  * User: KhurtinDN ( KhurtinDN@gmail.com )
@@ -39,17 +41,38 @@ public class StudentAccountWindow extends Window {
         setLayout(new FitLayout());
 
         TabPanel tabPanel = new TabPanel();
-
-        TabItem faceTabItem = new TabItem("Лицевая сторона");
-        faceTabItem.addText("Здесь была лицевая сторона");
-
-        TabItem backTabItem = new TabItem("Задняя сторона");
-        backTabItem.addText("Здесь была задняя сторона");
-
-        tabPanel.add(faceTabItem);
-        tabPanel.add(backTabItem);
+        tabPanel.add(createFaceTabItem());
+        tabPanel.add(createBackTabItem());
 
         add(tabPanel, new FitData(4));
+    }
+
+    private TabItem createFaceTabItem() {
+        TabItem faceTabItem = new TabItem("Лицевая сторона");
+
+//        HTML html = new HTML();
+        Html html = new Html();
+        html.setStylePrimaryName("student-account");
+
+        faceTabItem.addText("Здесь была лицевая сторона");
+
+        return faceTabItem;
+    }
+
+    private String getHeaderTemplate() {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("<img src=\"{photoUrl}\" />");
+        stringBuilder.append("<h1>Учетная карточка студента</h1>");
+        stringBuilder.append("<div>Фамилия: {lastName} Имя: {firstName} Отчество: {middleName}</div>");
+        stringBuilder.append("<div>Специальность (направление): {speciality} Шифр: {middleName}</div>");
+
+        return stringBuilder.toString();
+    }
+
+    private TabItem createBackTabItem() {
+        TabItem backTabItem = new TabItem("Задняя сторона");
+        backTabItem.addText("Здесь была задняя сторона");
+        return backTabItem;
     }
 
     @Override

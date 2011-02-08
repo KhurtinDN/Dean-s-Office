@@ -1,13 +1,11 @@
 package ru.sgu.csit.inoc.deansoffice.webui.gxt.students.shared.model;
 
-import com.extjs.gxt.ui.client.data.BaseModel;
-
 /**
  * User: Khurtin Denis (KhurtinDN@gmail.com)
  * Date: 1/27/11
  * Time: 2:05 PM
  */
-public class GroupModel extends BaseModel {
+public class GroupModel extends DtoModel {
     public GroupModel() {
     }
 
@@ -16,12 +14,12 @@ public class GroupModel extends BaseModel {
         setName(name);
     }
 
-    public Long getId() {
-        return get("id");
+    public SpecialityModel getSpeciality() {
+        return get("speciality");
     }
 
-    public void setId(Long id) {
-        set("id", id);
+    public void setSpeciality(SpecialityModel specialityModel) {
+        set("speciality", specialityModel);
     }
 
     public String getName() {

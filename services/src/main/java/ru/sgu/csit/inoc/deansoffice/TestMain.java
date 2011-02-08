@@ -7,7 +7,6 @@ import ru.sgu.csit.inoc.deansoffice.domain.*;
 import ru.sgu.csit.inoc.deansoffice.services.PhotoService;
 import ru.sgu.csit.inoc.deansoffice.services.impl.PhotoServiceImpl;
 
-import javax.naming.MalformedLinkException;
 import java.io.IOException;
 import java.util.*;
 
@@ -209,6 +208,8 @@ public class TestMain {
             student.setStudentIdNumber("" + ((int) (Math.random() * 100000)));
             student.setDivision(Student.Division.INTRAMURAL);
 
+            student.setBirthday(new GregorianCalendar().getTime());
+
             student.setAdditionalData(getRandomAdditionalData(student));
             additionalDataDAO.save(student.getAdditionalData());
 
@@ -230,7 +231,6 @@ public class TestMain {
                     "г. Саратов", "ул. Астраханская, д. 77, кв. 13");
 
             addressDAO.save(address);
-            additionalData.setBirthday(new GregorianCalendar().getTime());
             additionalData.setBirthPlace("г. Саратов");
             additionalData.setEducation("Средняя школа");
             additionalData.setWorkInfo("Грузчик");
@@ -257,7 +257,7 @@ public class TestMain {
             PhotoService photoService = new PhotoServiceImpl();
             Photo photo;
             try {
-                photo = photoService.loadFromFile("C:/temp/images/photo.jpg");
+                photo = photoService.loadFromFile("/home/hd/temp/photo.jpg");
             } catch (IOException e) {
                 throw new RuntimeException("Photo not found!!!", e);
             }
