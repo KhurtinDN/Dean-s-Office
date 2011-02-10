@@ -128,7 +128,7 @@ public class TestMain {
             for (int studentCount = 1; studentCount <= COUNT_STUDENTS_IN_GROUP; ++studentCount) {
                 Student student = StudentGenerator.getRandomStudent();
 
-                student.setCource(group.getCourse());
+                student.setCourse(group.getCourse());
                 student.setGroup(group);
                 student.setSpeciality(group.getSpeciality());
                 student.setEnrollmentOrder(orders.get(group.getCourse() - 1));

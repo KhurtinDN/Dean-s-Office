@@ -31,6 +31,14 @@ public class StudentDAOImpl extends BaseDAOImpl<Student, Long> implements Studen
         return (List<Student>) getHibernateTemplate().findByCriteria(criteria);
     }
 
+    @SuppressWarnings({"unchecked"})
+    @Override
+    public List<Student> findBySpecialityIdAndCourse(Long specialityId, Integer course) {
+        DetachedCriteria criteria = createCriteriaForPersistentClass(
+                Restrictions.eq("course", course), Restrictions.eq("speciality.id", specialityId));
+        return (List<Student>) getHibernateTemplate().findByCriteria(criteria);
+    }
+
     @Override
     public void initialize(Object proxy) {
         getHibernateTemplate().initialize(proxy);

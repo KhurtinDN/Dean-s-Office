@@ -14,5 +14,6 @@ import java.util.List;
 public interface StudentDAO extends BaseDAO<Student, Long> {
     List<Student> findByGroup(Group group);
     List<Student> findByGroupId(Long groupId);
+    List<Student> findBySpecialityIdAndCourse(Long specialityId, Integer course);
     void initialize(Object proxy);
 }

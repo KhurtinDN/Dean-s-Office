@@ -34,7 +34,7 @@ public class ReferenceServiceImpl extends DocumentServiceImpl implements Referen
         TEXT.put("Student.firstName_dat", student.getFirstNameDative());
         TEXT.put("Student.middleName_dat", student.getMiddleNameDative());
 
-        TEXT.put("Student.courseNumber", student.getCource().toString());
+        TEXT.put("Student.courseNumber", student.getCourse().toString());
 
         EnrollmentOrder order = student.getEnrollmentOrder();
         String division = "неизвестного";

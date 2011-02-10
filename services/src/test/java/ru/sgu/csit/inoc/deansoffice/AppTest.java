@@ -106,7 +106,7 @@ public class AppTest
         csit.getRector().setLastName("Коссович");
         csit.getRector().setDegree("д.ф.-м.н., профессор");
 
-        student.setCource(1);
+        student.setCourse(1);
         student.setDivision(Student.Division.INTRAMURAL);
         student.setEnrollmentOrder(enrolOrder);
         student.setFirstName("Александр");

@@ -17,7 +17,7 @@ public class Student extends Person {
      */
     private String studentIdNumber;
     
-    private Integer cource;
+    private Integer course;
 
     @ManyToOne(cascade = CascadeType.MERGE)
     @PrimaryKeyJoinColumn
@@ -47,12 +47,12 @@ public class Student extends Person {
         this.studentIdNumber = studentIdNumber;
     }
 
-    public Integer getCource() {
-        return cource;
+    public Integer getCourse() {
+        return course;
     }
 
-    public void setCource(Integer cource) {
-        this.cource = cource;
+    public void setCourse(Integer course) {
+        this.course = course;
     }
 
     public Group getGroup() {

@@ -33,7 +33,7 @@ public class StudentDossierServiceImpl extends DocumentServiceImpl implements St
         TEXT.put("Student.firstName", student.getFirstName());
         TEXT.put("Student.middleName", student.getMiddleName());
 
-        TEXT.put("Student.courseNumber", student.getCource().toString());
+        TEXT.put("Student.courseNumber", student.getCourse().toString());
         TEXT.put("Student.speciality", student.getSpeciality().getShortName());
         TEXT.put("Student.specialityCode", student.getSpeciality().getCode());
 
