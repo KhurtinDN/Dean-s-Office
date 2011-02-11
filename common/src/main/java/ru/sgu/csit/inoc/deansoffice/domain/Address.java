@@ -1,6 +1,5 @@
 package ru.sgu.csit.inoc.deansoffice.domain;
 
-import javax.persistence.Embeddable;
 import javax.persistence.Entity;
 
 /**
@@ -12,7 +11,7 @@ import javax.persistence.Entity;
 @Entity
 public class Address extends PersistentItem {
     // Почтовый индекс или zip-код
-    private Integer postalCode;
+    private String postalCode;
 
     // Страна
     private String country;
@@ -40,11 +39,11 @@ public class Address extends PersistentItem {
         this.streetAddress = streetAddress;
     }
 
-    public Integer getPostalCode() {
+    public String getPostalCode() {
         return postalCode;
     }
 
-    public void setPostalCode(Integer postalCode) {
+    public void setPostalCode(String postalCode) {
         this.postalCode = postalCode;
     }
 
