@@ -10,18 +10,16 @@ import javax.persistence.*;
  */
 @Entity
 public class Parent extends Person {
-    @ManyToOne(cascade = CascadeType.MERGE)
-    @PrimaryKeyJoinColumn
-    private Address address;
+    private String address;
 
     private String workInfo;
     private String phoneNumbers;
 
-    public Address getAddress() {
+    public String getAddress() {
         return address;
     }
 
-    public void setAddress(Address address) {
+    public void setAddress(String address) {
         this.address = address;
     }
 

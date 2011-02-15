@@ -78,7 +78,7 @@ public class AppTest
         System.out.println("New Photo size: " + newPhoto.getData().length);
         */
 
-        Student student = studentDAO.findById(55L);//findAll().get(0);//new Student();
+        Student student = studentDAO.findAll().get(0);//new Student();
         try {
             photoService.loadData(student.getAdditionalData().getPhoto());
         } catch (IOException e) {

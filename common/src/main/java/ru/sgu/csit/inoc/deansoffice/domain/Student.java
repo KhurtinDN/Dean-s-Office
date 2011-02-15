@@ -136,13 +136,9 @@ public class Student extends Person {
         @PrimaryKeyJoinColumn
         private Parent mather;
 
-        @ManyToOne(cascade = CascadeType.MERGE)
-        @PrimaryKeyJoinColumn
-        private Address oldAddress;
+        private String oldAddress;
 
-        @ManyToOne(cascade = CascadeType.MERGE)
-        @PrimaryKeyJoinColumn
-        private Address actualAddress;
+        private String actualAddress;
 
         public Photo getPhoto() {
             return photo;
@@ -220,19 +216,19 @@ public class Student extends Person {
             this.mather = mather;
         }
 
-        public Address getOldAddress() {
+        public String getOldAddress() {
             return oldAddress;
         }
 
-        public void setOldAddress(Address oldAddress) {
+        public void setOldAddress(String oldAddress) {
             this.oldAddress = oldAddress;
         }
 
-        public Address getActualAddress() {
+        public String getActualAddress() {
             return actualAddress;
         }
 
-        public void setActualAddress(Address actualAddress) {
+        public void setActualAddress(String actualAddress) {
             this.actualAddress = actualAddress;
         }
     }

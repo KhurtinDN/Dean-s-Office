@@ -16,10 +16,7 @@ public class Passport extends Person {
     private String issuingOrganization;
     private Date issuedDate;
     private String citizenship;
-
-    @ManyToOne(cascade = CascadeType.MERGE)
-    @PrimaryKeyJoinColumn
-    private Address address;
+    private String address;
 
     public Passport() {
     }
@@ -77,11 +74,11 @@ public class Passport extends Person {
         this.citizenship = citizenship;
     }
 
-    public Address getAddress() {
+    public String getAddress() {
         return address;
     }
 
-    public void setAddress(Address address) {
+    public void setAddress(String address) {
         this.address = address;
     }
 }

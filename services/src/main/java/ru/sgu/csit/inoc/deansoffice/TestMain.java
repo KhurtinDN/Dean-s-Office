@@ -27,7 +27,6 @@ public class TestMain {
     private RectorDAO rectorDAO = applicationContext.getBean(RectorDAO.class);
     private EnrollmentOrderDAO enrollmentOrderDAO = applicationContext.getBean(EnrollmentOrderDAO.class);
 
-    private static AddressDAO addressDAO = applicationContext.getBean(AddressDAO.class);
     private static ParentDAO parentDAO = applicationContext.getBean(ParentDAO.class);
     private static PhotoDAO photoDAO = applicationContext.getBean(PhotoDAO.class);
     private static PassportDAO passportDAO = applicationContext.getBean(PassportDAO.class);
@@ -227,10 +226,8 @@ public class TestMain {
         public static Student.AdditionalStudentData getRandomAdditionalData(Student student) {
             Student.AdditionalStudentData additionalData = new Student.AdditionalStudentData();
             Passport passport = new Passport(student);
-            Address address = new Address("Российская Федерация", null, null,
-                    "г. Саратов", "ул. Астраханская, д. 77, кв. 13");
+            String address = "Российская Федерация, г. Саратов, ул. Астраханская, д. 77, кв. 13";
 
-            addressDAO.save(address);
             additionalData.setBirthPlace("г. Саратов");
             additionalData.setEducation("Средняя школа");
             additionalData.setWorkInfo("Грузчик");
