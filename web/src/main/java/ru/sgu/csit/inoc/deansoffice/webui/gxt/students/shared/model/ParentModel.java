@@ -5,14 +5,18 @@ package ru.sgu.csit.inoc.deansoffice.webui.gxt.students.shared.model;
  * Date: 2/8/11
  * Time: 10:55 AM
  */
-public class ParentModel extends DtoModel {
+public class ParentModel extends PersonModel {
+    private String address;
 
-    public AddressModel getAddress() {
-        return get("address");
+    public ParentModel() {
     }
 
-    public void setAddress(AddressModel address) {
-        set("address", address);
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     public String getWorkInfo() {

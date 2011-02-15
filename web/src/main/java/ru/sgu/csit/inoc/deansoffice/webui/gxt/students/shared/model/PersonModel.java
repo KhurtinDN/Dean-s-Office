@@ -1,5 +1,6 @@
 package ru.sgu.csit.inoc.deansoffice.webui.gxt.students.shared.model;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -8,21 +9,13 @@ import java.util.Date;
  * Time: 11:03 AM
  */
 public class PersonModel extends DtoModel {
+    private Sex sex;
 
-    public Date getBirthday() {
-        return get("birthday");
+    public PersonModel() {
     }
 
-    public void setBirthday(Date birthday) {
-        set("birthday", birthday);
-    }
-
-    public String getSex() {
-        return get("sex");
-    }
-
-    public void setSex(String sex) {
-        set("sex", sex);
+    public PersonModel(Long id) {
+        super(id);
     }
 
     public String getFirstName() {
@@ -49,4 +42,22 @@ public class PersonModel extends DtoModel {
         set("lastName", lastName);
     }
 
+    public Date getBirthday() {
+        return get("birthday");
+    }
+
+    public void setBirthday(Date birthday) {
+        set("birthday", birthday);
+    }
+
+    public Sex getSex() {
+        return sex;
+    }
+
+    public void setSex(Sex sex) {
+        this.sex = sex;
+        set("sex", sex);
+    }
+
+    public enum Sex implements Serializable { MALE, FEMALE }
 }

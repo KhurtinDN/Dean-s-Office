@@ -1,12 +1,15 @@
 package ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.components;
 
-import com.extjs.gxt.ui.client.widget.Info;
+import com.extjs.gxt.ui.client.mvc.AppEvent;
+import com.extjs.gxt.ui.client.mvc.Dispatcher;
 import com.extjs.gxt.ui.client.widget.LayoutContainer;
 import com.extjs.gxt.ui.client.widget.form.FieldSet;
 import com.extjs.gxt.ui.client.widget.form.LabelField;
 import com.extjs.gxt.ui.client.widget.layout.FlowData;
 import com.extjs.gxt.ui.client.widget.layout.FormLayout;
 import com.google.gwt.user.client.Element;
+import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.constants.ErrorCode;
+import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.mvc.events.AppEvents;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.shared.model.SpecialityModel;
 
 /**
@@ -15,7 +18,9 @@ import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.shared.model.SpecialityMo
  * Time: 6:02 PM
  */
 public class SpecialityInfoLayoutContainer extends LayoutContainer {
-    private LabelField nameLabelField;
+    private LabelField shortNameLabelField;
+    private LabelField fullNameLabelField;
+    private LabelField codeLabelField;
 
     @Override
     protected void onRender(Element parent, int index) {
@@ -27,22 +32,40 @@ public class SpecialityInfoLayoutContainer extends LayoutContainer {
         formLayout.setLabelWidth(140);
         fieldSet.setLayout(formLayout);
 
-        nameLabelField = new LabelField();
-        nameLabelField.setName("name");
-        nameLabelField.setFieldLabel("Имя:");
-        nameLabelField.setLabelStyle("font-weight: bold");
-        nameLabelField.setAutoWidth(true);
+        fullNameLabelField = new LabelField();
+        fullNameLabelField.setName("fullName");
+        fullNameLabelField.setFieldLabel("Полное имя:");
+        fullNameLabelField.setLabelStyle("font-weight: bold");
+        fullNameLabelField.setAutoWidth(true);
 
-        fieldSet.add(nameLabelField);
+        shortNameLabelField = new LabelField();
+        shortNameLabelField.setName("shortName");
+        shortNameLabelField.setFieldLabel("Имя:");
+        shortNameLabelField.setLabelStyle("font-weight: bold");
+        shortNameLabelField.setAutoWidth(true);
+
+        codeLabelField = new LabelField();
+        codeLabelField.setName("code");
+        codeLabelField.setFieldLabel("Код:");
+        codeLabelField.setLabelStyle("font-weight: bold");
+        codeLabelField.setAutoWidth(true);
+
+        fieldSet.add(shortNameLabelField);
+        fieldSet.add(fullNameLabelField);
+        fieldSet.add(codeLabelField);
 
         add(fieldSet, new FlowData(5));
     }
 
     public void bind(SpecialityModel specialityModel) {
         if (isRendered()) {
-            nameLabelField.setText(specialityModel.getName());
+            shortNameLabelField.setText(specialityModel.getShortName());
+            fullNameLabelField.setText(specialityModel.getFullName());
+            codeLabelField.setText(specialityModel.getCode());
         } else {
-            Info.display("DEBUG", "GroupInfoLayoutContainer is not rendered!");
+            AppEvent appEvent = new AppEvent(AppEvents.Error, ErrorCode.DebugInformation);
+            appEvent.setData("message", "StudentInfoLayoutContainer is not rendered!");
+            Dispatcher.forwardEvent(appEvent);
         }
     }
 }

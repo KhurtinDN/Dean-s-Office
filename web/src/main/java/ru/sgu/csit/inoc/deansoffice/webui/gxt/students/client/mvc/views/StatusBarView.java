@@ -11,6 +11,7 @@ import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.mvc.events.AppEven
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.shared.model.GroupModel;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.shared.model.SpecialityModel;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.shared.model.StudentModel;
+import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.shared.utils.StudentModelUtil;
 
 /**
  * User: Khurtin Denis (KhurtinDN@gmail.com)
@@ -70,7 +71,7 @@ public class StatusBarView extends View {
 
     private void onSpecialitySelected(AppEvent event) {
         SpecialityModel specialityModel = event.getData();
-        setStatus("Выбрана специальность: " + specialityModel.getName());
+        setStatus("Выбрана специальность: " + specialityModel.getFullName());
     }
 
     private void onGroupSelected(AppEvent event) {
@@ -80,6 +81,6 @@ public class StatusBarView extends View {
 
     private void onStudentSelected(AppEvent event) {
         StudentModel studentModel = event.getData();
-        setStatus("Выбран студент: " + studentModel.getName());
+        setStatus("Выбран студент: " + StudentModelUtil.getFullName(studentModel));
     }
 }

@@ -15,6 +15,7 @@ public class NavigationController extends Controller {
 
     public NavigationController() {
         registerEventTypes(AppEvents.Init);
+        registerEventTypes(AppEvents.FacultySelected);
     }
 
     @Override

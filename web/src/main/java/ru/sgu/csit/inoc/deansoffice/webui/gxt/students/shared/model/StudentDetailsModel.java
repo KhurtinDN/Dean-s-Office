@@ -8,6 +8,11 @@ import java.util.List;
  * Time: 12:26 PM
  */
 public class StudentDetailsModel extends StudentModel {
+    private List<PassportModel> passports;
+    private ParentModel father;
+    private ParentModel mother;
+    private String oldAddress;
+    private String actualAddress;
 
     public String getBirthplace() {
         return get("birthplace");
@@ -34,11 +39,11 @@ public class StudentDetailsModel extends StudentModel {
     }
 
     public List<PassportModel> getPassports() {
-        return get("passports");
+        return passports;
     }
 
     public void setPassports(List<PassportModel> passports) {
-        set("passports", passports);
+        this.passports = passports;
     }
 
     public String getMaritalStatus() {
@@ -58,34 +63,34 @@ public class StudentDetailsModel extends StudentModel {
     }
 
     public ParentModel getFather() {
-        return get("father");
+        return father;
     }
 
     public void setFather(ParentModel father) {
-        set("father", father);
+        this.father = father;
     }
 
     public ParentModel getMother() {
-        return get("mother");
+        return mother;
     }
 
     public void setMother(ParentModel mother) {
-        set("mother", mother);
+        this.mother = mother;
     }
 
-    public AddressModel getOldAddress() {
-        return get("oldAddress");
+    public String getOldAddress() {
+        return oldAddress;
     }
 
-    public void setOldAddress(AddressModel oldAddress) {
-        set("oldAddress", oldAddress);
+    public void setOldAddress(String oldAddress) {
+        this.oldAddress = oldAddress;
     }
 
-    public AddressModel getActualAddress() {
-        return get("actualAddress");
+    public String getActualAddress() {
+        return actualAddress;
     }
 
-    public void setActualAddress(AddressModel actualAddress) {
-        set("actualAddress", actualAddress);
+    public void setActualAddress(String actualAddress) {
+        this.actualAddress = actualAddress;
     }
 }

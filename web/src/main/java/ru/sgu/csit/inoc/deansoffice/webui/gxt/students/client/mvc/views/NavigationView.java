@@ -7,6 +7,7 @@ import com.extjs.gxt.ui.client.mvc.View;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.components.NavigationPanel;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.mvc.controllers.NavigationController;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.mvc.events.AppEvents;
+import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.shared.model.FacultyModel;
 
 /**
  * User: Khurtin Denis (KhurtinDN@gmail.com)
@@ -33,10 +34,17 @@ public class NavigationView extends View {
 
         if (eventType.equals(AppEvents.Init)) {
             onInit(event);
+        } else if (eventType.equals(AppEvents.FacultySelected)) {
+            onFacultySelected(event);
         }
     }
 
     private void onInit(AppEvent event) {
         Dispatcher.forwardEvent(AppEvents.NavigationPanelReady, navigationPanel);
+    }
+
+    private void onFacultySelected(AppEvent event) {
+        FacultyModel facultyModel = event.getData();
+        navigationPanel.reloadMenuData(facultyModel);
     }
 }

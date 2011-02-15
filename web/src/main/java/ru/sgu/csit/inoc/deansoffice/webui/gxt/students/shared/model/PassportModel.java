@@ -8,13 +8,9 @@ import java.util.Date;
  * Time: 10:46 AM
  */
 public class PassportModel extends DtoModel {
+    private String address;
 
     public PassportModel() {
-    }
-
-    public PassportModel(String series, String number) {
-        setSeries(series);
-        setNumber(number);
     }
 
     public String getSeries() {
@@ -55,5 +51,13 @@ public class PassportModel extends DtoModel {
 
     public void setCitizenship(String citizenship) {
         set("citizenship", citizenship);
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 }

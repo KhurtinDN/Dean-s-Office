@@ -5,19 +5,21 @@ import com.extjs.gxt.ui.client.data.ModelData;
 import com.extjs.gxt.ui.client.event.Events;
 import com.extjs.gxt.ui.client.event.Listener;
 import com.extjs.gxt.ui.client.event.SelectionChangedEvent;
+import com.extjs.gxt.ui.client.mvc.AppEvent;
 import com.extjs.gxt.ui.client.mvc.Dispatcher;
 import com.extjs.gxt.ui.client.store.ListStore;
 import com.extjs.gxt.ui.client.widget.ContentPanel;
-import com.extjs.gxt.ui.client.widget.Info;
 import com.extjs.gxt.ui.client.widget.grid.*;
 import com.extjs.gxt.ui.client.widget.layout.FitLayout;
 import com.google.gwt.user.client.Element;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.constants.ErrorCode;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.mvc.events.AppEvents;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.services.StudentService;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.shared.model.GroupModel;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.shared.model.SpecialityModel;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.shared.model.StudentModel;
+import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.shared.utils.StudentModelUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +30,8 @@ import java.util.List;
  * Time: 11:16 AM
  */
 public class StudentsPanel extends ContentPanel {
-    private ListStore<StudentModel> studentListStore;
+    private ListStore<StudentModel> studentListStore = new ListStore<StudentModel>();
+    private StudentAsyncCallback studentAsyncCallback = new StudentAsyncCallback();
 
     public StudentsPanel() {
     }
@@ -40,8 +43,7 @@ public class StudentsPanel extends ContentPanel {
         setHeading("Студенты");
         setLayout(new FitLayout());
 
-        studentListStore = new ListStore<StudentModel>();
-        studentListStore.sort("name", Style.SortDir.ASC);
+        studentListStore.sort("fullName", Style.SortDir.ASC);
         Grid<StudentModel> grid = new Grid<StudentModel>(studentListStore, createColumnModel());
         grid.setBorders(true);
         grid.setAutoExpandColumn("name");
@@ -72,43 +74,53 @@ public class StudentsPanel extends ContentPanel {
             }
         });
 
+        ColumnConfig nameColumnConfig = new ColumnConfig("name", "Имя", 200);
+        nameColumnConfig.setRenderer(new GridCellRenderer() {
+            @Override
+            public Object render(ModelData model, String property, ColumnData config,
+                                 int rowIndex, int colIndex, ListStore listStore, Grid grid) {
+                return StudentModelUtil.getFullName((StudentModel) model);
+            }
+        });
+
+        ColumnConfig studyFormColumnConfig = new ColumnConfig("studyForm", "Форма обучения", 100);
+        studyFormColumnConfig.setRenderer(new GridCellRenderer() {
+            @Override
+            public Object render(ModelData model, String property, ColumnData config,
+                                 int rowIndex, int colIndex, ListStore listStore, Grid grid) {
+                return StudentModelUtil.studyFormToString(((StudentModel) model).getStudyForm());
+            }
+        });
+
         List<ColumnConfig> columns = new ArrayList<ColumnConfig>();
         columns.add(nnColumnConfig);
-        columns.add(new ColumnConfig("name", "Имя", 200));
-        columns.add(new ColumnConfig("studyForm", "Форма обучения", 100));
+        columns.add(nameColumnConfig);
+        columns.add(studyFormColumnConfig);
 
         return new ColumnModel(columns);
     }
 
     public void showGroup(GroupModel groupModel) {
-        StudentService.App.getInstance().loadStudentList(groupModel.getId(),
-                new AsyncCallback<List<StudentModel>>() {
-                    @Override
-                    public void onFailure(Throwable caught) {
-                        Info.display("Сообщение от сервера", "Сервер не доступен!");
-                    }
-
-                    @Override
-                    public void onSuccess(List<StudentModel> students) {
-                        studentListStore.removeAll();
-                        studentListStore.add(students);
-                    }
-                });
+        StudentService.App.getInstance().loadStudentList(groupModel.getId(), studentAsyncCallback);
     }
 
     public void showSpecialityByCourse(SpecialityModel specialityModel, Integer course) {
         StudentService.App.getInstance().loadStudentListBySpecialityIdAndCourse(specialityModel.getId(), course,
-                new AsyncCallback<List<StudentModel>>() {
-                    @Override
-                    public void onFailure(Throwable caught) {
-                        Info.display("Сообщение от сервера", "Сервер не доступен!");
-                    }
+                studentAsyncCallback);
+    }
 
-                    @Override
-                    public void onSuccess(List<StudentModel> students) {
-                        studentListStore.removeAll();
-                        studentListStore.add(students);
-                    }
-                });
+    private class StudentAsyncCallback implements AsyncCallback<List<StudentModel>> {
+        @Override
+        public void onFailure(Throwable caught) {
+            AppEvent appEvent = new AppEvent(AppEvents.Error, ErrorCode.ServerReturnError);
+            appEvent.setData("throwable", caught);
+            Dispatcher.forwardEvent(appEvent);
+        }
+
+        @Override
+        public void onSuccess(List<StudentModel> students) {
+            studentListStore.removeAll();
+            studentListStore.add(students);
+        }
     }
 }

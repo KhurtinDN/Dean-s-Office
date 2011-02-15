@@ -21,7 +21,7 @@
 
     <filter-mapping>
         <filter-name>springSecurityFilterChain</filter-name>
-        <url-pattern>/*</url-pattern>
+        <url-pattern>/abc*</url-pattern> <!--todo: delete abc-->
     </filter-mapping>
 
     <!-- Фильтр для возможности ленивой загрузки данных (не проверено)
@@ -59,6 +59,16 @@
     <servlet-mapping>
         <servlet-name>DocumentServlet</servlet-name>
         <url-pattern>/documents/*</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>PhotoServlet</servlet-name>
+        <servlet-class>ru.sgu.csit.inoc.deansoffice.servlets.PhotoServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>PhotoServlet</servlet-name>
+        <url-pattern>/photos/*</url-pattern>
     </servlet-mapping>
 
     <welcome-file-list>

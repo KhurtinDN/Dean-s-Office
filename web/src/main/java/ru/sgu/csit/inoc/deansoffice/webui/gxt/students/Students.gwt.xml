@@ -4,11 +4,12 @@
 <module rename-to="students">
 
     <inherits name='com.google.gwt.user.User'/>
+    <inherits name="com.google.gwt.i18n.I18N"/>
     <inherits name='com.extjs.gxt.ui.GXT'/>
 
-    <entry-point class='ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.Students'/>
+    <extend-property name="locale" values="ru" />
 
-    <stylesheet src='style.css'/>
+    <entry-point class='ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.Students'/>
 
     <source path='client'/>
     <source path='shared'/>

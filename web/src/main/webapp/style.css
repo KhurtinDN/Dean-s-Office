@@ -1,0 +1,37 @@
+.studentAccount {
+    text-align: center;
+    font-size: 12pt;
+}
+
+.studentAccount h1 {
+    font-size: 20pt;
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+
+.studentAccount img {
+    margin: 10px;
+}
+
+.stFIO {
+    margin-bottom: 10px;
+}
+
+.stSpeciality {
+}
+
+.stLabel {
+    font-weight: bold;
+}
+
+.stValue {
+    padding-left: 10px;
+    padding-right: 30px;
+    font-style: oblique;
+    font-size: 14pt;
+    color: #000099;
+}
+
+.studentDataForm {
+
+}

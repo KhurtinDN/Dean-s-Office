@@ -2,6 +2,8 @@ package ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.components;
 
 import com.extjs.gxt.ui.client.event.ButtonEvent;
 import com.extjs.gxt.ui.client.event.SelectionListener;
+import com.extjs.gxt.ui.client.mvc.AppEvent;
+import com.extjs.gxt.ui.client.mvc.Dispatcher;
 import com.extjs.gxt.ui.client.util.Margins;
 import com.extjs.gxt.ui.client.util.Padding;
 import com.extjs.gxt.ui.client.widget.*;
@@ -11,7 +13,11 @@ import com.extjs.gxt.ui.client.widget.form.LabelField;
 import com.extjs.gxt.ui.client.widget.layout.*;
 import com.google.gwt.user.client.*;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.ui.Image;
+import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.constants.ErrorCode;
+import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.mvc.events.AppEvents;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.shared.model.StudentModel;
+import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.shared.utils.StudentModelUtil;
 
 /**
  * User: Khurtin Denis (KhurtinDN@gmail.com)
@@ -21,7 +27,11 @@ import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.shared.model.StudentModel
 public class StudentInfoLayoutContainer extends LayoutContainer {
     private StudentModel currentStudentModel;
 
+    private Image image;
     private LabelField nameLabelField;
+    private LabelField groupLabelField;
+    private LabelField specialityLabelField;
+    private LabelField courseLabelField;
     private LabelField studentIdNumberLabelField;
     private LabelField divisionLabelField;
     private LabelField studyFormLabelField;
@@ -38,11 +48,33 @@ public class StudentInfoLayoutContainer extends LayoutContainer {
         infoFieldSet.setLayout(infoFormLayout);
         infoFieldSet.setHeading("Инфомация о студенте");
 
+        image = new Image();
+//        image.setPixelSize(100, 100);
+        image.setHeight("100px");
+
         nameLabelField = new LabelField();
         nameLabelField.setName("name");
         nameLabelField.setFieldLabel("Имя:");
         nameLabelField.setLabelStyle("font-weight: bold");
         nameLabelField.setAutoWidth(true);
+
+        groupLabelField = new LabelField();
+        groupLabelField.setName("group");
+        groupLabelField.setFieldLabel("Группа:");
+        groupLabelField.setLabelStyle("font-weight: bold");
+        groupLabelField.setAutoWidth(true);
+
+        specialityLabelField = new LabelField();
+        specialityLabelField.setName("speciality");
+        specialityLabelField.setFieldLabel("Специальность:");
+        specialityLabelField.setLabelStyle("font-weight: bold");
+        specialityLabelField.setAutoWidth(true);
+
+        courseLabelField = new LabelField();
+        courseLabelField.setName("course");
+        courseLabelField.setFieldLabel("Курс:");
+        courseLabelField.setLabelStyle("font-weight: bold");
+        courseLabelField.setAutoWidth(true);
 
         studentIdNumberLabelField = new LabelField();
         studentIdNumberLabelField.setName("studentIdNumber");
@@ -62,7 +94,11 @@ public class StudentInfoLayoutContainer extends LayoutContainer {
         studyFormLabelField.setLabelStyle("font-weight: bold");
         studyFormLabelField.setAutoWidth(true);
 
+        infoFieldSet.add(image);
         infoFieldSet.add(nameLabelField);
+        infoFieldSet.add(groupLabelField);
+        infoFieldSet.add(specialityLabelField);
+        infoFieldSet.add(courseLabelField);
         infoFieldSet.add(studentIdNumberLabelField);
         infoFieldSet.add(divisionLabelField);
         infoFieldSet.add(studyFormLabelField);
@@ -153,7 +189,15 @@ public class StudentInfoLayoutContainer extends LayoutContainer {
 
             @Override
             public void componentSelected(ButtonEvent ce) {
-                getStudentAccountWindow().show();
+                if (currentStudentModel != null) {
+                    getStudentAccountWindow().showStudentAccount(currentStudentModel.getId());
+                } else {
+                    MessageBox messageBox = new MessageBox();
+                    messageBox.setButtons(MessageBox.OK);
+                    messageBox.setTitle("Внимание!");
+                    messageBox.setMessage("Выберите, пожалуйста, студента.");
+                    messageBox.show();
+                }
             }
         });
     }
@@ -162,12 +206,18 @@ public class StudentInfoLayoutContainer extends LayoutContainer {
         this.currentStudentModel = studentModel;
 
         if (isRendered()) {
-            nameLabelField.setText(studentModel.getName());
+            image.setUrl("photos/" + studentModel.getPhotoId() + ".jpg");
+            nameLabelField.setText(StudentModelUtil.getFullName(studentModel));
+            groupLabelField.setText(studentModel.getGroup().getName());
+            specialityLabelField.setText(studentModel.getSpeciality().getFullName());
+            courseLabelField.setText(studentModel.getCourse().toString());
             studentIdNumberLabelField.setText(studentModel.getStudentIdNumber());
-            divisionLabelField.setText(studentModel.getDivision());
-            studyFormLabelField.setText(studentModel.getStudyForm());
+            divisionLabelField.setText(StudentModelUtil.divisionToString(studentModel.getDivision()));
+            studyFormLabelField.setText(StudentModelUtil.studyFormToString(studentModel.getStudyForm()));
         } else {
-            Info.display("DEBUG", "StudentInfoLayoutContainer is not rendered!");
+            AppEvent appEvent = new AppEvent(AppEvents.Error, ErrorCode.DebugInformation);
+            appEvent.setData("message", "StudentInfoLayoutContainer is not rendered!");
+            Dispatcher.forwardEvent(appEvent);
         }
     }
 }

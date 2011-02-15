@@ -18,6 +18,7 @@ public class AppEvents {
     public static final EventType MenuBarReady = new EventType();
     public static final EventType StatusBarReady = new EventType();
 
+    public static final EventType FacultySelected = new EventType();
     public static final EventType SpecialitySelected = new EventType();
     public static final EventType GroupSelected = new EventType();
     public static final EventType StudentSelected = new EventType();

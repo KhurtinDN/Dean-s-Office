@@ -3,16 +3,22 @@ package ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.mvc.views;
 import com.extjs.gxt.ui.client.Style;
 import com.extjs.gxt.ui.client.event.EventType;
 import com.extjs.gxt.ui.client.mvc.AppEvent;
+import com.extjs.gxt.ui.client.mvc.Dispatcher;
 import com.extjs.gxt.ui.client.mvc.View;
 import com.extjs.gxt.ui.client.widget.Component;
 import com.extjs.gxt.ui.client.widget.ContentPanel;
+import com.extjs.gxt.ui.client.widget.Info;
 import com.extjs.gxt.ui.client.widget.Viewport;
 import com.extjs.gxt.ui.client.widget.layout.BorderLayout;
 import com.extjs.gxt.ui.client.widget.layout.BorderLayoutData;
 import com.extjs.gxt.ui.client.widget.layout.FitLayout;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.RootLayoutPanel;
+import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.constants.ErrorCode;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.mvc.controllers.AppController;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.mvc.events.AppEvents;
+import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.services.AppService;
+import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.shared.model.FacultyModel;
 
 /**
  * User: Khurtin Denis (KhurtinDN@gmail.com)
@@ -66,7 +72,21 @@ public class AppView extends View {
         viewport.add(viewportPanel);
     }
 
-    private void onError(AppEvent event) {}
+    private void onError(AppEvent event) {
+        ErrorCode code = event.getData();
+
+        switch (code) {
+            case ServerReturnError:
+                Info.display("Важное сообщение", "Сервер не доступен");
+                break;
+            case DebugInformation:
+                String message = event.getData("message");
+                Info.display("DEBUG", message);
+                break;
+            default:
+                Info.display("Ошибка", "Неизвестная ошибка!");
+        }
+    }
 
     private void onNavigationPanelReady(AppEvent event) {
         Component component = event.getData();
@@ -118,5 +138,17 @@ public class AppView extends View {
 
     private void onUIReady(AppEvent event) {
         RootLayoutPanel.get().add(viewport);
+
+        AppService.App.getInstance().loadFaculty(new AsyncCallback<FacultyModel>() {
+            @Override
+            public void onFailure(Throwable caught) {
+                Info.display("Важное сообщение", "Сервер не доступен");
+            }
+
+            @Override
+            public void onSuccess(FacultyModel facultyModel) {
+                Dispatcher.forwardEvent(AppEvents.FacultySelected, facultyModel);
+            }
+        });
     }
 }

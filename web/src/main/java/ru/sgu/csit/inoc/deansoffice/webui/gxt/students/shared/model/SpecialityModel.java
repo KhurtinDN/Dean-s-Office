@@ -6,19 +6,36 @@ package ru.sgu.csit.inoc.deansoffice.webui.gxt.students.shared.model;
  * Time: 2:04 PM
  */
 public class SpecialityModel extends DtoModel {
+
     public SpecialityModel() {
     }
 
-    public SpecialityModel(Long id, String name) {
+    public SpecialityModel(Long id, String fullName) {
         setId(id);
-        setName(name);
+        setFullName(fullName);
     }
 
-    public String getName() {
-        return get("name");
+    public String getFullName() {
+        return get("fullName");
     }
 
-    public void setName(String name) {
-        set("name", name);
+    public void setFullName(String fullName) {
+        set("fullName", fullName);
+    }
+
+    public String getShortName() {
+        return get("shortName");
+    }
+
+    public void setShortName(String shortName) {
+        set("shortName", shortName);
+    }
+
+    public String getCode() {
+        return get("code");
+    }
+
+    public void setCode(String code) {
+        set("code", code);
     }
 }

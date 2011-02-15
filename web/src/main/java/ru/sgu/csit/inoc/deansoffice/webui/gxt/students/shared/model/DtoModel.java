@@ -1,6 +1,7 @@
 package ru.sgu.csit.inoc.deansoffice.webui.gxt.students.shared.model;
 
 import com.extjs.gxt.ui.client.data.BaseModel;
+import com.google.gwt.user.client.rpc.IsSerializable;
 
 /**
  * User: Khurtin Denis (KhurtinDN@gmail.com)
@@ -8,6 +9,14 @@ import com.extjs.gxt.ui.client.data.BaseModel;
  * Time: 12:28 PM
  */
 public class DtoModel extends BaseModel {
+
+    public DtoModel() {
+    }
+
+    public DtoModel(Long id) {
+        setId(id);
+    }
+
     public Long getId() {
         return get("id");
     }
