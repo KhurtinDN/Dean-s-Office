@@ -12,9 +12,13 @@ import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.shared.model.PersonModel;
  */
 public class FacultyUtil {
     public static FacultyModel convertFacultyToFacultyModel(Faculty faculty) {
+        if (faculty == null) {
+            return null;
+        }
+
         Dean dean = faculty.getDean();
         PersonModel deanModel = new PersonModel();
-        PersonUtil.populatePerson(dean, deanModel);
+        PersonUtil.populatePersonModelByPerson(deanModel, dean);
 
         FacultyModel facultyModel =  new FacultyModel(faculty.getId());
         facultyModel.setDean(deanModel);

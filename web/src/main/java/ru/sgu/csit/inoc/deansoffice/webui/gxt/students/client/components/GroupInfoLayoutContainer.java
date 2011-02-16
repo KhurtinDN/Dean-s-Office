@@ -8,6 +8,7 @@ import com.extjs.gxt.ui.client.widget.form.LabelField;
 import com.extjs.gxt.ui.client.widget.layout.FlowData;
 import com.extjs.gxt.ui.client.widget.layout.FormLayout;
 import com.google.gwt.user.client.Element;
+import com.google.gwt.user.client.ui.Image;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.constants.ErrorCode;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.mvc.events.AppEvents;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.shared.model.GroupModel;
@@ -33,6 +34,9 @@ public class GroupInfoLayoutContainer extends LayoutContainer {
         formLayout.setLabelWidth(140);
         fieldSet.setLayout(formLayout);
 
+        Image image = new Image("icons/group128x128.png");
+        image.setHeight("100px");
+
         nameLabelField = new LabelField();
         nameLabelField.setName("fullName");
         nameLabelField.setFieldLabel("Полное имя:");
@@ -51,6 +55,7 @@ public class GroupInfoLayoutContainer extends LayoutContainer {
         courseLabelField.setLabelStyle("font-weight: bold");
         courseLabelField.setAutoWidth(true);
 
+        fieldSet.add(image);
         fieldSet.add(nameLabelField);
         fieldSet.add(specialityLabelField);
         fieldSet.add(courseLabelField);

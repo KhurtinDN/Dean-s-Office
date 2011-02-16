@@ -1,5 +1,9 @@
 package ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.components;
 
+import com.extjs.gxt.ui.client.Style;
+import com.extjs.gxt.ui.client.data.BaseModel;
+import com.extjs.gxt.ui.client.data.ModelData;
+import com.extjs.gxt.ui.client.store.ListStore;
 import com.extjs.gxt.ui.client.util.Margins;
 import com.extjs.gxt.ui.client.widget.LayoutContainer;
 import com.extjs.gxt.ui.client.widget.form.*;
@@ -8,15 +12,20 @@ import com.google.gwt.user.client.Element;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.shared.model.*;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.shared.utils.PersonModelUtil;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * User: Khurtin Denis ( KhurtinDN (a) gmail.com )
  * Date: 2/11/11
  * Time: 1:32 PM
  */
 public class StudentDataForm extends FormPanel {
-    private Radio maleSexRadio = new Radio();
-    private Radio femaleSexRadio = new Radio();
-    private RadioGroup sexRadioGroup = new RadioGroup();
+    private StudentDetailsModel studentDetailsModel;
+
+    private ModelData maleSex = new BaseModel();
+    private ModelData femaleSex = new BaseModel();
+    private ComboBox<ModelData> sexComboBox = new ComboBox<ModelData>();
 
     private DateField birthdayDateField = new DateField();
     private TextField<String> birthplaceTextField = new TextField<String>();
@@ -64,9 +73,16 @@ public class StudentDataForm extends FormPanel {
         setSize("100%", "100%");
         setLabelAlign(LabelAlign.TOP);
 
+        ListStore<ModelData> store = new ListStore<ModelData>();
+        store.add(maleSex);
+        store.add(femaleSex);
+        sexComboBox.setStore(store);
+
         wh10FormData.setMargins(new Margins(0, 0, 10, 0));
         wh5FormData.setMargins(new Margins(0, 0, 5, 0));
         wrFormData.setMargins(new Margins(0, 20, 0, 0));
+
+        setButtonAlign(Style.HorizontalAlignment.CENTER);
     }
 
     @Override
@@ -87,7 +103,7 @@ public class StudentDataForm extends FormPanel {
         addressFieldSet.setLayout(new FormLayout());
         addressFieldSet.setHeading("Домашний адрес");
 
-        addressFieldSet.add( createTripleFieldContainer(oldAddressTextField, passportAddressTextField,
+        addressFieldSet.add(createTripleFieldContainer(oldAddressTextField, passportAddressTextField,
                 actualAddressTextField), wFormData);
 
         add(columnLayoutContainer, wFormData);
@@ -95,16 +111,14 @@ public class StudentDataForm extends FormPanel {
     }
 
     private LayoutContainer createLeftLayoutContainer() {
-        maleSexRadio.setData("sex", PersonModel.Sex.MALE);
-        maleSexRadio.setBoxLabel(PersonModelUtil.sexToString(PersonModel.Sex.MALE));
+        maleSex.set("sex", PersonModel.Sex.MALE);
+        maleSex.set("title", PersonModelUtil.sexToString(PersonModel.Sex.MALE));
 
-        femaleSexRadio.setData("sex", PersonModel.Sex.FEMALE);
-        femaleSexRadio.setBoxLabel(PersonModelUtil.sexToString(PersonModel.Sex.FEMALE));
+        femaleSex.set("sex", PersonModel.Sex.FEMALE);
+        femaleSex.set("title", PersonModelUtil.sexToString(PersonModel.Sex.FEMALE));
 
-        sexRadioGroup.setFieldLabel("Пол");
-
-        sexRadioGroup.add(maleSexRadio);
-        sexRadioGroup.add(femaleSexRadio);
+        sexComboBox.setDisplayField("title");
+        sexComboBox.setFieldLabel("Пол");
 
         birthdayDateField.setFieldLabel("Дата рождения");
         birthplaceTextField.setFieldLabel("Место рождения");
@@ -131,7 +145,7 @@ public class StudentDataForm extends FormPanel {
         LayoutContainer leftLayoutContainer = new LayoutContainer(new FormLayout(LabelAlign.TOP));
         leftLayoutContainer.setStyleAttribute("paddingRight", "10px");
 
-        leftLayoutContainer.add(createDoubleFieldContainer(sexRadioGroup, citizenshipTextField), wh10FormData);
+        leftLayoutContainer.add(createDoubleFieldContainer(sexComboBox, citizenshipTextField), wh10FormData);
         leftLayoutContainer.add(createDoubleFieldContainer(birthdayDateField, birthplaceTextField), wh10FormData);
 
         leftLayoutContainer.add(passportFieldSet, wh10FormData);
@@ -158,7 +172,7 @@ public class StudentDataForm extends FormPanel {
         fatherFieldSet.setLayout(new FormLayout(LabelAlign.TOP));
         fatherFieldSet.setHeading("Отец");
 
-        fatherFieldSet.add( createTripleFieldContainer(lastNameFatherTextField, firstNameFatherTextField,
+        fatherFieldSet.add(createTripleFieldContainer(lastNameFatherTextField, firstNameFatherTextField,
                 middleNameFatherTextField), wh5FormData);
         fatherFieldSet.add(createDoubleFieldContainer(birthdayDateFatherField, workInfoFatherTextField), wh5FormData);
         fatherFieldSet.add(addressFatherTextField, wh5FormData);
@@ -177,7 +191,7 @@ public class StudentDataForm extends FormPanel {
         motherFieldSet.setLayout(new FormLayout(LabelAlign.TOP));
         motherFieldSet.setHeading("Мать");
 
-        motherFieldSet.add( createTripleFieldContainer(lastNameMotherTextField, firstNameMotherTextField,
+        motherFieldSet.add(createTripleFieldContainer(lastNameMotherTextField, firstNameMotherTextField,
                 middleNameMotherTextField), wh5FormData);
         motherFieldSet.add(createDoubleFieldContainer(birthdayDateMotherField, workInfoMotherTextField), wh5FormData);
         motherFieldSet.add(addressMotherTextField, wh5FormData);
@@ -226,13 +240,15 @@ public class StudentDataForm extends FormPanel {
     }
 
     public void setStudentDetails(StudentDetailsModel studentDetailsModel) {
+        this.studentDetailsModel = studentDetailsModel;
+
         if (studentDetailsModel.getSex() != null) {
             switch (studentDetailsModel.getSex()) {
                 case MALE:
-                    sexRadioGroup.setValue(maleSexRadio);
+                    sexComboBox.select(maleSex);
                     break;
                 case FEMALE:
-                    sexRadioGroup.setValue(femaleSexRadio);
+                    sexComboBox.select(femaleSex);
                     break;
             }
         }
@@ -337,5 +353,75 @@ public class StudentDataForm extends FormPanel {
         if (studentDetailsModel.getActualAddress() != null) {
             actualAddressTextField.setValue(studentDetailsModel.getActualAddress());
         }
+    }
+
+    public StudentDetailsModel getStudentDetails() {
+        // todo validate
+        ModelData sexModelData = sexComboBox.getValue();
+        if (sexModelData != null) {
+            studentDetailsModel.setSex((PersonModel.Sex) sexModelData.get("sex")); // todo: fix
+        }
+
+        studentDetailsModel.setBirthday(birthdayDateField.getValue());
+        studentDetailsModel.setBirthplace(birthplaceTextField.getValue());
+        studentDetailsModel.setEducation(educationTextField.getValue());
+        studentDetailsModel.setWorkInfo(workInfoTextField.getValue());
+        studentDetailsModel.setMaritalStatus(maritalStatusTextField.getValue());
+        studentDetailsModel.setChildrenInfo(childrenInfoTextField.getValue());
+
+        studentDetailsModel.setOldAddress(oldAddressTextField.getValue());
+        studentDetailsModel.setActualAddress(actualAddressTextField.getValue());
+
+        PassportModel currentPassportModel;
+        if (studentDetailsModel.getPassports() == null || studentDetailsModel.getPassports().size() <= 0) {
+            currentPassportModel = new PassportModel();
+        } else {
+            currentPassportModel =
+                    studentDetailsModel.getPassports().get(studentDetailsModel.getPassports().size() - 1);
+        }
+        currentPassportModel.setCitizenship(citizenshipTextField.getValue());
+        currentPassportModel.setNumber(passportNumberTextField.getValue());
+        currentPassportModel.setSeries(passportSeriesTextField.getValue());
+        currentPassportModel.setIssuingOrganization(issuingOrganizationTextField.getValue());
+        currentPassportModel.setIssuedDate(issuedDateTextField.getValue());
+        currentPassportModel.setAddress(passportAddressTextField.getValue());
+
+        List<PassportModel> passports = studentDetailsModel.getPassports();
+        if (passports == null) {
+            passports = new ArrayList<PassportModel>();
+        }
+        if (!passports.contains(currentPassportModel)) {
+            passports.add(currentPassportModel);
+        }
+
+        ParentModel father = studentDetailsModel.getFather();
+        if (father == null) {
+            father = new ParentModel();
+        }
+        father.setLastName(lastNameFatherTextField.getValue());
+        father.setFirstName(firstNameFatherTextField.getValue());
+        father.setMiddleName(middleNameFatherTextField.getValue());
+        father.setBirthday(birthdayDateFatherField.getValue());
+        father.setWorkInfo(workInfoFatherTextField.getValue());
+        father.setPhoneNumbers(phonesFatherTextField.getValue());
+        father.setAddress(addressFatherTextField.getValue());
+
+        studentDetailsModel.setFather(father);
+
+        ParentModel mother = studentDetailsModel.getMother();
+        if (mother == null) {
+            mother = new ParentModel();
+        }
+        mother.setLastName(lastNameMotherTextField.getValue());
+        mother.setFirstName(firstNameMotherTextField.getValue());
+        mother.setMiddleName(middleNameMotherTextField.getValue());
+        mother.setBirthday(birthdayDateMotherField.getValue());
+        mother.setWorkInfo(workInfoMotherTextField.getValue());
+        mother.setPhoneNumbers(phonesMotherTextField.getValue());
+        mother.setAddress(addressMotherTextField.getValue());
+
+        studentDetailsModel.setMother(mother);
+
+        return studentDetailsModel;
     }
 }

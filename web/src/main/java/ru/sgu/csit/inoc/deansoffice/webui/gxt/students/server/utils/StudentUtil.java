@@ -13,6 +13,10 @@ import java.util.List;
  */
 public class StudentUtil extends PersonUtil {
     public static List<StudentModel> convertStudentsToStudentModels(List<Student> studentList) {
+        if (studentList == null) {
+            return null;
+        }
+
         List<StudentModel> studentModelList = new ArrayList<StudentModel>(studentList.size());
 
         Group group = new Group();
@@ -22,7 +26,7 @@ public class StudentUtil extends PersonUtil {
 
         for (Student student : studentList) {
             StudentModel studentModel = new StudentModel();
-            populatePerson(student, studentModel);
+            populatePersonModelByPerson(studentModel, student);
 
             studentModel.setStudentIdNumber(student.getStudentIdNumber());
             studentModel.setDivision( convertStudentDivisionToStudentModelDivision(student.getDivision()));
@@ -55,8 +59,12 @@ public class StudentUtil extends PersonUtil {
     }
 
     public static StudentDetailsModel convertStudentToStudentDetailsModel(Student student) {
+        if (student == null) {
+            return null;
+        }
+
         StudentDetailsModel studentDetailsModel = new StudentDetailsModel();
-        populatePerson(student, studentDetailsModel);
+        populatePersonModelByPerson(studentDetailsModel, student);
 
         studentDetailsModel.setStudentIdNumber(student.getStudentIdNumber());
         studentDetailsModel.setDivision(convertStudentDivisionToStudentModelDivision(student.getDivision()));
@@ -80,7 +88,7 @@ public class StudentUtil extends PersonUtil {
             studentDetailsModel.setChildrenInfo(additionalStudentData.getChildrenInfo());
 
             studentDetailsModel.setFather(ParentUtil.convertParentToParentModel(additionalStudentData.getFather()));
-            studentDetailsModel.setMother(ParentUtil.convertParentToParentModel(additionalStudentData.getMather()));
+            studentDetailsModel.setMother(ParentUtil.convertParentToParentModel(additionalStudentData.getMother()));
 
             studentDetailsModel.setOldAddress(additionalStudentData.getOldAddress());
             studentDetailsModel.setActualAddress(additionalStudentData.getActualAddress());
@@ -93,10 +101,11 @@ public class StudentUtil extends PersonUtil {
         return studentDetailsModel;
     }
 
-    private static StudentModel.Division convertStudentDivisionToStudentModelDivision(Student.Division division) {
+    public static StudentModel.Division convertStudentDivisionToStudentModelDivision(Student.Division division) {
         if (division == null) {
             return null;
         }
+
         switch (division) {
             case INTRAMURAL:
                 return StudentModel.Division.INTRAMURAL;
@@ -109,10 +118,28 @@ public class StudentUtil extends PersonUtil {
         }
     }
 
-    private static StudentModel.StudyForm convertStudentStudyFormToStudentModelStudyForm(Student.StudyForm studyForm) {
+    public static Student.Division convertStudentModelDivisionToStudentDivision(StudentModel.Division division) {
+        if (division == null) {
+            return null;
+        }
+
+        switch (division) {
+            case INTRAMURAL:
+                return Student.Division.INTRAMURAL;
+            case EXTRAMURAL:
+                return Student.Division.EXTRAMURAL;
+            case EVENINGSTUDY:
+                return Student.Division.EVENINGSTUDY;
+            default:
+                return null;
+        }
+    }
+
+    public static StudentModel.StudyForm convertStudentStudyFormToStudentModelStudyForm(Student.StudyForm studyForm) {
         if (studyForm == null) {
             return null;
         }
+
         switch (studyForm) {
             case BUDGET:
                 return StudentModel.StudyForm.BUDGET;
@@ -123,7 +150,69 @@ public class StudentUtil extends PersonUtil {
         }
     }
 
-    public static Student convertStudentDetailsModelToStudent(StudentDetailsModel studentDetailsModel) {
-        return null;  //ToDo
+    public static Student.StudyForm convertStudentModelStudyFormToStudentStudyForm(StudentModel.StudyForm studyForm) {
+        if (studyForm == null) {
+            return null;
+        }
+
+        switch (studyForm) {
+            case BUDGET:
+                return Student.StudyForm.BUDGET;
+            case COMMERCIAL:
+                return Student.StudyForm.COMMERCIAL;
+            default:
+                return null;
+        }
+    }
+
+    public static void populateStudentByStudentDetailsModel(Student student, StudentDetailsModel studentDetailsModel) {
+        if (student == null || studentDetailsModel == null) {
+            throw new IllegalArgumentException("Arguments must be not null.");
+        }
+
+        student.setBirthday(studentDetailsModel.getBirthday());
+        student.setSex(convertPersonModelSexToPersonSex(studentDetailsModel.getSex()));
+
+        Student.AdditionalStudentData additionalStudentData = student.getAdditionalData();
+        if (additionalStudentData == null) {
+            additionalStudentData = new Student.AdditionalStudentData();
+        }
+        additionalStudentData.setBirthPlace(studentDetailsModel.getBirthplace());
+        additionalStudentData.setEducation(studentDetailsModel.getEducation());
+        additionalStudentData.setWorkInfo(studentDetailsModel.getWorkInfo());
+        additionalStudentData.setMaritalStatus(studentDetailsModel.getMaritalStatus());
+        additionalStudentData.setChildrenInfo(studentDetailsModel.getChildrenInfo());
+
+
+        additionalStudentData.setPassports(
+                PassportUtil.convertPassportModelListsToPassportList(studentDetailsModel.getPassports()));
+
+        if (studentDetailsModel.getFather() == null) {
+            additionalStudentData.setFather(null);
+        } else {
+            ParentModel fatherModel = studentDetailsModel.getFather();
+
+            Parent father = additionalStudentData.getFather();
+            if (father == null) {
+                father = new Parent();
+            }
+            ParentUtil.populateParentByParentModel(father, fatherModel);
+
+            additionalStudentData.setFather(father);
+        }
+
+        if (studentDetailsModel.getMother() == null) {
+            additionalStudentData.setMother(null);
+        } else {
+            ParentModel motherModel = studentDetailsModel.getMother();
+
+            Parent mother = additionalStudentData.getMother();
+            if (mother == null) {
+                mother = new Parent();
+            }
+            ParentUtil.populateParentByParentModel(mother, motherModel);
+
+            additionalStudentData.setMother(mother);
+        }
     }
 }

@@ -10,6 +10,10 @@ import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.shared.model.SpecialityMo
  */
 public class SpecialityUtil {
     public static SpecialityModel convertSpecialityToSpecialityModel(Speciality speciality) {
+        if (speciality == null) {
+            return null;
+        }
+
         SpecialityModel specialityModel = new SpecialityModel();
         specialityModel.setId(speciality.getId());
         specialityModel.setFullName(speciality.getName());

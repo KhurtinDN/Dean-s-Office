@@ -9,9 +9,25 @@ import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.shared.model.ParentModel;
  * Time: 3:45 PM
  */
 public class ParentUtil extends PersonUtil {
+    public static void populateParentByParentModel(Parent parent, ParentModel parentModel) {
+        if (parent == null || parentModel == null) {
+            throw new IllegalArgumentException("Argument must be not null");
+        }
+
+        populatePersonByPersonModel(parent, parentModel);
+
+        parent.setPhoneNumbers(parentModel.getPhoneNumbers());
+        parent.setWorkInfo(parentModel.getWorkInfo());
+        parent.setAddress(parentModel.getAddress());
+    }
+
     public static ParentModel convertParentToParentModel(Parent parent) {
+        if (parent == null) {
+            return null;
+        }
+
         ParentModel parentModel = new ParentModel();
-        populatePerson(parent, parentModel);
+        populatePersonModelByPerson(parentModel, parent);
 
         parentModel.setPhoneNumbers(parent.getPhoneNumbers());
         parentModel.setWorkInfo(parent.getWorkInfo());

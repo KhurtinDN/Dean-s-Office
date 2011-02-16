@@ -2,6 +2,9 @@ package ru.sgu.csit.inoc.deansoffice.webui.gxt.students.server.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import ru.sgu.csit.inoc.deansoffice.dao.AdditionalStudentDataDAO;
+import ru.sgu.csit.inoc.deansoffice.dao.ParentDAO;
+import ru.sgu.csit.inoc.deansoffice.dao.PassportDAO;
 import ru.sgu.csit.inoc.deansoffice.dao.StudentDAO;
 import ru.sgu.csit.inoc.deansoffice.domain.*;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.services.StudentService;
@@ -19,6 +22,12 @@ import java.util.List;
 public class StudentServiceImpl implements StudentService {
     @Autowired
     private StudentDAO studentDAO;
+    @Autowired
+    private PassportDAO passportDAO;
+    @Autowired
+    private AdditionalStudentDataDAO additionalStudentDataDAO;
+    @Autowired
+    private ParentDAO parentDAO;
 
     @Override
     public List<StudentModel> loadStudentList(Long groupId) {
@@ -43,7 +52,26 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public void saveStudentDetails(StudentDetailsModel studentDetailsModel) {
-        Student student = StudentUtil.convertStudentDetailsModelToStudent(studentDetailsModel);
+        Student student = studentDAO.findById(studentDetailsModel.getId());
+        StudentUtil.populateStudentByStudentDetailsModel(student, studentDetailsModel);
+
+        if (student.getAdditionalData() != null) {
+            Student.AdditionalStudentData additionalStudentData = student.getAdditionalData();
+            if (additionalStudentData.getPassports() != null) {
+                for (Passport passport : additionalStudentData.getPassports()) {
+                    passportDAO.saveOrUpdate(passport);
+                }
+            }
+            if (additionalStudentData.getFather() != null) {
+                parentDAO.saveOrUpdate(additionalStudentData.getFather());
+            }
+            if (additionalStudentData.getMother() != null) {
+                parentDAO.saveOrUpdate(additionalStudentData.getMother());
+            }
+
+            additionalStudentDataDAO.saveOrUpdate(additionalStudentData);
+        }
+
         studentDAO.update(student);
     }
 }

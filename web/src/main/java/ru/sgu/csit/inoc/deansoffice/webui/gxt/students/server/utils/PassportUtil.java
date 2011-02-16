@@ -13,6 +13,10 @@ import java.util.List;
  */
 public class PassportUtil {
     public static List<PassportModel> convertPassportListsToPassportModelList(List<Passport> passports) {
+        if (passports == null) {
+            return null;
+        }
+
         List<PassportModel> passportModelList = new ArrayList<PassportModel>(passports.size());
 
         for (Passport passport : passports) {
@@ -22,7 +26,25 @@ public class PassportUtil {
         return passportModelList;
     }
 
-    private static PassportModel convertPassportToPassportModel(Passport passport) {
+    public static List<Passport> convertPassportModelListsToPassportList(List<PassportModel> passportModelList) {
+        if (passportModelList == null) {
+            return null;
+        }
+
+        List<Passport> passportList = new ArrayList<Passport>(passportModelList.size());
+
+        for (PassportModel passportModel : passportModelList) {
+            passportList.add(convertPassportModelToPassport(passportModel));
+        }
+
+        return passportList;
+    }
+
+    public static PassportModel convertPassportToPassportModel(Passport passport) {
+        if (passport == null) {
+            return null;
+        }
+
         PassportModel passportModel = new PassportModel();
         passportModel.setSeries(passport.getSeries());
         passportModel.setNumber(passport.getNumber());
@@ -32,5 +54,20 @@ public class PassportUtil {
         passportModel.setAddress(passport.getAddress());
 
         return passportModel;
+    }
+
+    public static Passport convertPassportModelToPassport(PassportModel passportModel) {
+        if (passportModel == null) {
+            return null;
+        }
+        Passport passport = new Passport();
+        passport.setSeries(passportModel.getSeries());
+        passport.setNumber(passportModel.getNumber());
+        passport.setIssuingOrganization(passportModel.getIssuingOrganization());
+        passport.setIssuedDate(passportModel.getIssuedDate());
+        passport.setCitizenship(passportModel.getCitizenship());
+        passport.setAddress(passportModel.getAddress());
+
+        return passport;
     }
 }

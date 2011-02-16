@@ -6,6 +6,7 @@ import com.extjs.gxt.ui.client.event.SelectionChangedListener;
 import com.extjs.gxt.ui.client.mvc.AppEvent;
 import com.extjs.gxt.ui.client.mvc.Dispatcher;
 import com.extjs.gxt.ui.client.store.TreeStore;
+import com.extjs.gxt.ui.client.util.IconHelper;
 import com.extjs.gxt.ui.client.widget.ContentPanel;
 import com.extjs.gxt.ui.client.widget.LayoutContainer;
 import com.extjs.gxt.ui.client.widget.layout.AccordionLayout;
@@ -83,6 +84,7 @@ public class NavigationPanel extends ContentPanel {
                     }
                 };
                 treePanel.setDisplayProperty("name");
+                treePanel.getStyle().setLeafIcon(IconHelper.createStyle("group-icon"));
 
                 final Integer finalCourse = course;
                 treePanel.getSelectionModel().addSelectionChangedListener(new SelectionChangedListener<BaseModel>() {

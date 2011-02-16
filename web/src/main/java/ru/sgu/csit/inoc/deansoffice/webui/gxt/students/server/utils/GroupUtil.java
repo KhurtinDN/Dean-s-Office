@@ -14,6 +14,10 @@ import java.util.List;
  */
 public class GroupUtil {
     public static GroupModel convertGroupToGroupModel(Group group) {
+        if (group == null) {
+            return null;
+        }
+
         GroupModel groupModel = new GroupModel();
         groupModel.setId(group.getId());
         groupModel.setName(group.getName());
@@ -23,6 +27,10 @@ public class GroupUtil {
     }
 
     public static GroupModel convertGroupToGroupModel(Group group, SpecialityModel specialityModel) {
+        if (group == null) {
+            return null;
+        }
+
         GroupModel groupModel = new GroupModel();
         groupModel.setId(group.getId());
         groupModel.setName(group.getName());
@@ -34,6 +42,9 @@ public class GroupUtil {
 
     public static List<GroupModel> convertGroupListToGroupModelList(List<Group> groupList,
                                                                     SpecialityModel specialityModel) {
+        if (groupList == null) {
+            return null;
+        }
 
         List<GroupModel> groupModelList = new ArrayList<GroupModel>(groupList.size());
 

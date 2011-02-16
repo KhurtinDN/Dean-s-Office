@@ -43,7 +43,7 @@ public class StudentsPanel extends ContentPanel {
         setHeading("Студенты");
         setLayout(new FitLayout());
 
-        studentListStore.sort("fullName", Style.SortDir.ASC);
+        studentListStore.sort("name", Style.SortDir.ASC);
         Grid<StudentModel> grid = new Grid<StudentModel>(studentListStore, createColumnModel());
         grid.setBorders(true);
         grid.setAutoExpandColumn("name");

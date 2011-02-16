@@ -14,7 +14,6 @@ import com.extjs.gxt.ui.client.widget.layout.FitData;
 import com.extjs.gxt.ui.client.widget.layout.FitLayout;
 import com.extjs.gxt.ui.client.widget.layout.VBoxLayout;
 import com.extjs.gxt.ui.client.widget.layout.VBoxLayoutData;
-import com.google.gwt.i18n.client.LocaleInfo;
 import com.google.gwt.user.client.*;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.constants.ErrorCode;
@@ -33,19 +32,22 @@ public class StudentAccountWindow extends Window {
     private StudentDataForm studentDataForm = new StudentDataForm();
     private StudentDetailsModel studentDetailsModel;
 
-    private StudentDetailsAsyncCallback studentDetailsAsyncCallback = new StudentDetailsAsyncCallback();
+    private StudentDetailsLoaderAsyncCallback studentDetailsLoaderAsyncCallback =
+            new StudentDetailsLoaderAsyncCallback();
+    private StudentDetailsSaverAsyncCallback studentDetailsSaverAsyncCallback =
+            new StudentDetailsSaverAsyncCallback();
 
     public StudentAccountWindow() {
         setSize(800, 600);
         setModal(true);
         setBlinkModal(true);
         setMaximizable(true);
-        setButtonAlign(Style.HorizontalAlignment.CENTER);
+        setButtonAlign(Style.HorizontalAlignment.RIGHT);
 
         addButton(new Button("Сохранить", new SelectionListener<ButtonEvent>() {
             @Override
             public void componentSelected(ButtonEvent ce) {
-                Info.display("Warn!", LocaleInfo.getCurrentLocale().toString());
+                saveStudentDetailsModel();
             }
         }));
 
@@ -121,7 +123,7 @@ public class StudentAccountWindow extends Window {
     }
 
     public void showStudentAccount(Long studentId) {
-        StudentService.App.getInstance().loadStudentDetails(studentId, studentDetailsAsyncCallback);
+        StudentService.App.getInstance().loadStudentDetails(studentId, studentDetailsLoaderAsyncCallback);
     }
 
     private void showStudentAccountWindow(StudentDetailsModel studentDetailsModel) {
@@ -138,6 +140,11 @@ public class StudentAccountWindow extends Window {
         show();
     }
 
+    private void saveStudentDetailsModel() {
+        studentDetailsModel = studentDataForm.getStudentDetails();
+        StudentService.App.getInstance().saveStudentDetails(studentDetailsModel, studentDetailsSaverAsyncCallback);
+    }
+
     private void prepareStudentDetail(StudentDetailsModel studentDetailsModel) {
         studentDetailsModel.set("specialityFullName", studentDetailsModel.getSpeciality().getFullName());
         studentDetailsModel.set("specialityShortName", studentDetailsModel.getSpeciality().getShortName());
@@ -151,7 +158,7 @@ public class StudentAccountWindow extends Window {
         layout(true);
     }
 
-    private class StudentDetailsAsyncCallback implements AsyncCallback<StudentDetailsModel> {
+    private class StudentDetailsLoaderAsyncCallback implements AsyncCallback<StudentDetailsModel> {
 
         @Override
         public void onFailure(Throwable caught) {
@@ -163,6 +170,21 @@ public class StudentAccountWindow extends Window {
         @Override
         public void onSuccess(StudentDetailsModel studentDetailsModel) {
             showStudentAccountWindow(studentDetailsModel);
+        }
+    }
+
+    private class StudentDetailsSaverAsyncCallback implements AsyncCallback<Void> {
+
+        @Override
+        public void onFailure(Throwable caught) {
+            AppEvent appEvent = new AppEvent(AppEvents.Error, ErrorCode.ServerReturnError);
+            appEvent.setData("throwable", caught);
+            Dispatcher.forwardEvent(appEvent);
+        }
+
+        @Override
+        public void onSuccess(Void result) {
+            Info.display("Информация", "Информация о студенте обнавлена успешно!");
         }
     }
 }
