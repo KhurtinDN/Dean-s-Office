@@ -11,6 +11,7 @@ import java.util.List;
  */
 public interface BaseDAO<T, ID extends Serializable> {
     ID save(T entity);
+    void saveOrUpdate(T entity);
     void update(T transientObject);
     void delete(T persistentObject);
     T findById(ID id);

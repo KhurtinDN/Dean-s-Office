@@ -45,6 +45,11 @@ public class BaseDAOImpl<T, ID extends Serializable> extends HibernateDaoSupport
     }
 
     @Override
+    public void saveOrUpdate(T entity) {
+        getHibernateTemplate().saveOrUpdate(entity);
+    }
+
+    @Override
     public void update(T transientObject) {
         getHibernateTemplate().update(transientObject);
     }
