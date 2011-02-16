@@ -92,11 +92,11 @@
 Тел.: <font type="sans"><var name="Student.father.phoneNumbers" /></font>
 
     Мать
-Ф.И.О.: <font type="sans"><var name="Student.mather.fullName" /></font>
-Дата рождения: <font type="sans"><var name="Student.mather.birthday" /></font>
-Адрес: <font type="sans"><var name="Student.mather.address" /></font>
-Сведения о работе: <font type="sans"><var name="Student.mather.workInfo" /></font>
-Тел.: <font type="sans"><var name="Student.mather.phoneNumbers" /></font>
+Ф.И.О.: <font type="sans"><var name="Student.mother.fullName" /></font>
+Дата рождения: <font type="sans"><var name="Student.mother.birthday" /></font>
+Адрес: <font type="sans"><var name="Student.mother.address" /></font>
+Сведения о работе: <font type="sans"><var name="Student.mother.workInfo" /></font>
+Тел.: <font type="sans"><var name="Student.mother.phoneNumbers" /></font>
                                 </td>
                         </tr>
                         <tr>

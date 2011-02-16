@@ -137,7 +137,7 @@ public class StudentDossierServiceImpl extends DocumentServiceImpl implements St
         TEXT.put("Student.lastPassport.issuingOrganization", lastPassport.getIssuingOrganization());
 
         Parent father = student.getAdditionalData().getFather();
-        Parent mather = student.getAdditionalData().getMather();
+        Parent mother = student.getAdditionalData().getMother();
 
         TEXT.put("Student.father.fullName", father.getLastName() + " "
                 + father.getFirstName() + " " + father.getMiddleName());
@@ -146,12 +146,12 @@ public class StudentDossierServiceImpl extends DocumentServiceImpl implements St
         TEXT.put("Student.father.workInfo",  father.getWorkInfo());
         TEXT.put("Student.father.phoneNumbers", father.getPhoneNumbers());
 
-        TEXT.put("Student.mather.fullName", mather.getLastName() + " "
-                + mather.getFirstName() + " " + mather.getMiddleName());
-        TEXT.put("Student.mather.birthday", dateFormat.format(mather.getBirthday()));
-        TEXT.put("Student.mather.address", mather.getAddress());
-        TEXT.put("Student.mather.workInfo",  mather.getWorkInfo());
-        TEXT.put("Student.mather.phoneNumbers", mather.getPhoneNumbers());
+        TEXT.put("Student.mother.fullName", mother.getLastName() + " "
+                + mother.getFirstName() + " " + mother.getMiddleName());
+        TEXT.put("Student.mother.birthday", dateFormat.format(mother.getBirthday()));
+        TEXT.put("Student.mother.address", mother.getAddress());
+        TEXT.put("Student.mother.workInfo",  mother.getWorkInfo());
+        TEXT.put("Student.mother.phoneNumbers", mother.getPhoneNumbers());
 
         TEXT.put("Student.oldAddress", student.getAdditionalData().getOldAddress());
         TEXT.put("Student.actualAddress", student.getAdditionalData().getActualAddress());

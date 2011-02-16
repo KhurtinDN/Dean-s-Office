@@ -134,7 +134,7 @@ public class Student extends Person {
 
         @ManyToOne(cascade = CascadeType.MERGE)
         @PrimaryKeyJoinColumn
-        private Parent mather;
+        private Parent mother;
 
         private String oldAddress;
 
@@ -177,6 +177,10 @@ public class Student extends Person {
             return passports;
         }
 
+        public void setPassports(List<Passport> passports) {
+            this.passports = passports;
+        }
+
         public void addPassport(Passport passport) {
             if (this.passports == null) {
                 this.passports = new ArrayList<Passport>();
@@ -208,12 +212,12 @@ public class Student extends Person {
             this.father = father;
         }
 
-        public Parent getMather() {
-            return mather;
+        public Parent getMother() {
+            return mother;
         }
 
-        public void setMather(Parent mather) {
-            this.mather = mather;
+        public void setMother(Parent mother) {
+            this.mother = mother;
         }
 
         public String getOldAddress() {

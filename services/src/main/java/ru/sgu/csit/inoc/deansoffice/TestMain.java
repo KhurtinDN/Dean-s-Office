@@ -245,11 +245,11 @@ public class TestMain {
             additionalData.setActualAddress(address);
             additionalData.setOldAddress(address);
             additionalData.setFather(getRandomParent(Person.Sex.MALE));
-            additionalData.setMather(getRandomParent(Person.Sex.FEMALE));
+            additionalData.setMother(getRandomParent(Person.Sex.FEMALE));
             additionalData.getFather().setAddress(address);
-            additionalData.getMather().setAddress(address);
+            additionalData.getMother().setAddress(address);
             parentDAO.save(additionalData.getFather());
-            parentDAO.save(additionalData.getMather());
+            parentDAO.save(additionalData.getMother());
 
             PhotoService photoService = new PhotoServiceImpl();
             Photo photo;
