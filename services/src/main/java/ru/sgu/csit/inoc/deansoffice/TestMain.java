@@ -262,6 +262,9 @@ public class TestMain {
             photoDAO.save(photo);
             additionalData.setPhoto(photo);
 
+            additionalData.setMaritalStatus("Всё сложно... :/");
+            additionalData.setChildrenInfo("Нет");
+
             return additionalData;
         }
 
