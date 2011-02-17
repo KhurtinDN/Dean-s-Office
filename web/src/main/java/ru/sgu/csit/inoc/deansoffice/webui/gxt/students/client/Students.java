@@ -18,6 +18,7 @@ public class Students implements EntryPoint {
         dispatcher.addController(new StudentsController());
         dispatcher.addController(new InformationController());
         dispatcher.addController(new MenuBarController());
+        dispatcher.addController(new MessageController());
         dispatcher.addController(new StatusBarController());
         dispatcher.dispatch(AppEvents.Init);
         dispatcher.dispatch(AppEvents.UIReady);
