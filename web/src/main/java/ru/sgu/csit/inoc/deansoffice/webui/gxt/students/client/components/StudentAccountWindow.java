@@ -47,7 +47,12 @@ public class StudentAccountWindow extends Window {
         addButton(new Button("Сохранить", new SelectionListener<ButtonEvent>() {
             @Override
             public void componentSelected(ButtonEvent ce) {
-                saveStudentDetailsModel();
+                if (studentDataForm.isValid()) {
+                    saveStudentDetailsModel();
+                } else {
+                    Dispatcher.forwardEvent(AppEvents.InfoWithConfirmation,
+                            "Пожалуйста, корректно заполните все поля!");
+                }
             }
         }));
 

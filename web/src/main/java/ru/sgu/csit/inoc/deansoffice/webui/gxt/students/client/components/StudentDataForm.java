@@ -73,9 +73,18 @@ public class StudentDataForm extends FormPanel {
         setSize("100%", "100%");
         setLabelAlign(LabelAlign.TOP);
 
+        maleSex.set("sex", PersonModel.Sex.MALE);
+        maleSex.set("title", PersonModelUtil.sexToString(PersonModel.Sex.MALE));
+
+        femaleSex.set("sex", PersonModel.Sex.FEMALE);
+        femaleSex.set("title", PersonModelUtil.sexToString(PersonModel.Sex.FEMALE));
+
         ListStore<ModelData> store = new ListStore<ModelData>();
         store.add(maleSex);
         store.add(femaleSex);
+
+        sexComboBox.setEditable(false);
+        sexComboBox.setTriggerAction(ComboBox.TriggerAction.ALL);
         sexComboBox.setStore(store);
 
         wh10FormData.setMargins(new Margins(0, 0, 10, 0));
@@ -111,12 +120,6 @@ public class StudentDataForm extends FormPanel {
     }
 
     private LayoutContainer createLeftLayoutContainer() {
-        maleSex.set("sex", PersonModel.Sex.MALE);
-        maleSex.set("title", PersonModelUtil.sexToString(PersonModel.Sex.MALE));
-
-        femaleSex.set("sex", PersonModel.Sex.FEMALE);
-        femaleSex.set("title", PersonModelUtil.sexToString(PersonModel.Sex.FEMALE));
-
         sexComboBox.setDisplayField("title");
         sexComboBox.setFieldLabel("Пол");
 
@@ -242,125 +245,65 @@ public class StudentDataForm extends FormPanel {
     public void setStudentDetails(StudentDetailsModel studentDetailsModel) {
         this.studentDetailsModel = studentDetailsModel;
 
+        ModelData sex = null;
         if (studentDetailsModel.getSex() != null) {
             switch (studentDetailsModel.getSex()) {
                 case MALE:
-                    sexComboBox.select(maleSex);
+                    sex = maleSex;
                     break;
                 case FEMALE:
-                    sexComboBox.select(femaleSex);
+                    sex = femaleSex;
                     break;
             }
         }
+        sexComboBox.setValue(sex);
 
-        if (studentDetailsModel.getBirthday() != null) {
-            birthdayDateField.setValue(studentDetailsModel.getBirthday());
-        }
-        if (studentDetailsModel.getBirthplace() != null) {
-            birthplaceTextField.setValue(studentDetailsModel.getBirthplace());
-        }
-        if (studentDetailsModel.getEducation() != null) {
-            educationTextField.setValue(studentDetailsModel.getEducation());
-        }
-        if (studentDetailsModel.getWorkInfo() != null) {
-            workInfoTextField.setValue(studentDetailsModel.getWorkInfo());
-        }
-        if (studentDetailsModel.getMaritalStatus() != null) {
-            maritalStatusTextField.setValue(studentDetailsModel.getMaritalStatus());
-        }
-        if (studentDetailsModel.getChildrenInfo() != null) {
-            childrenInfoTextField.setValue(studentDetailsModel.getChildrenInfo());
-        }
+        birthdayDateField.setValue(studentDetailsModel.getBirthday());
+        birthplaceTextField.setValue(studentDetailsModel.getBirthplace());
+        educationTextField.setValue(studentDetailsModel.getEducation());
+        workInfoTextField.setValue(studentDetailsModel.getWorkInfo());
+        maritalStatusTextField.setValue(studentDetailsModel.getMaritalStatus());
+        childrenInfoTextField.setValue(studentDetailsModel.getChildrenInfo());
 
+        PassportModel currentPassportModel = null;
         if (studentDetailsModel.getPassports() != null && studentDetailsModel.getPassports().size() > 0) {
-            PassportModel currentPassportModel =
+            currentPassportModel =
                     studentDetailsModel.getPassports().get(studentDetailsModel.getPassports().size() - 1);
-
-            citizenshipTextField.setValue(currentPassportModel.getCitizenship());
-
-            if (currentPassportModel.getNumber() != null) {
-                passportNumberTextField.setValue(currentPassportModel.getNumber());
-            }
-            if (currentPassportModel.getSeries() != null) {
-                passportSeriesTextField.setValue(currentPassportModel.getSeries());
-            }
-            if (currentPassportModel.getIssuingOrganization() != null) {
-                issuingOrganizationTextField.setValue(currentPassportModel.getIssuingOrganization());
-            }
-            if (currentPassportModel.getIssuedDate() != null) {
-                issuedDateTextField.setValue(currentPassportModel.getIssuedDate());
-            }
-            if (currentPassportModel.getAddress() != null) {
-                passportAddressTextField.setValue(currentPassportModel.getAddress());
-            }
         }
+        citizenshipTextField.setValue(currentPassportModel == null ? null : currentPassportModel.getCitizenship());
+        passportNumberTextField.setValue(currentPassportModel == null ? null : currentPassportModel.getNumber());
+        passportSeriesTextField.setValue(currentPassportModel == null ? null : currentPassportModel.getSeries());
+        issuingOrganizationTextField.setValue(
+                currentPassportModel == null ? null : currentPassportModel.getIssuingOrganization());
+        issuedDateTextField.setValue(currentPassportModel == null ? null : currentPassportModel.getIssuedDate());
+        passportAddressTextField.setValue(currentPassportModel == null ? null : currentPassportModel.getAddress());
 
-        if (studentDetailsModel.getFather() != null) {
-            ParentModel father = studentDetailsModel.getFather();
 
-            if (father.getLastName() != null) {
-                lastNameFatherTextField.setValue(father.getLastName());
-            }
-            if (father.getFirstName() != null) {
-                firstNameFatherTextField.setValue(father.getFirstName());
-            }
-            if (father.getFirstName() != null) {
-                middleNameFatherTextField.setValue(father.getMiddleName());
-            }
-            if (father.getBirthday() != null) {
-                birthdayDateFatherField.setValue(father.getBirthday());
-            }
-            if (father.getWorkInfo() != null) {
-                workInfoFatherTextField.setValue(father.getWorkInfo());
-            }
-            if (father.getPhoneNumbers() != null) {
-                phonesFatherTextField.setValue(father.getPhoneNumbers());
-            }
-            if (father.getAddress() != null) {
-                addressFatherTextField.setValue(father.getAddress());
-            }
-        }
+        ParentModel father = studentDetailsModel.getFather();
+        lastNameFatherTextField.setValue(father == null ? null : father.getLastName());
+        firstNameFatherTextField.setValue(father == null ? null : father.getFirstName());
+        middleNameFatherTextField.setValue(father == null ? null : father.getMiddleName());
+        birthdayDateFatherField.setValue(father == null ? null : father.getBirthday());
+        workInfoFatherTextField.setValue(father == null ? null : father.getWorkInfo());
+        phonesFatherTextField.setValue(father == null ? null : father.getPhoneNumbers());
+        addressFatherTextField.setValue(father == null ? null : father.getAddress());
 
-        if (studentDetailsModel.getMother() != null) {
-            ParentModel mother = studentDetailsModel.getMother();
+        ParentModel mother = studentDetailsModel.getMother();
+        lastNameMotherTextField.setValue(mother == null ? null : mother.getLastName());
+        firstNameMotherTextField.setValue(mother == null ? null : mother.getFirstName());
+        middleNameMotherTextField.setValue(mother == null ? null : mother.getMiddleName());
+        birthdayDateMotherField.setValue(mother == null ? null : mother.getBirthday());
+        workInfoMotherTextField.setValue(mother == null ? null : mother.getWorkInfo());
+        phonesMotherTextField.setValue(mother == null ? null : mother.getPhoneNumbers());
+        addressMotherTextField.setValue(mother == null ? null : mother.getAddress());
 
-            if (mother.getLastName() != null) {
-                lastNameMotherTextField.setValue(mother.getLastName());
-            }
-            if (mother.getFirstName() != null) {
-                firstNameMotherTextField.setValue(mother.getFirstName());
-            }
-            if (mother.getFirstName() != null) {
-                middleNameMotherTextField.setValue(mother.getMiddleName());
-            }
-            if (mother.getBirthday() != null) {
-                birthdayDateMotherField.setValue(mother.getBirthday());
-            }
-            if (mother.getWorkInfo() != null) {
-                workInfoMotherTextField.setValue(mother.getWorkInfo());
-            }
-            if (mother.getPhoneNumbers() != null) {
-                phonesMotherTextField.setValue(mother.getPhoneNumbers());
-            }
-            if (mother.getAddress() != null) {
-                addressMotherTextField.setValue(mother.getAddress());
-            }
-        }
-
-        if (studentDetailsModel.getOldAddress() != null) {
-            oldAddressTextField.setValue(studentDetailsModel.getOldAddress());
-        }
-        if (studentDetailsModel.getActualAddress() != null) {
-            actualAddressTextField.setValue(studentDetailsModel.getActualAddress());
-        }
+        oldAddressTextField.setValue(studentDetailsModel.getOldAddress());
+        actualAddressTextField.setValue(studentDetailsModel.getActualAddress());
     }
 
     public StudentDetailsModel getStudentDetails() {
-        // todo validate
         ModelData sexModelData = sexComboBox.getValue();
-        if (sexModelData != null) {
-            studentDetailsModel.setSex((PersonModel.Sex) sexModelData.get("sex")); // todo: fix
-        }
+        studentDetailsModel.setSex(sexModelData == null ? null : (PersonModel.Sex) sexModelData.get("sex"));
 
         studentDetailsModel.setBirthday(birthdayDateField.getValue());
         studentDetailsModel.setBirthplace(birthplaceTextField.getValue());
