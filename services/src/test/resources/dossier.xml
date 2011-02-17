@@ -35,48 +35,47 @@
                     <td border="8"><table columns="2" width="100" align="center" border="2">
                         <tr>
                             <td padding="4">1. Пол</td>
-                            <td padding="4"><font type="sans"><var name="Student.sex" /></font></td>
+                            <td padding="4"><font size="10" type="sans"><var name="Student.sex" /></font></td>
                         </tr>
                         <tr>
                             <td padding="4">2. Дата рождения</td>
-                            <td padding="4"><font type="sans"><var name="Student.birthday" /></font></td>
+                            <td padding="4"><font size="10" type="sans"><var name="Student.birthday" /></font></td>
                         </tr>
                         <tr>
                             <td padding="4">3. Место рождения</td>
-                            <td padding="4"><font type="sans"><var name="Student.birthPlace" /></font></td>
+                            <td padding="4"><font size="10" type="sans"><var name="Student.birthPlace" /></font></td>
                         </tr>
                         <tr>
                             <td padding="4">4. Гражданство</td>
-                            <td padding="4"><font type="sans"><var name="Student.citizenship" /></font></td>
+                            <td padding="4"><font size="10" type="sans"><var name="Student.citizenship" /></font></td>
                         </tr>
                         <tr>
                             <td padding="4">5. Образование (какое учебное заведение окончил, когда и где)</td>
-                            <td padding="4"><font type="sans"><var name="Student.education" /></font></td>
+                            <td padding="4"><font size="10" type="sans"><var name="Student.education" /></font></td>
                         </tr>
                         <tr>
                             <td padding="4">6. Выполняемая работа (учёба) до поступления в ВУЗ (где и в качестве кого), стаж работы</td>
-                            <td padding="4"><font type="sans"><var name="Student.workInfo" /></font></td>
+                            <td padding="4"><font size="10" type="sans"><var name="Student.workInfo" /></font></td>
                         </tr>
                         <tr>
                             <td padding="4" border="10">7. Паспортные данные
 
-Ф.И.О.: <font type="sans"><var name="Student.firstPassport.fullName" /></font>
-Серия: <font type="sans"><var name="Student.firstPassport.series" /></font> №: <font type="sans"><var name="Student.firstPassport.number" /></font>
-Кем и когда выдан: <font type="sans"><var name="Student.firstPassport.issuingOrganization" /> <var name="Student.firstPassport.issuedDate" /></font></td>
+Ф.И.О.: <font size="10" type="sans"><var name="Student.firstPassport.fullName" /></font>
+Серия: <font size="10" type="sans"><var name="Student.firstPassport.series" /></font> №: <font size="10" type="sans"><var name="Student.firstPassport.number" /></font>
+Кем и когда выдан: <font size="10" type="sans"><var name="Student.firstPassport.issuingOrganization" /> <var name="Student.firstPassport.issuedDate" /></font></td>
                             <td padding="4">Данные после смены паспорта
 
-Ф.И.О.: <font type="sans"><var name="Student.lastPassport.fullName" /></font>
-Серия: <font type="sans"><var name="Student.lastPassport.series" /></font> №: <font type="sans"><var name="Student.lastPassport.number" /></font>
-Кем и когда выдан: <font type="sans"><var name="Student.lastPassport.issuingOrganization" /> <var name="Student.lastPassport.issuedDate" /></font></td>
+Ф.И.О.: <font size="10" type="sans"><var name="Student.lastPassport.fullName" /></font>
+Серия: <font size="10" type="sans"><var name="Student.lastPassport.series" /></font> №: <font size="10" type="sans"><var name="Student.lastPassport.number" /></font>
+Кем и когда выдан: <font size="10" type="sans"><var name="Student.lastPassport.issuingOrganization" /> <var name="Student.lastPassport.issuedDate" /></font></td>
                         </tr>
                         <tr>
                             <td colspan="2" padding="4">8. Семейное положение, местожительство жены (мужа)
-<font type="sans"><var name="Student.maritalStatus" /></font>
-                            </td>
+<font size="10" type="sans"><var name="Student.maritalStatus" /></font></td>
                         </tr>
                         <tr>
                             <td colspan="2" padding="4" border="0">9. Сведения о детях (пол, дата рождения)
-<font type="sans"><var name="Student.childrenInfo" /></font>
+<font size="10" type="sans"><var name="Student.childrenInfo" /></font>
                             </td>
                         </tr>
                     </table></td>
@@ -85,29 +84,27 @@
                             <td padding="4">10. Сведения о родителях
 
     Отец
-Ф.И.О.: <font type="sans"><var name="Student.father.fullName" /></font>
-Дата рождения: <font type="sans"><var name="Student.father.birthday" /></font>
-Адрес: <font type="sans"><var name="Student.father.address" /></font>
-Сведения о работе: <font type="sans"><var name="Student.father.workInfo" /></font>
-Тел.: <font type="sans"><var name="Student.father.phoneNumbers" /></font>
+Ф.И.О.: <font size="10" type="sans"><var name="Student.father.fullName" /></font>
+Дата рождения: <font size="10" type="sans"><var name="Student.father.birthday" /></font>
+Адрес: <font size="10" type="sans"><var name="Student.father.address" /></font>
+Сведения о работе: <font size="10" type="sans"><var name="Student.father.workInfo" /></font>
+Тел.: <font size="10" type="sans"><var name="Student.father.phoneNumbers" /></font>
 
     Мать
-Ф.И.О.: <font type="sans"><var name="Student.mother.fullName" /></font>
-Дата рождения: <font type="sans"><var name="Student.mother.birthday" /></font>
-Адрес: <font type="sans"><var name="Student.mother.address" /></font>
-Сведения о работе: <font type="sans"><var name="Student.mother.workInfo" /></font>
-Тел.: <font type="sans"><var name="Student.mother.phoneNumbers" /></font>
-                                </td>
+Ф.И.О.: <font size="10" type="sans"><var name="Student.mother.fullName" /></font>
+Дата рождения: <font size="10" type="sans"><var name="Student.mother.birthday" /></font>
+Адрес: <font size="10" type="sans"><var name="Student.mother.address" /></font>
+Сведения о работе: <font size="10" type="sans"><var name="Student.mother.workInfo" /></font>
+Тел.: <font size="10" type="sans"><var name="Student.mother.phoneNumbers" /></font></td>
                         </tr>
                         <tr>
                             <td padding="4">11. Домашний адрес
 
-До поступления: <font type="sans"><var name="Student.oldAddress" /></font>
+До поступления: <font size="10" type="sans"><var name="Student.oldAddress" /></font>
 
-По паспорту: <font type="sans"><var name="Student.passportAddress" /></font>
+По паспорту: <font size="10" type="sans"><var name="Student.passportAddress" /></font>
 
-Фактический: <font type="sans"><var name="Student.actualAddress" /></font>
-
+Фактический: <font size="10" type="sans"><var name="Student.actualAddress" /></font>
 </td>
                         </tr>
                         <tr>
