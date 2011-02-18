@@ -241,6 +241,7 @@ public class TestMain {
             passport.setAddress(address);
             passportDAO.save(passport);
             additionalData.addPassport(passport);
+            additionalData.setCurrentPassport(passport);
 
             additionalData.setActualAddress(address);
             additionalData.setOldAddress(address);
