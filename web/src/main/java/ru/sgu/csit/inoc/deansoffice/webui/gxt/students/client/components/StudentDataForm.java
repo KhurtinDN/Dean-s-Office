@@ -30,22 +30,22 @@ public class StudentDataForm extends FormPanel {
     private DateField birthdayDateField = new DateField();
     private TextField<String> birthplaceTextField = new TextField<String>();
     private TextField<String> citizenshipTextField = new TextField<String>();
-    private TextField<String> educationTextField = new TextField<String>();
-    private TextField<String> workInfoTextField = new TextField<String>();
 
     private TextField<String> passportSeriesTextField = new TextField<String>();
     private TextField<String> passportNumberTextField = new TextField<String>();
     private TextField<String> issuingOrganizationTextField = new TextField<String>();
     private DateField issuedDateTextField = new DateField();
 
-    private TextField<String> maritalStatusTextField = new TextField<String>();
-    private TextField<String> childrenInfoTextField = new TextField<String>();
+    private TextArea educationTextField = new TextArea();
+    private TextArea workInfoTextField = new TextArea();
+    private TextArea maritalStatusTextField = new TextArea();
+    private TextArea childrenInfoTextField = new TextArea();
 
     private TextField<String> lastNameFatherTextField = new TextField<String>();
     private TextField<String> firstNameFatherTextField = new TextField<String>();
     private TextField<String> middleNameFatherTextField = new TextField<String>();
     private DateField birthdayDateFatherField = new DateField();
-    private TextField<String> addressFatherTextField = new TextField<String>();
+    private TextArea addressFatherTextField = new TextArea();
     private TextField<String> workInfoFatherTextField = new TextField<String>();
     private TextField<String> phonesFatherTextField = new TextField<String>();
 
@@ -53,13 +53,13 @@ public class StudentDataForm extends FormPanel {
     private TextField<String> firstNameMotherTextField = new TextField<String>();
     private TextField<String> middleNameMotherTextField = new TextField<String>();
     private DateField birthdayDateMotherField = new DateField();
-    private TextField<String> addressMotherTextField = new TextField<String>();
+    private TextArea addressMotherTextField = new TextArea();
     private TextField<String> workInfoMotherTextField = new TextField<String>();
     private TextField<String> phonesMotherTextField = new TextField<String>();
 
-    private TextField<String> oldAddressTextField = new TextField<String>();
-    private TextField<String> passportAddressTextField = new TextField<String>();
-    private TextField<String> actualAddressTextField = new TextField<String>();
+    private TextArea oldAddressTextField = new TextArea();
+    private TextArea passportAddressTextField = new TextArea();
+    private TextArea actualAddressTextField = new TextArea();
 
     private FormData wFormData = new FormData("100%");
     private FormData wh10FormData = new FormData("100%");
@@ -85,7 +85,20 @@ public class StudentDataForm extends FormPanel {
 
         sexComboBox.setEditable(false);
         sexComboBox.setTriggerAction(ComboBox.TriggerAction.ALL);
+        sexComboBox.setDisplayField("title");
         sexComboBox.setStore(store);
+
+        educationTextField.setHeight(35);
+        workInfoTextField.setHeight(35);
+        maritalStatusTextField.setHeight(35);
+        childrenInfoTextField.setHeight(35);
+
+        oldAddressTextField.setHeight(35);
+        passportAddressTextField.setHeight(35);
+        actualAddressTextField.setHeight(35);
+
+        addressFatherTextField.setHeight(35);
+        addressMotherTextField.setHeight(35);
 
         wh10FormData.setMargins(new Margins(0, 0, 10, 0));
         wh5FormData.setMargins(new Margins(0, 0, 5, 0));
@@ -104,65 +117,78 @@ public class StudentDataForm extends FormPanel {
         columnLayoutContainer.add(createLeftLayoutContainer(), new ColumnData(0.5));
         columnLayoutContainer.add(createRightLayoutContainer(), new ColumnData(0.5));
 
-        oldAddressTextField.setFieldLabel("До поступления в ВУЗ");
-        passportAddressTextField.setFieldLabel("В соответствии с данными паспорта");
-        actualAddressTextField.setFieldLabel("Фактический адрес");
-
         FieldSet addressFieldSet = new FieldSet();
         addressFieldSet.setLayout(new FormLayout());
         addressFieldSet.setHeading("Домашний адрес");
+
+        oldAddressTextField.setFieldLabel("До поступления в ВУЗ");
+        passportAddressTextField.setFieldLabel("В соответствии с данными паспорта");
+        actualAddressTextField.setFieldLabel("Фактический адрес");
 
         addressFieldSet.add(createTripleFieldContainer(oldAddressTextField, passportAddressTextField,
                 actualAddressTextField), wFormData);
 
         add(columnLayoutContainer, wFormData);
         add(addressFieldSet, wFormData);
+        add(createParentLayoutContainer(), wFormData);
     }
 
     private LayoutContainer createLeftLayoutContainer() {
-        sexComboBox.setDisplayField("title");
-        sexComboBox.setFieldLabel("Пол");
+        LayoutContainer leftLayoutContainer = new LayoutContainer(new FormLayout(LabelAlign.TOP));
+        leftLayoutContainer.setStyleAttribute("paddingRight", "10px");
 
+        sexComboBox.setFieldLabel("Пол");
+        citizenshipTextField.setFieldLabel("Гражданство");
         birthdayDateField.setFieldLabel("Дата рождения");
         birthplaceTextField.setFieldLabel("Место рождения");
-        citizenshipTextField.setFieldLabel("Гражданство");
-        educationTextField.setFieldLabel("Образование (какое учебное заведение окончил, когда и где)");
-        workInfoTextField.setFieldLabel(
-                "Выполняемая работа (учеба) до поступления в ВУЗ (где и в качестве кого), стаж работы");
+
+        FieldSet passportFieldSet = new FieldSet();
+        passportFieldSet.setLayout(new FormLayout());
+        passportFieldSet.setHeading("Паспортные данные");
 
         passportSeriesTextField.setFieldLabel("Серия");
         passportNumberTextField.setFieldLabel("Номер");
         issuingOrganizationTextField.setFieldLabel("Кем выдан");
         issuedDateTextField.setFieldLabel("Когда выдан");
 
-        FieldSet passportFieldSet = new FieldSet();
-        passportFieldSet.setLayout(new FormLayout());
-        passportFieldSet.setHeading("Паспортные данные");
-
         passportFieldSet.add(createDoubleFieldContainer(passportSeriesTextField, passportNumberTextField), wh5FormData);
         passportFieldSet.add(createDoubleFieldContainer(issuedDateTextField, issuingOrganizationTextField), wFormData);
 
-        maritalStatusTextField.setFieldLabel("Семейное положение, местожительство жены (мужа)");
-        childrenInfoTextField.setFieldLabel("Сведения о детях (пол, дата рождения)");
-
-        LayoutContainer leftLayoutContainer = new LayoutContainer(new FormLayout(LabelAlign.TOP));
-        leftLayoutContainer.setStyleAttribute("paddingRight", "10px");
-
         leftLayoutContainer.add(createDoubleFieldContainer(sexComboBox, citizenshipTextField), wh10FormData);
         leftLayoutContainer.add(createDoubleFieldContainer(birthdayDateField, birthplaceTextField), wh10FormData);
-
         leftLayoutContainer.add(passportFieldSet, wh10FormData);
-
-        leftLayoutContainer.add(educationTextField, wh10FormData);
-        leftLayoutContainer.add(workInfoTextField, wh10FormData);
-        leftLayoutContainer.add(maritalStatusTextField, wh10FormData);
-        leftLayoutContainer.add(childrenInfoTextField, wh10FormData);
 
         return leftLayoutContainer;
     }
 
     private LayoutContainer createRightLayoutContainer() {
+        LayoutContainer rightLayoutContainer = new LayoutContainer(new FormLayout(LabelAlign.TOP));
+        rightLayoutContainer.setStyleAttribute("paddingLeft", "10px");
+
+        educationTextField.setFieldLabel("Образование (какое учебное заведение окончил, когда и где)");
+        workInfoTextField.setFieldLabel(
+                "Выполняемая работа (учеба) до поступления в ВУЗ (где и в качестве кого), стаж работы");
+
+        maritalStatusTextField.setFieldLabel("Семейное положение, местожительство жены (мужа)");
+        childrenInfoTextField.setFieldLabel("Сведения о детях (пол, дата рождения)");
+
+        rightLayoutContainer.add(educationTextField, wh10FormData);
+        rightLayoutContainer.add(workInfoTextField, wh10FormData);
+        rightLayoutContainer.add(maritalStatusTextField, wh10FormData);
+        rightLayoutContainer.add(childrenInfoTextField, wh10FormData);
+
+        return rightLayoutContainer;
+    }
+
+    private LayoutContainer createParentLayoutContainer() {
+        LayoutContainer parentLayoutContainer = new LayoutContainer(new ColumnLayout());
+
         // Father
+        FieldSet fatherFieldSet = new FieldSet();
+        fatherFieldSet.setLayout(new FormLayout(LabelAlign.TOP));
+        fatherFieldSet.setHeading("Отец");
+        fatherFieldSet.setStyleAttribute("paddingRight", "10px");
+
         lastNameFatherTextField.setFieldLabel("Фимилия");
         firstNameFatherTextField.setFieldLabel("Имя");
         middleNameFatherTextField.setFieldLabel("Отчество");
@@ -171,10 +197,6 @@ public class StudentDataForm extends FormPanel {
         workInfoFatherTextField.setFieldLabel("Место работы");
         phonesFatherTextField.setFieldLabel("Телефон (домашний, рабочий, мобильный)");
 
-        FieldSet fatherFieldSet = new FieldSet();
-        fatherFieldSet.setLayout(new FormLayout(LabelAlign.TOP));
-        fatherFieldSet.setHeading("Отец");
-
         fatherFieldSet.add(createTripleFieldContainer(lastNameFatherTextField, firstNameFatherTextField,
                 middleNameFatherTextField), wh5FormData);
         fatherFieldSet.add(createDoubleFieldContainer(birthdayDateFatherField, workInfoFatherTextField), wh5FormData);
@@ -182,6 +204,11 @@ public class StudentDataForm extends FormPanel {
         fatherFieldSet.add(phonesFatherTextField, wFormData);
 
         // Mother
+        FieldSet motherFieldSet = new FieldSet();
+        motherFieldSet.setLayout(new FormLayout(LabelAlign.TOP));
+        motherFieldSet.setHeading("Мать");
+        motherFieldSet.setStyleAttribute("paddingLeft", "10px");
+
         lastNameMotherTextField.setFieldLabel("Фимилия");
         firstNameMotherTextField.setFieldLabel("Имя");
         middleNameMotherTextField.setFieldLabel("Отчество");
@@ -190,24 +217,24 @@ public class StudentDataForm extends FormPanel {
         workInfoMotherTextField.setFieldLabel("Место работы");
         phonesMotherTextField.setFieldLabel("Телефон (домашний, рабочий, мобильный)");
 
-        FieldSet motherFieldSet = new FieldSet();
-        motherFieldSet.setLayout(new FormLayout(LabelAlign.TOP));
-        motherFieldSet.setHeading("Мать");
-
         motherFieldSet.add(createTripleFieldContainer(lastNameMotherTextField, firstNameMotherTextField,
                 middleNameMotherTextField), wh5FormData);
         motherFieldSet.add(createDoubleFieldContainer(birthdayDateMotherField, workInfoMotherTextField), wh5FormData);
         motherFieldSet.add(addressMotherTextField, wh5FormData);
         motherFieldSet.add(phonesMotherTextField, wFormData);
 
-        // adding to container
+        LayoutContainer leftLayoutContainer = new LayoutContainer(new FormLayout(LabelAlign.TOP));
+        leftLayoutContainer.setStyleAttribute("paddingRight", "10px");
+        leftLayoutContainer.add(fatherFieldSet, wFormData);
+
         LayoutContainer rightLayoutContainer = new LayoutContainer(new FormLayout(LabelAlign.TOP));
         rightLayoutContainer.setStyleAttribute("paddingLeft", "10px");
-
-        rightLayoutContainer.add(fatherFieldSet, wFormData);
         rightLayoutContainer.add(motherFieldSet, wFormData);
 
-        return rightLayoutContainer;
+        parentLayoutContainer.add(leftLayoutContainer, new ColumnData(0.5));
+        parentLayoutContainer.add(rightLayoutContainer, new ColumnData(0.5));
+
+        return parentLayoutContainer;
     }
 
     private LayoutContainer createDoubleFieldContainer(Field firstField, Field secondField) {

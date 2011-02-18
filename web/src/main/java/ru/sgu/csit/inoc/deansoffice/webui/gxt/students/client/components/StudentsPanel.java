@@ -75,13 +75,6 @@ public class StudentsPanel extends ContentPanel {
         });
 
         ColumnConfig nameColumnConfig = new ColumnConfig("name", "Имя", 200);
-        nameColumnConfig.setRenderer(new GridCellRenderer() {
-            @Override
-            public Object render(ModelData model, String property, ColumnData config,
-                                 int rowIndex, int colIndex, ListStore listStore, Grid grid) {
-                return StudentModelUtil.getFullName((StudentModel) model);
-            }
-        });
 
         ColumnConfig studyFormColumnConfig = new ColumnConfig("studyForm", "Форма обучения", 100);
         studyFormColumnConfig.setRenderer(new GridCellRenderer() {
@@ -119,6 +112,9 @@ public class StudentsPanel extends ContentPanel {
 
         @Override
         public void onSuccess(List<StudentModel> students) {
+            for (StudentModel studentModel : students) {
+                studentModel.set("name", StudentModelUtil.getFullName(studentModel));
+            }
             studentListStore.removeAll();
             studentListStore.add(students);
         }
