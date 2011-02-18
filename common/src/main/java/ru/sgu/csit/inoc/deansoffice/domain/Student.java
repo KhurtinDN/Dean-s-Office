@@ -122,6 +122,8 @@ public class Student extends Person {
         private String education;
         private String workInfo;
 
+        @OneToOne(cascade = CascadeType.MERGE)
+        @PrimaryKeyJoinColumn
         private Passport currentPassport;
 
         @ElementCollection(fetch = FetchType.EAGER)
