@@ -13,7 +13,7 @@
     <packaging>war</packaging>
 
     <properties>
-        <gwt.version>2.0.4</gwt.version>
+        <gwt.version>2.1.1</gwt.version>
         <gxt.version>2.2.0</gxt.version>
         <spring.version>3.0.3.RELEASE</spring.version>
     </properties>
