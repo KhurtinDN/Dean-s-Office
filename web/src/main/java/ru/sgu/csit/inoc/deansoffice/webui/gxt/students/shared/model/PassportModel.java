@@ -13,6 +13,14 @@ public class PassportModel extends PersonModel {
     public PassportModel() {
     }
 
+    public boolean isActual() {
+        return get("actual");
+    }
+
+    public void setActual(boolean actual) {
+        set("actual", actual);
+    }
+
     public String getSeries() {
         return get("series");
     }

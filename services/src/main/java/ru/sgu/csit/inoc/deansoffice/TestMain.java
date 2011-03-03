@@ -232,6 +232,7 @@ public class TestMain {
             additionalData.setEducation("Средняя школа");
             additionalData.setWorkInfo("Грузчик");
 
+            passport.setActual(true);
             passport.setSeries("63 04");
             passport.setNumber("" + generator.nextInt(10) + generator.nextInt(10) + generator.nextInt(10)
                     + generator.nextInt(10) + generator.nextInt(10) + generator.nextInt(10));
@@ -241,7 +242,6 @@ public class TestMain {
             passport.setAddress(address);
             passportDAO.save(passport);
             additionalData.addPassport(passport);
-            additionalData.setCurrentPassport(passport);
 
             additionalData.setActualAddress(address);
             additionalData.setOldAddress(address);

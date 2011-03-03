@@ -47,6 +47,7 @@ public class PassportUtil extends PersonUtil {
 
         PassportModel passportModel = new PassportModel();
         populatePersonModelByPerson(passportModel, passport);
+        passportModel.setActual(passport.isActual());
         passportModel.setSeries(passport.getSeries());
         passportModel.setNumber(passport.getNumber());
         passportModel.setIssuingOrganization(passport.getIssuingOrganization());
@@ -63,6 +64,7 @@ public class PassportUtil extends PersonUtil {
         }
         Passport passport = new Passport();
         populatePersonByPersonModel(passport, passportModel);
+        passport.setActual(passportModel.isActual());
         passport.setSeries(passportModel.getSeries());
         passport.setNumber(passportModel.getNumber());
         passport.setIssuingOrganization(passportModel.getIssuingOrganization());

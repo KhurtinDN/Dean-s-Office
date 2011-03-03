@@ -11,6 +11,7 @@ import java.util.Date;
  */
 @Entity
 public class Passport extends Person {
+    private boolean actual;
     private String series;
     private String number;
     private String issuingOrganization;
@@ -32,6 +33,14 @@ public class Passport extends Person {
         setFirstNameDative(person.getFirstNameDative());
         setMiddleNameDative(person.getMiddleNameDative());
         setLastNameDative(person.getLastNameDative());
+    }
+
+    public boolean isActual() {
+        return actual;
+    }
+
+    public void setActual(boolean actual) {
+        this.actual = actual;
     }
 
     public String getSeries() {
