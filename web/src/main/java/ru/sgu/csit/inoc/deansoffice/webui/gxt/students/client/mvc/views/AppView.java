@@ -14,7 +14,6 @@ import com.extjs.gxt.ui.client.widget.layout.BorderLayoutData;
 import com.extjs.gxt.ui.client.widget.layout.FitLayout;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.RootLayoutPanel;
-import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.constants.ErrorCode;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.mvc.controllers.AppController;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.mvc.events.AppEvents;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.services.AppService;
@@ -73,19 +72,6 @@ public class AppView extends View {
     }
 
     private void onError(AppEvent event) {
-        ErrorCode code = event.getData();
-
-        switch (code) {
-            case ServerReturnError:
-                Info.display("Важное сообщение", "Сервер не доступен");
-                break;
-            case DebugInformation:
-                String message = event.getData("message");
-                Info.display("DEBUG", message);
-                break;
-            default:
-                Info.display("Ошибка", "Неизвестная ошибка!");
-        }
     }
 
     private void onNavigationPanelReady(AppEvent event) {

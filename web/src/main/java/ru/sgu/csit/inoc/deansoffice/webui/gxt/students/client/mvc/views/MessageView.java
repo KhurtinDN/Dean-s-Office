@@ -5,6 +5,7 @@ import com.extjs.gxt.ui.client.mvc.AppEvent;
 import com.extjs.gxt.ui.client.mvc.View;
 import com.extjs.gxt.ui.client.widget.Info;
 import com.extjs.gxt.ui.client.widget.MessageBox;
+import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.constants.ErrorCode;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.mvc.controllers.MessageController;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.mvc.events.AppEvents;
 
@@ -26,23 +27,41 @@ public class MessageView extends View {
 
         infoWithConfirmationMessageBox = new MessageBox();
         infoWithConfirmationMessageBox.setButtons(MessageBox.OK);
-        infoWithConfirmationMessageBox.setTitle("Внимание! Важное сообщение");
+        infoWithConfirmationMessageBox.setTitle("Внимание!");
     }
 
     @Override
     protected void handleEvent(AppEvent event) {
         EventType eventType = event.getType();
 
-        if (eventType.equals(AppEvents.Info)) {
+        if (eventType.equals(AppEvents.Error)) {
+            onError(event);
+        } else if (eventType.equals(AppEvents.Info)) {
             onInfo(event);
         } else if (eventType.equals(AppEvents.InfoWithConfirmation)) {
             onInfoWithConfirmation(event);
         }
     }
 
+    private void onError(AppEvent event) {
+        ErrorCode code = event.getData();
+
+        switch (code) {
+            case ServerReturnError:
+                Info.display("Важное сообщение", "Сервер не доступен");
+                break;
+            case DebugInformation:
+                String message = event.getData("message");
+                Info.display("DEBUG", message);
+                break;
+            default:
+                Info.display("Ошибка", "Неизвестная ошибка!");
+        }
+    }
+
     private void onInfo(AppEvent event) {
         String message = event.getData().toString();
-        Info.display("Внимание! Важное сообщение", message);
+        Info.display("Внимание!", message);
     }
 
     private void onInfoWithConfirmation(AppEvent event) {

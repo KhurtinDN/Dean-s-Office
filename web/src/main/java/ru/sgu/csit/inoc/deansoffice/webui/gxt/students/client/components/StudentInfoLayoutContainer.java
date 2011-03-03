@@ -147,11 +147,8 @@ public class StudentInfoLayoutContainer extends LayoutContainer {
                     String url = "../documents/reference-1.pdf?studentId=" + currentStudentModel.getId();
                     Window.open(url, "_blank", "");
                 } else {
-                    MessageBox messageBox = new MessageBox();
-                    messageBox.setButtons(MessageBox.OK);
-                    messageBox.setTitle("Внимание!");
-                    messageBox.setMessage("Выберите, пожалуйста, студента.");
-                    messageBox.show();
+                    Dispatcher.forwardEvent(AppEvents.InfoWithConfirmation,
+                            "GroupInfoLayoutContainer is not rendered!");
                 }
             }
         });
@@ -165,11 +162,7 @@ public class StudentInfoLayoutContainer extends LayoutContainer {
                     String url = "../documents/reference-2.pdf?studentId=" + currentStudentModel.getId();
                     Window.open(url, "_blank", "");
                 } else {
-                    MessageBox messageBox = new MessageBox();
-                    messageBox.setButtons(MessageBox.OK);
-                    messageBox.setTitle("Внимание!");
-                    messageBox.setMessage("Выберите, пожалуйста, студента.");
-                    messageBox.show();
+                    Dispatcher.forwardEvent(AppEvents.InfoWithConfirmation, "Выберите, пожалуйста, студента!");
                 }
 
             }
@@ -192,11 +185,7 @@ public class StudentInfoLayoutContainer extends LayoutContainer {
                 if (currentStudentModel != null) {
                     getStudentAccountWindow().showStudentAccount(currentStudentModel.getId());
                 } else {
-                    MessageBox messageBox = new MessageBox();
-                    messageBox.setButtons(MessageBox.OK);
-                    messageBox.setTitle("Внимание!");
-                    messageBox.setMessage("Выберите, пожалуйста, студента.");
-                    messageBox.show();
+                    Dispatcher.forwardEvent(AppEvents.InfoWithConfirmation, "Выберите, пожалуйста, студента!");
                 }
             }
         });
