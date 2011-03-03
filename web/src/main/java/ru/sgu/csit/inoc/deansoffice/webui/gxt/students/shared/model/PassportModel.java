@@ -7,7 +7,7 @@ import java.util.Date;
  * Date: 2/8/11
  * Time: 10:46 AM
  */
-public class PassportModel extends DtoModel {
+public class PassportModel extends PersonModel {
     private String address;
 
     public PassportModel() {

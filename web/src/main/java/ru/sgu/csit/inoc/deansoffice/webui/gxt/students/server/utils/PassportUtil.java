@@ -11,7 +11,7 @@ import java.util.List;
  * Date: 2/11/11
  * Time: 3:39 PM
  */
-public class PassportUtil {
+public class PassportUtil extends PersonUtil {
     public static List<PassportModel> convertPassportListsToPassportModelList(List<Passport> passports) {
         if (passports == null) {
             return null;
@@ -46,6 +46,7 @@ public class PassportUtil {
         }
 
         PassportModel passportModel = new PassportModel();
+        populatePersonModelByPerson(passportModel, passport);
         passportModel.setSeries(passport.getSeries());
         passportModel.setNumber(passport.getNumber());
         passportModel.setIssuingOrganization(passport.getIssuingOrganization());
@@ -61,6 +62,7 @@ public class PassportUtil {
             return null;
         }
         Passport passport = new Passport();
+        populatePersonByPersonModel(passport, passportModel);
         passport.setSeries(passportModel.getSeries());
         passport.setNumber(passportModel.getNumber());
         passport.setIssuingOrganization(passportModel.getIssuingOrganization());
