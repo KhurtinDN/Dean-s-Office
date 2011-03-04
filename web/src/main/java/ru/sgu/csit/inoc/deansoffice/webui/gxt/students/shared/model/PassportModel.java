@@ -14,7 +14,7 @@ public class PassportModel extends PersonModel {
     }
 
     public boolean isActual() {
-        return get("actual");
+        return (Boolean)get("actual");
     }
 
     public void setActual(boolean actual) {

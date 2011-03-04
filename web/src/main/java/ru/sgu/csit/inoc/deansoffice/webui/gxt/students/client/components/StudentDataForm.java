@@ -3,13 +3,22 @@ package ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.components;
 import com.extjs.gxt.ui.client.Style;
 import com.extjs.gxt.ui.client.data.BaseModel;
 import com.extjs.gxt.ui.client.data.ModelData;
+import com.extjs.gxt.ui.client.event.ButtonEvent;
+import com.extjs.gxt.ui.client.event.SelectionListener;
+import com.extjs.gxt.ui.client.mvc.Dispatcher;
 import com.extjs.gxt.ui.client.store.ListStore;
 import com.extjs.gxt.ui.client.util.Margins;
+import com.extjs.gxt.ui.client.widget.ContentPanel;
 import com.extjs.gxt.ui.client.widget.LayoutContainer;
+import com.extjs.gxt.ui.client.widget.button.Button;
 import com.extjs.gxt.ui.client.widget.form.*;
+import com.extjs.gxt.ui.client.widget.grid.*;
 import com.extjs.gxt.ui.client.widget.layout.*;
-import com.google.gwt.user.client.Element;
+import com.extjs.gxt.ui.client.widget.layout.ColumnData;
+import com.google.gwt.i18n.client.DateTimeFormat;
+import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.mvc.events.AppEvents;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.shared.model.*;
+import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.shared.utils.PassportModelUtil;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.shared.utils.PersonModelUtil;
 
 import java.util.ArrayList;
@@ -23,6 +32,9 @@ import java.util.List;
 public class StudentDataForm extends FormPanel {
     private StudentDetailsModel studentDetailsModel;
 
+    private Grid<PassportModel> passportGrid;
+    private ListStore<PassportModel> passportListStore = new ListStore<PassportModel>();
+
     private ModelData maleSex = new BaseModel();
     private ModelData femaleSex = new BaseModel();
     private ComboBox<ModelData> sexComboBox = new ComboBox<ModelData>();
@@ -30,11 +42,6 @@ public class StudentDataForm extends FormPanel {
     private DateField birthdayDateField = new DateField();
     private TextField<String> birthplaceTextField = new TextField<String>();
     private TextField<String> citizenshipTextField = new TextField<String>();
-
-    private TextField<String> passportSeriesTextField = new TextField<String>();
-    private TextField<String> passportNumberTextField = new TextField<String>();
-    private TextField<String> issuingOrganizationTextField = new TextField<String>();
-    private DateField issuedDateTextField = new DateField();
 
     private TextArea educationTextField = new TextArea();
     private TextArea workInfoTextField = new TextArea();
@@ -67,11 +74,11 @@ public class StudentDataForm extends FormPanel {
     private FormData wrFormData = new FormData("100%");
 
     public StudentDataForm() {
+        setLayout(new FormLayout(LabelAlign.TOP));
         setHeaderVisible(false);
         setFrame(true);
         setBorders(false);
         setSize("100%", "100%");
-        setLabelAlign(LabelAlign.TOP);
 
         maleSex.set("sex", PersonModel.Sex.MALE);
         maleSex.set("title", PersonModelUtil.sexToString(PersonModel.Sex.MALE));
@@ -105,13 +112,6 @@ public class StudentDataForm extends FormPanel {
         wrFormData.setMargins(new Margins(0, 20, 0, 0));
 
         setButtonAlign(Style.HorizontalAlignment.CENTER);
-    }
-
-    @Override
-    protected void onRender(Element target, int index) {
-        super.onRender(target, index);
-
-        setLayout(new FormLayout(LabelAlign.TOP));
 
         LayoutContainer columnLayoutContainer = new LayoutContainer(new ColumnLayout());
         columnLayoutContainer.add(createLeftLayoutContainer(), new ColumnData(0.5));
@@ -142,23 +142,124 @@ public class StudentDataForm extends FormPanel {
         birthdayDateField.setFieldLabel("Дата рождения");
         birthplaceTextField.setFieldLabel("Место рождения");
 
-        FieldSet passportFieldSet = new FieldSet();
-        passportFieldSet.setLayout(new FormLayout());
-        passportFieldSet.setHeading("Паспортные данные");
+        LayoutContainer passportLayoutContainer = createPassportLayoutContainer();
 
-        passportSeriesTextField.setFieldLabel("Серия");
-        passportNumberTextField.setFieldLabel("Номер");
-        issuingOrganizationTextField.setFieldLabel("Кем выдан");
-        issuedDateTextField.setFieldLabel("Когда выдан");
+        // todo: leftLayoutContainer.add(createDoubleFieldContainer(sexComboBox, citizenshipTextField), wh10FormData);
+        // todo: leftLayoutContainer.add(createDoubleFieldContainer(birthdayDateField, birthplaceTextField), wh10FormData);
+        LayoutContainer firstLayoutContainer = new LayoutContainer(new FormLayout(LabelAlign.TOP));
+        firstLayoutContainer.add(sexComboBox, wrFormData);
 
-        passportFieldSet.add(createDoubleFieldContainer(passportSeriesTextField, passportNumberTextField), wh5FormData);
-        passportFieldSet.add(createDoubleFieldContainer(issuedDateTextField, issuingOrganizationTextField), wFormData);
+        LayoutContainer secondLayoutContainer = new LayoutContainer(new FormLayout(LabelAlign.TOP));
+        secondLayoutContainer.add(birthdayDateField, wrFormData);
 
-        leftLayoutContainer.add(createDoubleFieldContainer(sexComboBox, citizenshipTextField), wh10FormData);
-        leftLayoutContainer.add(createDoubleFieldContainer(birthdayDateField, birthplaceTextField), wh10FormData);
-        leftLayoutContainer.add(passportFieldSet, wh10FormData);
+        LayoutContainer thirdLayoutContainer = new LayoutContainer(new FormLayout(LabelAlign.TOP));
+        thirdLayoutContainer.add(citizenshipTextField, wrFormData);
+
+        LayoutContainer fourthLayoutContainer = new LayoutContainer(new FormLayout(LabelAlign.TOP));
+        fourthLayoutContainer.add(birthplaceTextField, wFormData);
+
+        LayoutContainer layoutContainer = new LayoutContainer(new ColumnLayout());
+        layoutContainer.add(firstLayoutContainer, new ColumnData(0.18));
+        layoutContainer.add(secondLayoutContainer, new ColumnData(0.2));
+        layoutContainer.add(thirdLayoutContainer, new ColumnData(0.25));
+        layoutContainer.add(fourthLayoutContainer, new ColumnData(0.37));
+
+        leftLayoutContainer.add(layoutContainer, wh10FormData);
+        // todo: the end!
+
+
+        leftLayoutContainer.add(passportLayoutContainer, wh10FormData);
 
         return leftLayoutContainer;
+    }
+
+    private LayoutContainer createPassportLayoutContainer () {
+        ContentPanel passportContentPanel = new ContentPanel();
+        passportContentPanel.setBorders(true);
+        passportContentPanel.setLayout(new FitLayout());
+        passportContentPanel.setHeading("Паспортные данные");
+        passportContentPanel.setHeight(190);
+
+        List<ColumnConfig> columnConfigList = new ArrayList<ColumnConfig>();
+
+        CheckBoxSelectionModel<PassportModel> checkBoxSelectionModel = new CheckBoxSelectionModel<PassportModel>();
+        checkBoxSelectionModel.setSelectionMode(Style.SelectionMode.SINGLE);
+
+        columnConfigList.add(checkBoxSelectionModel.getColumn());
+
+        ColumnConfig columnConfig = new ColumnConfig("lastName", "Фамилия", 100);
+        columnConfig.setEditor(new CellEditor(new TextField<String>()));
+        columnConfigList.add(columnConfig);
+
+        columnConfig = new ColumnConfig("firstName", "Имя", 100);
+        columnConfig.setEditor(new CellEditor(new TextField<String>()));
+        columnConfigList.add(columnConfig);
+
+        columnConfig = new ColumnConfig("middleName", "Отчество", 100);
+        columnConfig.setEditor(new CellEditor(new TextField<String>()));
+        columnConfigList.add(columnConfig);
+
+        columnConfig = new ColumnConfig("series", "Серия", 50);
+        columnConfig.setEditor(new CellEditor(new TextField<String>()));
+        columnConfigList.add(columnConfig);
+
+        columnConfig = new ColumnConfig("number", "Номер", 55);
+        columnConfig.setEditor(new CellEditor(new TextField<String>()));
+        columnConfigList.add(columnConfig);
+
+        columnConfig = new ColumnConfig("issuedDate", "Когда выдан", 80);
+        columnConfig.setEditor(new CellEditor(new DateField()));
+        columnConfig.setDateTimeFormat(DateTimeFormat.getFormat(DateTimeFormat.PredefinedFormat.DATE_MEDIUM));
+        columnConfigList.add(columnConfig);
+
+        columnConfig = new ColumnConfig("issuingOrganization", "Кем выдан", 100);
+        columnConfig.setEditor(new CellEditor(new TextField<String>()));
+        columnConfigList.add(columnConfig);
+
+        ColumnModel columnModel = new ColumnModel(columnConfigList);
+        passportGrid = new Grid<PassportModel>(passportListStore, columnModel);
+        passportGrid.setSelectionModel(checkBoxSelectionModel);
+        passportGrid.setColumnReordering(true);
+        passportGrid.addPlugin(checkBoxSelectionModel);
+        passportGrid.setAutoExpandColumn("issuingOrganization");
+
+        final RowEditor<PassportModel> rowEditor = new RowEditor<PassportModel>();
+        rowEditor.setClicksToEdit(EditorGrid.ClicksToEdit.TWO);
+        passportGrid.addPlugin(rowEditor);
+
+        passportContentPanel.add(passportGrid, wFormData);
+
+        passportContentPanel.setButtonAlign(Style.HorizontalAlignment.CENTER);
+
+        passportContentPanel.addButton(new Button("Добавить новый паспорт", new SelectionListener<ButtonEvent>() {
+            @Override
+            public void componentSelected(ButtonEvent ce) {
+                PassportModel currentPassport =
+                        PassportModelUtil.findCurrentPassport(studentDetailsModel.getPassports());
+
+                PassportModel passportModel = ( currentPassport == null ? new PassportModel() :
+                        PassportModelUtil.createCopy(currentPassport) );
+
+                rowEditor.stopEditing(false);
+                passportListStore.add(passportModel);
+                rowEditor.startEditing(passportListStore.indexOf(passportModel), true);
+            }
+        }));
+
+        passportContentPanel.addButton(new Button("Удалить выбранный паспорт", new SelectionListener<ButtonEvent>() {
+            @Override
+            public void componentSelected(ButtonEvent ce) {
+                PassportModel passportModel = passportGrid.getSelectionModel().getSelectedItem();
+                if (passportModel == null) {
+                    Dispatcher.forwardEvent(AppEvents.InfoWithConfirmation, "Выберите, пожалуйста, паспорт!");
+                } else {
+                    rowEditor.stopEditing(false);
+                    passportListStore.remove(passportModel);
+                }
+            }
+        }));
+
+        return passportContentPanel;
     }
 
     private LayoutContainer createRightLayoutContainer() {
@@ -189,7 +290,7 @@ public class StudentDataForm extends FormPanel {
         fatherFieldSet.setHeading("Отец");
         fatherFieldSet.setStyleAttribute("paddingRight", "10px");
 
-        lastNameFatherTextField.setFieldLabel("Фимилия");
+        lastNameFatherTextField.setFieldLabel("Фамилия");
         firstNameFatherTextField.setFieldLabel("Имя");
         middleNameFatherTextField.setFieldLabel("Отчество");
         birthdayDateFatherField.setFieldLabel("Дата рождения");
@@ -209,7 +310,7 @@ public class StudentDataForm extends FormPanel {
         motherFieldSet.setHeading("Мать");
         motherFieldSet.setStyleAttribute("paddingLeft", "10px");
 
-        lastNameMotherTextField.setFieldLabel("Фимилия");
+        lastNameMotherTextField.setFieldLabel("Фамилия");
         firstNameMotherTextField.setFieldLabel("Имя");
         middleNameMotherTextField.setFieldLabel("Отчество");
         birthdayDateMotherField.setFieldLabel("Дата рождения");
@@ -292,19 +393,20 @@ public class StudentDataForm extends FormPanel {
         maritalStatusTextField.setValue(studentDetailsModel.getMaritalStatus());
         childrenInfoTextField.setValue(studentDetailsModel.getChildrenInfo());
 
-        PassportModel currentPassportModel = null;
-        if (studentDetailsModel.getPassports() != null && studentDetailsModel.getPassports().size() > 0) {
-            currentPassportModel =
-                    studentDetailsModel.getPassports().get(studentDetailsModel.getPassports().size() - 1);
-        }
-        citizenshipTextField.setValue(currentPassportModel == null ? null : currentPassportModel.getCitizenship());
-        passportNumberTextField.setValue(currentPassportModel == null ? null : currentPassportModel.getNumber());
-        passportSeriesTextField.setValue(currentPassportModel == null ? null : currentPassportModel.getSeries());
-        issuingOrganizationTextField.setValue(
-                currentPassportModel == null ? null : currentPassportModel.getIssuingOrganization());
-        issuedDateTextField.setValue(currentPassportModel == null ? null : currentPassportModel.getIssuedDate());
-        passportAddressTextField.setValue(currentPassportModel == null ? null : currentPassportModel.getAddress());
+        passportListStore.removeAll();
 
+        if (studentDetailsModel.getPassports() != null) {
+            passportListStore.add(studentDetailsModel.getPassports());
+        }
+
+        PassportModel currentPassport = PassportModelUtil.findCurrentPassport(studentDetailsModel.getPassports());
+
+        if (currentPassport != null) {
+            passportGrid.getSelectionModel().select(currentPassport, false);
+        }
+
+        citizenshipTextField.setValue(currentPassport == null ? null : currentPassport.getCitizenship());
+        passportAddressTextField.setValue(currentPassport == null ? null : currentPassport.getAddress());
 
         ParentModel father = studentDetailsModel.getFather();
         lastNameFatherTextField.setValue(father == null ? null : father.getLastName());
@@ -342,26 +444,19 @@ public class StudentDataForm extends FormPanel {
         studentDetailsModel.setOldAddress(oldAddressTextField.getValue());
         studentDetailsModel.setActualAddress(actualAddressTextField.getValue());
 
-        PassportModel currentPassportModel;
-        if (studentDetailsModel.getPassports() == null || studentDetailsModel.getPassports().size() <= 0) {
-            currentPassportModel = new PassportModel();
-        } else {
-            currentPassportModel =
-                    studentDetailsModel.getPassports().get(studentDetailsModel.getPassports().size() - 1);
-        }
-        currentPassportModel.setCitizenship(citizenshipTextField.getValue());
-        currentPassportModel.setNumber(passportNumberTextField.getValue());
-        currentPassportModel.setSeries(passportSeriesTextField.getValue());
-        currentPassportModel.setIssuingOrganization(issuingOrganizationTextField.getValue());
-        currentPassportModel.setIssuedDate(issuedDateTextField.getValue());
-        currentPassportModel.setAddress(passportAddressTextField.getValue());
+        studentDetailsModel.setPassports(passportListStore.getModels());
 
-        List<PassportModel> passports = studentDetailsModel.getPassports();
-        if (passports == null) {
-            passports = new ArrayList<PassportModel>();
+        // deselect all
+        for (PassportModel passportModel : studentDetailsModel.getPassports()) {
+            passportModel.setActual(false);
         }
-        if (!passports.contains(currentPassportModel)) {
-            passports.add(currentPassportModel);
+
+        // select current passport
+        PassportModel currentPassport = passportGrid.getSelectionModel().getSelectedItem();
+        if (currentPassport != null) {   // todo: verify
+            currentPassport.setActual(true);
+            currentPassport.setCitizenship(citizenshipTextField.getValue());
+            currentPassport.setAddress(passportAddressTextField.getValue());
         }
 
         ParentModel father = studentDetailsModel.getFather();
