@@ -144,8 +144,8 @@ public class StudentDataForm extends FormPanel {
 
         LayoutContainer passportLayoutContainer = createPassportLayoutContainer();
 
-        // todo: leftLayoutContainer.add(createDoubleFieldContainer(sexComboBox, citizenshipTextField), wh10FormData);
-        // todo: leftLayoutContainer.add(createDoubleFieldContainer(birthdayDateField, birthplaceTextField), wh10FormData);
+        // leftLayoutContainer.add(createDoubleFieldContainer(sexComboBox, citizenshipTextField), wh10FormData);
+        // leftLayoutContainer.add(createDoubleFieldContainer(birthdayDateField, birthplaceTextField), wh10FormData);
         LayoutContainer firstLayoutContainer = new LayoutContainer(new FormLayout(LabelAlign.TOP));
         firstLayoutContainer.add(sexComboBox, wrFormData);
 
@@ -165,8 +165,6 @@ public class StudentDataForm extends FormPanel {
         layoutContainer.add(fourthLayoutContainer, new ColumnData(0.37));
 
         leftLayoutContainer.add(layoutContainer, wh10FormData);
-        // todo: the end!
-
 
         leftLayoutContainer.add(passportLayoutContainer, wh10FormData);
 
