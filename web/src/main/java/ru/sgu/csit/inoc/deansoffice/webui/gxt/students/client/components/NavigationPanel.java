@@ -1,12 +1,14 @@
 package ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.components;
 
 import com.extjs.gxt.ui.client.data.*;
+import com.extjs.gxt.ui.client.event.ComponentEvent;
 import com.extjs.gxt.ui.client.event.SelectionChangedEvent;
 import com.extjs.gxt.ui.client.event.SelectionChangedListener;
 import com.extjs.gxt.ui.client.mvc.AppEvent;
 import com.extjs.gxt.ui.client.mvc.Dispatcher;
 import com.extjs.gxt.ui.client.store.TreeStore;
 import com.extjs.gxt.ui.client.util.IconHelper;
+import com.extjs.gxt.ui.client.widget.Component;
 import com.extjs.gxt.ui.client.widget.ContentPanel;
 import com.extjs.gxt.ui.client.widget.LayoutContainer;
 import com.extjs.gxt.ui.client.widget.layout.AccordionLayout;
@@ -44,6 +46,21 @@ public class NavigationPanel extends ContentPanel {
         setLayout(vBoxLayout);
 
         navigationContainer = new LayoutContainer(new AccordionLayout() {
+            @Override
+            protected void onBeforeExpand(ComponentEvent ce) {
+                super.onBeforeExpand(ce);
+
+                for (Component item : getItems()) {
+                    if (item instanceof ContentPanel) {
+                        ContentPanel contentPanel = (ContentPanel)item;
+                        for (Component component : contentPanel.getItems()) {
+                            if (component instanceof TreePanel) {
+                                ((TreePanel)component).getSelectionModel().deselectAll();
+                            }
+                        }
+                    }
+                }
+            }
             /*@Override
             protected void onExpand(ComponentEvent ce) {
                 layoutContainer();
