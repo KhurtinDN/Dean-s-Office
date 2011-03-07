@@ -50,7 +50,7 @@ public class NavigationPanel extends ContentPanel {
             protected void onBeforeExpand(ComponentEvent ce) {
                 super.onBeforeExpand(ce);
 
-                for (Component item : getItems()) {
+                for (Component item : container.getItems()) {
                     if (item instanceof ContentPanel) {
                         ContentPanel contentPanel = (ContentPanel)item;
                         for (Component component : contentPanel.getItems()) {
