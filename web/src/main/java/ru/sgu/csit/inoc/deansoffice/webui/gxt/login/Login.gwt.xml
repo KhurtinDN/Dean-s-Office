@@ -5,7 +5,7 @@
     <inherits name='com.google.gwt.user.User'/>
     <inherits name='com.extjs.gxt.ui.GXT'/>
 
-    <entry-point class='ru.sgu.csit.inoc.deansoffice.login.client.Login'/>
+    <entry-point class='ru.sgu.csit.inoc.deansoffice.webui.gxt.login.client.Login'/>
 
     <stylesheet src='style.css'/>
 

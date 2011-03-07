@@ -1,4 +1,4 @@
-package ru.sgu.csit.inoc.deansoffice.login.client.gxt;
+package ru.sgu.csit.inoc.deansoffice.webui.gxt.login.client;
 
 import com.extjs.gxt.ui.client.Style;
 import com.extjs.gxt.ui.client.event.*;

@@ -1,7 +1,6 @@
-package ru.sgu.csit.inoc.deansoffice.login.client;
+package ru.sgu.csit.inoc.deansoffice.webui.gxt.login.client;
 
 import com.google.gwt.core.client.EntryPoint;
-import ru.sgu.csit.inoc.deansoffice.login.client.gxt.LoginDialog;
 
 /**
  * User: hd (KhurtinDN@gmail.com)
