@@ -8,11 +8,14 @@
        http://www.springframework.org/schema/security/spring-security.xsd">
 
     <security:http auto-config="true" >
+        <security:intercept-url pattern="/css/**" filters="none"/>
+        <security:intercept-url pattern="/icons/**" filters="none"/>
         <security:intercept-url pattern="/gxt-resources/**" filters="none"/>
+        <security:intercept-url pattern="/login.html*" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
         <security:intercept-url pattern="/login/**" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
         <security:intercept-url pattern="/**" access="ROLE_USER"/>
-        <security:form-login login-page="/login/" />
-        <security:logout logout-success-url="/login/" />
+        <security:form-login login-page="/login.html" />
+        <security:logout logout-success-url="/login.html" />
     </security:http>
 
 
@@ -23,12 +26,12 @@
                 <security:user name="hd"
                                password="b1b3773a05c0ed0176787a4f1574ff0075f7521e"
                                authorities="ROLE_USER" />
-                <security:user name="test"                      
+                <security:user name="test"
                                password="a94a8fe5ccb19ba61c4c0873d391e987982fbbd3"
                                authorities="ROLE_USER" />
             </security:user-service>
         </security:authentication-provider>
-    </security:authentication-manager>      
-    
+    </security:authentication-manager>
+
 </beans>
         
