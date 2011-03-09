@@ -25,4 +25,6 @@ public class AppEvents {
     public static final EventType SpecialitySelected = new EventType();
     public static final EventType GroupSelected = new EventType();
     public static final EventType StudentSelected = new EventType();
+
+    public static final EventType OrderQueueCall = new EventType();
 }

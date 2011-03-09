@@ -6,7 +6,6 @@ import com.extjs.gxt.ui.client.event.SelectionListener;
 import com.extjs.gxt.ui.client.mvc.AppEvent;
 import com.extjs.gxt.ui.client.mvc.Dispatcher;
 import com.extjs.gxt.ui.client.mvc.View;
-import com.extjs.gxt.ui.client.widget.Info;
 import com.extjs.gxt.ui.client.widget.menu.Menu;
 import com.extjs.gxt.ui.client.widget.menu.MenuBar;
 import com.extjs.gxt.ui.client.widget.menu.MenuBarItem;
@@ -41,18 +40,29 @@ public class MenuBarView extends View {
         });
         fileMenu.add(quitMenuItem);
 
+        Menu orderMenu = new Menu();
+
+        MenuItem orderQueueMenuItem = new MenuItem("Очередь приказов", new SelectionListener<MenuEvent>() {
+            @Override
+            public void componentSelected(MenuEvent ce) {
+                Dispatcher.forwardEvent(AppEvents.OrderQueueCall);
+            }
+        });
+        orderMenu.add(orderQueueMenuItem);
+
         Menu helpMenu = new Menu();
 
         MenuItem helpMenuItem = new MenuItem("Справка", new SelectionListener<MenuEvent>() {
             @Override
             public void componentSelected(MenuEvent ce) {
-                Info.display("Интересное сообщение", "Справочная информация находится в разработке.");
+                Dispatcher.forwardEvent(AppEvents.Info, "Справочная информация находится в разработке.");
             }
         });
         helpMenu.add(helpMenuItem);
 
         menuBar = new MenuBar();
         menuBar.add(new MenuBarItem("Файл", fileMenu));
+        menuBar.add(new MenuBarItem("Приказы", orderMenu));
         menuBar.add(new MenuBarItem("Помощь", helpMenu));
     }
 

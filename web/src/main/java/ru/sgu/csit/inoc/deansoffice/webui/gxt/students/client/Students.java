@@ -14,12 +14,14 @@ public class Students implements EntryPoint {
     public void onModuleLoad() {
         Dispatcher dispatcher = Dispatcher.get();
         dispatcher.addController(new AppController());
+        dispatcher.addController(new OrderController());
         dispatcher.addController(new NavigationController());
         dispatcher.addController(new StudentsController());
         dispatcher.addController(new InformationController());
         dispatcher.addController(new MenuBarController());
         dispatcher.addController(new MessageController());
         dispatcher.addController(new StatusBarController());
+
         dispatcher.dispatch(AppEvents.Init);
         dispatcher.dispatch(AppEvents.UIReady);
     }
