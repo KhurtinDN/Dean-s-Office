@@ -17,7 +17,7 @@ public class DocumentServiceImpl implements DocumentService, Report {
     //@ElementCollection(fetch = FetchType.EAGER)
     //@Transient
     public Map<String, Object> TEXT = new HashMap<String, Object>();
-    private Document document;
+    protected Document document;
 
     public DocumentServiceImpl(Document document) {
         this.document = document;

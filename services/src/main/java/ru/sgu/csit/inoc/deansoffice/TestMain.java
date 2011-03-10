@@ -210,7 +210,7 @@ public class TestMain {
             student.setBirthday(new GregorianCalendar().getTime());
 
             student.setAdditionalData(getRandomAdditionalData(student));
-            additionalDataDAO.save(student.getAdditionalData());
+//            additionalDataDAO.save(student.getAdditionalData());
 
             return student;
         }
@@ -240,7 +240,7 @@ public class TestMain {
             passport.setIssuedDate(new GregorianCalendar().getTime());
             passport.setIssuingOrganization("УВД Заводского р-на г. Саратова");
             passport.setAddress(address);
-            passportDAO.save(passport);
+//            passportDAO.save(passport);
             additionalData.addPassport(passport);
 
             additionalData.setActualAddress(address);

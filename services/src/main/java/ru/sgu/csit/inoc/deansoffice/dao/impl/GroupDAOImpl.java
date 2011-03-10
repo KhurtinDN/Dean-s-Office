@@ -32,4 +32,11 @@ public class GroupDAOImpl extends BaseDAOImpl<Group, Long> implements GroupDAO {
                 Restrictions.eq("course", course), Restrictions.eq("speciality.id", specialityId));
         return (List<Group>) getHibernateTemplate().findByCriteria(criteria);
     }
+
+    @Override
+    @SuppressWarnings("unchecked")
+    public List<Group> findByName(String name) {
+        DetachedCriteria criteria = createCriteriaForPersistentClass(Restrictions.eq("name", name));
+        return (List<Group>) getHibernateTemplate().findByCriteria(criteria);
+    }
 }
