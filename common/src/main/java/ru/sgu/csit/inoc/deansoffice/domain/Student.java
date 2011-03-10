@@ -2,7 +2,9 @@ package ru.sgu.csit.inoc.deansoffice.domain;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * .
@@ -29,15 +31,18 @@ public class Student extends Person {
 
     private Division division;
     private StudyForm studyForm;
+    private Role role;
 
     @ManyToOne(cascade = CascadeType.MERGE)
     @PrimaryKeyJoinColumn
     private EnrollmentOrder enrollmentOrder;
 
     //@OneToOne(fetch = FetchType.LAZY)
-    @ManyToOne(cascade = CascadeType.MERGE)
-    @PrimaryKeyJoinColumn
+    @OneToOne(cascade = CascadeType.ALL)
     private AdditionalStudentData additionalData;
+
+    @ElementCollection(fetch = FetchType.EAGER)
+    private Set<Stipend> stipends = new HashSet<Stipend>();
 
     public String getStudentIdNumber() {
         return studentIdNumber;
@@ -95,6 +100,7 @@ public class Student extends Person {
         this.enrollmentOrder = enrollmentOrder;
     }
 
+    @OneToOne(cascade = CascadeType.ALL)
     public AdditionalStudentData getAdditionalData() {
         return additionalData;
     }
@@ -103,12 +109,36 @@ public class Student extends Person {
         this.additionalData = additionalData;
     }
 
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
+
+    public Set<Stipend> getStipends() {
+        return stipends;
+    }
+
+    public void setStipends(Set<Stipend> stipends) {
+        this.stipends = stipends;
+    }
+
+    public void addStipend(Stipend stipend) {
+        stipends.add(stipend);
+    }
+
     public enum Division {
         INTRAMURAL, EXTRAMURAL, EVENINGSTUDY
     }
 
     public enum StudyForm {
         BUDGET, COMMERCIAL
+    }
+
+    public enum Role {
+        CAPTAIN
     }
 
     @Entity
@@ -122,8 +152,10 @@ public class Student extends Person {
         private String education;
         private String workInfo;
 
-        @ElementCollection(fetch = FetchType.EAGER)
-        private List<Passport> passports;
+//        @ElementCollection(fetch = FetchType.EAGER)
+        @OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
+        @OrderColumn(name="passports_index")
+        private List<Passport> passports = new ArrayList<Passport>();
 
         private String maritalStatus;
         private String childrenInfo;
@@ -172,7 +204,7 @@ public class Student extends Person {
             this.workInfo = workInfo;
         }
 
-        @ElementCollection
+        @OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
         public List<Passport> getPassports() {
             return passports;
         }

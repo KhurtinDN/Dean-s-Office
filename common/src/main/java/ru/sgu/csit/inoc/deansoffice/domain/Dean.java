@@ -9,5 +9,5 @@ import javax.persistence.Entity;
  * Time: 12:00:05 PM
  */
 @Entity
-public class Dean extends Person {
+public class Dean extends Leader {
 }

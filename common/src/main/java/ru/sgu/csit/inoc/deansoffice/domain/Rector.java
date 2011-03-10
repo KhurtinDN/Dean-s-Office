@@ -8,14 +8,5 @@ import javax.persistence.Entity;
  * Time: 10:10:09
  */
 @Entity
-public class Rector extends Person {
-    private String degree;
-
-    public String getDegree() {
-        return degree;
-    }
-
-    public void setDegree(String degree) {
-        this.degree = degree;
-    }
+public class Rector extends Leader {
 }
