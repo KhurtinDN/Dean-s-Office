@@ -255,7 +255,7 @@ public class TestMain {
             PhotoService photoService = new PhotoServiceImpl();
             Photo photo;
             try {
-                photo = photoService.loadFromFile("/home/hd/temp/photo.jpg");
+                photo = photoService.loadFromFile("C:/temp/photo.jpg");
             } catch (IOException e) {
                 throw new RuntimeException("Photo not found!!!", e);
             }

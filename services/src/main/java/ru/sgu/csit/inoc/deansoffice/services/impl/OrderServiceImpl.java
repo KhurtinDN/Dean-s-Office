@@ -1,11 +1,9 @@
 package ru.sgu.csit.inoc.deansoffice.services.impl;
 
-import ru.sgu.csit.inoc.deansoffice.domain.Document;
-import ru.sgu.csit.inoc.deansoffice.domain.Faculty;
-import ru.sgu.csit.inoc.deansoffice.domain.Leader;
-import ru.sgu.csit.inoc.deansoffice.domain.Order;
+import ru.sgu.csit.inoc.deansoffice.domain.*;
 import ru.sgu.csit.inoc.deansoffice.services.OrderService;
 
+import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -32,7 +30,7 @@ public class OrderServiceImpl extends DocumentServiceImpl implements OrderServic
         String note = null;
         try {
             note = order.getData().getNote();
-        } catch (NullPointerException e) {
+        } catch (NullPointerException e) { // если нет примечания, то ничего не делаем
         }
         TEXT.put("ORDER_NOTE", note != null ? ("[" + note + "]") : "");
         Leader supervisor = order.getData().getSupervisor();
@@ -45,6 +43,13 @@ public class OrderServiceImpl extends DocumentServiceImpl implements OrderServic
         }
         TEXT.put("COORDINATORS_LIST", coordinators);
 
+        for (Directive directive : order.getDirectives()) {
+            try {
+                directive.getData().setBody(new DirectiveServiceImpl().generatePrintTemplateBody(directive));
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
+        }
         rootMap.put("directives", order.getDirectives());
     }
 

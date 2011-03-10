@@ -1,12 +1,19 @@
 package ru.sgu.csit.inoc;
 
 import freemarker.template.TemplateException;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 import ru.sgu.csit.inoc.deansoffice.aos.Register;
+import ru.sgu.csit.inoc.deansoffice.dao.GroupDAO;
+import ru.sgu.csit.inoc.deansoffice.dao.StipendDAO;
+import ru.sgu.csit.inoc.deansoffice.dao.StudentDAO;
 import ru.sgu.csit.inoc.deansoffice.domain.*;
 import ru.sgu.csit.inoc.deansoffice.reports.ReportPdfProcessor;
 import ru.sgu.csit.inoc.deansoffice.reports.reportsutil.Report;
 import ru.sgu.csit.inoc.deansoffice.reports.reportsutil.Templater;
+import ru.sgu.csit.inoc.deansoffice.services.DirectiveService;
 import ru.sgu.csit.inoc.deansoffice.services.OrderService;
+import ru.sgu.csit.inoc.deansoffice.services.impl.DirectiveServiceImpl;
 import ru.sgu.csit.inoc.deansoffice.services.impl.OrderServiceImpl;
 
 import java.io.File;
@@ -18,6 +25,11 @@ import java.util.List;
 import java.util.Scanner;
 
 public class App {
+    private static ApplicationContext applicationContext = new ClassPathXmlApplicationContext("ApplicationContext.xml");
+    private static StudentDAO studentDAO = applicationContext.getBean(StudentDAO.class);
+    private static GroupDAO groupDAO = applicationContext.getBean(GroupDAO.class);
+    private static StipendDAO stipendDAO = applicationContext.getBean(StipendDAO.class);
+
     public static void main(String[] args) {
         Shell shell = new Shell();
         shell.loop();
@@ -147,6 +159,16 @@ public class App {
                     Directive.DirectiveData data = directive.getData();
                     println("Тип: " + directive.getType());
                     println("Описание: " + data.getDescription());
+                    if (Directive.APPOINT_CAPTAINS.equals(directive.getType())) {
+                        Directive1.SourceData sourceData = new Directive1.SourceData();
+                        Student student = studentDAO.findById(52L);
+                        sourceData.addCaptain(student.getGroup(), student);
+                        println(student.generateShortName(false) + " - " + student.getGroup().getName());
+                        student = studentDAO.findById(232L);
+                        sourceData.addCaptain(student.getGroup(), student);
+                        println(student.generateShortName(false) + " - " + student.getGroup().getName());
+                        data.setSourceData(sourceData);
+                    }
                     println("Основания: " + data.getGrounds());
                     register.addDirective(data);
                     print(Mode.UPDATED_ORDER);

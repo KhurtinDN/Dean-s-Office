@@ -37,8 +37,9 @@ public abstract class Directive extends PersistentItem {
 
     @Entity
     public static class DirectiveData extends PersistentItem {
-        private String description;
-        private String grounds;
+        private String description = "";
+        private String body = "";
+        private String grounds = "";
         @OneToOne(cascade = CascadeType.MERGE)
         @PrimaryKeyJoinColumn
         private DirectiveSourceData sourceData;
@@ -49,6 +50,14 @@ public abstract class Directive extends PersistentItem {
 
         public void setDescription(String description) {
             this.description = description;
+        }
+
+        public String getBody() {
+            return body;
+        }
+
+        public void setBody(String body) {
+            this.body = body;
         }
 
         public String getGrounds() {

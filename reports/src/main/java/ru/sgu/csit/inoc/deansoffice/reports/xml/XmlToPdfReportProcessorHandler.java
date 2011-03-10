@@ -353,6 +353,8 @@ public class XmlToPdfReportProcessorHandler extends DefaultHandler {
                             paragraph.setSpacingAfter(Float.valueOf(attributeValue));
                         } else if ("spacingBefore".equals(attributeName)) {
                             paragraph.setSpacingBefore(Float.valueOf(attributeValue));
+                        } else if ("firstLineIndent".equals(attributeName)) {
+                            paragraph.setFirstLineIndent(Float.valueOf(attributeValue));
                         }
                     }
                 }

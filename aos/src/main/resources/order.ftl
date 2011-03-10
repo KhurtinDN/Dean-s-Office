@@ -24,9 +24,18 @@
 <#assign x = 1>
 <#list directives as directive>
     <p spacingBefore="4.0" align="center"><b>${x}</b></p>
-    <p>${directive.data.description}</p>
+    <p firstLineIndent="40">${directive.data.description}</p>
+${directive.data.body}
+    <p> </p>
+    <table columns="2" width="100" align="center" border="0">
+        <tr>
+            <td align="right" valign="top">Основание:</td>
+            <td align="left">${directive.data.grounds}</td>
+        </tr>
+    </table>
 <#assign x = x + 1>
 </#list>
+    <p> </p>
     <b><table columns="2" width="100" align="center" border="0">
         <tr>
             <td align="left"><var name="SUPERVISOR_POSITION" />,</td>

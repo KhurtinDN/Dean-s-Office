@@ -21,7 +21,7 @@ public class Directive1 extends Directive {
         //data.setDescription("Следующих студентов 1 курса дневного отделения " +
         //        "факультета КНиИТ разделить по группам следующим образом.");
         data.setDescription("Следующих студентов 1 курса назначить старостами групп.");
-        data.setGrounds("Представление декана с резолюцией проректора по УОР");
+        data.setGrounds("Представление декана с резолюцией проректора по УОР.");
         //data.setSourceData(new SourceData());
     }
 
