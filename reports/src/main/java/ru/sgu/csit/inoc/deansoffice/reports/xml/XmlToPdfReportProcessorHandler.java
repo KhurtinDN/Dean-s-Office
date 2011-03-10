@@ -38,6 +38,7 @@ public class XmlToPdfReportProcessorHandler extends DefaultHandler {
 
     private Document document;
     private Rectangle pageSize;
+    private MarginsData marginsData = null;
     private OutputStream outputStream = null;
     Report report;
 
@@ -69,6 +70,9 @@ public class XmlToPdfReportProcessorHandler extends DefaultHandler {
             throw new RuntimeException("File not found.", e);
         }
         document.setPageSize(pageSize);
+        if (marginsData != null) {
+            document.setMargins(marginsData.left, marginsData.right, marginsData.top, marginsData.bottom);
+        }
         document.open();
     }
 
@@ -216,6 +220,26 @@ public class XmlToPdfReportProcessorHandler extends DefaultHandler {
                             pageSize = rectangleByName(attributeValue);
                         } else if ("orientation".equals(attributeName)) {
                             orientation = attributeValue;
+                        } else if ("marginLeft".equals(attributeName)) {
+                            if (marginsData == null) {
+                                marginsData = new MarginsData();
+                            }
+                            marginsData.left = Float.valueOf(attributeValue);
+                        } else if ("marginRight".equals(attributeName)) {
+                            if (marginsData == null) {
+                                marginsData = new MarginsData();
+                            }
+                            marginsData.right = Float.valueOf(attributeValue);
+                        } else if ("marginTop".equals(attributeName)) {
+                            if (marginsData == null) {
+                                marginsData = new MarginsData();
+                            }
+                            marginsData.top = Float.valueOf(attributeValue);
+                        } else if ("marginBottom".equals(attributeName)) {
+                            if (marginsData == null) {
+                                marginsData = new MarginsData();
+                            }
+                            marginsData.bottom = Float.valueOf(attributeValue);
                         }
                     }
                 }
@@ -630,5 +654,12 @@ public class XmlToPdfReportProcessorHandler extends DefaultHandler {
         System.out.println("Элементов : " + elements);
         System.out.println("Атрибутов : " + attributes);
         System.out.println("Символов  : " + characters);
+    }
+
+    public static class MarginsData {
+        public float left = 36;
+        public float right = 36;
+        public float top = 36;
+        public float bottom = 36;
     }
 }
