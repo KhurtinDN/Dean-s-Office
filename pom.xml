@@ -65,6 +65,7 @@
         <module>reports</module>
         <module>services</module>
         <module>web</module>
+        <module>aos</module>
     </modules>
 
     <repositories>
