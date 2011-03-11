@@ -1,9 +1,6 @@
 package ru.sgu.csit.inoc.deansoffice.aos;
 
-import ru.sgu.csit.inoc.deansoffice.domain.Directive;
-import ru.sgu.csit.inoc.deansoffice.domain.Directive1;
-import ru.sgu.csit.inoc.deansoffice.domain.Leader;
-import ru.sgu.csit.inoc.deansoffice.domain.Order;
+import ru.sgu.csit.inoc.deansoffice.domain.*;
 import ru.sgu.csit.inoc.deansoffice.services.DirectiveService;
 import ru.sgu.csit.inoc.deansoffice.services.impl.DirectiveServiceImpl;
 
@@ -35,6 +32,7 @@ public class Register {
         allCoordinators.add("Начальник общего отдела");
 
         allDirectives.add(new Directive1());
+        allDirectives.add(new Directive2());
 
         this.leaders = leaders;
     }

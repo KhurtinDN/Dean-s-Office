@@ -21,11 +21,13 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
 
 public class App {
     private static ApplicationContext applicationContext = new ClassPathXmlApplicationContext("ApplicationContext.xml");
+
     private static StudentDAO studentDAO = applicationContext.getBean(StudentDAO.class);
     private static GroupDAO groupDAO = applicationContext.getBean(GroupDAO.class);
     private static StipendDAO stipendDAO = applicationContext.getBean(StipendDAO.class);
@@ -166,6 +168,26 @@ public class App {
                         println(student.generateShortName(false) + " - " + student.getGroup().getName());
                         student = studentDAO.findById(232L);
                         sourceData.addCaptain(student.getGroup(), student);
+                        println(student.generateShortName(false) + " - " + student.getGroup().getName());
+                        data.setSourceData(sourceData);
+                    } else if (Directive.APPOINT_SOCIAL_STIPEND.equals(directive.getType())) {
+                        Directive2.SourceData sourceData = new Directive2.SourceData();
+                        Stipend stipend = new Stipend();
+                        stipend.setType(Stipend.StipendType.SOCIAL);
+                        stipend.setValue(198437);
+                        stipend.setStartDate(new Date());
+                        stipend.setEndDate(new Date());
+                        Student student = studentDAO.findById(70L);
+                        sourceData.addStudent(student, stipend);
+                        println(student.generateShortName(false) + " - " + student.getGroup().getName());
+                        student = studentDAO.findById(100L);
+                        sourceData.addStudent(student, stipend);
+                        println(student.generateShortName(false) + " - " + student.getGroup().getName());
+                        student = studentDAO.findById(220L);
+                        sourceData.addStudent(student, stipend);
+                        println(student.generateShortName(false) + " - " + student.getGroup().getName());
+                        student = studentDAO.findById(250L);
+                        sourceData.addStudent(student, stipend);
                         println(student.generateShortName(false) + " - " + student.getGroup().getName());
                         data.setSourceData(sourceData);
                     }

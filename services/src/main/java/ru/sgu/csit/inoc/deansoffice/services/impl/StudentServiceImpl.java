@@ -1,5 +1,6 @@
 package ru.sgu.csit.inoc.deansoffice.services.impl;
 
+import org.springframework.stereotype.Service;
 import ru.sgu.csit.inoc.deansoffice.domain.Student;
 import ru.sgu.csit.inoc.deansoffice.services.StudentService;
 
@@ -9,6 +10,7 @@ import ru.sgu.csit.inoc.deansoffice.services.StudentService;
  * Date: Sep 11, 2010
  * Time: 12:50:30 PM
  */
+@Service
 public class StudentServiceImpl implements StudentService {
     public boolean equalsFullName(Student student1, Student student2) {
         return (student1.getFirstName().compareTo(student2.getFirstName()) == 0 &&

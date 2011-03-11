@@ -1,5 +1,6 @@
 package ru.sgu.csit.inoc.deansoffice.services.impl;
 
+import org.springframework.stereotype.Service;
 import ru.sgu.csit.inoc.deansoffice.domain.Document;
 import ru.sgu.csit.inoc.deansoffice.reports.reportsutil.Report;
 import ru.sgu.csit.inoc.deansoffice.reports.reportsutil.TemplType;
@@ -13,7 +14,8 @@ import java.util.Map;
  * Date: 13.01.11
  * Time: 10:05
  */
-public class DocumentServiceImpl implements DocumentService, Report {
+//@Service
+public class DocumentServiceImpl implements DocumentService , Report {
     //@ElementCollection(fetch = FetchType.EAGER)
     //@Transient
     public Map<String, Object> TEXT = new HashMap<String, Object>();

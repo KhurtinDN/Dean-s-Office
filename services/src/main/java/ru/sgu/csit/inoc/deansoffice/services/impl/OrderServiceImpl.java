@@ -1,6 +1,9 @@
 package ru.sgu.csit.inoc.deansoffice.services.impl;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import ru.sgu.csit.inoc.deansoffice.domain.*;
+import ru.sgu.csit.inoc.deansoffice.services.DirectiveService;
 import ru.sgu.csit.inoc.deansoffice.services.OrderService;
 
 import java.io.UnsupportedEncodingException;
@@ -13,7 +16,11 @@ import java.util.Map;
  * Date: 09.03.11
  * Time: 12:10
  */
+//@Service
 public class OrderServiceImpl extends DocumentServiceImpl implements OrderService {
+//    @Autowired
+//    private DirectiveService directiveService;
+
     private Map rootMap = new HashMap();
 
     public OrderServiceImpl(Document document) {

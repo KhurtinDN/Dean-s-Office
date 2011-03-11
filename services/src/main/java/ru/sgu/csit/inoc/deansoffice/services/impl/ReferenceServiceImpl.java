@@ -1,5 +1,6 @@
 package ru.sgu.csit.inoc.deansoffice.services.impl;
 
+import org.springframework.stereotype.Service;
 import ru.sgu.csit.inoc.deansoffice.domain.Document;
 import ru.sgu.csit.inoc.deansoffice.domain.EnrollmentOrder;
 import ru.sgu.csit.inoc.deansoffice.domain.Student;
@@ -13,6 +14,7 @@ import java.util.Date;
  * Date: 13.01.11
  * Time: 10:37
  */
+//@Service
 public class ReferenceServiceImpl extends DocumentServiceImpl implements ReferenceService {
     public ReferenceServiceImpl(Document document) {
         super(document);

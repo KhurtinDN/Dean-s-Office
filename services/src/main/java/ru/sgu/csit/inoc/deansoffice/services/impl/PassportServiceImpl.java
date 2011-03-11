@@ -1,5 +1,6 @@
 package ru.sgu.csit.inoc.deansoffice.services.impl;
 
+import org.springframework.stereotype.Service;
 import ru.sgu.csit.inoc.deansoffice.domain.Passport;
 import ru.sgu.csit.inoc.deansoffice.domain.Person;
 import ru.sgu.csit.inoc.deansoffice.services.PasportService;
@@ -13,6 +14,7 @@ import java.util.List;
  * Date: 13.01.11
  * Time: 10:20
  */
+@Service
 public class PassportServiceImpl implements PasportService {
     @Override
     public void fillAllFields(Passport passport, String value) {

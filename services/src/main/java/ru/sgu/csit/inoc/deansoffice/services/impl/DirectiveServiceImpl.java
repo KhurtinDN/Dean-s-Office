@@ -1,8 +1,10 @@
 package ru.sgu.csit.inoc.deansoffice.services.impl;
 
 import freemarker.template.TemplateException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.stereotype.Service;
 import ru.sgu.csit.inoc.deansoffice.dao.GroupDAO;
 import ru.sgu.csit.inoc.deansoffice.dao.StipendDAO;
 import ru.sgu.csit.inoc.deansoffice.dao.StudentDAO;
@@ -14,6 +16,7 @@ import ru.sgu.csit.inoc.deansoffice.services.StudentService;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
@@ -22,6 +25,7 @@ import java.util.*;
  * Date: 28.02.11
  * Time: 12:33
  */
+//@Service
 public class DirectiveServiceImpl implements DirectiveService {
     private static ApplicationContext applicationContext = new ClassPathXmlApplicationContext("ApplicationContext.xml");
 
@@ -132,10 +136,46 @@ public class DirectiveServiceImpl implements DirectiveService {
                 templater.process(simpleTemplName, rootMap, outputStream);
             } catch (IOException e) {
                 throw new RuntimeException("IO Exception in templater.", e);
-            }  catch (TemplateException e) {
+            } catch (TemplateException e) {
                 throw new RuntimeException("Template Exception in templater.", e);
             }
         } else if (Directive.APPOINT_SOCIAL_STIPEND.equals(directive.getType())) {
+            Directive2.SourceData sourceData =
+                    (Directive2.SourceData) directive.getData().getSourceData();
+
+            Map<Student, Stipend> studentMap = sourceData.getStudents();
+            List<Map> studentMaps = new ArrayList<Map>();
+            for (Map.Entry<Student, Stipend> studentEntry : studentMap.entrySet()) {
+                Map theMap = new HashMap();
+                theMap.put("student", studentEntry.getKey());
+                theMap.put("stipend", studentEntry.getValue());
+                SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
+                theMap.put("stipendStartDate", dateFormat.format(studentEntry.getValue().getStartDate()));
+                theMap.put("stipendEndDate", dateFormat.format(studentEntry.getValue().getEndDate()));
+                studentMaps.add(theMap);
+            }
+            Collections.sort(studentMaps, new Comparator<Map>() {
+                public int compare(Map map1, Map map2) {
+                    String groupName1 = ((Student) map1.get("student")).getGroup().getName();
+                    String groupName2 = ((Student) map2.get("student")).getGroup().getName();
+
+                    return groupName1.compareTo(groupName2);
+                }
+            });
+            rootMap.put("studentMaps", studentMaps);//studentMap.entrySet());
+            String simpleTemplName = "directive2.ftl";
+            String templDir = DirectiveServiceImpl.class.getResource("/" + simpleTemplName).getPath()
+                    .replace("%20", " ");
+            templDir = templDir.substring(0, templDir.lastIndexOf("/" + simpleTemplName));
+            try {
+                Templater templater = new Templater(templDir);
+
+                templater.process(simpleTemplName, rootMap, outputStream);
+            } catch (IOException e) {
+                throw new RuntimeException("IO Exception in templater.", e);
+            } catch (TemplateException e) {
+                throw new RuntimeException("Template Exception in templater.", e);
+            }
         } else {
             throw new RuntimeException("Can not generate print template with directive type " + directive.getType());
         }
