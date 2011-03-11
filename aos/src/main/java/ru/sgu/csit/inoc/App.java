@@ -5,6 +5,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import ru.sgu.csit.inoc.deansoffice.aos.Register;
 import ru.sgu.csit.inoc.deansoffice.dao.GroupDAO;
+import ru.sgu.csit.inoc.deansoffice.dao.LeaderDAO;
 import ru.sgu.csit.inoc.deansoffice.dao.StipendDAO;
 import ru.sgu.csit.inoc.deansoffice.dao.StudentDAO;
 import ru.sgu.csit.inoc.deansoffice.domain.*;
@@ -31,6 +32,7 @@ public class App {
     private static StudentDAO studentDAO = applicationContext.getBean(StudentDAO.class);
     private static GroupDAO groupDAO = applicationContext.getBean(GroupDAO.class);
     private static StipendDAO stipendDAO = applicationContext.getBean(StipendDAO.class);
+    private static LeaderDAO leaderDAO = applicationContext.getBean(LeaderDAO.class);
 
     public static void main(String[] args) {
         Shell shell = new Shell();
@@ -46,14 +48,15 @@ public class App {
         private static Register register;
 
         static {
-            Rector rector = new Rector();
-            rector.setPosition("Ректор СГУ");
-            rector.setDegree("профессор, д.ф.-м.н.");
-            rector.setFirstName("Леонид");
-            rector.setMiddleName("Юрьевич");
-            rector.setLastName("Коссович");
+//            Rector rector = new Rector();
+//            rector.setPosition("Ректор СГУ");
+//            rector.setDegree("профессор, д.ф.-м.н.");
+//            rector.setFirstName("Леонид");
+//            rector.setMiddleName("Юрьевич");
+//            rector.setLastName("Коссович");
 
-            leaders.add(rector);
+//            leaders.add(rector);
+            leaders = leaderDAO.findAll();
             register = new Register(leaders);
         }
 

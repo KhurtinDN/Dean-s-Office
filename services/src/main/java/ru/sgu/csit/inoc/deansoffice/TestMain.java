@@ -48,12 +48,15 @@ public class TestMain {
         dean.setFirstName("Антонина");
         dean.setMiddleName("Гавриловна");
         dean.setLastName("Федорова");
+        dean.setPosition("Декан факультета КНиИТ");
+        dean.setDegree("к.ф.-м.н., доцент");
         deanDAO.save(dean);
 
         Rector rector = new Rector();
         rector.setFirstName("Леонид");
         rector.setMiddleName("Юрьевич");
         rector.setLastName("Коссович");
+        rector.setPosition("Ректор СГУ");
         rector.setDegree("д.ф.-м.н., профессор");
         rectorDAO.save(rector);
 
