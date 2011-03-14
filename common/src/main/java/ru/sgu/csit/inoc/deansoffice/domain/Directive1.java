@@ -16,7 +16,6 @@ import java.util.Map;
 public class Directive1 extends Directive {
     public Directive1() {
         type = APPOINT_CAPTAINS;
-        data = new DirectiveData();
 
         //data.setDescription("Следующих студентов 1 курса дневного отделения " +
         //        "факультета КНиИТ разделить по группам следующим образом.");
