@@ -16,7 +16,6 @@ import java.util.Map;
 public class Directive2 extends Directive {
     public Directive2() {
         type = APPOINT_SOCIAL_STIPEND;
-        data = new DirectiveData();
 
         data.setDescription("Следующим студентам факультета назначить выплату социальной стипендии");
         data.setGrounds("справки УСЗН, решение стипендиальной комиссии");

@@ -14,9 +14,8 @@ public abstract class Directive extends PersistentItem {
     public static final String APPOINT_CAPTAINS = "Назначение старост";
     public static final String APPOINT_SOCIAL_STIPEND = "Назначение выплаты социальной стипендии";
 
-    @OneToOne(cascade = CascadeType.MERGE)
-    @PrimaryKeyJoinColumn
-    protected DirectiveData data;
+    @OneToOne(cascade = CascadeType.ALL)
+    protected DirectiveData data = new DirectiveData();
     protected String type;
 
     public DirectiveData getData() {
@@ -40,7 +39,7 @@ public abstract class Directive extends PersistentItem {
         private String description = "";
         private String body = "";
         private String grounds = "";
-        @OneToOne(cascade = CascadeType.MERGE)
+        @OneToOne(cascade = CascadeType.ALL)
         @PrimaryKeyJoinColumn
         private DirectiveSourceData sourceData;
 

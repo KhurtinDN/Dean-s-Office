@@ -64,7 +64,8 @@ public class Order extends Document {
         private Leader supervisor;
 
         @ElementCollection(fetch = FetchType.EAGER)
-        private Set<String> coordinators = new LinkedHashSet<String>();
+        @OrderColumn
+        private List<Coordinator> coordinators = new ArrayList<Coordinator>();
 
         public String getNote() {
             return note;
@@ -83,15 +84,15 @@ public class Order extends Document {
         }
 
         @ElementCollection
-        public Set<String> getCoordinators() {
+        public List<Coordinator> getCoordinators() {
             return coordinators;
         }
 
-        public void addCoordinator(String coordinator) {
+        public void addCoordinator(Coordinator coordinator) {
             coordinators.add(coordinator);
         }
 
-        public void setCoordinators(Set<String> coordinators) {
+        public void setCoordinators(List<Coordinator> coordinators) {
             this.coordinators = coordinators;
         }
     }

@@ -45,8 +45,8 @@ public class OrderServiceImpl extends DocumentServiceImpl implements OrderServic
         TEXT.put("SUPERVISOR_DEGREE", supervisor.getDegree());
         TEXT.put("SUPERVISOR_NAME", supervisor.generateShortName(true));
         String coordinators = "";
-        for (String coordinator : order.getData().getCoordinators()) {
-            coordinators += coordinator + "\n";
+        for (Coordinator coordinator : order.getData().getCoordinators()) {
+            coordinators += coordinator.getPosition() + "\n";
         }
         TEXT.put("COORDINATORS_LIST", coordinators);
 

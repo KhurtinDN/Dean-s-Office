@@ -31,6 +31,10 @@ public class TestMain {
     private static PhotoDAO photoDAO = applicationContext.getBean(PhotoDAO.class);
     private static PassportDAO passportDAO = applicationContext.getBean(PassportDAO.class);
     private static AdditionalStudentDataDAO additionalDataDAO = applicationContext.getBean(AdditionalStudentDataDAO.class);
+    private static CoordinatorDAO coordinatorDAO = applicationContext.getBean(CoordinatorDAO.class);
+    private static DirectiveDAO directiveDAO = applicationContext.getBean(DirectiveDAO.class);
+    private static Directive1DAO directive1DAO = applicationContext.getBean(Directive1DAO.class);
+    private static Directive2DAO directive2DAO = applicationContext.getBean(Directive2DAO.class);
 
     private final Integer COUNT_STUDENTS_IN_GROUP = 10;
 
@@ -67,6 +71,17 @@ public class TestMain {
         faculty.setRector(rector);
         faculty.setCourseCount(6);
         facultyDAO.save(faculty);
+
+        coordinatorDAO.save(new Coordinator("Проректор по учебно-организационной работе"));
+        coordinatorDAO.save(new Coordinator("Начальник учебного управления"));
+        coordinatorDAO.save(new Coordinator("Начальник юридического отдела"));
+        coordinatorDAO.save(new Coordinator("Декан факультета"));
+        coordinatorDAO.save(new Coordinator("Начальник общего отдела"));
+
+        Directive1 directive1 = new Directive1();
+        directiveDAO.save(directive1);
+        Directive2 directive2 = new Directive2();
+        directiveDAO.save(directive2);
     }
 
     private void createSpecialities() {
