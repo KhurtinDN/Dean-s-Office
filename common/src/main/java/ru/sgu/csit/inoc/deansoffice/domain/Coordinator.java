@@ -9,7 +9,7 @@ import javax.persistence.Entity;
  * Time: 14:11
  */
 @Entity
-public class Coordinator {
+public class Coordinator extends PersistentItem {
     private String position;
 
     public Coordinator() {
