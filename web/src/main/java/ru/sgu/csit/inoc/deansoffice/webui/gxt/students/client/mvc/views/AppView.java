@@ -1,5 +1,6 @@
 package ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.mvc.views;
 
+import com.extjs.gxt.ui.client.Registry;
 import com.extjs.gxt.ui.client.Style;
 import com.extjs.gxt.ui.client.event.EventType;
 import com.extjs.gxt.ui.client.mvc.AppEvent;
@@ -14,6 +15,7 @@ import com.extjs.gxt.ui.client.widget.layout.BorderLayoutData;
 import com.extjs.gxt.ui.client.widget.layout.FitLayout;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.RootLayoutPanel;
+import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.constants.AppConstants;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.mvc.controllers.AppController;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.mvc.events.AppEvents;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.services.AppService;
@@ -133,6 +135,7 @@ public class AppView extends View {
 
             @Override
             public void onSuccess(FacultyModel facultyModel) {
+                Registry.register(AppConstants.CURRENT_FACULTY, facultyModel);
                 Dispatcher.forwardEvent(AppEvents.FacultySelected, facultyModel);
             }
         });

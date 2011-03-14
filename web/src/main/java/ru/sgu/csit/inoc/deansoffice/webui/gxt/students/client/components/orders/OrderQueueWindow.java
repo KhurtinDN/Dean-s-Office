@@ -1,9 +1,10 @@
-package ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.components;
+package ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.components.orders;
 
 import com.extjs.gxt.ui.client.Style;
 import com.extjs.gxt.ui.client.data.*;
 import com.extjs.gxt.ui.client.event.ButtonEvent;
 import com.extjs.gxt.ui.client.event.SelectionListener;
+import com.extjs.gxt.ui.client.mvc.Dispatcher;
 import com.extjs.gxt.ui.client.store.ListStore;
 import com.extjs.gxt.ui.client.widget.ContentPanel;
 import com.extjs.gxt.ui.client.widget.Html;
@@ -14,6 +15,7 @@ import com.extjs.gxt.ui.client.widget.layout.BorderLayout;
 import com.extjs.gxt.ui.client.widget.layout.BorderLayoutData;
 import com.extjs.gxt.ui.client.widget.layout.FitLayout;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.mvc.events.AppEvents;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.services.OrderService;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.shared.model.OrderModel;
 
@@ -64,17 +66,17 @@ public class OrderQueueWindow extends Window {
 
         contentPanel.add(grid);
 
-        contentPanel.addButton(new Button("Добавить новый", new SelectionListener<ButtonEvent>() {
+        contentPanel.addButton(new Button("Создать новый", new SelectionListener<ButtonEvent>() {
             @Override
             public void componentSelected(ButtonEvent ce) {
-                // todo: add new Order
+                Dispatcher.forwardEvent(AppEvents.AddNewOrderCall);
             }
         }));
 
         contentPanel.addButton(new Button("Изменить выбранный", new SelectionListener<ButtonEvent>() {
             @Override
             public void componentSelected(ButtonEvent ce) {
-                // todo: add new Order
+                Dispatcher.forwardEvent(AppEvents.EditOrderCall);
             }
         }));
 

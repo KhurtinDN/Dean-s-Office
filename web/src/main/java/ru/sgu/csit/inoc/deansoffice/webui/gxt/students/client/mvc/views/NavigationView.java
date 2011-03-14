@@ -44,7 +44,7 @@ public class NavigationView extends View {
     }
 
     private void onFacultySelected(AppEvent event) {
-        FacultyModel facultyModel = event.getData();
-        navigationPanel.reloadMenuData(facultyModel);
+//        FacultyModel facultyModel = event.getData();
+        navigationPanel.reloadMenuData();
     }
 }

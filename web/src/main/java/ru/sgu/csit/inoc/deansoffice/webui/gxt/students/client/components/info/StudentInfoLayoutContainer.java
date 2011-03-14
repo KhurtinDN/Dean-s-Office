@@ -1,4 +1,4 @@
-package ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.components;
+package ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.components.info;
 
 import com.extjs.gxt.ui.client.event.ButtonEvent;
 import com.extjs.gxt.ui.client.event.SelectionListener;
@@ -14,6 +14,7 @@ import com.extjs.gxt.ui.client.widget.layout.*;
 import com.google.gwt.user.client.*;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Image;
+import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.components.StudentAccountWindow;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.constants.ErrorCode;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.mvc.events.AppEvents;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.shared.model.StudentModel;

@@ -225,7 +225,7 @@ public class StudentDataForm extends FormPanel {
         rowEditor.setClicksToEdit(EditorGrid.ClicksToEdit.TWO);
         passportGrid.addPlugin(rowEditor);
 
-        passportContentPanel.add(passportGrid, wFormData);
+        passportContentPanel.add(passportGrid);
 
         passportContentPanel.setButtonAlign(Style.HorizontalAlignment.CENTER);
 

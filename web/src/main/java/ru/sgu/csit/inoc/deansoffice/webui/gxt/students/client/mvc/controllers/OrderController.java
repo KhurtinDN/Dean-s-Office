@@ -14,7 +14,7 @@ public class OrderController extends Controller {
     private OrderView orderView;
 
     public OrderController() {
-        registerEventTypes(AppEvents.OrderQueueCall);
+        registerEventTypes(AppEvents.OrderQueueCall, AppEvents.AddNewOrderCall, AppEvents.EditOrderCall);
     }
 
     @Override

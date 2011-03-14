@@ -4,7 +4,7 @@ import com.extjs.gxt.ui.client.event.EventType;
 import com.extjs.gxt.ui.client.mvc.AppEvent;
 import com.extjs.gxt.ui.client.mvc.Dispatcher;
 import com.extjs.gxt.ui.client.mvc.View;
-import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.components.InformationPanel;
+import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.components.info.InformationPanel;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.mvc.controllers.InformationController;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.mvc.events.AppEvents;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.shared.model.GroupModel;

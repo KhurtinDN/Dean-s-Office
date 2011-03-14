@@ -1,5 +1,6 @@
 package ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.components;
 
+import com.extjs.gxt.ui.client.Registry;
 import com.extjs.gxt.ui.client.data.*;
 import com.extjs.gxt.ui.client.event.ComponentEvent;
 import com.extjs.gxt.ui.client.event.SelectionChangedEvent;
@@ -17,6 +18,7 @@ import com.extjs.gxt.ui.client.widget.layout.VBoxLayout;
 import com.extjs.gxt.ui.client.widget.treepanel.TreePanel;
 import com.google.gwt.user.client.Element;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.constants.AppConstants;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.constants.ErrorCode;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.services.AppService;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.shared.model.FacultyModel;
@@ -35,10 +37,9 @@ import java.util.Map;
 public class NavigationPanel extends ContentPanel {
     private LayoutContainer navigationContainer;
 
-    @Override
-    protected void onRender(Element parent, int pos) {
-        super.onRender(parent, pos);
+    private StudentsPanel studentsPanel;
 
+    public NavigationPanel() {
         setHeading("Структура факультета");
 
         VBoxLayout vBoxLayout = new VBoxLayout();
@@ -66,12 +67,23 @@ public class NavigationPanel extends ContentPanel {
                 layoutContainer();
             }*/
         });
+    }
+
+    public NavigationPanel(StudentsPanel studentsPanel) {
+        this();
+        this.studentsPanel = studentsPanel;
+    }
+
+    @Override
+    protected void onRender(Element parent, int pos) {
+        super.onRender(parent, pos);
 
         add(navigationContainer);
     }
 
-    public void reloadMenuData(FacultyModel facultyModel) {
+    public void reloadMenuData() {
         navigationContainer.removeAll();
+        FacultyModel facultyModel = Registry.get(AppConstants.CURRENT_FACULTY);
         AppService.App.getInstance().loadMenuData(facultyModel.getId(), new MenuLoader());
     }
 
@@ -103,21 +115,10 @@ public class NavigationPanel extends ContentPanel {
                 treePanel.setDisplayProperty("name");
                 treePanel.getStyle().setLeafIcon(IconHelper.createStyle("group-icon"));
 
-                final Integer finalCourse = course;
-                treePanel.getSelectionModel().addSelectionChangedListener(new SelectionChangedListener<BaseModel>() {
-                    @Override
-                    public void selectionChanged(SelectionChangedEvent<BaseModel> se) {
-                        BaseModel baseModel = se.getSelectedItem();
+                treePanel.getSelectionModel().addSelectionChangedListener(studentsPanel == null ?
+                        new DefaultSelectionChangedListener(course) :
+                        new StudentPanelSelectionChangedListener(studentsPanel, course));
 
-                        if (baseModel instanceof SpecialityModel) {
-                            AppEvent appEvent = new AppEvent(AppEvents.SpecialitySelected, baseModel);
-                            appEvent.setData("course", finalCourse);
-                            Dispatcher.forwardEvent(appEvent);
-                        } else if (baseModel instanceof GroupModel) {
-                            Dispatcher.forwardEvent(AppEvents.GroupSelected, baseModel);
-                        }
-                    }
-                });
                 treePanel.setAutoExpand(true);
 
                 ContentPanel courseContentPanel = new ContentPanel(new FitLayout());
@@ -140,6 +141,48 @@ public class NavigationPanel extends ContentPanel {
             }
 
             NavigationPanel.this.layout();
+        }
+
+        private class DefaultSelectionChangedListener extends SelectionChangedListener<BaseModel> {
+            private int course;
+
+            public DefaultSelectionChangedListener(int course) {
+                this.course = course;
+            }
+
+            @Override
+            public void selectionChanged(SelectionChangedEvent<BaseModel> se) {
+                BaseModel baseModel = se.getSelectedItem();
+
+                if (baseModel instanceof SpecialityModel) {
+                    AppEvent appEvent = new AppEvent(AppEvents.SpecialitySelected, baseModel);
+                    appEvent.setData("course", course);
+                    Dispatcher.forwardEvent(appEvent);
+                } else if (baseModel instanceof GroupModel) {
+                    Dispatcher.forwardEvent(AppEvents.GroupSelected, baseModel);
+                }
+            }
+        }
+
+        private class StudentPanelSelectionChangedListener extends SelectionChangedListener<BaseModel> {
+            private StudentsPanel studentsPanel;
+            private int course;
+
+            public StudentPanelSelectionChangedListener(StudentsPanel studentsPanel, int course) {
+                this.studentsPanel = studentsPanel;
+                this.course = course;
+            }
+
+            @Override
+            public void selectionChanged(SelectionChangedEvent<BaseModel> se) {
+                BaseModel baseModel = se.getSelectedItem();
+
+                if (baseModel instanceof SpecialityModel) {
+                    studentsPanel.showSpecialityByCourse((SpecialityModel) baseModel, course);
+                } else if (baseModel instanceof GroupModel) {
+                    studentsPanel.showGroup((GroupModel) baseModel);
+                }
+            }
         }
     }
 }

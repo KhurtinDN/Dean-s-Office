@@ -32,33 +32,37 @@ public class MenuBarView extends View {
 
         Menu fileMenu = new Menu();
 
-        MenuItem quitMenuItem = new MenuItem("Выход", new SelectionListener<MenuEvent>() {
+        fileMenu.add(new MenuItem("Выход", new SelectionListener<MenuEvent>() {
             @Override
             public void componentSelected(MenuEvent ce) {
                 Window.open("j_spring_security_logout", "_self", "");
             }
-        });
-        fileMenu.add(quitMenuItem);
+        }));
 
         Menu orderMenu = new Menu();
 
-        MenuItem orderQueueMenuItem = new MenuItem("Очередь приказов", new SelectionListener<MenuEvent>() {
+        orderMenu.add(new MenuItem("Создать новый", new SelectionListener<MenuEvent>() {
+            @Override
+            public void componentSelected(MenuEvent ce) {
+                Dispatcher.forwardEvent(AppEvents.AddNewOrderCall);
+            }
+        }));
+
+        orderMenu.add(new MenuItem("Очередь приказов", new SelectionListener<MenuEvent>() {
             @Override
             public void componentSelected(MenuEvent ce) {
                 Dispatcher.forwardEvent(AppEvents.OrderQueueCall);
             }
-        });
-        orderMenu.add(orderQueueMenuItem);
+        }));
 
         Menu helpMenu = new Menu();
 
-        MenuItem helpMenuItem = new MenuItem("Справка", new SelectionListener<MenuEvent>() {
+        helpMenu.add(new MenuItem("Справка", new SelectionListener<MenuEvent>() {
             @Override
             public void componentSelected(MenuEvent ce) {
                 Dispatcher.forwardEvent(AppEvents.Info, "Справочная информация находится в разработке.");
             }
-        });
-        helpMenu.add(helpMenuItem);
+        }));
 
         menuBar = new MenuBar();
         menuBar.add(new MenuBarItem("Файл", fileMenu));

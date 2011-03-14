@@ -1,4 +1,4 @@
-package ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.components;
+package ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.components.info;
 
 import com.extjs.gxt.ui.client.mvc.AppEvent;
 import com.extjs.gxt.ui.client.mvc.Dispatcher;

@@ -3,9 +3,11 @@ package ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.mvc.views;
 import com.extjs.gxt.ui.client.event.EventType;
 import com.extjs.gxt.ui.client.mvc.AppEvent;
 import com.extjs.gxt.ui.client.mvc.View;
-import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.components.OrderQueueWindow;
+import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.components.orders.OrderDialog;
+import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.components.orders.OrderQueueWindow;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.mvc.controllers.OrderController;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.mvc.events.AppEvents;
+import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.shared.model.OrderModel;
 
 /**
  * User: Khurtin Denis ( KhurtinDN (a) gmail.com )
@@ -14,6 +16,7 @@ import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.mvc.events.AppEven
  */
 public class OrderView extends View {
     private OrderQueueWindow orderQueueWindow;
+    private OrderDialog orderDialog;
 
     public OrderView(OrderController controller) {
         super(controller);
@@ -24,6 +27,7 @@ public class OrderView extends View {
         super.initialize();
 
         orderQueueWindow = new OrderQueueWindow();
+        orderDialog = new OrderDialog();
     }
 
     @Override
@@ -31,7 +35,23 @@ public class OrderView extends View {
         EventType eventType = event.getType();
 
         if (eventType.equals(AppEvents.OrderQueueCall)) {
-            orderQueueWindow.show();
+            onOrderQueueCall(event);
+        } else if (eventType.equals(AppEvents.AddNewOrderCall)) {
+            onAddNewOrderCall(event);
+        } else if (eventType.equals(AppEvents.EditOrderCall)) {
+            onEditOrderCall(event);
         }
+    }
+
+    private void onOrderQueueCall(AppEvent event) {
+        orderQueueWindow.show();
+    }
+
+    private void onAddNewOrderCall(AppEvent event) {
+        orderDialog.showNewOrderDialog();
+    }
+
+    private void onEditOrderCall(AppEvent event) {
+        orderDialog.showEditOrderDialog( (OrderModel) event.getData() );
     }
 }

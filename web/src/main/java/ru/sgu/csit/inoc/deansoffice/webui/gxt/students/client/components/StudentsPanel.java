@@ -2,6 +2,8 @@ package ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.components;
 
 import com.extjs.gxt.ui.client.Style;
 import com.extjs.gxt.ui.client.data.ModelData;
+import com.extjs.gxt.ui.client.dnd.GridDragSource;
+import com.extjs.gxt.ui.client.dnd.GridDropTarget;
 import com.extjs.gxt.ui.client.event.Events;
 import com.extjs.gxt.ui.client.event.Listener;
 import com.extjs.gxt.ui.client.event.SelectionChangedEvent;
@@ -33,7 +35,15 @@ public class StudentsPanel extends ContentPanel {
     private ListStore<StudentModel> studentListStore = new ListStore<StudentModel>();
     private StudentAsyncCallback studentAsyncCallback = new StudentAsyncCallback();
 
+    private Grid<StudentModel> grid = new Grid<StudentModel>(studentListStore, createColumnModel());
+
+    private boolean simple;
+
     public StudentsPanel() {
+    }
+
+    public StudentsPanel(boolean simple) {
+        this.simple = simple;
     }
 
     @Override
@@ -44,21 +54,23 @@ public class StudentsPanel extends ContentPanel {
         setLayout(new FitLayout());
 
         studentListStore.sort("name", Style.SortDir.ASC);
-        Grid<StudentModel> grid = new Grid<StudentModel>(studentListStore, createColumnModel());
+
         grid.setBorders(true);
         grid.setAutoExpandColumn("name");
         grid.setAutoExpandMax(2000);
 
-        grid.getSelectionModel().addListener(Events.SelectionChange,
-                new Listener<SelectionChangedEvent<StudentModel>>() {
-                    @Override
-                    public void handleEvent(SelectionChangedEvent<StudentModel> be) {
-                        StudentModel studentModel = be.getSelectedItem();
-                        if (studentModel != null) {
-                            Dispatcher.forwardEvent(AppEvents.StudentSelected, studentModel);
+        if (!simple) {
+            grid.getSelectionModel().addListener(Events.SelectionChange,
+                    new Listener<SelectionChangedEvent<StudentModel>>() {
+                        @Override
+                        public void handleEvent(SelectionChangedEvent<StudentModel> be) {
+                            StudentModel studentModel = be.getSelectedItem();
+                            if (studentModel != null) {
+                                Dispatcher.forwardEvent(AppEvents.StudentSelected, studentModel);
+                            }
                         }
-                    }
-                });
+                    });
+        }
 
         add(grid);
     }
@@ -100,6 +112,14 @@ public class StudentsPanel extends ContentPanel {
     public void showSpecialityByCourse(SpecialityModel specialityModel, Integer course) {
         StudentService.App.getInstance().loadStudentListBySpecialityIdAndCourse(specialityModel.getId(), course,
                 studentAsyncCallback);
+    }
+
+    public void setupGridDropTarget() {
+        new GridDropTarget(grid);
+    }
+
+    public void setupGridDragSource() {
+        new GridDragSource(grid);
     }
 
     private class StudentAsyncCallback implements AsyncCallback<List<StudentModel>> {
