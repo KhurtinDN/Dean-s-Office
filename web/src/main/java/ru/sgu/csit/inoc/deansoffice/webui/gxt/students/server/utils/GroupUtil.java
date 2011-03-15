@@ -35,7 +35,7 @@ public class GroupUtil {
         groupModel.setId(group.getId());
         groupModel.setName(group.getName());
         groupModel.setCourse(group.getCourse());
-        groupModel.setSpeciality(specialityModel);
+        groupModel.setSpecialityName(specialityModel.getName());
 
         return groupModel;
     }

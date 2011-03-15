@@ -8,8 +8,6 @@ import java.io.Serializable;
  * Time: 2:02 PM
  */
 public class StudentModel extends PersonModel {
-    private GroupModel group;
-    private SpecialityModel speciality;
     private Division division;
     private StudyForm studyForm;
 
@@ -20,22 +18,20 @@ public class StudentModel extends PersonModel {
         super(id);
     }
 
-    public GroupModel getGroup() {
-        return group;
+    public String getGroupName() {
+        return get("groupName");
     }
 
-    public void setGroup(GroupModel groupModel) {
-        this.group = groupModel;
-        set("group", groupModel);
+    public void setGroupName(String groupName) {
+        set("groupName", groupName);
     }
 
-    public SpecialityModel getSpeciality() {
-        return speciality;
+    public String getSpecialityName() {
+        return get("specialityName");
     }
 
-    public void setSpeciality(SpecialityModel specialityModel) {
-        this.speciality = specialityModel;
-        set("speciality", specialityModel);
+    public void setSpecialityName(String specialityName) {
+        set("specialityName", specialityName);
     }
 
     public Integer getCourse() {
@@ -60,7 +56,6 @@ public class StudentModel extends PersonModel {
 
     public void setDivision(Division division) {
         this.division = division;
-        set("division", division);
     }
 
     public StudyForm getStudyForm() {
@@ -69,7 +64,6 @@ public class StudentModel extends PersonModel {
 
     public void setStudyForm(StudyForm studyForm) {
         this.studyForm = studyForm;
-        set("studyForm", studyForm);
     }
 
     public Long getPhotoId() {

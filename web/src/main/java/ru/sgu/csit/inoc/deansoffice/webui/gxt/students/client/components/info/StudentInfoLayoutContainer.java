@@ -30,8 +30,8 @@ public class StudentInfoLayoutContainer extends LayoutContainer {
 
     private Image image;
     private LabelField nameLabelField;
-    private LabelField groupLabelField;
-    private LabelField specialityLabelField;
+    private LabelField groupNameLabelField;
+    private LabelField specialityNameLabelField;
     private LabelField courseLabelField;
     private LabelField studentIdNumberLabelField;
     private LabelField divisionLabelField;
@@ -54,22 +54,22 @@ public class StudentInfoLayoutContainer extends LayoutContainer {
         image.setHeight("100px");
 
         nameLabelField = new LabelField();
-        nameLabelField.setName("name");
+        nameLabelField.setName("fullName");
         nameLabelField.setFieldLabel("Имя:");
         nameLabelField.setLabelStyle("font-weight: bold");
         nameLabelField.setAutoWidth(true);
 
-        groupLabelField = new LabelField();
-        groupLabelField.setName("group");
-        groupLabelField.setFieldLabel("Группа:");
-        groupLabelField.setLabelStyle("font-weight: bold");
-        groupLabelField.setAutoWidth(true);
+        groupNameLabelField = new LabelField();
+        groupNameLabelField.setName("groupName");
+        groupNameLabelField.setFieldLabel("Группа:");
+        groupNameLabelField.setLabelStyle("font-weight: bold");
+        groupNameLabelField.setAutoWidth(true);
 
-        specialityLabelField = new LabelField();
-        specialityLabelField.setName("speciality");
-        specialityLabelField.setFieldLabel("Специальность:");
-        specialityLabelField.setLabelStyle("font-weight: bold");
-        specialityLabelField.setAutoWidth(true);
+        specialityNameLabelField = new LabelField();
+        specialityNameLabelField.setName("specialityName");
+        specialityNameLabelField.setFieldLabel("Специальность:");
+        specialityNameLabelField.setLabelStyle("font-weight: bold");
+        specialityNameLabelField.setAutoWidth(true);
 
         courseLabelField = new LabelField();
         courseLabelField.setName("course");
@@ -97,8 +97,8 @@ public class StudentInfoLayoutContainer extends LayoutContainer {
 
         infoFieldSet.add(image);
         infoFieldSet.add(nameLabelField);
-        infoFieldSet.add(groupLabelField);
-        infoFieldSet.add(specialityLabelField);
+        infoFieldSet.add(groupNameLabelField);
+        infoFieldSet.add(specialityNameLabelField);
         infoFieldSet.add(courseLabelField);
         infoFieldSet.add(studentIdNumberLabelField);
         infoFieldSet.add(divisionLabelField);
@@ -197,9 +197,9 @@ public class StudentInfoLayoutContainer extends LayoutContainer {
 
         if (isRendered()) {
             image.setUrl("photos/" + studentModel.getPhotoId() + ".jpg");
-            nameLabelField.setText(StudentModelUtil.getFullName(studentModel));
-            groupLabelField.setText(studentModel.getGroup().getName());
-            specialityLabelField.setText(studentModel.getSpeciality().getFullName());
+            nameLabelField.setText(studentModel.getFullName());
+            groupNameLabelField.setText(studentModel.getGroupName());
+            specialityNameLabelField.setText(studentModel.getSpecialityName());
             courseLabelField.setText(studentModel.getCourse().toString());
             studentIdNumberLabelField.setText(studentModel.getStudentIdNumber());
             divisionLabelField.setText(StudentModelUtil.divisionToString(studentModel.getDivision()));

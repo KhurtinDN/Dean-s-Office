@@ -103,15 +103,7 @@ public class NavigationPanel extends ContentPanel {
 
             for (int course = 1; course <= resultList.size(); ++course) {
                 TreeStore<BaseModel> treeStore = new TreeStore<BaseModel>();
-                TreePanel<BaseModel> treePanel = new TreePanel<BaseModel>(treeStore) {
-                    @Override
-                    protected BaseModel prepareData(BaseModel model) {
-                        if (model instanceof SpecialityModel) {
-                            model.set("name", model.get("shortName"));
-                        }
-                        return super.prepareData(model);
-                    }
-                };
+                TreePanel<BaseModel> treePanel = new TreePanel<BaseModel>(treeStore);
                 treePanel.setDisplayProperty("name");
                 treePanel.getStyle().setLeafIcon(IconHelper.createStyle("group-icon"));
 

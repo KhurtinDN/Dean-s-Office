@@ -8,8 +8,6 @@ import java.util.Date;
  * Time: 10:46 AM
  */
 public class PassportModel extends PersonModel {
-    private String address;
-
     public PassportModel() {
     }
 
@@ -59,13 +57,5 @@ public class PassportModel extends PersonModel {
 
     public void setCitizenship(String citizenship) {
         set("citizenship", citizenship);
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
     }
 }

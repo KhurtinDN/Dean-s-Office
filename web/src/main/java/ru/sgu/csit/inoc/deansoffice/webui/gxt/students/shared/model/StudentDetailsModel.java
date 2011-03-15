@@ -8,11 +8,28 @@ import java.util.List;
  * Time: 12:26 PM
  */
 public class StudentDetailsModel extends StudentModel {
+    private GroupModel group;
+    private SpecialityModel speciality;
     private List<PassportModel> passports;
     private ParentModel father;
     private ParentModel mother;
     private String oldAddress;
-    private String actualAddress;
+
+    public GroupModel getGroup() {
+        return group;
+    }
+
+    public void setGroup(GroupModel group) {
+        this.group = group;
+    }
+
+    public SpecialityModel getSpeciality() {
+        return speciality;
+    }
+
+    public void setSpeciality(SpecialityModel speciality) {
+        this.speciality = speciality;
+    }
 
     public String getBirthplace() {
         return get("birthplace");
@@ -84,13 +101,5 @@ public class StudentDetailsModel extends StudentModel {
 
     public void setOldAddress(String oldAddress) {
         this.oldAddress = oldAddress;
-    }
-
-    public String getActualAddress() {
-        return actualAddress;
-    }
-
-    public void setActualAddress(String actualAddress) {
-        this.actualAddress = actualAddress;
     }
 }

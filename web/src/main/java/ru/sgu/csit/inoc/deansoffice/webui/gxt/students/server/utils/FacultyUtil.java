@@ -22,7 +22,7 @@ public class FacultyUtil {
 
         FacultyModel facultyModel =  new FacultyModel(faculty.getId());
         facultyModel.setDean(deanModel);
-        facultyModel.setShortName(faculty.getShortName());
+        facultyModel.setName(faculty.getShortName());
         facultyModel.setFullName(faculty.getFullName());
         facultyModel.setCourseCount(faculty.getCourseCount());
 

@@ -39,7 +39,7 @@ public class SpecialityInfoLayoutContainer extends LayoutContainer {
         fullNameLabelField.setAutoWidth(true);
 
         shortNameLabelField = new LabelField();
-        shortNameLabelField.setName("shortName");
+        shortNameLabelField.setName("name");
         shortNameLabelField.setFieldLabel("Имя:");
         shortNameLabelField.setLabelStyle("font-weight: bold");
         shortNameLabelField.setAutoWidth(true);
@@ -59,7 +59,7 @@ public class SpecialityInfoLayoutContainer extends LayoutContainer {
 
     public void bind(SpecialityModel specialityModel) {
         if (isRendered()) {
-            shortNameLabelField.setText(specialityModel.getShortName());
+            shortNameLabelField.setText(specialityModel.getName());
             fullNameLabelField.setText(specialityModel.getFullName());
             codeLabelField.setText(specialityModel.getCode());
         } else {

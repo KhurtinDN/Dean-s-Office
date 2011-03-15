@@ -17,7 +17,7 @@ public class SpecialityUtil {
         SpecialityModel specialityModel = new SpecialityModel();
         specialityModel.setId(speciality.getId());
         specialityModel.setFullName(speciality.getName());
-        specialityModel.setShortName(speciality.getShortName());
+        specialityModel.setName(speciality.getShortName());
         specialityModel.setCode(speciality.getCode());
 
         return specialityModel;

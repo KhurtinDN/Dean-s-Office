@@ -38,13 +38,13 @@ public class GroupInfoLayoutContainer extends LayoutContainer {
         image.setHeight("100px");
 
         nameLabelField = new LabelField();
-        nameLabelField.setName("fullName");
-        nameLabelField.setFieldLabel("Полное имя:");
+        nameLabelField.setName("name");
+        nameLabelField.setFieldLabel("Имя:");
         nameLabelField.setLabelStyle("font-weight: bold");
         nameLabelField.setAutoWidth(true);
 
         specialityLabelField = new LabelField();
-        specialityLabelField.setName("speciality");
+        specialityLabelField.setName("specialityName");
         specialityLabelField.setFieldLabel("Специальность:");
         specialityLabelField.setLabelStyle("font-weight: bold");
         specialityLabelField.setAutoWidth(true);
@@ -66,7 +66,7 @@ public class GroupInfoLayoutContainer extends LayoutContainer {
     public void bind(GroupModel groupModel) {
         if (isRendered()) {
             nameLabelField.setText(groupModel.getName());
-            specialityLabelField.setText(groupModel.getSpeciality().getFullName());
+            specialityLabelField.setText(groupModel.getSpecialityName());
             courseLabelField.setText(groupModel.getCourse().toString());
         } else {
             AppEvent appEvent = new AppEvent(AppEvents.Error, ErrorCode.DebugInformation);

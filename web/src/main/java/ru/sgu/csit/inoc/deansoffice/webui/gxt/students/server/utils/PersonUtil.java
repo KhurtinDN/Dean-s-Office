@@ -18,6 +18,7 @@ public class PersonUtil {
         personModel.setFirstName(person.getFirstName());
         personModel.setMiddleName(person.getMiddleName());
         personModel.setLastName(person.getLastName());
+        personModel.setFullName(person.getLastName() + ' ' + person.getFirstName() + ' ' + person.getMiddleName());
         personModel.setBirthday(person.getBirthday());
         personModel.setSex( convertPersonSexToPersonModelSex(person.getSex()));
     }

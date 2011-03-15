@@ -20,7 +20,6 @@ import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.constants.ErrorCod
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.mvc.events.AppEvents;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.services.StudentService;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.shared.model.StudentDetailsModel;
-import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.shared.utils.StudentModelUtil;
 
 /**
  * User: KhurtinDN ( KhurtinDN@gmail.com )
@@ -120,7 +119,7 @@ public class StudentAccountWindow extends Window {
                 .append("</div>")
                 .append("<div class=\"stSpeciality\">")
                 .append("<span class=\"stLabel\">Специальность (направление):</span>")
-                .append("<span class=\"stValue\">{specialityFullName} ({specialityShortName})</span>")
+                .append("<span class=\"stValue\">{specialityFullName} ({specialityName})</span>")
                 .append("<span class=\"stLabel\">Шифр (по ОКСО):</span><span class=\"stValue\">{specialityCode}</span>")
                 .append("</div>")
                 .toString();
@@ -132,7 +131,7 @@ public class StudentAccountWindow extends Window {
 
     private void showStudentAccountWindow(StudentDetailsModel studentDetailsModel) {
         this.studentDetailsModel = studentDetailsModel;
-        setHeading("Данные студента: " + StudentModelUtil.getFullName(studentDetailsModel));
+        setHeading("Данные студента: " + studentDetailsModel.getFullName());
         XTemplate template = XTemplate.create(getHeaderTemplate());
 
         prepareStudentDetail(studentDetailsModel);
@@ -151,7 +150,7 @@ public class StudentAccountWindow extends Window {
 
     private void prepareStudentDetail(StudentDetailsModel studentDetailsModel) {
         studentDetailsModel.set("specialityFullName", studentDetailsModel.getSpeciality().getFullName());
-        studentDetailsModel.set("specialityShortName", studentDetailsModel.getSpeciality().getShortName());
+        studentDetailsModel.set("specialityName", studentDetailsModel.getSpeciality().getName());
         studentDetailsModel.set("specialityCode", studentDetailsModel.getSpeciality().getCode());
     }
 

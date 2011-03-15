@@ -18,7 +18,6 @@ import com.google.gwt.user.client.Element;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.components.NavigationPanel;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.components.StudentsPanel;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.mvc.events.AppEvents;
-import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.shared.model.GroupModel;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.shared.model.StudentModel;
 
 import java.util.ArrayList;
@@ -53,6 +52,19 @@ public class AppointCaptainsDirectiveWindow extends AbstractDirectiveWindow {
         captainsContentPanel.setHeading("Старосты");
         captainsContentPanel.setHeight(400);
         captainsContentPanel.add(studentGrid);
+        captainsContentPanel.addButton(new Button("Изменить группу", new SelectionListener<ButtonEvent>() {
+            @Override
+            public void componentSelected(ButtonEvent ce) {
+                StudentModel studentModel = studentGrid.getSelectionModel().getSelectedItem();
+
+                if (studentModel == null) {
+                    Dispatcher.forwardEvent(AppEvents.InfoWithConfirmation,
+                            "Выберите, пожалуйста, старосту для удаления!");
+                } else {
+                    studentGrid.startEditing(studentListStore.indexOf(studentModel), 2);
+                }
+            }
+        }));
         captainsContentPanel.addButton(new Button("Удалить", new SelectionListener<ButtonEvent>() {
             @Override
             public void componentSelected(ButtonEvent ce) {
@@ -97,17 +109,9 @@ public class AppointCaptainsDirectiveWindow extends AbstractDirectiveWindow {
             }
         });
 
-        ColumnConfig nameColumnConfig = new ColumnConfig("name", "Имя", 200);
+        ColumnConfig nameColumnConfig = new ColumnConfig("fullName", "Имя", 200);
 
-        ColumnConfig groupColumnConfig = new ColumnConfig("group", "Группа", 100);
-        groupColumnConfig.setRenderer(new GridCellRenderer() {
-            @Override
-            public Object render(ModelData model, String property, ColumnData config,
-                                 int rowIndex, int colIndex, ListStore listStore, Grid grid) {
-                GroupModel groupModel = ((StudentModel) model).getGroup();
-                return groupModel.getName();
-            }
-        });
+        ColumnConfig groupColumnConfig = new ColumnConfig("groupName", "Группа", 100);
         groupColumnConfig.setEditor(new CellEditor(new TextField<String>()));
 
         List<ColumnConfig> columns = new ArrayList<ColumnConfig>();
@@ -116,9 +120,10 @@ public class AppointCaptainsDirectiveWindow extends AbstractDirectiveWindow {
         columns.add(groupColumnConfig);
 
         EditorGrid<StudentModel> studentGrid = new EditorGrid<StudentModel>(studentListStore, new ColumnModel(columns));
+        studentGrid.setSelectionModel(new GridSelectionModel<StudentModel>());
         studentGrid.setClicksToEdit(EditorGrid.ClicksToEdit.TWO);
         studentGrid.setBorders(true);
-        studentGrid.setAutoExpandColumn("name");
+        studentGrid.setAutoExpandColumn("fullName");
         studentGrid.setAutoExpandMax(2000);
 
         new GridDropTarget(studentGrid);

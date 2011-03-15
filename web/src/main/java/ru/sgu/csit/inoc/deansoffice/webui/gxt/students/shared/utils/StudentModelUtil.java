@@ -8,10 +8,6 @@ import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.shared.model.StudentModel
  * Time: 2:48 PM
  */
 public class StudentModelUtil extends PersonModelUtil {
-    public static String getFullName(StudentModel studentModel) {
-        return studentModel.getLastName() + ' ' + studentModel.getFirstName() + ' ' + studentModel.getMiddleName();
-    }
-
     public static String divisionToString(StudentModel.Division division) {
         if (division == null) {
             return "";

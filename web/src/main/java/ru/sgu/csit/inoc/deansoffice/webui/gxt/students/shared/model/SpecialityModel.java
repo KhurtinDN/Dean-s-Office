@@ -23,12 +23,12 @@ public class SpecialityModel extends DtoModel {
         set("fullName", fullName);
     }
 
-    public String getShortName() {
-        return get("shortName");
+    public String getName() {
+        return get("name");
     }
 
-    public void setShortName(String shortName) {
-        set("shortName", shortName);
+    public void setName(String name) {
+        set("name", name);
     }
 
     public String getCode() {

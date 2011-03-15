@@ -18,6 +18,14 @@ public class PersonModel extends DtoModel {
         super(id);
     }
 
+    public String getFullName() {
+        return get("fullName");
+    }
+
+    public void setFullName(String fullName) {
+        set("fullName", fullName);
+    }
+
     public String getFirstName() {
         return get("firstName");
     }
@@ -48,6 +56,14 @@ public class PersonModel extends DtoModel {
 
     public void setBirthday(Date birthday) {
         set("birthday", birthday);
+    }
+
+    public String getAddress() {
+        return get("address");
+    }
+
+    public void setAddress(String address) {
+        set("address", address);
     }
 
     public Sex getSex() {

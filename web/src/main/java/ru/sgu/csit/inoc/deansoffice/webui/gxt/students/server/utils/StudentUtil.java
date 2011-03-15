@@ -19,11 +19,6 @@ public class StudentUtil extends PersonUtil {
 
         List<StudentModel> studentModelList = new ArrayList<StudentModel>(studentList.size());
 
-        Group group = new Group();
-        Speciality speciality = new Speciality();
-        GroupModel groupModel = null;
-        SpecialityModel specialityModel = null;
-
         for (Student student : studentList) {
             StudentModel studentModel = new StudentModel();
             populatePersonModelByPerson(studentModel, student);
@@ -32,20 +27,8 @@ public class StudentUtil extends PersonUtil {
             studentModel.setDivision( convertStudentDivisionToStudentModelDivision(student.getDivision()));
             studentModel.setStudyForm(convertStudentStudyFormToStudentModelStudyForm(student.getStudyForm()));
 
-            if (!group.equals(student.getGroup())) {
-                group = student.getGroup();
-                groupModel = GroupUtil.convertGroupToGroupModel(group);
-            }
-            if (!speciality.equals(group.getSpeciality())) {
-                speciality = group.getSpeciality();
-                specialityModel = SpecialityUtil.convertSpecialityToSpecialityModel(speciality);
-
-                assert groupModel != null;
-                groupModel.setSpeciality(specialityModel);
-            }
-
-            studentModel.setGroup(groupModel);
-            studentModel.setSpeciality(specialityModel);
+            studentModel.setGroupName(student.getGroup().getName());
+            studentModel.setSpecialityName(student.getSpeciality().getName());
             studentModel.setCourse(student.getCourse());
 
             if (student.getAdditionalData() != null && student.getAdditionalData().getPhoto() != null) {
@@ -74,6 +57,10 @@ public class StudentUtil extends PersonUtil {
         studentDetailsModel.setSpeciality(specialityModel);
         studentDetailsModel.setGroup(GroupUtil.convertGroupToGroupModel(student.getGroup(), specialityModel));
 
+        studentDetailsModel.setSpecialityName(student.getSpeciality().getName());
+        studentDetailsModel.setGroupName(student.getGroup().getName());
+        studentDetailsModel.setCourse(student.getCourse());
+
         if (student.getAdditionalData() != null) {
             Student.AdditionalStudentData additionalStudentData = student.getAdditionalData();
 
@@ -91,7 +78,7 @@ public class StudentUtil extends PersonUtil {
             studentDetailsModel.setMother(ParentUtil.convertParentToParentModel(additionalStudentData.getMother()));
 
             studentDetailsModel.setOldAddress(additionalStudentData.getOldAddress());
-            studentDetailsModel.setActualAddress(additionalStudentData.getActualAddress());
+            studentDetailsModel.setAddress(additionalStudentData.getActualAddress());
 
             if (additionalStudentData.getPhoto() != null) {
                 studentDetailsModel.setPhotoId(additionalStudentData.getPhoto().getId());
@@ -118,22 +105,6 @@ public class StudentUtil extends PersonUtil {
         }
     }
 
-    public static Student.Division convertStudentModelDivisionToStudentDivision(StudentModel.Division division) {
-        if (division == null) {
-            return null;
-        }
-
-        switch (division) {
-            case INTRAMURAL:
-                return Student.Division.INTRAMURAL;
-            case EXTRAMURAL:
-                return Student.Division.EXTRAMURAL;
-            case EVENINGSTUDY:
-                return Student.Division.EVENINGSTUDY;
-            default:
-                return null;
-        }
-    }
 
     public static StudentModel.StudyForm convertStudentStudyFormToStudentModelStudyForm(Student.StudyForm studyForm) {
         if (studyForm == null) {
@@ -145,21 +116,6 @@ public class StudentUtil extends PersonUtil {
                 return StudentModel.StudyForm.BUDGET;
             case COMMERCIAL:
                 return StudentModel.StudyForm.COMMERCIAL;
-            default:
-                return null;
-        }
-    }
-
-    public static Student.StudyForm convertStudentModelStudyFormToStudentStudyForm(StudentModel.StudyForm studyForm) {
-        if (studyForm == null) {
-            return null;
-        }
-
-        switch (studyForm) {
-            case BUDGET:
-                return Student.StudyForm.BUDGET;
-            case COMMERCIAL:
-                return Student.StudyForm.COMMERCIAL;
             default:
                 return null;
         }

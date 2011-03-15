@@ -6,7 +6,7 @@ package ru.sgu.csit.inoc.deansoffice.webui.gxt.students.shared.model;
  * Time: 2:05 PM
  */
 public class GroupModel extends DtoModel {
-    private SpecialityModel specialityModel;
+//    private SpecialityModel specialityModel;
 
     public GroupModel() {
     }
@@ -24,21 +24,21 @@ public class GroupModel extends DtoModel {
         set("course", course);
     }
 
-    public SpecialityModel getSpeciality() {
+    /*public SpecialityModel getSpeciality() {
         return specialityModel;
     }
 
     public void setSpeciality(SpecialityModel specialityModel) {
         this.specialityModel = specialityModel;
-    }
-
-    /*public SpecialityModel getSpeciality() { // not work with GWT Serialization
-        return get("speciality");
-    }
-
-    public void setSpeciality(SpecialityModel specialityModel) {
-        set("speciality", specialityModel);
     }*/
+
+    public String getSpecialityName() {
+        return get("specialityName");
+    }
+
+    public void setSpecialityName(String specialityName) {
+        set("specialityName", specialityName);
+    }
 
     public String getName() {
         return get("name");

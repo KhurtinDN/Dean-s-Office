@@ -53,10 +53,10 @@ public class StudentsPanel extends ContentPanel {
         setHeading("Студенты");
         setLayout(new FitLayout());
 
-        studentListStore.sort("name", Style.SortDir.ASC);
+        studentListStore.sort("fullName", Style.SortDir.ASC);
 
         grid.setBorders(true);
-        grid.setAutoExpandColumn("name");
+        grid.setAutoExpandColumn("fullName");
         grid.setAutoExpandMax(2000);
 
         if (!simple) {
@@ -86,7 +86,7 @@ public class StudentsPanel extends ContentPanel {
             }
         });
 
-        ColumnConfig nameColumnConfig = new ColumnConfig("name", "Имя", 200);
+        ColumnConfig nameColumnConfig = new ColumnConfig("fullName", "Имя", 200);
 
         ColumnConfig studyFormColumnConfig = new ColumnConfig("studyForm", "Форма обучения", 100);
         studyFormColumnConfig.setRenderer(new GridCellRenderer() {
@@ -132,9 +132,6 @@ public class StudentsPanel extends ContentPanel {
 
         @Override
         public void onSuccess(List<StudentModel> students) {
-            for (StudentModel studentModel : students) {
-                studentModel.set("name", StudentModelUtil.getFullName(studentModel));
-            }
             studentListStore.removeAll();
             studentListStore.add(students);
         }

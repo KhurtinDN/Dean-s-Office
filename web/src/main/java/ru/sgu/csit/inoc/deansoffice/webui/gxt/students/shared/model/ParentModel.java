@@ -6,17 +6,7 @@ package ru.sgu.csit.inoc.deansoffice.webui.gxt.students.shared.model;
  * Time: 10:55 AM
  */
 public class ParentModel extends PersonModel {
-    private String address;
-
     public ParentModel() {
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
     }
 
     public String getWorkInfo() {

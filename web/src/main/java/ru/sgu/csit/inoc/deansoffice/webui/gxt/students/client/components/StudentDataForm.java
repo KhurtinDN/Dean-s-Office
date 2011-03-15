@@ -425,7 +425,7 @@ public class StudentDataForm extends FormPanel {
         addressMotherTextField.setValue(mother == null ? null : mother.getAddress());
 
         oldAddressTextField.setValue(studentDetailsModel.getOldAddress());
-        actualAddressTextField.setValue(studentDetailsModel.getActualAddress());
+        actualAddressTextField.setValue(studentDetailsModel.getAddress());
     }
 
     public StudentDetailsModel getStudentDetails() {
@@ -440,7 +440,7 @@ public class StudentDataForm extends FormPanel {
         studentDetailsModel.setChildrenInfo(childrenInfoTextField.getValue());
 
         studentDetailsModel.setOldAddress(oldAddressTextField.getValue());
-        studentDetailsModel.setActualAddress(actualAddressTextField.getValue());
+        studentDetailsModel.setAddress(actualAddressTextField.getValue());
 
         studentDetailsModel.setPassports(passportListStore.getModels());
 
