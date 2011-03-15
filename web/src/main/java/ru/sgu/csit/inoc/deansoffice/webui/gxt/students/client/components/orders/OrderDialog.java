@@ -149,7 +149,8 @@ public class OrderDialog extends Window {
         contentPanel.addButton(new Button("Изменить", new SelectionListener<ButtonEvent>() {
             @Override
             public void componentSelected(ButtonEvent ce) {
-                // todo: implement
+                AppointSocialStipendDirectiveWindow directiveWindow = new AppointSocialStipendDirectiveWindow();
+                directiveWindow.show();
             }
         }));
 

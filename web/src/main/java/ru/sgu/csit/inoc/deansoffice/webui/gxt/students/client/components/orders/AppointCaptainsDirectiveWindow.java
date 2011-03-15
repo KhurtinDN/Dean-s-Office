@@ -59,7 +59,7 @@ public class AppointCaptainsDirectiveWindow extends AbstractDirectiveWindow {
 
                 if (studentModel == null) {
                     Dispatcher.forwardEvent(AppEvents.InfoWithConfirmation,
-                            "Выберите, пожалуйста, старосту для удаления!");
+                            "Выберите, пожалуйста, старосту для изменения!");
                 } else {
                     studentGrid.startEditing(studentListStore.indexOf(studentModel), 2);
                 }
