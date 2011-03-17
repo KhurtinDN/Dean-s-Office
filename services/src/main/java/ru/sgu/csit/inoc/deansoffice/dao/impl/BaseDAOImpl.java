@@ -62,8 +62,10 @@ public class BaseDAOImpl<T, ID extends Serializable> extends HibernateDaoSupport
     @Override
     @SuppressWarnings("unchecked")
     public T findById(ID id) {
-        DetachedCriteria criteria = createCriteriaForPersistentClass(Restrictions.eq("id", id));
-        return (T) getHibernateTemplate().findByCriteria(criteria, 0, 1).get(0);
+//        DetachedCriteria criteria = createCriteriaForPersistentClass(Restrictions.eq("id", id));
+//        return (T) getHibernateTemplate().findByCriteria(criteria, 0, 1).get(0);
+        return (T) getHibernateTemplate().find("from " + getPersistentClass().getName() + " s where s.id=?", id).get(0);
+
     }
 
     @Override
