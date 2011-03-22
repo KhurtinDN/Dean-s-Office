@@ -148,7 +148,7 @@ public class App {
                     state = 3;
                 } else if ("4".equals(command)) {
                     for (String coordinator : register.getAllCoordinators()) {
-                        register.getCurrentOrderData().addCoordinator(coordinator);
+                        register.getCurrentOrderData().addCoordinator(new Coordinator(coordinator));
                     }
                     register.enterOrderData(register.getCurrentOrderData());
                     println("Выбраны все доступные координаторы.");
@@ -166,10 +166,10 @@ public class App {
                     println("Описание: " + data.getDescription());
                     if (Directive.APPOINT_CAPTAINS.equals(directive.getType())) {
                         Directive1.SourceData sourceData = new Directive1.SourceData();
-                        Student student = studentDAO.findById(52L);
+                        Student student = studentDAO.findById(61L);
                         sourceData.addCaptain(student.getGroup(), student);
                         println(student.generateShortName(false) + " - " + student.getGroup().getName());
-                        student = studentDAO.findById(232L);
+                        student = studentDAO.findById(133L);
                         sourceData.addCaptain(student.getGroup(), student);
                         println(student.generateShortName(false) + " - " + student.getGroup().getName());
                         data.setSourceData(sourceData);
@@ -180,16 +180,16 @@ public class App {
                         stipend.setValue(198437);
                         stipend.setStartDate(new Date());
                         stipend.setEndDate(new Date());
-                        Student student = studentDAO.findById(70L);
+                        Student student = studentDAO.findById(73L);
                         sourceData.addStudent(student, stipend);
                         println(student.generateShortName(false) + " - " + student.getGroup().getName());
-                        student = studentDAO.findById(100L);
+                        student = studentDAO.findById(103L);
                         sourceData.addStudent(student, stipend);
                         println(student.generateShortName(false) + " - " + student.getGroup().getName());
-                        student = studentDAO.findById(220L);
+                        student = studentDAO.findById(223L);
                         sourceData.addStudent(student, stipend);
                         println(student.generateShortName(false) + " - " + student.getGroup().getName());
-                        student = studentDAO.findById(250L);
+                        student = studentDAO.findById(559L);
                         sourceData.addStudent(student, stipend);
                         println(student.generateShortName(false) + " - " + student.getGroup().getName());
                         data.setSourceData(sourceData);
@@ -270,8 +270,8 @@ public class App {
                                     ? order.getData().getSupervisor().generateShortName(true) : ""));
                     println("4. Согласовано:");
                     if (order.getData() != null) {
-                        for (String coordinator : order.getData().getCoordinators()) {
-                            println("  " + coordinator);
+                        for (Coordinator coordinator : order.getData().getCoordinators()) {
+                            println("  " + coordinator.getPosition());
                         }
                     }
                     break;

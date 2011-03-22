@@ -21,15 +21,15 @@ public class OrderServiceImpl implements OrderService {
         OrderModel orderModel = new OrderModel();
         orderModel.setId(1L);
         orderModel.setType("Приказ");
-        orderModel.setName("О назначении старост");
-        orderModel.setStatus("processing");
+        orderModel.setName("Остаточные итоги");
+        orderModel.setStatus("Утверждён");
         orderModelList.add(orderModel);
 
         orderModel = new OrderModel();
         orderModel.setId(1L);
         orderModel.setType("Приказ");
-        orderModel.setName("О производстве рыбных консерв");
-        orderModel.setStatus("accepted");
+        orderModel.setName("Назначение на стипендию");
+        orderModel.setStatus("Создан");
         orderModelList.add(orderModel);
 
         return orderModelList;

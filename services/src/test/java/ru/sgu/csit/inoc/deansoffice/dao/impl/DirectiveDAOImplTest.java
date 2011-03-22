@@ -18,7 +18,7 @@ import ru.sgu.csit.inoc.deansoffice.domain.Directive;
 import java.util.*;
 
 /**
- * Unit test for SudentDAOImpl.
+ * Unit test for DirectiveDAOImpl.
  */
 public class DirectiveDAOImplTest extends TestCase {
     /**

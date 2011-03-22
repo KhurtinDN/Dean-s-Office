@@ -20,21 +20,24 @@ public class SpecialityDAOImpl extends BaseDAOImpl<Speciality, Long> implements 
     @Override
     @SuppressWarnings("unchecked")
     public List<Speciality> findByShortName(String shortName) {
-        DetachedCriteria criteria = createCriteriaForPersistentClass(Restrictions.eq("shortName", shortName));
-        return (List<Speciality>) getHibernateTemplate().findByCriteria(criteria);
+//        DetachedCriteria criteria = createCriteriaForPersistentClass(Restrictions.eq("shortName", shortName));
+//        return (List<Speciality>) getHibernateTemplate().findByCriteria(criteria);
+        return (List<Speciality>) getHibernateTemplate().find("from Speciality s where s.shortName=?", shortName);
     }
 
     @Override
     @SuppressWarnings("unchecked")
     public List<Speciality> findByFaculty(Faculty faculty) {
-        DetachedCriteria criteria = createCriteriaForPersistentClass(Restrictions.eq("faculty", faculty));
-        return (List<Speciality>) getHibernateTemplate().findByCriteria(criteria);
+//        DetachedCriteria criteria = createCriteriaForPersistentClass(Restrictions.eq("faculty", faculty));
+//        return (List<Speciality>) getHibernateTemplate().findByCriteria(criteria);
+        return (List<Speciality>) getHibernateTemplate().find("from Speciality s where s.faculty=?", faculty);
     }
 
     @Override
     @SuppressWarnings("unchecked")
     public List<Speciality> findByFacultyId(Long facultyId) {
-        DetachedCriteria criteria = createCriteriaForPersistentClass(Restrictions.eq("faculty.id", facultyId));
-        return (List<Speciality>) getHibernateTemplate().findByCriteria(criteria);
+//        DetachedCriteria criteria = createCriteriaForPersistentClass(Restrictions.eq("faculty.id", facultyId));
+//        return (List<Speciality>) getHibernateTemplate().findByCriteria(criteria);
+        return (List<Speciality>) getHibernateTemplate().find("from Speciality s where s.faculty.id=?", facultyId);
     }
 }

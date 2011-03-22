@@ -20,23 +20,28 @@ public class GroupDAOImpl extends BaseDAOImpl<Group, Long> implements GroupDAO {
     @Override
     @SuppressWarnings("unchecked")
     public List<Group> findByCourseAndSpeciality(Integer course, Speciality speciality) {
-        DetachedCriteria criteria = createCriteriaForPersistentClass(
-                Restrictions.eq("course", course), Restrictions.eq("speciality", speciality));
-        return (List<Group>) getHibernateTemplate().findByCriteria(criteria);
+//        DetachedCriteria criteria = createCriteriaForPersistentClass(
+//                Restrictions.eq("course", course), Restrictions.eq("speciality", speciality));
+//        return (List<Group>) getHibernateTemplate().findByCriteria(criteria);
+        return (List<Group>) getHibernateTemplate().find("from Group g where g.course=? and g.speciality=?",
+                course, speciality);
     }
 
     @Override
     @SuppressWarnings("unchecked")
     public List<Group> findByCourseAndSpecialityId(Integer course, Long specialityId) {
-        DetachedCriteria criteria = createCriteriaForPersistentClass(
-                Restrictions.eq("course", course), Restrictions.eq("speciality.id", specialityId));
-        return (List<Group>) getHibernateTemplate().findByCriteria(criteria);
+//        DetachedCriteria criteria = createCriteriaForPersistentClass(
+//                Restrictions.eq("course", course), Restrictions.eq("speciality.id", specialityId));
+//        return (List<Group>) getHibernateTemplate().findByCriteria(criteria);
+        return (List<Group>) getHibernateTemplate().find("from Group g where g.course=? and g.speciality.id=?",
+                course, specialityId);
     }
 
     @Override
     @SuppressWarnings("unchecked")
     public List<Group> findByName(String name) {
-        DetachedCriteria criteria = createCriteriaForPersistentClass(Restrictions.eq("name", name));
-        return (List<Group>) getHibernateTemplate().findByCriteria(criteria);
+//        DetachedCriteria criteria = createCriteriaForPersistentClass(Restrictions.eq("name", name));
+//        return (List<Group>) getHibernateTemplate().findByCriteria(criteria);
+        return (List<Group>) getHibernateTemplate().find("from Group g where g.name=?", name);
     }
 }

@@ -19,7 +19,8 @@ public class FacultyDAOImpl extends BaseDAOImpl<Faculty, Long> implements Facult
     @Override
     @SuppressWarnings("unchecked")
     public List<Faculty> findByShortName(String shortName) {
-        DetachedCriteria criteria = createCriteriaForPersistentClass(Restrictions.eq("shortName", shortName));
-        return (List<Faculty>) getHibernateTemplate().findByCriteria(criteria);
+//        DetachedCriteria criteria = createCriteriaForPersistentClass(Restrictions.eq("shortName", shortName));
+//        return (List<Faculty>) getHibernateTemplate().findByCriteria(criteria);
+        return (List<Faculty>) getHibernateTemplate().find("from Faculty f where f.shortName=?", shortName);
     }
 }
