@@ -7,8 +7,10 @@ import org.hibernate.Hibernate;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.orm.hibernate3.HibernateTemplate;
+import ru.sgu.csit.inoc.deansoffice.dao.GroupDAO;
 import ru.sgu.csit.inoc.deansoffice.dao.PhotoDAO;
 import ru.sgu.csit.inoc.deansoffice.dao.StudentDAO;
+import ru.sgu.csit.inoc.deansoffice.dao.impl.GroupDAOImpl;
 import ru.sgu.csit.inoc.deansoffice.dao.impl.PhotoDAOImpl;
 import ru.sgu.csit.inoc.deansoffice.dao.impl.StudentDAOImpl;
 import ru.sgu.csit.inoc.deansoffice.domain.*;
@@ -16,11 +18,15 @@ import ru.sgu.csit.inoc.deansoffice.reports.ReportPdfProcessor;
 import ru.sgu.csit.inoc.deansoffice.reports.reportsutil.Report;
 import ru.sgu.csit.inoc.deansoffice.services.DocumentService;
 import ru.sgu.csit.inoc.deansoffice.services.PhotoService;
+import ru.sgu.csit.inoc.deansoffice.services.ReferenceService;
 import ru.sgu.csit.inoc.deansoffice.services.StudentDossierService;
 import ru.sgu.csit.inoc.deansoffice.services.impl.PhotoServiceImpl;
+import ru.sgu.csit.inoc.deansoffice.services.impl.ReferenceServiceImpl;
 import ru.sgu.csit.inoc.deansoffice.services.impl.StudentDossierServiceImpl;
 
 import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Unit test for simple App.
@@ -52,7 +58,7 @@ public class AppTest
 
     private static ApplicationContext applicationContext = new ClassPathXmlApplicationContext("ApplicationContext.xml");
     private static StudentDAO studentDAO = applicationContext.getBean(StudentDAOImpl.class);
-
+    private static GroupDAO groupDAO = applicationContext.getBean(GroupDAOImpl.class);
     private static PhotoDAO photoDAO = applicationContext.getBean(PhotoDAOImpl.class);
 
     public void /*skip_*/ testPdfGenerate() {
@@ -77,8 +83,9 @@ public class AppTest
         }
         System.out.println("New Photo size: " + newPhoto.getData().length);
         */
-
-        Student student = studentDAO.findAll().get(0);//new Student();
+        Group group = groupDAO.findAll().get(0);
+        List<Student> students = studentDAO.findByGroup(group);
+        Student student = students.get(0);//new Student();
         try {
             photoService.loadData(student.getAdditionalData().getPhoto());
         } catch (IOException e) {
@@ -136,6 +143,30 @@ public class AppTest
         StudentDossierService dossierService = new StudentDossierServiceImpl(dossier);
 
         dossierService.build(student);
-        ReportPdfProcessor.getInstance().generate((Report) dossierService, outputStream);
+        //ReportPdfProcessor.getInstance().generate((Report) dossierService, outputStream);
+
+        //==============================================
+
+        List<Report> references = new ArrayList<Report>();
+        references.add((Report) dossierService);
+        try {
+            outputStream = new FileOutputStream(new File("test_multi.pdf"));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        templName = AppTest.class.getResource("/reference-1.xml").getFile();
+        templName = templName.replace("%20", " ");
+
+        for (int i = 0; i < students.size(); ++i) {
+            Student theStudent = students.get(i);
+            Reference reference = new Reference();
+            System.out.println(templName);
+            reference.setPrintTemplate(new Template(templName));
+            ReferenceService referenceService = new ReferenceServiceImpl(reference);
+            referenceService.build(theStudent);
+            references.add((Report) referenceService);
+        }
+
+        ReportPdfProcessor.getInstance().generate(references, outputStream);
     }
 }

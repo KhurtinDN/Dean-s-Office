@@ -12,6 +12,7 @@ import org.xml.sax.helpers.DefaultHandler;
 import ru.sgu.csit.inoc.deansoffice.reports.reportsutil.*;
 
 import java.io.*;
+import java.util.List;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.Stack;
@@ -36,11 +37,14 @@ public class XmlToPdfReportProcessorHandler extends DefaultHandler {
     private Stack<MyTable> stackTables = new Stack<MyTable>();
     private Stack<MyCell> stackCells = new Stack<MyCell>();
 
-    private Document document;
+    private Document document = null;
     private Rectangle pageSize;
     private MarginsData marginsData = null;
     private OutputStream outputStream = null;
-    Report report;
+    private Report report;
+    private List<Report> reports;
+    private int pass = 0;
+    private boolean multiReport = false;
 
     public XmlToPdfReportProcessorHandler(String url, Report report, OutputStream outputStream) {
         this.url = url;
@@ -54,26 +58,54 @@ public class XmlToPdfReportProcessorHandler extends DefaultHandler {
         }
     }
 
-    public void initDocument(String outputFileName) {
-        document = new Document();
-        if (outputFileName == null || outputFileName.isEmpty()) {
-            outputFileName = "document.pdf";
-        }
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public XmlToPdfReportProcessorHandler(List<Report> reports, OutputStream outputStream) {
+        multiReport = true;
+        this.reports = reports;
+        this.report = reports.get(0);
+        this.outputStream = outputStream;
+
         try {
-            if (outputStream == null) {
-                outputStream = new FileOutputStream(outputFileName);
+            printWriter = new PrintWriter(new OutputStreamWriter(System.out, "UTF-8"));
+        } catch (UnsupportedEncodingException e) {
+            throw new RuntimeException("The encoding is unsupported.", e);
+        }
+    }
+
+    public void initDocument(String outputFileName) {
+        if (multiReport) {
+            this.report = reports.get(pass++);
+        }
+        if (!multiReport || (pass == 1)) {
+            document = new Document();
+            if (outputFileName == null || outputFileName.isEmpty()) {
+                outputFileName = "document.pdf";
             }
-            pdfWriter = PdfWriter.getInstance(document, outputStream);
-        } catch (DocumentException e) {
-            throw new RuntimeException("Document exception.", e);
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException("File not found.", e);
+            try {
+                if (outputStream == null) {
+                    outputStream = new FileOutputStream(outputFileName);
+                }
+                pdfWriter = PdfWriter.getInstance(document, outputStream);
+            } catch (DocumentException e) {
+                throw new RuntimeException("Document exception.", e);
+            } catch (FileNotFoundException e) {
+                throw new RuntimeException("File not found.", e);
+            }
+            document.setPageSize(pageSize);
+            if (marginsData != null) {
+                document.setMargins(marginsData.left, marginsData.right, marginsData.top, marginsData.bottom);
+            }
+            document.open();
+        } else {
+            document.setPageSize(pageSize);
+            if (marginsData != null) {
+                document.setMargins(marginsData.left, marginsData.right, marginsData.top, marginsData.bottom);
+            }
+            document.newPage();
         }
-        document.setPageSize(pageSize);
-        if (marginsData != null) {
-            document.setMargins(marginsData.left, marginsData.right, marginsData.top, marginsData.bottom);
-        }
-        document.open();
     }
 
     private Rectangle rectangleByName(String name) {
@@ -185,11 +217,13 @@ public class XmlToPdfReportProcessorHandler extends DefaultHandler {
 
     // Конец документа
     public void endDocument() {
-        //out.Flush();
-        document.close();
-        pdfWriter.close();
         printInfo();
-        printWriter.flush();
+        if (!multiReport || (pass == reports.size())) {
+            printWriter.flush();
+            document.close();
+            pdfWriter.close();
+        }
+        marginsData = null;
     }
 
     // Встретился открывающий тэг элемента
@@ -252,8 +286,8 @@ public class XmlToPdfReportProcessorHandler extends DefaultHandler {
             }
             initDocument(outputFileName);
         } else if ("newpage".equals(qName)) {
-            document.newPage();
             document.setPageSize(pageSize);
+            document.newPage();
         } else if ("var".equals(qName)) {
             if (attributes != null) {
                 for (int i = 0, n = attributes.getLength(); i < n; ++i) {
