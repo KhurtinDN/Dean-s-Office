@@ -146,4 +146,25 @@ public class ReferenceServiceImpl extends DocumentServiceImpl implements Referen
         reference.setState(Reference.ReferenceState.REGISTERED);
         referenceDAO.saveOrUpdate(reference);
     }
+
+    @Override
+    public void printReferences(List<Reference> references, OutputStream outputStream) {
+        for (Reference reference : references) {
+            reference.setState(Reference.ReferenceState.PROCESSED);
+            referenceDAO.saveOrUpdate(reference);
+        }
+        generatePrintForm(references, outputStream);
+    }
+
+    @Override
+    public void readyReference(Reference reference) {
+        reference.setState(Reference.ReferenceState.READY);
+        referenceDAO.saveOrUpdate(reference);
+    }
+
+    @Override
+    public void issueReference(Reference reference) {
+        reference.setState(Reference.ReferenceState.ISSUED);
+        referenceDAO.saveOrUpdate(reference);
+    }
 }

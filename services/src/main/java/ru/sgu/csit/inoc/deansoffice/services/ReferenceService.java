@@ -15,5 +15,9 @@ public interface ReferenceService {
     void generatePrintForm(Reference reference, OutputStream outputStream);
     void generatePrintForm(List<Reference> references, OutputStream outputStream);
     void setDefaultPrintTemplate(Reference reference);
+
     void registrationReference(Reference reference);
+    void printReferences(List<Reference> references, OutputStream outputStream);
+    void readyReference(Reference reference);
+    void issueReference(Reference reference);
 }
