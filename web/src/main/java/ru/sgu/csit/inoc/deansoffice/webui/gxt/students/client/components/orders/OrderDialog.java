@@ -55,13 +55,17 @@ public class OrderDialog extends Window {
         LayoutContainer hBoxLayoutContainer = new LayoutContainer(new HBoxLayout());
 
         dateField.setFieldLabel("Дата");
-        hBoxLayoutContainer.add(createFormLayoutContainer(dateField, FormUtil.formData), FormUtil.flex0);
+        FormLayout dateFormLayout = new FormLayout();
+        dateFormLayout.setLabelWidth(formPanel.getLabelWidth());
+        LayoutContainer dateLayoutContainer = new LayoutContainer(dateFormLayout);
+        dateLayoutContainer.add(dateField, FormUtil.formData);
+        hBoxLayoutContainer.add(dateLayoutContainer, FormUtil.flex0);
 
         hBoxLayoutContainer.add(new Text(), FormUtil.flex1);
 
         orderNumberTextField.setFieldLabel("Номер");
-        LayoutContainer orderNumberLayoutContainer = createFormLayoutContainer(orderNumberTextField, FormUtil.formData);
-        orderNumberLayoutContainer.setLayout(new FormLayout(FormPanel.LabelAlign.RIGHT));
+        LayoutContainer orderNumberLayoutContainer = new LayoutContainer(new FormLayout(FormPanel.LabelAlign.RIGHT));
+        orderNumberLayoutContainer.add(orderNumberTextField, FormUtil.formData);
         hBoxLayoutContainer.add(orderNumberLayoutContainer, FormUtil.flex0);
 
         formPanel.add(hBoxLayoutContainer, FormUtil.wh5FormData);
@@ -217,12 +221,6 @@ public class OrderDialog extends Window {
         }));
 
         return contentPanel;
-    }
-
-    private LayoutContainer createFormLayoutContainer(Field field, FormData formData) {
-        LayoutContainer layoutContainer = new LayoutContainer(new FormLayout());
-        layoutContainer.add(field, formData);
-        return layoutContainer;
     }
 
     public void clearForm() {

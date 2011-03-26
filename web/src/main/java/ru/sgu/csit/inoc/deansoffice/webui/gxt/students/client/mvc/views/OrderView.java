@@ -5,6 +5,7 @@ import com.extjs.gxt.ui.client.mvc.AppEvent;
 import com.extjs.gxt.ui.client.mvc.View;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.components.orders.OrderDialog;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.components.orders.OrderQueueWindow;
+import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.components.orders.ReferenceQueueWindow;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.mvc.controllers.OrderController;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.mvc.events.AppEvents;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.shared.model.OrderModel;
@@ -15,6 +16,7 @@ import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.shared.model.OrderModel;
  * Time: 1:07 PM
  */
 public class OrderView extends View {
+    private ReferenceQueueWindow referenceQueueWindow;
     private OrderQueueWindow orderQueueWindow;
     private OrderDialog orderDialog;
 
@@ -26,6 +28,7 @@ public class OrderView extends View {
     protected void initialize() {
         super.initialize();
 
+        referenceQueueWindow = new ReferenceQueueWindow();
         orderQueueWindow = new OrderQueueWindow();
         orderDialog = new OrderDialog();
     }
@@ -34,13 +37,19 @@ public class OrderView extends View {
     protected void handleEvent(AppEvent event) {
         EventType eventType = event.getType();
 
-        if (eventType.equals(AppEvents.OrderQueueCall)) {
+        if (eventType.equals(AppEvents.ReferenceQueueCall)) {
+            onReferenceQueueCall(event);
+        } else if (eventType.equals(AppEvents.OrderQueueCall)) {
             onOrderQueueCall(event);
         } else if (eventType.equals(AppEvents.AddNewOrderCall)) {
             onAddNewOrderCall(event);
         } else if (eventType.equals(AppEvents.EditOrderCall)) {
             onEditOrderCall(event);
         }
+    }
+
+    private void onReferenceQueueCall(AppEvent event) {
+        referenceQueueWindow.show();
     }
 
     private void onOrderQueueCall(AppEvent event) {
