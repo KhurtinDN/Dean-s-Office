@@ -1,10 +1,8 @@
 package ru.sgu.csit.inoc.deansoffice.services.impl;
 
 import freemarker.template.TemplateException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-import org.springframework.stereotype.Service;
 import ru.sgu.csit.inoc.deansoffice.dao.GroupDAO;
 import ru.sgu.csit.inoc.deansoffice.dao.StipendDAO;
 import ru.sgu.csit.inoc.deansoffice.dao.StudentDAO;
@@ -126,7 +124,7 @@ public class DirectiveServiceImpl implements DirectiveService {
                         new SpecialityData.Captain(captainEntry.getKey(), captainEntry.getValue()));
             }
             rootMap.put("dataList", dataList);
-            String simpleTemplName = "directive1.ftl";
+            String simpleTemplName = "templates/directive1.ftl";
             String templDir = DirectiveServiceImpl.class.getResource("/" + simpleTemplName).getPath()
                     .replace("%20", " ");
             templDir = templDir.substring(0, templDir.lastIndexOf("/" + simpleTemplName));
@@ -163,7 +161,7 @@ public class DirectiveServiceImpl implements DirectiveService {
                 }
             });
             rootMap.put("studentMaps", studentMaps);//studentMap.entrySet());
-            String simpleTemplName = "directive2.ftl";
+            String simpleTemplName = "templates/directive2.ftl";
             String templDir = DirectiveServiceImpl.class.getResource("/" + simpleTemplName).getPath()
                     .replace("%20", " ");
             templDir = templDir.substring(0, templDir.lastIndexOf("/" + simpleTemplName));

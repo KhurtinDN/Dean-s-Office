@@ -1,13 +1,18 @@
 package ru.sgu.csit.inoc.deansoffice.services.impl;
 
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Service;
-import ru.sgu.csit.inoc.deansoffice.domain.Document;
-import ru.sgu.csit.inoc.deansoffice.domain.EnrollmentOrder;
-import ru.sgu.csit.inoc.deansoffice.domain.Student;
+import ru.sgu.csit.inoc.deansoffice.dao.ReferenceDAO;
+import ru.sgu.csit.inoc.deansoffice.domain.*;
+import ru.sgu.csit.inoc.deansoffice.reports.ReportPdfProcessor;
+import ru.sgu.csit.inoc.deansoffice.reports.reportsutil.Report;
 import ru.sgu.csit.inoc.deansoffice.services.ReferenceService;
 
+import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 /**
  * User: XX (freecoder.xx@gmail.com)
@@ -16,6 +21,9 @@ import java.util.Date;
  */
 //@Service
 public class ReferenceServiceImpl extends DocumentServiceImpl implements ReferenceService {
+    private static ApplicationContext applicationContext = new ClassPathXmlApplicationContext("ApplicationContext.xml");
+    private static ReferenceDAO referenceDAO = applicationContext.getBean(ReferenceDAO.class);
+
     public ReferenceServiceImpl(Document document) {
         super(document);
     }
@@ -75,5 +83,30 @@ public class ReferenceServiceImpl extends DocumentServiceImpl implements Referen
                 break;
         }
         TEXT.put("Student.studyForm", studyForm);
+    }
+
+    @Override
+    public void addNewReference(Reference reference) {
+        reference.setAddedDate(new Date());
+        reference.setState(Reference.ReferenceState.ADDED);
+        referenceDAO.saveOrUpdate(reference);
+    }
+
+    @Override
+    public void generatePrintForm(List<Reference> references, OutputStream outputStream) {
+        String documentName = "";
+        String templName = ReferenceServiceImpl.class.getResource("/templates/reference-1.xml").getFile();
+        templName = templName.replace("%20", " ");
+
+        for (Reference reference : references) {
+            Student theStudent = stu
+            System.out.println(templName);
+            reference.setPrintTemplate(new Template(templName));
+            ReferenceService referenceService = new ReferenceServiceImpl(reference);
+            referenceService.build(theStudent);
+            references.add((Report) referenceService);
+        }
+
+        ReportPdfProcessor.getInstance().generate(references, outputStream);
     }
 }

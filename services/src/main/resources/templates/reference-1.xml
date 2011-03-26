@@ -1,0 +1,103 @@
+<?xml version="1.0"?>
+<!-- <fonts>
+	<font name="" style="" path="" />
+</fonts> -->
+<document
+	 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	 xsi:noNamespaceSchemaLocation="../../../test/resources/document.xsd"
+	 type="PDF" name="spravka1.pdf" format="A5" orientation="landscape">
+	<table widths="4 30 8 24 8 4 6 7 10 25 5 4 5 13 5 7 15" width="100" align="center" border="0">
+		<tr>
+			<td colspan="6" align="center"><font size="10">
+					<p>Федеральное агентство по образованию
+						Государственное образовательное
+						учреждение
+						высшего профессионального образования
+						«САРАТОВСКИЙ ГОСУДАРСТВЕННЫЙ
+						УНИВЕРСИТЕТ
+						имени  Н.Г. Чернышевского»
+						410012, г. Саратов, ул. Астраханская, 83
+						тел: (845-2) 26-16-96, факс: (845-2)27-85-29
+						
+						_______________________№_________________
+						
+						На №______________ от ____________________</p>
+				</font></td>
+			<td colspan="11">
+				<table widths="6 7 10 25 5 4 5 13 5 7 15" width="100" border="0">
+					<td colspan="11" align="center"><font size="14"><b>СПРАВКА</b></font>
+                    </td>
+					
+					<td colspan="2" align="center">Дана</td>
+					<td colspan="9" align="center" border="2"><var name="Student.lastName_dat" /></td>
+					
+					<td colspan="2" align="center"></td>
+					<td colspan="9" align="center" padding="0"><font size="8">(Ф.И.О.)</font></td>
+					
+					<td colspan="11" align="center" border="2"><var name="Student.firstName_dat" /> <var name="Student.middleName_dat" /></td>
+					
+					<td colspan="8" align="center">в том, что он(а) является студентом(кой)</td>
+					<td colspan="2" align="center" border="2"><var name="Student.courseNumber" /></td>
+					<td align="center">курса</td>
+					
+					<td colspan="9" align="center" border="2"><var name="Student.division_rad" /></td>
+					<td colspan="2" align="center">отделения</td>
+					
+					<td colspan="9" align="center"><font size="8">(очного, очно-заочного (вечернего), заочного)</font></td>
+					<td colspan="2" align="center"></td>
+					
+					<td colspan="11" align="center" border="2">факультета <var name="FACULTY_SHORTNAME" /></td>
+					
+					<td colspan="11" align="center"><font size="8">(наименование института, факультета)</font></td>
+					
+					<td colspan="11" align="center" border="2"><var name="SSU_ONLY_GEN" /> </td>
+                    <td colspan="11" align="center" border="2"><var name="SSU_BY" /> </td>
+					<td></td>
+				</table>
+			</td>
+			
+			<td colspan="3" align="center">Зачислен(а) в СГУ с</td>
+			<td colspan="3" align="center" border="2"><var name="Student.startDate" /></td>
+			<td colspan="3" align="center">Приказ №</td>
+			<td align="center" border="2"><var name="Student.order.number" /></td>
+			<td colspan="3" align="center">от</td>
+			<td colspan="4" align="center" border="2"><var name="Student.order.date" /></td>
+			
+			<td colspan="2" align="center">Форма обучения</td>
+			<td colspan="5" align="center" border="2"><var name="Student.studyForm" /></td>
+			<td colspan="7" align="center">Предполагаемая дата окончания СГУ</td>
+			<td colspan="3" align="center" border="2"><var name="Student.endDate" /></td>
+			
+			<td colspan="2" align="center"></td>
+			<td colspan="5" align="center"><font size="8">(бюджетная/ коммерческая)</font></td>
+			<td colspan="7" align="center"></td>
+			<td colspan="3" align="center"></td>
+			
+			<td colspan="4" align="center">Справка дана для предоставления</td>
+			<td colspan="13" align="center" border="2"> </td>
+			
+			<td colspan="4" align="center"></td>
+			<td colspan="13" align="center"><font size="8">(по месту требования и др.)</font></td>
+			
+			<td align="center"></td>
+			<td colspan="4" align="center" border="2">
+				Декан факультета <var name="FACULTY_SHORTNAME" /></td>
+			<td align="center"></td>
+			<td colspan="5" align="center" border="2"></td>
+			<td align="center"></td>
+			<td colspan="5" align="center" border="2">
+				<var name="FACULTY_DEAN" /></td>
+			
+		<font size="8">
+			<td align="center"></td>
+			<td colspan="4" align="center">(директор института, декан)</td>
+			<td align="center"></td>
+			<td colspan="5" align="center">(подпись, дата)</td>
+			<td align="center"></td>
+			<td colspan="5" align="center">(инициалы, фамилия)</td>
+		</font>
+			<td colspan="17" align="center">
+				М.П.</td>
+		</tr>
+	</table>
+</document>

@@ -148,7 +148,7 @@ public class AppTest
         //==============================================
 
         List<Report> references = new ArrayList<Report>();
-        references.add((Report) dossierService);
+//        references.add((Report) dossierService);
         try {
             outputStream = new FileOutputStream(new File("test_multi.pdf"));
         } catch (FileNotFoundException e) {
