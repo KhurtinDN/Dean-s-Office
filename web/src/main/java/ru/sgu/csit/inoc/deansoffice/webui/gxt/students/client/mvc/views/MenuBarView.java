@@ -41,7 +41,14 @@ public class MenuBarView extends View {
 
         Menu orderMenu = new Menu();
 
-        orderMenu.add(new MenuItem("Создать новый", new SelectionListener<MenuEvent>() {
+        orderMenu.add(new MenuItem("Очередь справок", new SelectionListener<MenuEvent>() {
+            @Override
+            public void componentSelected(MenuEvent ce) {
+                Dispatcher.forwardEvent(AppEvents.ReferenceQueueCall);
+            }
+        }));
+
+        orderMenu.add(new MenuItem("Создать новый приказ", new SelectionListener<MenuEvent>() {
             @Override
             public void componentSelected(MenuEvent ce) {
                 Dispatcher.forwardEvent(AppEvents.AddNewOrderCall);

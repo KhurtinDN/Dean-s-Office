@@ -26,6 +26,7 @@ public class AppEvents {
     public static final EventType GroupSelected = new EventType();
     public static final EventType StudentSelected = new EventType();
 
+    public static final EventType ReferenceQueueCall = new EventType();
     public static final EventType OrderQueueCall = new EventType();
     public static final EventType AddNewOrderCall = new EventType();
     public static final EventType EditOrderCall = new EventType();
