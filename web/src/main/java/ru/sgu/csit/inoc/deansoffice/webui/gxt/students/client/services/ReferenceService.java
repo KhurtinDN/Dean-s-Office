@@ -17,6 +17,13 @@ public interface ReferenceService extends RemoteService {
 
     List<ReferenceModel> loadReferences(boolean all);
 
+    boolean updateReference(ReferenceModel referenceModel);
+
+    boolean registrationReference(ReferenceModel referenceModel);
+    boolean printReferences(List<ReferenceModel> referenceModelList);
+    boolean readyReferences(List<ReferenceModel> referenceModelList);
+    boolean issueReferences(List<ReferenceModel> referenceModelList);
+
     public static class App {
         private static final ReferenceServiceAsync ourInstance = GWT.create(ReferenceService.class);
 

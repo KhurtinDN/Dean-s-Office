@@ -7,13 +7,9 @@ import ru.sgu.csit.inoc.deansoffice.domain.Reference;
 import ru.sgu.csit.inoc.deansoffice.domain.Student;
 import ru.sgu.csit.inoc.deansoffice.domain.StudentDossier;
 import ru.sgu.csit.inoc.deansoffice.domain.Template;
-import ru.sgu.csit.inoc.deansoffice.reports.ReportPdfProcessor;
-import ru.sgu.csit.inoc.deansoffice.reports.reportsutil.Report;
 import ru.sgu.csit.inoc.deansoffice.services.PhotoService;
 import ru.sgu.csit.inoc.deansoffice.services.ReferenceService;
 import ru.sgu.csit.inoc.deansoffice.services.StudentDossierService;
-import ru.sgu.csit.inoc.deansoffice.services.impl.ReferenceServiceImpl;
-import ru.sgu.csit.inoc.deansoffice.services.impl.StudentDossierServiceImpl;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -28,6 +24,9 @@ import java.net.URL;
  * Time: 9:11:09 AM
  */
 public class DocumentServlet extends HttpServlet {
+    private ReferenceService referenceService;
+    private StudentDossierService studentDossierService;
+
     private StudentDAO studentDAO;
     private PhotoService photoService;
 
@@ -37,6 +36,9 @@ public class DocumentServlet extends HttpServlet {
 				.getWebApplicationContext(getServletContext());
         studentDAO = applicationContext.getBean(StudentDAO.class);
         photoService = applicationContext.getBean(PhotoService.class);
+
+        referenceService = applicationContext.getBean(ReferenceService.class);
+        studentDossierService = applicationContext.getBean(StudentDossierService.class);
     }
 
     @Override
@@ -72,13 +74,13 @@ public class DocumentServlet extends HttpServlet {
 
             Reference reference = new Reference();
             reference.setPrintTemplate(new Template(templateName));
-
-            ReferenceService referenceService = new ReferenceServiceImpl(reference);
-            referenceService.build(student);
+            reference.setOwnerId(studentId);
 
             response.setContentType("application/pdf");
             OutputStream outputStream = response.getOutputStream();
-            ReportPdfProcessor.getInstance().generate((Report) referenceService, outputStream);
+
+            referenceService.generatePrintForm(reference, outputStream);
+
             outputStream.flush();
         } else if (documentType.startsWith("dossier")) {
 
@@ -97,7 +99,7 @@ public class DocumentServlet extends HttpServlet {
                 response.sendError(HttpServletResponse.SC_NOT_FOUND);
                 return;
             }
-            String templateName = url.getFile().replace("%20", " ");
+//            String templateName = url.getFile().replace("%20", " ");
 
             Student student = studentDAO.findById(studentId);
 
@@ -109,16 +111,11 @@ public class DocumentServlet extends HttpServlet {
                 photoService.loadData(student.getAdditionalData().getPhoto());
             }
 
-            StudentDossier dossier = new StudentDossier();
-            dossier.setPrintTemplate(new Template(templateName));
-
-            StudentDossierService dossierService = new StudentDossierServiceImpl(dossier);
-
-            dossierService.build(student);
-
             response.setContentType("application/pdf");
             OutputStream outputStream = response.getOutputStream();
-            ReportPdfProcessor.getInstance().generate((Report) dossierService, outputStream);
+
+            studentDossierService.generatePrintForm(new StudentDossier(), student, outputStream);
+
             outputStream.flush();
         } else {
             response.sendError(HttpServletResponse.SC_NOT_FOUND);

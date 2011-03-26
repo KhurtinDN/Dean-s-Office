@@ -15,6 +15,7 @@ import com.extjs.gxt.ui.client.widget.grid.*;
 import com.extjs.gxt.ui.client.widget.layout.BorderLayout;
 import com.extjs.gxt.ui.client.widget.layout.BorderLayoutData;
 import com.extjs.gxt.ui.client.widget.layout.FitLayout;
+import com.google.gwt.core.client.Scheduler;
 import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.user.client.Element;
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -101,17 +102,46 @@ public class ReferenceQueueWindow extends Window {
 
         contentPanel.add(grid);
 
-        contentPanel.addButton(new Button("Создать новый", new SelectionListener<ButtonEvent>() {
+        contentPanel.addButton(new Button("Добавить", new SelectionListener<ButtonEvent>() {
             @Override
             public void componentSelected(ButtonEvent ce) {
-                Dispatcher.forwardEvent(AppEvents.AddNewOrderCall);
+                Dispatcher.forwardEvent(AppEvents.AddReference);
             }
         }));
 
-        contentPanel.addButton(new Button("Изменить выбранный", new SelectionListener<ButtonEvent>() {
+        contentPanel.addButton(new Button("Печатать в PDF", new SelectionListener<ButtonEvent>() {
             @Override
             public void componentSelected(ButtonEvent ce) {
-                Dispatcher.forwardEvent(AppEvents.EditOrderCall);
+                List<ReferenceModel> references = grid.getSelectionModel().getSelectedItems();
+                if (references.size() > 0) {
+                    Dispatcher.forwardEvent(AppEvents.PrintReference, references);
+                } else {
+                    Dispatcher.forwardEvent(AppEvents.InfoWithConfirmation, "Выберите справки для печати");
+                }
+            }
+        }));
+
+        contentPanel.addButton(new Button("Доложить о готовности", new SelectionListener<ButtonEvent>() {
+            @Override
+            public void componentSelected(ButtonEvent ce) {
+                List<ReferenceModel> references = grid.getSelectionModel().getSelectedItems();
+                if (references.size() > 0) {
+                    Dispatcher.forwardEvent(AppEvents.ReadyReference, references);
+                } else {
+                    Dispatcher.forwardEvent(AppEvents.InfoWithConfirmation, "Выберите готовые справки");
+                }
+            }
+        }));
+
+        contentPanel.addButton(new Button("Выдать", new SelectionListener<ButtonEvent>() {
+            @Override
+            public void componentSelected(ButtonEvent ce) {
+                List<ReferenceModel> references = grid.getSelectionModel().getSelectedItems();
+                if (references.size() > 0) {
+                    Dispatcher.forwardEvent(AppEvents.IssueReference, references);
+                } else {
+                    Dispatcher.forwardEvent(AppEvents.InfoWithConfirmation, "Выберите выданные справки");
+                }
             }
         }));
 
@@ -186,16 +216,23 @@ public class ReferenceQueueWindow extends Window {
         return new ColumnModel(columns);
     }
 
+    public void reload() {
+        grid.getStore().removeAll();
+        loader.load();
+    }
+
     @Override
     public void show() {
         super.show();
 
-        loader.load();
+        reload();
+
+        if (grid.getStore().getCount() > 0) {   // todo: move to listener
+            grid.getSelectionModel().select(grid.getStore().getCount() - 1, false);
+        }
     }
 
     private class ReferenceInfoPanel extends FormPanel {
-        private ReferenceModel referenceModel;
-
         private LabelField registrationDateLabelField = new LabelField();
         private LabelField nameLabelField = new LabelField();
         private LabelField groupNameLabelField = new LabelField();
@@ -204,6 +241,8 @@ public class ReferenceQueueWindow extends Window {
         private TextField<String> destinationTextField = new TextField<String>();
         private LabelField statusLabelField = new LabelField();
         private LabelField issueDateLabelField = new LabelField();
+
+        private Listener<FieldEvent> destinationListener;
 
         private DateTimeFormat dtf = DateTimeFormat.getFormat(DateTimeFormat.PredefinedFormat.DATE_MEDIUM);
 
@@ -235,8 +274,6 @@ public class ReferenceQueueWindow extends Window {
             destinationTextField.setFieldLabel("Назначение");
             destinationTextField.setLabelStyle("font-weight: bold");
 
-//            destinationTextField.addListener(Events.Change, new Listener<>); todo
-
             statusLabelField.setName("status");
             statusLabelField.setFieldLabel("Статус");
             statusLabelField.setLabelStyle("font-weight: bold");
@@ -260,37 +297,58 @@ public class ReferenceQueueWindow extends Window {
             add(issueDateLabelField, FormUtil.wh5FormData);
         }
 
-        public void bind(ReferenceModel referenceModel) {
-            bind(referenceModel, false);
-        }
+        public void bind(final ReferenceModel referenceModel) {
+            Scheduler.get().scheduleDeferred(new Scheduler.ScheduledCommand() {
+                @Override
+                public void execute() {
+                    if (destinationListener != null) {
+                        destinationTextField.removeListener(Events.Change, destinationListener);
+                    }
 
-        public void bind(ReferenceModel referenceModel, boolean auto) {
-//            if (auto) {
-//                this.referenceModel
-//            }
-            registrationDateLabelField.setValue(dtf.format(referenceModel.getRegistrationDate()));
-            nameLabelField.setValue(referenceModel.getStudent().getFullName());
-            groupNameLabelField.setValue(referenceModel.getStudent().getGroupName());
-            studyFormLabelField.setValue(StudentModelUtil.studyFormToString(referenceModel.getStudent().getStudyForm()));
-            typeLabelField.setValue(ReferenceModelUtil.typeToString(referenceModel.getType()));
-            destinationTextField.setValue(referenceModel.getDestination());
-            statusLabelField.setValue(ReferenceModelUtil.statusToString(referenceModel.getStatus()));
-            issueDateLabelField.setValue(dtf.format(referenceModel.getIssueDate()));
+                    destinationListener = new Listener<FieldEvent> () {
+                        @Override
+                        public void handleEvent(FieldEvent be) {
+                            referenceModel.setDestination( be.getValue() != null ? be.getValue().toString() : "" );
+                            Dispatcher.forwardEvent(AppEvents.UpdateReference, referenceModel);
+                        }
+                    };
 
-//            if (auto) {
-//                destinationTextField.addListener(Events.);
-//            }
+                    destinationTextField.addListener(Events.Change, destinationListener);
+
+                    registrationDateLabelField.setValue(dtf.format(referenceModel.getRegistrationDate()));
+                    nameLabelField.setValue(referenceModel.getStudent().getFullName());
+                    groupNameLabelField.setValue(referenceModel.getStudent().getGroupName());
+                    studyFormLabelField.setValue(
+                            StudentModelUtil.studyFormToString(referenceModel.getStudent().getStudyForm()));
+                    typeLabelField.setValue(ReferenceModelUtil.typeToString(referenceModel.getType()));
+                    destinationTextField.setValue(referenceModel.getDestination());
+                    statusLabelField.setValue(ReferenceModelUtil.statusToString(referenceModel.getStatus()));
+                    issueDateLabelField.setValue(dtf.format(referenceModel.getIssueDate()));
+                }
+            });
+
+
+
         }
 
         public void unbind() {
-            registrationDateLabelField.clear();
-            nameLabelField.clear();
-            groupNameLabelField.clear();
-            studyFormLabelField.clear();
-            typeLabelField.clear();
-            destinationTextField.clear();
-            statusLabelField.clear();
-            issueDateLabelField.clear();
+            Scheduler.get().scheduleDeferred(new Scheduler.ScheduledCommand() {
+                @Override
+                public void execute() {
+                    if (destinationListener != null) {
+                        destinationTextField.removeListener(Events.Change, destinationListener);
+                    }
+
+                    registrationDateLabelField.clear();
+                    nameLabelField.clear();
+                    groupNameLabelField.clear();
+                    studyFormLabelField.clear();
+                    typeLabelField.clear();
+                    destinationTextField.clear();
+                    statusLabelField.clear();
+                    issueDateLabelField.clear();
+                }
+            });
         }
     }
 }

@@ -12,4 +12,11 @@ import java.util.List;
  */
 public interface ReferenceServiceAsync {
     void loadReferences(boolean all, AsyncCallback<List<ReferenceModel>> async);
+
+    void updateReference(ReferenceModel referenceModel, AsyncCallback<Boolean> async);
+
+    void registrationReference(ReferenceModel referenceModel, AsyncCallback<Boolean> async);
+    void printReferences(List<ReferenceModel> referenceModelList, AsyncCallback<Boolean> async);
+    void readyReferences(List<ReferenceModel> referenceModelList, AsyncCallback<Boolean> async);
+    void issueReferences(List<ReferenceModel> referenceModelList, AsyncCallback<Boolean> async);
 }

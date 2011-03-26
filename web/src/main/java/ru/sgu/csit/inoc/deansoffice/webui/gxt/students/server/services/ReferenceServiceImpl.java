@@ -16,10 +16,9 @@ import java.util.List;
  */
 @Service("ReferenceService")
 public class ReferenceServiceImpl implements ReferenceService {
-    @Override
-    public List<ReferenceModel> loadReferences(boolean all) {
-        List<ReferenceModel> referenceModelList = new ArrayList<ReferenceModel>();
+    private List<ReferenceModel> referenceModelList = new ArrayList<ReferenceModel>();
 
+    public ReferenceServiceImpl() {
         StudentModel studentModel = new StudentModel();
         studentModel.setFullName("Хуртин Денис Николаевич");
         studentModel.setGroupName("511");
@@ -61,7 +60,45 @@ public class ReferenceServiceImpl implements ReferenceService {
         referenceModel.setStatus(ReferenceModel.Status.READY);
         referenceModel.setIssueDate(new Date());
         referenceModelList.add(referenceModel);
+    }
 
+    @Override
+    public List<ReferenceModel> loadReferences(boolean all) {
         return referenceModelList;
+    }
+
+    @Override
+    public boolean registrationReference(ReferenceModel referenceModel) {
+        if (referenceModel.getType() == null ||
+                referenceModel.getStudent() == null || referenceModel.getStudent().getId() == null) {
+            return false;
+        }
+
+        referenceModel.setRegistrationDate(new Date());
+        referenceModel.setStatus(ReferenceModel.Status.REGISTERED);
+
+        referenceModelList.add(referenceModel);
+
+        return true;
+    }
+
+    @Override
+    public boolean updateReference(ReferenceModel referenceModel) {
+        return false;
+    }
+
+    @Override
+    public boolean printReferences(List<ReferenceModel> referenceModelList) {
+        return false;
+    }
+
+    @Override
+    public boolean readyReferences(List<ReferenceModel> referenceModelList) {
+        return false;
+    }
+
+    @Override
+    public boolean issueReferences(List<ReferenceModel> referenceModelList) {
+        return false;
     }
 }

@@ -48,7 +48,7 @@ public class MessageView extends View {
 
         switch (code) {
             case ServerReturnError:
-                Info.display("Важное сообщение", "Сервер не доступен");
+                Info.display("Важное сообщение", "Ошибка на сервере");
                 break;
             case DebugInformation:
                 String message = event.getData("message");

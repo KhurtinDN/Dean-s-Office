@@ -14,6 +14,7 @@ public class Students implements EntryPoint {
     public void onModuleLoad() {
         Dispatcher dispatcher = Dispatcher.get();
         dispatcher.addController(new AppController());
+        dispatcher.addController(new ReferenceController());
         dispatcher.addController(new OrderController());
         dispatcher.addController(new NavigationController());
         dispatcher.addController(new StudentsController());

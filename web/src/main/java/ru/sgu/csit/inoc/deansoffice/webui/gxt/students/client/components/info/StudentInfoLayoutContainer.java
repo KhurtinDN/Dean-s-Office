@@ -2,7 +2,6 @@ package ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.components.info;
 
 import com.extjs.gxt.ui.client.event.ButtonEvent;
 import com.extjs.gxt.ui.client.event.SelectionListener;
-import com.extjs.gxt.ui.client.mvc.AppEvent;
 import com.extjs.gxt.ui.client.mvc.Dispatcher;
 import com.extjs.gxt.ui.client.util.Margins;
 import com.extjs.gxt.ui.client.util.Padding;
@@ -12,11 +11,10 @@ import com.extjs.gxt.ui.client.widget.form.FieldSet;
 import com.extjs.gxt.ui.client.widget.form.LabelField;
 import com.extjs.gxt.ui.client.widget.layout.*;
 import com.google.gwt.user.client.*;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Image;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.components.StudentAccountWindow;
-import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.constants.ErrorCode;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.mvc.events.AppEvents;
+import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.shared.model.ReferenceModel;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.shared.model.StudentModel;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.shared.utils.StudentModelUtil;
 
@@ -28,14 +26,14 @@ import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.shared.utils.StudentModel
 public class StudentInfoLayoutContainer extends LayoutContainer {
     private StudentModel currentStudentModel;
 
-    private Image image;
-    private LabelField nameLabelField;
-    private LabelField groupNameLabelField;
-    private LabelField specialityNameLabelField;
-    private LabelField courseLabelField;
-    private LabelField studentIdNumberLabelField;
-    private LabelField divisionLabelField;
-    private LabelField studyFormLabelField;
+    private Image image = new Image();
+    private LabelField nameLabelField = new LabelField();
+    private LabelField groupNameLabelField = new LabelField();
+    private LabelField specialityNameLabelField = new LabelField();
+    private LabelField courseLabelField = new LabelField();
+    private LabelField studentIdNumberLabelField = new LabelField();
+    private LabelField divisionLabelField = new LabelField();
+    private LabelField studyFormLabelField = new LabelField();
 
     @Override
     protected void onRender(Element parent, int index) {
@@ -49,47 +47,39 @@ public class StudentInfoLayoutContainer extends LayoutContainer {
         infoFieldSet.setLayout(infoFormLayout);
         infoFieldSet.setHeading("Инфомация о студенте");
 
-        image = new Image();
 //        image.setPixelSize(100, 100);
         image.setHeight("100px");
 
-        nameLabelField = new LabelField();
         nameLabelField.setName("fullName");
         nameLabelField.setFieldLabel("Имя:");
         nameLabelField.setLabelStyle("font-weight: bold");
         nameLabelField.setAutoWidth(true);
 
-        groupNameLabelField = new LabelField();
         groupNameLabelField.setName("groupName");
         groupNameLabelField.setFieldLabel("Группа:");
         groupNameLabelField.setLabelStyle("font-weight: bold");
         groupNameLabelField.setAutoWidth(true);
 
-        specialityNameLabelField = new LabelField();
         specialityNameLabelField.setName("specialityName");
         specialityNameLabelField.setFieldLabel("Специальность:");
         specialityNameLabelField.setLabelStyle("font-weight: bold");
         specialityNameLabelField.setAutoWidth(true);
 
-        courseLabelField = new LabelField();
         courseLabelField.setName("course");
         courseLabelField.setFieldLabel("Курс:");
         courseLabelField.setLabelStyle("font-weight: bold");
         courseLabelField.setAutoWidth(true);
 
-        studentIdNumberLabelField = new LabelField();
         studentIdNumberLabelField.setName("studentIdNumber");
         studentIdNumberLabelField.setFieldLabel("Номер студенческого:");
         studentIdNumberLabelField.setLabelStyle("font-weight: bold");
         studentIdNumberLabelField.setAutoWidth(true);
 
-        divisionLabelField = new LabelField();
         divisionLabelField.setName("division");
         divisionLabelField.setFieldLabel("Отделение:");
         divisionLabelField.setLabelStyle("font-weight: bold");
         divisionLabelField.setAutoWidth(true);
 
-        studyFormLabelField = new LabelField();
         studyFormLabelField.setName("studyForm");
         studyFormLabelField.setFieldLabel("Форма обучения:");
         studyFormLabelField.setLabelStyle("font-weight: bold");
@@ -141,33 +131,107 @@ public class StudentInfoLayoutContainer extends LayoutContainer {
     }
 
     private LayoutContainer createReference1() {
-        return createDocument("Справка #1", "Сгенерировать в PDF", new SelectionListener<ButtonEvent>() {
+        HBoxLayout hBoxLayout = new HBoxLayout();
+        hBoxLayout.setPadding(new Padding(5));
+
+        LayoutContainer layoutContainer = new LayoutContainer(hBoxLayout);
+        layoutContainer.setBorders(true);
+
+        Label referenceLabel = new Label("Справка #1");
+        referenceLabel.addStyleName("x-form-item");
+        referenceLabel.setStyleAttribute("fontWeight", "bold");
+        layoutContainer.add(referenceLabel);
+
+        HBoxLayoutData flex = new HBoxLayoutData(new Margins(0, 5, 0, 0));
+        flex.setFlex(1);
+        layoutContainer.add(new Text(), flex);
+
+        layoutContainer.add(new Button("Добавить в очередь", new SelectionListener<ButtonEvent>() {
             @Override
             public void componentSelected(ButtonEvent ce) {
                 if (currentStudentModel != null) {
-                    String url = "../documents/reference-1.pdf?studentId=" + currentStudentModel.getId();
-                    Window.open(url, "_blank", "");
+                    ReferenceModel referenceModel = new ReferenceModel();
+                    referenceModel.setType(ReferenceModel.ReferenceType.REFERENCE1);
+                    referenceModel.setStudent(currentStudentModel);
+                    Dispatcher.forwardEvent(AppEvents.RegistrationReference, referenceModel);
+//                    String url = "../documents/reference-1.pdf?studentId=" + currentStudentModel.getId();
+//                    Window.open(url, "_blank", "");
                 } else {
                     Dispatcher.forwardEvent(AppEvents.InfoWithConfirmation,
                             "GroupInfoLayoutContainer is not rendered!");
                 }
             }
-        });
-    }
+        }));
 
-    private LayoutContainer createReference2() {
-        return createDocument("Справка #2", "Сгенерировать в PDF", new SelectionListener<ButtonEvent>() {
+        layoutContainer.add(new Button("Добавить в очередь как...", new SelectionListener<ButtonEvent>() {
             @Override
             public void componentSelected(ButtonEvent ce) {
                 if (currentStudentModel != null) {
-                    String url = "../documents/reference-2.pdf?studentId=" + currentStudentModel.getId();
-                    Window.open(url, "_blank", "");
+                    ReferenceModel referenceModel = new ReferenceModel();
+                    referenceModel.setType(ReferenceModel.ReferenceType.REFERENCE1);
+                    referenceModel.setStudent(currentStudentModel);
+                    Dispatcher.forwardEvent(AppEvents.RegistrationReference, referenceModel);
+                    Dispatcher.forwardEvent(AppEvents.ReferenceQueueCall);
                 } else {
-                    Dispatcher.forwardEvent(AppEvents.InfoWithConfirmation, "Выберите, пожалуйста, студента!");
+                    Dispatcher.forwardEvent(AppEvents.InfoWithConfirmation,
+                            "GroupInfoLayoutContainer is not rendered!");
                 }
-
             }
-        });
+        }));
+
+        return layoutContainer;
+    }
+
+    private LayoutContainer createReference2() {
+        HBoxLayout hBoxLayout = new HBoxLayout();
+        hBoxLayout.setPadding(new Padding(5));
+
+        LayoutContainer layoutContainer = new LayoutContainer(hBoxLayout);
+        layoutContainer.setBorders(true);
+
+        Label referenceLabel = new Label("Справка #2");
+        referenceLabel.addStyleName("x-form-item");
+        referenceLabel.setStyleAttribute("fontWeight", "bold");
+        layoutContainer.add(referenceLabel);
+
+        HBoxLayoutData flex = new HBoxLayoutData(new Margins(0, 5, 0, 0));
+        flex.setFlex(1);
+        layoutContainer.add(new Text(), flex);
+
+        layoutContainer.add(new Button("Добавить в очередь", new SelectionListener<ButtonEvent>() {
+            @Override
+            public void componentSelected(ButtonEvent ce) {
+                if (currentStudentModel != null) {
+                    ReferenceModel referenceModel = new ReferenceModel();
+                    referenceModel.setType(ReferenceModel.ReferenceType.REFERENCE2);
+                    referenceModel.setStudent(currentStudentModel);
+                    Dispatcher.forwardEvent(AppEvents.RegistrationReference, referenceModel);
+//                    String url = "../documents/reference-2.pdf?studentId=" + currentStudentModel.getId();
+//                    Window.open(url, "_blank", "");
+                } else {
+                    Dispatcher.forwardEvent(AppEvents.InfoWithConfirmation,
+                            "GroupInfoLayoutContainer is not rendered!");
+                }
+            }
+        }));
+
+        layoutContainer.add(new Button("Добавить в очередь как...", new SelectionListener<ButtonEvent>() {
+            @Override
+            public void componentSelected(ButtonEvent ce) {
+                if (currentStudentModel != null) {
+                    ReferenceModel referenceModel = new ReferenceModel();
+                    referenceModel.setType(ReferenceModel.ReferenceType.REFERENCE2);
+                    referenceModel.setStudent(currentStudentModel);
+                    Dispatcher.forwardEvent(AppEvents.RegistrationReference, referenceModel);
+                    Dispatcher.forwardEvent(AppEvents.ReferenceQueueCall);
+                } else {
+                    Dispatcher.forwardEvent(AppEvents.InfoWithConfirmation,
+                            "GroupInfoLayoutContainer is not rendered!");
+                }
+            }
+        }));
+
+        return layoutContainer;
     }
 
     private LayoutContainer createStudentAccount() {
@@ -195,19 +259,13 @@ public class StudentInfoLayoutContainer extends LayoutContainer {
     public void bind(StudentModel studentModel) {
         this.currentStudentModel = studentModel;
 
-        if (isRendered()) {
-            image.setUrl("photos/" + studentModel.getPhotoId() + ".jpg");
-            nameLabelField.setText(studentModel.getFullName());
-            groupNameLabelField.setText(studentModel.getGroupName());
-            specialityNameLabelField.setText(studentModel.getSpecialityName());
-            courseLabelField.setText(studentModel.getCourse().toString());
-            studentIdNumberLabelField.setText(studentModel.getStudentIdNumber());
-            divisionLabelField.setText(StudentModelUtil.divisionToString(studentModel.getDivision()));
-            studyFormLabelField.setText(StudentModelUtil.studyFormToString(studentModel.getStudyForm()));
-        } else {
-            AppEvent appEvent = new AppEvent(AppEvents.Error, ErrorCode.DebugInformation);
-            appEvent.setData("message", "StudentInfoLayoutContainer is not rendered!");
-            Dispatcher.forwardEvent(appEvent);
-        }
+        image.setUrl("photos/" + studentModel.getPhotoId() + ".jpg");
+        nameLabelField.setText(studentModel.getFullName());
+        groupNameLabelField.setText(studentModel.getGroupName());
+        specialityNameLabelField.setText(studentModel.getSpecialityName());
+        courseLabelField.setText(studentModel.getCourse().toString());
+        studentIdNumberLabelField.setText(studentModel.getStudentIdNumber());
+        divisionLabelField.setText(StudentModelUtil.divisionToString(studentModel.getDivision()));
+        studyFormLabelField.setText(StudentModelUtil.studyFormToString(studentModel.getStudyForm()));
     }
 }

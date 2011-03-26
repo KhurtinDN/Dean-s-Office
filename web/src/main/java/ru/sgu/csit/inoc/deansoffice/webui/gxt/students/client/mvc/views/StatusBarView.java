@@ -45,6 +45,10 @@ public class StatusBarView extends View {
             onInit(event);
         } else if (eventType.equals(AppEvents.UIReady)) {
             onUIReady(event);
+        } else if (eventType.equals(AppEvents.Info) || eventType.equals(AppEvents.InfoWithConfirmation)) {
+            onInfo(event);
+        } else if (eventType.equals(AppEvents.Error)) {
+            onError(event);
         } else if (eventType.equals(AppEvents.SpecialitySelected)) {
             onSpecialitySelected(event);
         } else if (eventType.equals(AppEvents.GroupSelected)) {
@@ -66,6 +70,14 @@ public class StatusBarView extends View {
 
     private void onUIReady(AppEvent event) {
         setStatus("Приложение готово к работе");
+    }
+
+    private void onInfo(AppEvent event) {
+        setStatus("Информация: " + event.getData().toString());
+    }
+
+    private void onError(AppEvent event) {
+        setStatus("Ошибка: " + event.getData().toString());
     }
 
     private void onSpecialitySelected(AppEvent event) {

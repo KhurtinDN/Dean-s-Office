@@ -14,11 +14,9 @@ public class StatusBarController extends Controller {
     private StatusBarView statusBarView;
 
     public StatusBarController() {
-        registerEventTypes(AppEvents.Init);
-        registerEventTypes(AppEvents.UIReady);
-        registerEventTypes(AppEvents.SpecialitySelected);
-        registerEventTypes(AppEvents.GroupSelected);
-        registerEventTypes(AppEvents.StudentSelected);
+        registerEventTypes(AppEvents.Init, AppEvents.UIReady);
+        registerEventTypes(AppEvents.Info, AppEvents.InfoWithConfirmation, AppEvents.Error);
+        registerEventTypes(AppEvents.SpecialitySelected, AppEvents.GroupSelected, AppEvents.StudentSelected);
     }
 
     @Override
