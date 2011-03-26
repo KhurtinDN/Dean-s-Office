@@ -141,6 +141,14 @@ public class ReferenceServiceImpl extends DocumentServiceImpl implements Referen
     }
 
     @Override
+    public Reference makeReference(Reference.ReferenceType type, Long ownerId) {
+        Reference reference = new Reference();
+        reference.setType(type);
+        reference.setOwnerId(ownerId);
+        return reference;
+    }
+
+    @Override
     public void registrationReference(Reference reference) {
         reference.setRegisteredDate(new Date());
         reference.setState(Reference.ReferenceState.REGISTERED);
@@ -166,5 +174,32 @@ public class ReferenceServiceImpl extends DocumentServiceImpl implements Referen
     public void issueReference(Reference reference) {
         reference.setState(Reference.ReferenceState.ISSUED);
         referenceDAO.saveOrUpdate(reference);
+    }
+
+    @Override
+    public void registrationReferenceById(Long referenceId) {
+        registrationReference(referenceDAO.findById(referenceId));
+    }
+
+    @Override
+    public void printReferencesById(List<Long> referenceIds, OutputStream outputStream) {
+        List<Reference> references = new ArrayList<Reference>();
+        for (Long referenceId : referenceIds) {
+            Reference reference = referenceDAO.findById(referenceId);
+            reference.setState(Reference.ReferenceState.PROCESSED);
+            referenceDAO.saveOrUpdate(reference);
+            references.add(reference);
+        }
+        generatePrintForm(references, outputStream);
+    }
+
+    @Override
+    public void readyReferenceById(Long referenceId) {
+        readyReference(referenceDAO.findById(referenceId));
+    }
+
+    @Override
+    public void issueReferenceById(Long referenceId) {
+        issueReference(referenceDAO.findById(referenceId));
     }
 }
