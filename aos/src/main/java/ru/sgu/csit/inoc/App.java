@@ -73,6 +73,14 @@ public class App {
             } else if ("exit".equals(command) || "quit".equals(command)) {
                 print(Mode.END);
                 return false;
+            } else if ("test".equals(command)) {
+                process("create");
+                process("2+");
+                process("1");
+                process("3");
+                process("2");
+                process("4");
+                process("print");
             } else if ("reset".equals(command)) {
                 println("Состояние установлено в начальное");
                 state = 0;
@@ -87,31 +95,31 @@ public class App {
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
                 }
-                String simpleTemplName = "order.ftl";
-                String templDir = App.class.getResource("/" + simpleTemplName).getPath()
-                        .replace("%20", " ");
-                templDir = templDir.substring(0, templDir.lastIndexOf("/" + simpleTemplName));
-                println(templDir);
-                String templName = simpleTemplName + ".xml";//templDir + "/" + simpleTemplName;
-                println(templName);
+//                String simpleTemplName = "order.ftl";
+//                String templDir = App.class.getResource("/" + simpleTemplName).getPath()
+//                        .replace("%20", " ");
+//                templDir = templDir.substring(0, templDir.lastIndexOf("/" + simpleTemplName));
+//                println(templDir);
+//                String templName = simpleTemplName + ".xml";//templDir + "/" + simpleTemplName;
+//                println(templName);
                 Order order = register.getCurrentOrder();
-                order.setPrintTemplate(new Template(templName));
-                OrderService orderService = new OrderServiceImpl(order);
+//                order.setPrintTemplate(new Template(templName));
+                OrderService orderService = new OrderServiceImpl();//applicationContext.getBean(OrderService.class);
                 Faculty faculty = new Faculty();
                 faculty.setCourseCount(6);
                 faculty.setFullName("Компьютерных наук и информационных технологий");
                 faculty.setShortName("КНиИТ");
-                orderService.build(faculty);
-                try {
-                    Templater templater = new Templater(templDir);
-                    templater.process(simpleTemplName, orderService.getRootMap(),
-                            new FileOutputStream(new File(templName)));
-                } catch (IOException e) {
-                    throw new RuntimeException("IO Exception in templater.", e);
-                }  catch (TemplateException e) {
-                    throw new RuntimeException("Template Exception in templater.", e);
-                }
-                ReportPdfProcessor.getInstance().generate((Report) orderService, outputStream);
+                orderService.generatePrintForm(order, faculty, outputStream);
+//                try {
+//                    Templater templater = new Templater(templDir);
+//                    templater.process(simpleTemplName, orderService.getRootMap(),
+//                            new FileOutputStream(new File(templName)));
+//                } catch (IOException e) {
+//                    throw new RuntimeException("IO Exception in templater.", e);
+//                }  catch (TemplateException e) {
+//                    throw new RuntimeException("Template Exception in templater.", e);
+//                }
+//                ReportPdfProcessor.getInstance().generate((Report) orderService, outputStream);
 //                print(Mode.GENERATE_PRINT_FORM);
             } else if ("edit".equals(command)) {
                 if (register.getCurrentOrder() != null

@@ -12,7 +12,8 @@ import java.util.List;
  * Time: 10:36
  */
 public interface ReferenceService {
-    void build(Student student);
-    void addNewReference(Reference reference);
+    void generatePrintForm(Reference reference, OutputStream outputStream);
     void generatePrintForm(List<Reference> references, OutputStream outputStream);
+    void setDefaultPrintTemplate(Reference reference);
+    void registrationReference(Reference reference);
 }

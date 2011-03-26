@@ -1,16 +1,18 @@
 package ru.sgu.csit.inoc.deansoffice.services.impl;
 
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.sgu.csit.inoc.deansoffice.dao.ReferenceDAO;
+import ru.sgu.csit.inoc.deansoffice.dao.StudentDAO;
 import ru.sgu.csit.inoc.deansoffice.domain.*;
 import ru.sgu.csit.inoc.deansoffice.reports.ReportPdfProcessor;
 import ru.sgu.csit.inoc.deansoffice.reports.reportsutil.Report;
+import ru.sgu.csit.inoc.deansoffice.reports.reportsutil.ReportXml;
 import ru.sgu.csit.inoc.deansoffice.services.ReferenceService;
 
 import java.io.OutputStream;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -19,32 +21,33 @@ import java.util.List;
  * Date: 13.01.11
  * Time: 10:37
  */
-//@Service
+@Service
 public class ReferenceServiceImpl extends DocumentServiceImpl implements ReferenceService {
-    private static ApplicationContext applicationContext = new ClassPathXmlApplicationContext("ApplicationContext.xml");
-    private static ReferenceDAO referenceDAO = applicationContext.getBean(ReferenceDAO.class);
+    @Autowired
+    private ReferenceDAO referenceDAO;
+    @Autowired
+    private StudentDAO studentDAO;
 
-    public ReferenceServiceImpl(Document document) {
-        super(document);
+    public ReferenceServiceImpl() {
     }
 
-    public void build(Student student) {
-        clear();
-        TEXT.put("FACULTY_FULLNAME", student.getSpeciality().getFaculty().getFullName());
-        TEXT.put("FACULTY_SHORTNAME", student.getSpeciality().getFaculty().getShortName());
+    private void build(ReportXml report, Student student) {
+        putDefaultValues(report.getValuesMap());
+        report.addValue("FACULTY_FULLNAME", student.getSpeciality().getFaculty().getFullName());
+        report.addValue("FACULTY_SHORTNAME", student.getSpeciality().getFaculty().getShortName());
 
-        TEXT.put("FACULTY_DEAN", student.getSpeciality().getFaculty().getDean().generateShortName(true));
+        report.addValue("FACULTY_DEAN", student.getSpeciality().getFaculty().getDean().generateShortName(true));
 
-        TEXT.put("RECTOR", student.getSpeciality().getFaculty().getRector().generateShortName(true));
-        TEXT.put("RECTOR_DEGREE", student.getSpeciality().getFaculty().getRector().getDegree());
+        report.addValue("RECTOR", student.getSpeciality().getFaculty().getRector().generateShortName(true));
+        report.addValue("RECTOR_DEGREE", student.getSpeciality().getFaculty().getRector().getDegree());
 
-        TEXT.put("Student.fullName_dat", student.getLastNameDative() + " "
+        report.addValue("Student.fullName_dat", student.getLastNameDative() + " "
                 + student.getFirstNameDative() + " " + student.getMiddleNameDative());
-        TEXT.put("Student.lastName_dat", student.getLastNameDative());
-        TEXT.put("Student.firstName_dat", student.getFirstNameDative());
-        TEXT.put("Student.middleName_dat", student.getMiddleNameDative());
+        report.addValue("Student.lastName_dat", student.getLastNameDative());
+        report.addValue("Student.firstName_dat", student.getFirstNameDative());
+        report.addValue("Student.middleName_dat", student.getMiddleNameDative());
 
-        TEXT.put("Student.courseNumber", student.getCourse().toString());
+        report.addValue("Student.courseNumber", student.getCourse().toString());
 
         EnrollmentOrder order = student.getEnrollmentOrder();
         String division = "неизвестного";
@@ -60,17 +63,17 @@ public class ReferenceServiceImpl extends DocumentServiceImpl implements Referen
                 division = "вечернего";
                 break;
         }
-        TEXT.put("Student.division_rad", division);
+        report.addValue("Student.division_rad", division);
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
         Date date = order.getEnrollmentDate();
 
-        TEXT.put("Student.startDate", dateFormat.format(date)); // "01.09.2007"
+        report.addValue("Student.startDate", dateFormat.format(date)); // "01.09.2007"
 
         date = order.getReleaseDate();
-        TEXT.put("Student.endDate", dateFormat.format(date)); // "01.07.2012"
-        TEXT.put("Student.order.number", order.getNumber()); // "22-0107"
-        TEXT.put("Student.order.date", dateFormat.format(order.getSignedDate())); // "12.08.2007"
+        report.addValue("Student.endDate", dateFormat.format(date)); // "01.07.2012"
+        report.addValue("Student.order.number", order.getNumber()); // "22-0107"
+        report.addValue("Student.order.date", dateFormat.format(order.getSignedDate())); // "12.08.2007"
 
         String studyForm = "неизвестная";
 
@@ -82,31 +85,65 @@ public class ReferenceServiceImpl extends DocumentServiceImpl implements Referen
                 studyForm = "коммерческая";
                 break;
         }
-        TEXT.put("Student.studyForm", studyForm);
+        report.addValue("Student.studyForm", studyForm);
     }
 
     @Override
-    public void addNewReference(Reference reference) {
-        reference.setAddedDate(new Date());
-        reference.setState(Reference.ReferenceState.ADDED);
-        referenceDAO.saveOrUpdate(reference);
+    public void generatePrintForm(Reference reference, OutputStream outputStream) {
+        ReportXml reportXml = new ReportXml();
+        if (reference.getPrintTemplate() == null ||
+                reference.getPrintTemplate().getFileName() == null) {
+            setDefaultPrintTemplate(reference);
+        }
+        reportXml.setTemplateFileName(reference.getPrintTemplate().getFileName());
+        build(reportXml, studentDAO.findById(reference.getOwnerId()));
+        ReportPdfProcessor.getInstance().generate(reportXml, outputStream);
     }
 
     @Override
     public void generatePrintForm(List<Reference> references, OutputStream outputStream) {
-        String documentName = "";
-        String templName = ReferenceServiceImpl.class.getResource("/templates/reference-1.xml").getFile();
-        templName = templName.replace("%20", " ");
+        List<Report> reports = new ArrayList<Report>();
 
         for (Reference reference : references) {
-            Student theStudent = stu
-            System.out.println(templName);
-            reference.setPrintTemplate(new Template(templName));
-            ReferenceService referenceService = new ReferenceServiceImpl(reference);
-            referenceService.build(theStudent);
-            references.add((Report) referenceService);
+            ReportXml reportXml = new ReportXml();
+            if (reference.getPrintTemplate() == null ||
+                    reference.getPrintTemplate().getFileName() == null) {
+                setDefaultPrintTemplate(reference);
+            }
+            reportXml.setTemplateFileName(reference.getPrintTemplate().getFileName());
+            build(reportXml, studentDAO.findById(reference.getOwnerId()));
+            reports.add(reportXml);
         }
+        ReportPdfProcessor.getInstance().generate(reports, outputStream);
+    }
 
-        ReportPdfProcessor.getInstance().generate(references, outputStream);
+    @Override
+    public void setDefaultPrintTemplate(Reference reference) {
+        String documentName;
+
+        switch (reference.getType()) {
+            case REFERENCE_1:
+                documentName = "reference-1.xml";
+                break;
+            case REFERENCE_2:
+                documentName = "reference-2.xml";
+                break;
+            case REFERENCE_3:
+                documentName = "reference-3.xml";
+                break;
+            default:
+                throw new RuntimeException("Unknown template file name for reference type " +
+                        reference.getType() + ".");
+        }
+        String templName = ReferenceServiceImpl.class.getResource("/templates/" + documentName).getFile();
+        templName = templName.replace("%20", " ");
+        reference.setPrintTemplate(new Template(templName));
+    }
+
+    @Override
+    public void registrationReference(Reference reference) {
+        reference.setRegisteredDate(new Date());
+        reference.setState(Reference.ReferenceState.REGISTERED);
+        referenceDAO.saveOrUpdate(reference);
     }
 }

@@ -6,5 +6,4 @@ package ru.sgu.csit.inoc.deansoffice.services;
  * Time: 10:03
  */
 public interface DocumentService {
-    void clear();
 }

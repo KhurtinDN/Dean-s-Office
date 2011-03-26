@@ -12,7 +12,7 @@ import java.util.Date;
 public class Reference extends Document {
     private ReferenceType type;
     private ReferenceState state;
-    private Date addedDate;
+    private Date registeredDate;
     private Date issuedDate;
     private String purpose;
     private Long ownerId;
@@ -33,12 +33,12 @@ public class Reference extends Document {
         this.state = state;
     }
 
-    public Date getAddedDate() {
-        return addedDate;
+    public Date getRegisteredDate() {
+        return registeredDate;
     }
 
-    public void setAddedDate(Date addedDate) {
-        this.addedDate = addedDate;
+    public void setRegisteredDate(Date registeredDate) {
+        this.registeredDate = registeredDate;
     }
 
     public Date getIssuedDate() {
@@ -70,6 +70,6 @@ public class Reference extends Document {
     }
 
     public static enum ReferenceState {
-        ADDED, PROCESSING, SIGNED, ISSUED;
+        REGISTERED, PROCESSED, READY, ISSUED;
     }
 }

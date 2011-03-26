@@ -2,41 +2,43 @@ package ru.sgu.csit.inoc.deansoffice.services.impl;
 
 import org.springframework.stereotype.Service;
 import ru.sgu.csit.inoc.deansoffice.domain.*;
+import ru.sgu.csit.inoc.deansoffice.reports.ReportPdfProcessor;
+import ru.sgu.csit.inoc.deansoffice.reports.reportsutil.Report;
+import ru.sgu.csit.inoc.deansoffice.reports.reportsutil.ReportXml;
 import ru.sgu.csit.inoc.deansoffice.services.StudentDossierService;
 
+import java.io.OutputStream;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * User: XX (freecoder.xx@gmail.com)
  * Date: 13.01.11
  * Time: 10:16
  */
-//@Service
+@Service
 public class StudentDossierServiceImpl extends DocumentServiceImpl implements StudentDossierService {
-    public StudentDossierServiceImpl(Document document) {
-        super(document);
-    }
+    private void build(ReportXml report, Student student) {
+        putDefaultValues(report.getValuesMap());
+        report.addValue("FACULTY_FULLNAME", student.getSpeciality().getFaculty().getFullName());
+        report.addValue("FACULTY_SHORTNAME", student.getSpeciality().getFaculty().getShortName());
 
-    public void build(Student student) {
-        clear();
-        TEXT.put("FACULTY_FULLNAME", student.getSpeciality().getFaculty().getFullName());
-        TEXT.put("FACULTY_SHORTNAME", student.getSpeciality().getFaculty().getShortName());
+        report.addValue("FACULTY_DEAN", student.getSpeciality().getFaculty().getDean().generateShortName(true));
 
-        TEXT.put("FACULTY_DEAN", student.getSpeciality().getFaculty().getDean().generateShortName(true));
+        report.addValue("RECTOR", student.getSpeciality().getFaculty().getRector().generateShortName(true));
+        report.addValue("RECTOR_DEGREE", student.getSpeciality().getFaculty().getRector().getDegree());
 
-        TEXT.put("RECTOR", student.getSpeciality().getFaculty().getRector().generateShortName(true));
-        TEXT.put("RECTOR_DEGREE", student.getSpeciality().getFaculty().getRector().getDegree());
-
-        TEXT.put("Student.fullName", student.getLastName() + " "
+        report.addValue("Student.fullName", student.getLastName() + " "
                 + student.getFirstName() + " " + student.getMiddleName());
-        TEXT.put("Student.lastName", student.getLastName());
-        TEXT.put("Student.firstName", student.getFirstName());
-        TEXT.put("Student.middleName", student.getMiddleName());
+        report.addValue("Student.lastName", student.getLastName());
+        report.addValue("Student.firstName", student.getFirstName());
+        report.addValue("Student.middleName", student.getMiddleName());
 
-        TEXT.put("Student.courseNumber", student.getCourse().toString());
-        TEXT.put("Student.speciality", student.getSpeciality().getShortName());
-        TEXT.put("Student.specialityCode", student.getSpeciality().getCode());
+        report.addValue("Student.courseNumber", student.getCourse().toString());
+        report.addValue("Student.speciality", student.getSpeciality().getShortName());
+        report.addValue("Student.specialityCode", student.getSpeciality().getCode());
 
         EnrollmentOrder order = student.getEnrollmentOrder();
         String division = "неизвестного";
@@ -52,7 +54,7 @@ public class StudentDossierServiceImpl extends DocumentServiceImpl implements St
                 division = "вечернего";
                 break;
         }
-        TEXT.put("Student.division_rad", division);
+        report.addValue("Student.division_rad", division);
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
         SimpleDateFormat dateFormatYear = new SimpleDateFormat("yyyy");
@@ -64,18 +66,18 @@ public class StudentDossierServiceImpl extends DocumentServiceImpl implements St
         // .initialize(student.getAdditionalData());
         //Hibernate.initialize(student.getAdditionalData().getPhoto());
 
-        TEXT.put("Student.birthday", dateFormat.format(student.getBirthday()));
-        TEXT.put("Student.birthPlace", student.getAdditionalData().getBirthPlace());
+        report.addValue("Student.birthday", dateFormat.format(student.getBirthday()));
+        report.addValue("Student.birthPlace", student.getAdditionalData().getBirthPlace());
 
-        TEXT.put("Student.photoData", student.getAdditionalData().getPhoto().getData());
+        report.addValue("Student.photoData", student.getAdditionalData().getPhoto().getData());
 
-        TEXT.put("Student.startDate", dateFormat.format(date)); // "01.09.2007"
-        TEXT.put("Student.startYear", dateFormatYear.format(date));
+        report.addValue("Student.startDate", dateFormat.format(date)); // "01.09.2007"
+        report.addValue("Student.startYear", dateFormatYear.format(date));
 
         date = order.getReleaseDate();
-        TEXT.put("Student.endDate", dateFormat.format(date)); // "01.07.2012"
-        TEXT.put("Student.order.number", order.getNumber()); // "22-0107"
-        TEXT.put("Student.order.date", dateFormat.format(order.getSignedDate())); // "12.08.2007"
+        report.addValue("Student.endDate", dateFormat.format(date)); // "01.07.2012"
+        report.addValue("Student.order.number", order.getNumber()); // "22-0107"
+        report.addValue("Student.order.date", dateFormat.format(order.getSignedDate())); // "12.08.2007"
 
         String studyForm = "неизвестная";
 
@@ -87,7 +89,7 @@ public class StudentDossierServiceImpl extends DocumentServiceImpl implements St
                 studyForm = "коммерческая";
                 break;
         }
-        TEXT.put("Student.studyForm", studyForm);
+        report.addValue("Student.studyForm", studyForm);
 
         String str = "";
 
@@ -99,14 +101,14 @@ public class StudentDossierServiceImpl extends DocumentServiceImpl implements St
                 str = "Ж";
                 break;
         }
-        TEXT.put("Student.sex", str);
+        report.addValue("Student.sex", str);
 
-        TEXT.put("Student.education", student.getAdditionalData().getEducation());
-        TEXT.put("Student.workInfo", student.getAdditionalData().getWorkInfo());
+        report.addValue("Student.education", student.getAdditionalData().getEducation());
+        report.addValue("Student.workInfo", student.getAdditionalData().getWorkInfo());
         str = student.getAdditionalData().getMaritalStatus();
-        TEXT.put("Student.maritalStatus", str == null ? "\n" : str);
+        report.addValue("Student.maritalStatus", str == null ? "\n" : str);
         str = student.getAdditionalData().getChildrenInfo();
-        TEXT.put("Student.childrenInfo", str == null ? "\n" : str);
+        report.addValue("Student.childrenInfo", str == null ? "\n" : str);
 
         Passport firstPassport = student.getAdditionalData().getPassports().get(0);
         Passport lastPassport;
@@ -114,50 +116,87 @@ public class StudentDossierServiceImpl extends DocumentServiceImpl implements St
         if (student.getAdditionalData().getPassports().size() > 1) {
             lastPassport = student.getAdditionalData().getPassports().get(
                     student.getAdditionalData().getPassports().size() - 1);
-            TEXT.put("Student.citizenship", lastPassport.getCitizenship());
+            report.addValue("Student.citizenship", lastPassport.getCitizenship());
         } else {
             lastPassport = new Passport();
             new PassportServiceImpl().fillAllFields(lastPassport, "");
-            TEXT.put("Student.citizenship", firstPassport.getCitizenship());
+            report.addValue("Student.citizenship", firstPassport.getCitizenship());
         }
 
-        TEXT.put("Student.firstPassport.fullName", firstPassport.getLastName() + " "
+        report.addValue("Student.firstPassport.fullName", firstPassport.getLastName() + " "
                 + firstPassport.getFirstName() + " " + firstPassport.getMiddleName());
-        TEXT.put("Student.firstPassport.citizenship", firstPassport.getCitizenship());
-        TEXT.put("Student.firstPassport.number", firstPassport.getNumber());
-        TEXT.put("Student.firstPassport.series", firstPassport.getSeries());
-        TEXT.put("Student.firstPassport.issuedDate", dateFormat.format(firstPassport.getIssuedDate()));
-        TEXT.put("Student.firstPassport.issuingOrganization", firstPassport.getIssuingOrganization());
+        report.addValue("Student.firstPassport.citizenship", firstPassport.getCitizenship());
+        report.addValue("Student.firstPassport.number", firstPassport.getNumber());
+        report.addValue("Student.firstPassport.series", firstPassport.getSeries());
+        report.addValue("Student.firstPassport.issuedDate", dateFormat.format(firstPassport.getIssuedDate()));
+        report.addValue("Student.firstPassport.issuingOrganization", firstPassport.getIssuingOrganization());
 
-        TEXT.put("Student.lastPassport.fullName", lastPassport.getLastName() + " "
+        report.addValue("Student.lastPassport.fullName", lastPassport.getLastName() + " "
                 + lastPassport.getFirstName() + " " + lastPassport.getMiddleName());
-        TEXT.put("Student.lastPassport.citizenship", lastPassport.getCitizenship());
-        TEXT.put("Student.lastPassport.number", lastPassport.getNumber());
-        TEXT.put("Student.lastPassport.series", lastPassport.getSeries());
-        TEXT.put("Student.lastPassport.issuedDate", lastPassport.getIssuedDate() == null ? "" :
+        report.addValue("Student.lastPassport.citizenship", lastPassport.getCitizenship());
+        report.addValue("Student.lastPassport.number", lastPassport.getNumber());
+        report.addValue("Student.lastPassport.series", lastPassport.getSeries());
+        report.addValue("Student.lastPassport.issuedDate", lastPassport.getIssuedDate() == null ? "" :
                 dateFormat.format(lastPassport.getIssuedDate()));
-        TEXT.put("Student.lastPassport.issuingOrganization", lastPassport.getIssuingOrganization());
+        report.addValue("Student.lastPassport.issuingOrganization", lastPassport.getIssuingOrganization());
 
         Parent father = student.getAdditionalData().getFather();
         Parent mother = student.getAdditionalData().getMother();
 
-        TEXT.put("Student.father.fullName", father.getLastName() + " "
+        report.addValue("Student.father.fullName", father.getLastName() + " "
                 + father.getFirstName() + " " + father.getMiddleName());
-        TEXT.put("Student.father.birthday", dateFormat.format(father.getBirthday()));
-        TEXT.put("Student.father.address", father.getAddress());
-        TEXT.put("Student.father.workInfo",  father.getWorkInfo());
-        TEXT.put("Student.father.phoneNumbers", father.getPhoneNumbers());
+        report.addValue("Student.father.birthday", dateFormat.format(father.getBirthday()));
+        report.addValue("Student.father.address", father.getAddress());
+        report.addValue("Student.father.workInfo", father.getWorkInfo());
+        report.addValue("Student.father.phoneNumbers", father.getPhoneNumbers());
 
-        TEXT.put("Student.mother.fullName", mother.getLastName() + " "
+        report.addValue("Student.mother.fullName", mother.getLastName() + " "
                 + mother.getFirstName() + " " + mother.getMiddleName());
-        TEXT.put("Student.mother.birthday", dateFormat.format(mother.getBirthday()));
-        TEXT.put("Student.mother.address", mother.getAddress());
-        TEXT.put("Student.mother.workInfo",  mother.getWorkInfo());
-        TEXT.put("Student.mother.phoneNumbers", mother.getPhoneNumbers());
+        report.addValue("Student.mother.birthday", dateFormat.format(mother.getBirthday()));
+        report.addValue("Student.mother.address", mother.getAddress());
+        report.addValue("Student.mother.workInfo", mother.getWorkInfo());
+        report.addValue("Student.mother.phoneNumbers", mother.getPhoneNumbers());
 
-        TEXT.put("Student.oldAddress", student.getAdditionalData().getOldAddress());
-        TEXT.put("Student.actualAddress", student.getAdditionalData().getActualAddress());
-        TEXT.put("Student.passportAddress", student.getAdditionalData().getPassports().size() > 1 ?
+        report.addValue("Student.oldAddress", student.getAdditionalData().getOldAddress());
+        report.addValue("Student.actualAddress", student.getAdditionalData().getActualAddress());
+        report.addValue("Student.passportAddress", student.getAdditionalData().getPassports().size() > 1 ?
                 lastPassport.getAddress() : firstPassport.getAddress());
+    }
+
+    @Override
+    public void generatePrintForm(StudentDossier dossier, Student student, OutputStream outputStream) {
+        ReportXml reportXml = new ReportXml();
+        if (dossier.getPrintTemplate() == null ||
+                dossier.getPrintTemplate().getFileName() == null) {
+            setDefaultPrintTemplate(dossier);
+        }
+        reportXml.setTemplateFileName(dossier.getPrintTemplate().getFileName());
+        build(reportXml, student);
+        ReportPdfProcessor.getInstance().generate(reportXml, outputStream);
+    }
+
+    @Override
+    public void generatePrintForm(List<StudentDossier> dossiers, Student student, OutputStream outputStream) {
+        List<Report> reports = new ArrayList<Report>();
+
+        for (StudentDossier dossier : dossiers) {
+            ReportXml reportXml = new ReportXml();
+            if (dossier.getPrintTemplate() == null ||
+                    dossier.getPrintTemplate().getFileName() == null) {
+                setDefaultPrintTemplate(dossier);
+            }
+            reportXml.setTemplateFileName(dossier.getPrintTemplate().getFileName());
+            build(reportXml, student);
+            reports.add(reportXml);
+        }
+        ReportPdfProcessor.getInstance().generate(reports, outputStream);
+    }
+
+    @Override
+    public void setDefaultPrintTemplate(StudentDossier dossier) {
+        String templName = StudentDossierServiceImpl.class.getResource("/templates/dossier.xml").getFile();
+        templName = templName.replace("%20", " ");
+        System.out.println(templName);
+        dossier.setPrintTemplate(new Template(templName));
     }
 }

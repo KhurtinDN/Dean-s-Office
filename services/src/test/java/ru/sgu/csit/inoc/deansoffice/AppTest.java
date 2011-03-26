@@ -134,39 +134,25 @@ public class AppTest
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-        String templName = AppTest.class.getResource("/dossier.xml").getFile();
-
-        templName = templName.replace("%20", " ");
-        System.out.println(templName);
-        dossier.setPrintTemplate(new Template(templName));
-
-        StudentDossierService dossierService = new StudentDossierServiceImpl(dossier);
-
-        dossierService.build(student);
-        //ReportPdfProcessor.getInstance().generate((Report) dossierService, outputStream);
+        StudentDossierService dossierService = new StudentDossierServiceImpl();
+        dossierService.generatePrintForm(dossier, student, outputStream);
 
         //==============================================
 
-        List<Report> references = new ArrayList<Report>();
-//        references.add((Report) dossierService);
+        List<Reference> references = new ArrayList<Reference>();
         try {
             outputStream = new FileOutputStream(new File("test_multi.pdf"));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-        templName = AppTest.class.getResource("/reference-1.xml").getFile();
-        templName = templName.replace("%20", " ");
-
+        ReferenceService referenceService = applicationContext.getBean(ReferenceService.class);
         for (int i = 0; i < students.size(); ++i) {
             Student theStudent = students.get(i);
             Reference reference = new Reference();
-            System.out.println(templName);
-            reference.setPrintTemplate(new Template(templName));
-            ReferenceService referenceService = new ReferenceServiceImpl(reference);
-            referenceService.build(theStudent);
-            references.add((Report) referenceService);
+            reference.setType(Reference.ReferenceType.REFERENCE_1);
+            reference.setOwnerId(theStudent.getId());
+            references.add(reference);
         }
-
-        ReportPdfProcessor.getInstance().generate(references, outputStream);
+        referenceService.generatePrintForm(references, outputStream);
     }
 }
