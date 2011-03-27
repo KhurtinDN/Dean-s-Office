@@ -18,12 +18,9 @@ public interface ReferenceService {
 
     Reference makeReference(Reference.ReferenceType type, Long ownerId);
     void registrationReference(Reference reference);
-    void printReferences(List<Reference> references, OutputStream outputStream);
-    void readyReference(Reference reference);
-    void issueReference(Reference reference);
+    void printReferencesById(List<Long> referenceIds);
+    void readyReferencesById(List<Long> referenceIds);
+    void issueReferencesById(List<Long> referenceIds);
 
-    void registrationReferenceById(Long referenceId);
-    void printReferencesById(List<Long> referenceIds, OutputStream outputStream);
-    void readyReferenceById(Long referenceId);
-    void issueReferenceById(Long referenceId);
+    void removeReferencesById(List<Long> referenceIds);
 }

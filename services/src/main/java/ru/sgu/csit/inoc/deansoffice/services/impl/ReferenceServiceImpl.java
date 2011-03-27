@@ -156,50 +156,38 @@ public class ReferenceServiceImpl extends DocumentServiceImpl implements Referen
     }
 
     @Override
-    public void printReferences(List<Reference> references, OutputStream outputStream) {
-        for (Reference reference : references) {
-            reference.setState(Reference.ReferenceState.PROCESSED);
-            referenceDAO.saveOrUpdate(reference);
-        }
-        generatePrintForm(references, outputStream);
-    }
-
-    @Override
-    public void readyReference(Reference reference) {
-        reference.setState(Reference.ReferenceState.READY);
-        referenceDAO.saveOrUpdate(reference);
-    }
-
-    @Override
-    public void issueReference(Reference reference) {
-        reference.setState(Reference.ReferenceState.ISSUED);
-        referenceDAO.saveOrUpdate(reference);
-    }
-
-    @Override
-    public void registrationReferenceById(Long referenceId) {
-        registrationReference(referenceDAO.findById(referenceId));
-    }
-
-    @Override
-    public void printReferencesById(List<Long> referenceIds, OutputStream outputStream) {
-        List<Reference> references = new ArrayList<Reference>();
+    public void printReferencesById(List<Long> referenceIds) {
         for (Long referenceId : referenceIds) {
             Reference reference = referenceDAO.findById(referenceId);
             reference.setState(Reference.ReferenceState.PROCESSED);
-            referenceDAO.saveOrUpdate(reference);
-            references.add(reference);
+            referenceDAO.update(reference);
         }
-        generatePrintForm(references, outputStream);
     }
 
     @Override
-    public void readyReferenceById(Long referenceId) {
-        readyReference(referenceDAO.findById(referenceId));
+    public void readyReferencesById(List<Long> referenceIds) {
+        for (Long referenceId : referenceIds) {
+            Reference reference = referenceDAO.findById(referenceId);
+            reference.setState(Reference.ReferenceState.READY);
+            referenceDAO.update(reference);
+        }
     }
 
     @Override
-    public void issueReferenceById(Long referenceId) {
-        issueReference(referenceDAO.findById(referenceId));
+    public void issueReferencesById(List<Long> referenceIds) {
+        for (Long referenceId : referenceIds) {
+            Reference reference = referenceDAO.findById(referenceId);
+            reference.setIssuedDate(new Date());
+            reference.setState(Reference.ReferenceState.ISSUED);
+            referenceDAO.update(reference);
+        }
+    }
+
+    @Override
+    public void removeReferencesById(List<Long> referenceIds) {
+        for (Long referenceId : referenceIds) {
+            Reference reference = referenceDAO.findById(referenceId);
+            referenceDAO.delete(reference); // todo: need implement deleteById
+        }
     }
 }
