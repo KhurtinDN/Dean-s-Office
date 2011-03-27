@@ -1,3 +1,7 @@
 .group-icon {
     background: url(../icons/group16x16.png) no-repeat center left !important;
 }
+
+.refresh-icon {
+    background: url(../gxt-resources/images/default/grid/refresh.png) no-repeat center left !important;
+}

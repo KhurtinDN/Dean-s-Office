@@ -14,7 +14,8 @@ public class ReferenceController extends Controller {
     private ReferenceView referenceView;
 
     public ReferenceController() {
-        registerEventTypes(AppEvents.AddReference, AppEvents.UpdateReference, AppEvents.ReferenceQueueCall);
+        registerEventTypes(AppEvents.AddReference, AppEvents.RemoveReference, AppEvents.UpdateReference);
+        registerEventTypes(AppEvents.ReferenceQueueCall, AppEvents.RegistrationReference);
         registerEventTypes(AppEvents.PrintReference, AppEvents.ReadyReference, AppEvents.IssueReference);
     }
 

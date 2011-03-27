@@ -3,7 +3,6 @@ package ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.components;
 import com.extjs.gxt.ui.client.Style;
 import com.extjs.gxt.ui.client.data.ModelData;
 import com.extjs.gxt.ui.client.dnd.GridDragSource;
-import com.extjs.gxt.ui.client.dnd.GridDropTarget;
 import com.extjs.gxt.ui.client.event.Events;
 import com.extjs.gxt.ui.client.event.Listener;
 import com.extjs.gxt.ui.client.event.SelectionChangedEvent;
@@ -32,18 +31,27 @@ import java.util.List;
  * Time: 11:16 AM
  */
 public class StudentsPanel extends ContentPanel {
-    private ListStore<StudentModel> studentListStore = new ListStore<StudentModel>();
-    private StudentAsyncCallback studentAsyncCallback = new StudentAsyncCallback();
+    private ListStore<StudentModel> studentListStore;
+    private StudentAsyncCallback studentAsyncCallback;
 
-    private Grid<StudentModel> grid = new Grid<StudentModel>(studentListStore, createColumnModel());
+    private Grid<StudentModel> grid;
 
     private boolean simple;
 
     public StudentsPanel() {
+        studentListStore = new ListStore<StudentModel>();
+        studentAsyncCallback = new StudentAsyncCallback();
+
+        grid = new Grid<StudentModel>(studentListStore, createColumnModel());
     }
 
     public StudentsPanel(boolean simple) {
+        this();
         this.simple = simple;
+    }
+
+    public Grid<StudentModel> getStudentGrid() {
+        return grid;
     }
 
     @Override
@@ -112,10 +120,6 @@ public class StudentsPanel extends ContentPanel {
     public void showSpecialityByCourse(SpecialityModel specialityModel, Integer course) {
         StudentService.App.getInstance().loadStudentListBySpecialityIdAndCourse(specialityModel.getId(), course,
                 studentAsyncCallback);
-    }
-
-    public void setupGridDropTarget() {
-        new GridDropTarget(grid);
     }
 
     public void setupGridDragSource() {

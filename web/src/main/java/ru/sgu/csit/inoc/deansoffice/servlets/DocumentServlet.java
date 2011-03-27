@@ -2,11 +2,11 @@ package ru.sgu.csit.inoc.deansoffice.servlets;
 
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
+import ru.sgu.csit.inoc.deansoffice.dao.ReferenceDAO;
 import ru.sgu.csit.inoc.deansoffice.dao.StudentDAO;
 import ru.sgu.csit.inoc.deansoffice.domain.Reference;
 import ru.sgu.csit.inoc.deansoffice.domain.Student;
 import ru.sgu.csit.inoc.deansoffice.domain.StudentDossier;
-import ru.sgu.csit.inoc.deansoffice.domain.Template;
 import ru.sgu.csit.inoc.deansoffice.services.PhotoService;
 import ru.sgu.csit.inoc.deansoffice.services.ReferenceService;
 import ru.sgu.csit.inoc.deansoffice.services.StudentDossierService;
@@ -17,6 +17,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * User: hd (KhurtinDN(a)gmail.com)
@@ -27,6 +29,7 @@ public class DocumentServlet extends HttpServlet {
     private ReferenceService referenceService;
     private StudentDossierService studentDossierService;
 
+    private ReferenceDAO referenceDAO;
     private StudentDAO studentDAO;
     private PhotoService photoService;
 
@@ -34,6 +37,8 @@ public class DocumentServlet extends HttpServlet {
     public void init() throws ServletException {
         WebApplicationContext applicationContext = WebApplicationContextUtils
 				.getWebApplicationContext(getServletContext());
+
+        referenceDAO = applicationContext.getBean(ReferenceDAO.class);
         studentDAO = applicationContext.getBean(StudentDAO.class);
         photoService = applicationContext.getBean(PhotoService.class);
 
@@ -46,40 +51,64 @@ public class DocumentServlet extends HttpServlet {
             throws ServletException, IOException {
         String documentType = request.getRequestURI().substring("/documents/".length());
 
-        if (documentType.startsWith("reference")) {
+        if (documentType.startsWith("references.pdf")) {
 
-            Long studentId;
+            String idsLine = request.getParameter("referencesId");
+            if (idsLine == null) {
+                response.sendError(HttpServletResponse.SC_BAD_REQUEST);
+                return;
+            }
+
+            List<Long> referenceIdList = new ArrayList<Long>();
             try {
-                studentId = Long.parseLong(request.getParameter("studentId"));
+                String[] ids = idsLine.split(",");
+                for (String id : ids) {
+                    id = id.trim();
+                    if (!id.isEmpty()) {
+                        referenceIdList.add(Long.parseLong(id));
+
+                    }
+                }
             } catch (NumberFormatException e) {
                 response.sendError(HttpServletResponse.SC_BAD_REQUEST);
                 return;
             }
 
-            String documentName = documentType.substring(0, documentType.lastIndexOf(".pdf"));
+//            String documentName = documentType.substring(0, documentType.lastIndexOf(".pdf"));
+//
+//            URL url = DocumentServlet.class.getResource("/templates/" + documentName + ".xml");
+//            if (url == null) {
+//                response.sendError(HttpServletResponse.SC_NOT_FOUND);
+//                return;
+//            }
+//            String templateName = url.getFile().replace("%20", " ");
 
-            URL url = DocumentServlet.class.getResource("/templates/" + documentName + ".xml");
-            if (url == null) {
-                response.sendError(HttpServletResponse.SC_NOT_FOUND);
-                return;
+//            Student student = studentDAO.findById(studentId);
+//
+//            if (student == null) {
+//                response.sendError(HttpServletResponse.SC_NOT_FOUND);
+//                return;
+//            }
+//
+//            Reference reference = new Reference();
+//            reference.setPrintTemplate(new Template(templateName));
+//            reference.setOwnerId(studentId);
+
+            List<Reference> referenceList = new ArrayList<Reference>(referenceIdList.size());
+            for (Long referenceId : referenceIdList) {
+                Reference reference = referenceDAO.findById(referenceId);
+                if (reference != null) {
+                    referenceList.add(reference);
+                } else {
+                    response.sendError(HttpServletResponse.SC_BAD_REQUEST);
+                    return;
+                }
             }
-            String templateName = url.getFile().replace("%20", " ");
-
-            Student student = studentDAO.findById(studentId);
-
-            if (student == null) {
-                response.sendError(HttpServletResponse.SC_NOT_FOUND);
-                return;
-            }
-
-            Reference reference = new Reference();
-            reference.setPrintTemplate(new Template(templateName));
-            reference.setOwnerId(studentId);
 
             response.setContentType("application/pdf");
             OutputStream outputStream = response.getOutputStream();
 
-            referenceService.generatePrintForm(reference, outputStream);
+            referenceService.generatePrintForm(referenceList, outputStream);
 
             outputStream.flush();
         } else if (documentType.startsWith("dossier")) {

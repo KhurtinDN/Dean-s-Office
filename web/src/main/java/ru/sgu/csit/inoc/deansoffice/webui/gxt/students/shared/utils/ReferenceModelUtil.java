@@ -13,22 +13,22 @@ public class ReferenceModelUtil {
             return "";
         }
         switch (type) {
-            case REFERENCE1:
+            case REFERENCE_1:
                 return "Справка #1";
-            case REFERENCE2:
+            case REFERENCE_2:
                 return "Справка #2";
-            case REFERENCE3:
+            case REFERENCE_3:
                 return "Справка #3";
             default:
                 return "";
         }
     }
 
-    public static String statusToString(ReferenceModel.Status status) {
-        if (status == null) {
+    public static String statusToString(ReferenceModel.ReferenceState referenceState) {
+        if (referenceState == null) {
             return "";
         }
-        switch (status) {
+        switch (referenceState) {
             case REGISTERED:
                 return "Зарегистрирована";
             case PROCESSED:

@@ -2,6 +2,7 @@ package ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.components.info;
 
 import com.extjs.gxt.ui.client.event.ButtonEvent;
 import com.extjs.gxt.ui.client.event.SelectionListener;
+import com.extjs.gxt.ui.client.mvc.AppEvent;
 import com.extjs.gxt.ui.client.mvc.Dispatcher;
 import com.extjs.gxt.ui.client.util.Margins;
 import com.extjs.gxt.ui.client.util.Padding;
@@ -45,7 +46,7 @@ public class StudentInfoLayoutContainer extends LayoutContainer {
         FormLayout infoFormLayout = new FormLayout();
         infoFormLayout.setLabelWidth(140);
         infoFieldSet.setLayout(infoFormLayout);
-        infoFieldSet.setHeading("Инфомация о студенте");
+        infoFieldSet.setHeading("Информация о студенте");
 
 //        image.setPixelSize(100, 100);
         image.setHeight("100px");
@@ -150,10 +151,11 @@ public class StudentInfoLayoutContainer extends LayoutContainer {
             @Override
             public void componentSelected(ButtonEvent ce) {
                 if (currentStudentModel != null) {
-                    ReferenceModel referenceModel = new ReferenceModel();
-                    referenceModel.setType(ReferenceModel.ReferenceType.REFERENCE1);
-                    referenceModel.setStudent(currentStudentModel);
-                    Dispatcher.forwardEvent(AppEvents.RegistrationReference, referenceModel);
+                    AppEvent appEvent = new AppEvent(AppEvents.RegistrationReference);
+                    appEvent.setData("referenceType", ReferenceModel.ReferenceType.REFERENCE_1);
+                    appEvent.setData("ownerId", currentStudentModel.getId());
+
+                    Dispatcher.forwardEvent(appEvent);
 //                    String url = "../documents/reference-1.pdf?studentId=" + currentStudentModel.getId();
 //                    Window.open(url, "_blank", "");
                 } else {
@@ -161,17 +163,18 @@ public class StudentInfoLayoutContainer extends LayoutContainer {
                             "GroupInfoLayoutContainer is not rendered!");
                 }
             }
-        }));
+        }), new HBoxLayoutData(0, 5, 0, 5));
 
         layoutContainer.add(new Button("Добавить в очередь как...", new SelectionListener<ButtonEvent>() {
             @Override
             public void componentSelected(ButtonEvent ce) {
                 if (currentStudentModel != null) {
-                    ReferenceModel referenceModel = new ReferenceModel();
-                    referenceModel.setType(ReferenceModel.ReferenceType.REFERENCE1);
-                    referenceModel.setStudent(currentStudentModel);
-                    Dispatcher.forwardEvent(AppEvents.RegistrationReference, referenceModel);
-                    Dispatcher.forwardEvent(AppEvents.ReferenceQueueCall);
+                    AppEvent appEvent = new AppEvent(AppEvents.RegistrationReference);
+                    appEvent.setData("referenceType", ReferenceModel.ReferenceType.REFERENCE_1);
+                    appEvent.setData("ownerId", currentStudentModel.getId());
+
+                    Dispatcher.forwardEvent(appEvent);
+                    Dispatcher.forwardEvent(AppEvents.ReferenceQueueCall, Boolean.TRUE);
                 } else {
                     Dispatcher.forwardEvent(AppEvents.InfoWithConfirmation,
                             "GroupInfoLayoutContainer is not rendered!");
@@ -202,10 +205,11 @@ public class StudentInfoLayoutContainer extends LayoutContainer {
             @Override
             public void componentSelected(ButtonEvent ce) {
                 if (currentStudentModel != null) {
-                    ReferenceModel referenceModel = new ReferenceModel();
-                    referenceModel.setType(ReferenceModel.ReferenceType.REFERENCE2);
-                    referenceModel.setStudent(currentStudentModel);
-                    Dispatcher.forwardEvent(AppEvents.RegistrationReference, referenceModel);
+                    AppEvent appEvent = new AppEvent(AppEvents.RegistrationReference);
+                    appEvent.setData("referenceType", ReferenceModel.ReferenceType.REFERENCE_2);
+                    appEvent.setData("ownerId", currentStudentModel.getId());
+
+                    Dispatcher.forwardEvent(appEvent);
 //                    String url = "../documents/reference-2.pdf?studentId=" + currentStudentModel.getId();
 //                    Window.open(url, "_blank", "");
                 } else {
@@ -213,17 +217,18 @@ public class StudentInfoLayoutContainer extends LayoutContainer {
                             "GroupInfoLayoutContainer is not rendered!");
                 }
             }
-        }));
+        }), new HBoxLayoutData(0, 5, 0, 5));
 
         layoutContainer.add(new Button("Добавить в очередь как...", new SelectionListener<ButtonEvent>() {
             @Override
             public void componentSelected(ButtonEvent ce) {
                 if (currentStudentModel != null) {
-                    ReferenceModel referenceModel = new ReferenceModel();
-                    referenceModel.setType(ReferenceModel.ReferenceType.REFERENCE2);
-                    referenceModel.setStudent(currentStudentModel);
-                    Dispatcher.forwardEvent(AppEvents.RegistrationReference, referenceModel);
-                    Dispatcher.forwardEvent(AppEvents.ReferenceQueueCall);
+                    AppEvent appEvent = new AppEvent(AppEvents.RegistrationReference);
+                    appEvent.setData("referenceType", ReferenceModel.ReferenceType.REFERENCE_2);
+                    appEvent.setData("ownerId", currentStudentModel.getId());
+
+                    Dispatcher.forwardEvent(appEvent);
+                    Dispatcher.forwardEvent(AppEvents.ReferenceQueueCall, Boolean.TRUE);
                 } else {
                     Dispatcher.forwardEvent(AppEvents.InfoWithConfirmation,
                             "GroupInfoLayoutContainer is not rendered!");

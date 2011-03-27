@@ -29,7 +29,7 @@ public class GroupInfoLayoutContainer extends LayoutContainer {
         super.onRender(parent, index);
 
         FieldSet fieldSet = new FieldSet();
-        fieldSet.setHeading("Инфомация о группе");
+        fieldSet.setHeading("Информация о группе");
         FormLayout formLayout = new FormLayout();
         formLayout.setLabelWidth(140);
         fieldSet.setLayout(formLayout);

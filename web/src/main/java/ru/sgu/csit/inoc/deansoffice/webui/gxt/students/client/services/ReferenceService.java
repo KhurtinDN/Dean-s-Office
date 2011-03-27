@@ -15,14 +15,21 @@ import java.util.List;
 @RemoteServiceRelativePath("GWTServices/ReferenceService")
 public interface ReferenceService extends RemoteService {
 
-    List<ReferenceModel> loadReferences(boolean all);
+    List<ReferenceModel> loadAllReferences();
+    List<ReferenceModel> loadNotIssuedReferences();
 
-    boolean updateReference(ReferenceModel referenceModel);
+    List<ReferenceModel> loadRegisteredReferences();
+    List<ReferenceModel> loadProcessedReferences();
+    List<ReferenceModel> loadReadyReferences();
+    List<ReferenceModel> loadIssuedReferences();
 
-    boolean registrationReference(ReferenceModel referenceModel);
-    boolean printReferences(List<ReferenceModel> referenceModelList);
-    boolean readyReferences(List<ReferenceModel> referenceModelList);
-    boolean issueReferences(List<ReferenceModel> referenceModelList);
+    void removeReferences(List<Long> referenceIdList);
+    void updateDestinationReference(Long referenceId, String destination);
+
+    void registrationReference(ReferenceModel.ReferenceType type, Long ownerId);
+    void printReferences(List<Long> referenceIdList);
+    void readyReferences(List<Long> referenceIdList);
+    void issueReferences(List<Long> referenceIdList);
 
     public static class App {
         private static final ReferenceServiceAsync ourInstance = GWT.create(ReferenceService.class);

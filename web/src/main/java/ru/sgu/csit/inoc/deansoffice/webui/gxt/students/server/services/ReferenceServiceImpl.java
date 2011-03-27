@@ -1,12 +1,15 @@
 package ru.sgu.csit.inoc.deansoffice.webui.gxt.students.server.services;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import ru.sgu.csit.inoc.deansoffice.dao.ReferenceDAO;
+import ru.sgu.csit.inoc.deansoffice.dao.StudentDAO;
+import ru.sgu.csit.inoc.deansoffice.domain.Reference;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.services.ReferenceService;
+import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.server.utils.ReferenceUtil;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.shared.model.ReferenceModel;
-import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.shared.model.StudentModel;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -16,89 +19,106 @@ import java.util.List;
  */
 @Service("ReferenceService")
 public class ReferenceServiceImpl implements ReferenceService {
-    private List<ReferenceModel> referenceModelList = new ArrayList<ReferenceModel>();
+    @Autowired
+    private ru.sgu.csit.inoc.deansoffice.services.ReferenceService referenceService;
+    @Autowired
+    private ReferenceDAO referenceDAO;
+    @Autowired
+    private StudentDAO studentDAO;
 
-    public ReferenceServiceImpl() {
-        StudentModel studentModel = new StudentModel();
-        studentModel.setFullName("Хуртин Денис Николаевич");
-        studentModel.setGroupName("511");
-        studentModel.setStudyForm(StudentModel.StudyForm.BUDGET);
+    @Override
+    public List<ReferenceModel> loadAllReferences() {
+        List<Reference> referenceList = referenceDAO.findAll();
 
-        ReferenceModel referenceModel = new ReferenceModel();
-        referenceModel.setRegistrationDate(new Date());
-        referenceModel.setStudent(studentModel);
-        referenceModel.setDestination("маме");
-        referenceModel.setType(ReferenceModel.ReferenceType.REFERENCE1);
-        referenceModel.setStatus(ReferenceModel.Status.REGISTERED);
-        referenceModel.setIssueDate(new Date());
-        referenceModelList.add(referenceModel);
-
-        studentModel = new StudentModel();
-        studentModel.setFullName("Мещеряков Александр Викторович");
-        studentModel.setGroupName("411");
-        studentModel.setStudyForm(StudentModel.StudyForm.BUDGET);
-
-        referenceModel = new ReferenceModel();
-        referenceModel.setRegistrationDate(new Date());
-        referenceModel.setStudent(studentModel);
-        referenceModel.setDestination("бабушке");
-        referenceModel.setType(ReferenceModel.ReferenceType.REFERENCE2);
-        referenceModel.setStatus(ReferenceModel.Status.PROCESSED);
-        referenceModel.setIssueDate(new Date());
-        referenceModelList.add(referenceModel);
-
-        studentModel = new StudentModel();
-        studentModel.setFullName("Иванов Иван Иванович");
-        studentModel.setGroupName("312");
-        studentModel.setStudyForm(StudentModel.StudyForm.COMMERCIAL);
-
-        referenceModel = new ReferenceModel();
-        referenceModel.setRegistrationDate(new Date());
-        referenceModel.setStudent(studentModel);
-        referenceModel.setDestination("тетке в крым");
-        referenceModel.setType(ReferenceModel.ReferenceType.REFERENCE3);
-        referenceModel.setStatus(ReferenceModel.Status.READY);
-        referenceModel.setIssueDate(new Date());
-        referenceModelList.add(referenceModel);
+        return ReferenceUtil.convertReferenceListToReferenceModelList(studentDAO, referenceList);
     }
 
     @Override
-    public List<ReferenceModel> loadReferences(boolean all) {
-        return referenceModelList;
-    }
-
-    @Override
-    public boolean registrationReference(ReferenceModel referenceModel) {
-        if (referenceModel.getType() == null ||
-                referenceModel.getStudent() == null || referenceModel.getStudent().getId() == null) {
-            return false;
+    public List<ReferenceModel> loadNotIssuedReferences() { // todo: need implement
+        List<ReferenceModel> notIssuedReferences = new ArrayList<ReferenceModel>();
+        for (ReferenceModel referenceModel : loadAllReferences()) {
+            if (!ReferenceModel.ReferenceState.ISSUED.equals(referenceModel.getState())) {
+                notIssuedReferences.add(referenceModel);
+            }
         }
-
-        referenceModel.setRegistrationDate(new Date());
-        referenceModel.setStatus(ReferenceModel.Status.REGISTERED);
-
-        referenceModelList.add(referenceModel);
-
-        return true;
+        return notIssuedReferences;
     }
 
     @Override
-    public boolean updateReference(ReferenceModel referenceModel) {
-        return false;
+    public List<ReferenceModel> loadRegisteredReferences() { // todo: need implement
+        List<ReferenceModel> registeredReferences = new ArrayList<ReferenceModel>();
+        for (ReferenceModel referenceModel : loadAllReferences()) {
+            if (ReferenceModel.ReferenceState.REGISTERED.equals(referenceModel.getState())) {
+                registeredReferences.add(referenceModel);
+            }
+        }
+        return registeredReferences;
     }
 
     @Override
-    public boolean printReferences(List<ReferenceModel> referenceModelList) {
-        return false;
+    public List<ReferenceModel> loadProcessedReferences() { // todo: need implement
+        List<ReferenceModel> processedReferences = new ArrayList<ReferenceModel>();
+        for (ReferenceModel referenceModel : loadAllReferences()) {
+            if (ReferenceModel.ReferenceState.PROCESSED.equals(referenceModel.getState())) {
+                processedReferences.add(referenceModel);
+            }
+        }
+        return processedReferences;
     }
 
     @Override
-    public boolean readyReferences(List<ReferenceModel> referenceModelList) {
-        return false;
+    public List<ReferenceModel> loadReadyReferences() { // todo: need implement
+        List<ReferenceModel> readyReferences = new ArrayList<ReferenceModel>();
+        for (ReferenceModel referenceModel : loadAllReferences()) {
+            if (ReferenceModel.ReferenceState.READY.equals(referenceModel.getState())) {
+                readyReferences.add(referenceModel);
+            }
+        }
+        return readyReferences;
     }
 
     @Override
-    public boolean issueReferences(List<ReferenceModel> referenceModelList) {
-        return false;
+    public List<ReferenceModel> loadIssuedReferences() { // todo: need implement
+        List<ReferenceModel> issuedReferences = new ArrayList<ReferenceModel>();
+        for (ReferenceModel referenceModel : loadAllReferences()) {
+            if (ReferenceModel.ReferenceState.ISSUED.equals(referenceModel.getState())) {
+                issuedReferences.add(referenceModel);
+            }
+        }
+        return issuedReferences;
+    }
+
+    @Override
+    public void removeReferences(List<Long> referenceIdList) {
+        referenceService.removeReferencesById(referenceIdList);
+    }
+
+    @Override
+    public void updateDestinationReference(Long referenceId, String destination) {
+        Reference reference = referenceDAO.findById(referenceId);
+        reference.setPurpose(destination);
+        referenceDAO.update(reference);
+    }
+
+    @Override
+    public void registrationReference(ReferenceModel.ReferenceType type, Long ownerId) {
+        Reference reference =
+                referenceService.makeReference(ReferenceUtil.convertReferenceModelTypeToReferenceType(type), ownerId);
+        referenceService.registrationReference(reference);
+    }
+
+    @Override
+    public void printReferences(List<Long> referenceIdList) {
+        referenceService.printReferencesById(referenceIdList);
+    }
+
+    @Override
+    public void readyReferences(List<Long> referenceIdList) {
+        referenceService.readyReferencesById(referenceIdList);
+    }
+
+    @Override
+    public void issueReferences(List<Long> referenceIdList) {
+        referenceService.issueReferencesById(referenceIdList);
     }
 }

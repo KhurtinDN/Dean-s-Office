@@ -11,7 +11,7 @@ import java.util.Date;
 public class ReferenceModel extends DtoModel {
     private StudentModel student;
     private ReferenceType type;
-    private Status status;
+    private ReferenceState state;
 
     public StudentModel getStudent() {
         return student;
@@ -45,12 +45,12 @@ public class ReferenceModel extends DtoModel {
         set("destination", destination);
     }
 
-    public Status getStatus() {
-        return status;
+    public ReferenceState getState() {
+        return state;
     }
 
-    public void setStatus(Status status) {
-        this.status = status;
+    public void setState(ReferenceState state) {
+        this.state = state;
     }
 
     public Date getIssueDate() {
@@ -61,6 +61,6 @@ public class ReferenceModel extends DtoModel {
         set("issueDate", issueDate);
     }
 
-    public enum ReferenceType implements Serializable { REFERENCE1, REFERENCE2, REFERENCE3 }
-    public enum Status implements Serializable { REGISTERED, PROCESSED, READY, ISSUED }
+    public enum ReferenceType implements Serializable {REFERENCE_1, REFERENCE_2, REFERENCE_3}
+    public enum ReferenceState implements Serializable { REGISTERED, PROCESSED, READY, ISSUED }
 }

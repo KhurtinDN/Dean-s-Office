@@ -27,6 +27,7 @@ public class AppEvents {
     public static final EventType StudentSelected = new EventType();
 
     public static final EventType AddReference = new EventType();
+    public static final EventType RemoveReference = new EventType();
     public static final EventType UpdateReference = new EventType();
     public static final EventType RegistrationReference = new EventType();
     public static final EventType PrintReference = new EventType();
