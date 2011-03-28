@@ -31,7 +31,10 @@ public class ReferenceServiceImpl extends DocumentServiceImpl implements Referen
     public ReferenceServiceImpl() {
     }
 
-    private void build(ReportXml report, Student student) {
+    private void build(ReportXml report, Student student, String purpose) {
+        if (purpose == null) {
+            purpose = "";
+        }
         putDefaultValues(report.getValuesMap());
         report.addValue("FACULTY_FULLNAME", student.getSpeciality().getFaculty().getFullName());
         report.addValue("FACULTY_SHORTNAME", student.getSpeciality().getFaculty().getShortName());
@@ -86,6 +89,7 @@ public class ReferenceServiceImpl extends DocumentServiceImpl implements Referen
                 break;
         }
         report.addValue("Student.studyForm", studyForm);
+        report.addValue("Purpose", purpose);
     }
 
     @Override
@@ -96,7 +100,7 @@ public class ReferenceServiceImpl extends DocumentServiceImpl implements Referen
             setDefaultPrintTemplate(reference);
         }
         reportXml.setTemplateFileName(reference.getPrintTemplate().getFileName());
-        build(reportXml, studentDAO.findById(reference.getOwnerId()));
+        build(reportXml, studentDAO.findById(reference.getOwnerId()), reference.getPurpose());
         ReportPdfProcessor.getInstance().generate(reportXml, outputStream);
     }
 
@@ -111,7 +115,7 @@ public class ReferenceServiceImpl extends DocumentServiceImpl implements Referen
                 setDefaultPrintTemplate(reference);
             }
             reportXml.setTemplateFileName(reference.getPrintTemplate().getFileName());
-            build(reportXml, studentDAO.findById(reference.getOwnerId()));
+            build(reportXml, studentDAO.findById(reference.getOwnerId()), reference.getPurpose());
             reports.add(reportXml);
         }
         ReportPdfProcessor.getInstance().generate(reports, outputStream);

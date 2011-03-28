@@ -4,7 +4,7 @@
 </fonts> -->
 <document
 	 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	 xsi:noNamespaceSchemaLocation="document.xsd"
+	 xsi:noNamespaceSchemaLocation="../../../test/resources/document.xsd"
 	 type="PDF" name="spravka1.pdf" format="A5" orientation="landscape">
 	<table widths="4 30 8 24 8 4 6 7 10 25 5 4 5 13 5 7 15" width="100" align="center" border="0">
 		<tr>
@@ -74,7 +74,7 @@
 			<td colspan="3" align="center"></td>
 			
 			<td colspan="4" align="center">Справка дана для предоставления</td>
-			<td colspan="13" align="center" border="2"> </td>
+			<td colspan="13" align="center" border="2"><var name="Purpose" /></td>
 			
 			<td colspan="4" align="center"></td>
 			<td colspan="13" align="center"><font size="8">(по месту требования и др.)</font></td>
