@@ -1,5 +1,7 @@
 package ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.services;
 
+import com.extjs.gxt.ui.client.data.PagingLoadConfig;
+import com.extjs.gxt.ui.client.data.PagingLoadResult;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
@@ -12,16 +14,17 @@ import java.util.List;
  * Date: 3/25/11
  * Time: 10:17 AM
  */
+@SuppressWarnings({"NonSerializableServiceParameters"})
 @RemoteServiceRelativePath("GWTServices/ReferenceService")
 public interface ReferenceService extends RemoteService {
 
-    List<ReferenceModel> loadAllReferences();
-    List<ReferenceModel> loadNotIssuedReferences();
+    PagingLoadResult<ReferenceModel> loadAllReferences(PagingLoadConfig pagingLoadConfig);
+    PagingLoadResult<ReferenceModel> loadNotIssuedReferences(PagingLoadConfig pagingLoadConfig);
 
-    List<ReferenceModel> loadRegisteredReferences();
-    List<ReferenceModel> loadProcessedReferences();
-    List<ReferenceModel> loadReadyReferences();
-    List<ReferenceModel> loadIssuedReferences();
+    PagingLoadResult<ReferenceModel> loadRegisteredReferences(PagingLoadConfig pagingLoadConfig);
+    PagingLoadResult<ReferenceModel> loadProcessedReferences(PagingLoadConfig pagingLoadConfig);
+    PagingLoadResult<ReferenceModel> loadReadyReferences(PagingLoadConfig pagingLoadConfig);
+    PagingLoadResult<ReferenceModel> loadIssuedReferences(PagingLoadConfig pagingLoadConfig);
 
     void removeReferences(List<Long> referenceIdList);
     void updateDestinationReference(Long referenceId, String destination);

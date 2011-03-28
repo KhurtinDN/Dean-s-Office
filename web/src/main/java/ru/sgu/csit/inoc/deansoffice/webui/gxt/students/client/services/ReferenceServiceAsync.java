@@ -1,5 +1,7 @@
 package ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.services;
 
+import com.extjs.gxt.ui.client.data.PagingLoadConfig;
+import com.extjs.gxt.ui.client.data.PagingLoadResult;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.shared.model.ReferenceModel;
 
@@ -11,13 +13,13 @@ import java.util.List;
  * Time: 10:25 AM
  */
 public interface ReferenceServiceAsync {
-    void loadAllReferences(AsyncCallback<List<ReferenceModel>> async);
-    void loadNotIssuedReferences(AsyncCallback<List<ReferenceModel>> async);
+    void loadAllReferences(PagingLoadConfig pagingLoadConfig, AsyncCallback<PagingLoadResult<ReferenceModel>> async);
+    void loadNotIssuedReferences(PagingLoadConfig pagingLoadConfig, AsyncCallback<PagingLoadResult<ReferenceModel>> async);
 
-    void loadRegisteredReferences(AsyncCallback<List<ReferenceModel>> async);
-    void loadProcessedReferences(AsyncCallback<List<ReferenceModel>> async);
-    void loadReadyReferences(AsyncCallback<List<ReferenceModel>> async);
-    void loadIssuedReferences(AsyncCallback<List<ReferenceModel>> async);
+    void loadRegisteredReferences(PagingLoadConfig pagingLoadConfig, AsyncCallback<PagingLoadResult<ReferenceModel>> async);
+    void loadProcessedReferences(PagingLoadConfig pagingLoadConfig, AsyncCallback<PagingLoadResult<ReferenceModel>> async);
+    void loadReadyReferences(PagingLoadConfig pagingLoadConfig, AsyncCallback<PagingLoadResult<ReferenceModel>> async);
+    void loadIssuedReferences(PagingLoadConfig pagingLoadConfig, AsyncCallback<PagingLoadResult<ReferenceModel>> async);
 
     void removeReferences(List<Long> referenceIdList, AsyncCallback<Void> async);
     void updateDestinationReference(Long referenceId, String destination, AsyncCallback<Void> async);

@@ -16,6 +16,8 @@ import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.shared.model.ReferenceMod
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.shared.utils.ReferenceModelUtil;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.shared.utils.StudentModelUtil;
 
+import java.util.Date;
+
 /**
  * User: hd KhurtinDN (dog) gmail.com
  * Date: 3/27/11
@@ -104,9 +106,8 @@ public class ReferenceInfoPanel extends FormPanel {
             public void execute() {
                 ReferenceInfoPanel.this.referenceModel = referenceModel;
 
-                if (referenceModel.getRegistrationDate() != null) {
-                    registrationDateLabelField.setValue(dtf.format(referenceModel.getRegistrationDate()));
-                }
+                Date registrationDate = referenceModel.getRegistrationDate();
+                registrationDateLabelField.setValue(registrationDate == null ? null : dtf.format(registrationDate));
                 nameLabelField.setValue(referenceModel.getStudent().getFullName());
                 groupNameLabelField.setValue(referenceModel.getStudent().getGroupName());
                 studyFormLabelField.setValue(
@@ -114,9 +115,8 @@ public class ReferenceInfoPanel extends FormPanel {
                 typeLabelField.setValue(ReferenceModelUtil.typeToString(referenceModel.getType()));
                 destinationTextField.setValue(referenceModel.getDestination());
                 statusLabelField.setValue(ReferenceModelUtil.statusToString(referenceModel.getState()));
-                if (referenceModel.getIssueDate() != null) {
-                    issueDateLabelField.setValue(dtf.format(referenceModel.getIssueDate()));
-                }
+                Date issueDate = referenceModel.getIssueDate();
+                issueDateLabelField.setValue(issueDate == null ? null : dtf.format(issueDate));
             }
         });
     }

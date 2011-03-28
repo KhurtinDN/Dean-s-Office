@@ -35,6 +35,7 @@ public class ReferenceModel extends DtoModel {
 
     public void setType(ReferenceType type) {
         this.type = type;
+        set("type", type);
     }
 
     public String getDestination() {
@@ -51,6 +52,7 @@ public class ReferenceModel extends DtoModel {
 
     public void setState(ReferenceState state) {
         this.state = state;
+        set("state", state);
     }
 
     public Date getIssueDate() {

@@ -1,5 +1,8 @@
 package ru.sgu.csit.inoc.deansoffice.webui.gxt.students.server.services;
 
+import com.extjs.gxt.ui.client.data.BasePagingLoadResult;
+import com.extjs.gxt.ui.client.data.PagingLoadConfig;
+import com.extjs.gxt.ui.client.data.PagingLoadResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.sgu.csit.inoc.deansoffice.dao.ReferenceDAO;
@@ -9,8 +12,7 @@ import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.services.Reference
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.server.utils.ReferenceUtil;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.shared.model.ReferenceModel;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 /**
  * User: hd KhurtinDN (dog) gmail.com
@@ -27,65 +29,129 @@ public class ReferenceServiceImpl implements ReferenceService {
     private StudentDAO studentDAO;
 
     @Override
-    public List<ReferenceModel> loadAllReferences() {
+    public PagingLoadResult<ReferenceModel> loadAllReferences(PagingLoadConfig pagingLoadConfig) {
         List<Reference> referenceList = referenceDAO.findAll();
+        List<ReferenceModel> referenceModelList =
+                ReferenceUtil.convertReferenceListToReferenceModelList(studentDAO, referenceList);
 
-        return ReferenceUtil.convertReferenceListToReferenceModelList(studentDAO, referenceList);
+        return createPagingLoadResult(referenceModelList, pagingLoadConfig);
     }
 
     @Override
-    public List<ReferenceModel> loadNotIssuedReferences() { // todo: need implement
+    public PagingLoadResult<ReferenceModel> loadNotIssuedReferences(PagingLoadConfig pagingLoadConfig) { // todo: need implement
+        List<ReferenceModel> allReferenceModelList =
+                ReferenceUtil.convertReferenceListToReferenceModelList(studentDAO, referenceDAO.findAll());
+
         List<ReferenceModel> notIssuedReferences = new ArrayList<ReferenceModel>();
-        for (ReferenceModel referenceModel : loadAllReferences()) {
+        for (ReferenceModel referenceModel : allReferenceModelList) {
             if (!ReferenceModel.ReferenceState.ISSUED.equals(referenceModel.getState())) {
                 notIssuedReferences.add(referenceModel);
             }
         }
-        return notIssuedReferences;
+
+        return createPagingLoadResult(notIssuedReferences, pagingLoadConfig);
     }
 
     @Override
-    public List<ReferenceModel> loadRegisteredReferences() { // todo: need implement
+    public PagingLoadResult<ReferenceModel> loadRegisteredReferences(PagingLoadConfig pagingLoadConfig) { // todo: need implement
+        List<ReferenceModel> allReferenceModelList =
+                ReferenceUtil.convertReferenceListToReferenceModelList(studentDAO, referenceDAO.findAll());
+
         List<ReferenceModel> registeredReferences = new ArrayList<ReferenceModel>();
-        for (ReferenceModel referenceModel : loadAllReferences()) {
+        for (ReferenceModel referenceModel : allReferenceModelList) {
             if (ReferenceModel.ReferenceState.REGISTERED.equals(referenceModel.getState())) {
                 registeredReferences.add(referenceModel);
             }
         }
-        return registeredReferences;
+
+        return createPagingLoadResult(registeredReferences, pagingLoadConfig);
     }
 
     @Override
-    public List<ReferenceModel> loadProcessedReferences() { // todo: need implement
+    public PagingLoadResult<ReferenceModel> loadProcessedReferences(PagingLoadConfig pagingLoadConfig) { // todo: need implement
+        List<ReferenceModel> allReferenceModelList =
+                ReferenceUtil.convertReferenceListToReferenceModelList(studentDAO, referenceDAO.findAll());
+
         List<ReferenceModel> processedReferences = new ArrayList<ReferenceModel>();
-        for (ReferenceModel referenceModel : loadAllReferences()) {
+        for (ReferenceModel referenceModel : allReferenceModelList) {
             if (ReferenceModel.ReferenceState.PROCESSED.equals(referenceModel.getState())) {
                 processedReferences.add(referenceModel);
             }
         }
-        return processedReferences;
+
+        return createPagingLoadResult(processedReferences, pagingLoadConfig);
     }
 
     @Override
-    public List<ReferenceModel> loadReadyReferences() { // todo: need implement
+    public PagingLoadResult<ReferenceModel> loadReadyReferences(PagingLoadConfig pagingLoadConfig) { // todo: need implement
+        List<ReferenceModel> allReferenceModelList =
+                ReferenceUtil.convertReferenceListToReferenceModelList(studentDAO, referenceDAO.findAll());
+
         List<ReferenceModel> readyReferences = new ArrayList<ReferenceModel>();
-        for (ReferenceModel referenceModel : loadAllReferences()) {
+        for (ReferenceModel referenceModel : allReferenceModelList) {
             if (ReferenceModel.ReferenceState.READY.equals(referenceModel.getState())) {
                 readyReferences.add(referenceModel);
             }
         }
-        return readyReferences;
+
+        return createPagingLoadResult(readyReferences, pagingLoadConfig);
     }
 
     @Override
-    public List<ReferenceModel> loadIssuedReferences() { // todo: need implement
+    public PagingLoadResult<ReferenceModel> loadIssuedReferences(PagingLoadConfig pagingLoadConfig) { // todo: need implement
+        List<ReferenceModel> allReferenceModelList =
+                ReferenceUtil.convertReferenceListToReferenceModelList(studentDAO, referenceDAO.findAll());
+
         List<ReferenceModel> issuedReferences = new ArrayList<ReferenceModel>();
-        for (ReferenceModel referenceModel : loadAllReferences()) {
+        for (ReferenceModel referenceModel : allReferenceModelList) {
             if (ReferenceModel.ReferenceState.ISSUED.equals(referenceModel.getState())) {
                 issuedReferences.add(referenceModel);
             }
         }
-        return issuedReferences;
+
+        return createPagingLoadResult(issuedReferences, pagingLoadConfig);
+    }
+
+    private PagingLoadResult<ReferenceModel> createPagingLoadResult(List<ReferenceModel> references,
+                                                                    PagingLoadConfig config) {
+        final String sortField = config.getSortField();
+        if (sortField != null) {
+            Collections.sort(references, config.getSortDir().comparator(new Comparator<ReferenceModel>() {
+                @Override
+                public int compare(ReferenceModel reference1, ReferenceModel reference2) {
+                    if (sortField.equals("fullName") || sortField.equals("groupName")) {
+                        String field1 = reference1.getStudent().get(sortField);
+                        String field2 = reference2.getStudent().get(sortField);
+
+                        return field1.compareTo(field2);
+                    }
+
+                    Comparable<Object> comparable1 = reference1.get(sortField);
+                    Comparable<Object> comparable2 = reference2.get(sortField);
+
+                    if (comparable1 == null || comparable2 == null) {
+                        return comparable1 == null && comparable2 == null ? 0 : (comparable1 != null ? 1 : -1);
+                    }
+
+                    return comparable1.compareTo(comparable2);
+                }
+            }));
+        }
+
+        int offset = config.getOffset();
+        int limit = references.size();
+
+        if (config.getLimit() > 0) {
+            limit = Math.min(offset + config.getLimit(), limit);
+        }
+
+        if (offset > limit) {
+            offset = limit;
+        }
+
+        List<ReferenceModel> data = new ArrayList<ReferenceModel>(references.subList(offset, limit));
+
+        return new BasePagingLoadResult<ReferenceModel>(data, offset, references.size());
     }
 
     @Override
