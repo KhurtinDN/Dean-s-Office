@@ -227,6 +227,7 @@ public class ReferenceQueueWindow extends Window {
             public void loaderLoad(LoadEvent le) {
                 if (lastSelect && grid.getStore().getCount() > 0) {
                     lastSelect = false;
+
                     grid.getSelectionModel().select(grid.getStore().getCount() - 1, false);
                 }
             }
@@ -349,6 +350,7 @@ public class ReferenceQueueWindow extends Window {
 
     public void show(boolean lastSelect) {
         super.show();
+        loadTypeComboBox.setSimpleValue(LoadType.NOT_ISSUED);
         this.lastSelect = lastSelect;
         reload();
     }

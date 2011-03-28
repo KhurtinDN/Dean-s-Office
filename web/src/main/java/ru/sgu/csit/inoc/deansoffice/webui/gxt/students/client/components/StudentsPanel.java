@@ -1,5 +1,6 @@
 package ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.components;
 
+import com.extjs.gxt.ui.client.GXT;
 import com.extjs.gxt.ui.client.Style;
 import com.extjs.gxt.ui.client.data.ModelData;
 import com.extjs.gxt.ui.client.dnd.GridDragSource;
@@ -64,6 +65,7 @@ public class StudentsPanel extends ContentPanel {
         studentListStore.sort("fullName", Style.SortDir.ASC);
 
         grid.setBorders(true);
+        grid.setLoadMask(true);
         grid.setAutoExpandColumn("fullName");
         grid.setAutoExpandMax(2000);
 
@@ -114,10 +116,12 @@ public class StudentsPanel extends ContentPanel {
     }
 
     public void showGroup(GroupModel groupModel) {
+        mask(GXT.MESSAGES.loadMask_msg());
         StudentService.App.getInstance().loadStudentList(groupModel.getId(), studentAsyncCallback);
     }
 
     public void showSpecialityByCourse(SpecialityModel specialityModel, Integer course) {
+        mask(GXT.MESSAGES.loadMask_msg());
         StudentService.App.getInstance().loadStudentListBySpecialityIdAndCourse(specialityModel.getId(), course,
                 studentAsyncCallback);
     }
@@ -138,6 +142,8 @@ public class StudentsPanel extends ContentPanel {
         public void onSuccess(List<StudentModel> students) {
             studentListStore.removeAll();
             studentListStore.add(students);
+
+            unmask();
         }
     }
 }

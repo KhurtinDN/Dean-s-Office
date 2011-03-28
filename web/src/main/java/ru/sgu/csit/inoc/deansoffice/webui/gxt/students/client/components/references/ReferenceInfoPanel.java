@@ -117,6 +117,8 @@ public class ReferenceInfoPanel extends FormPanel {
                 statusLabelField.setValue(ReferenceModelUtil.statusToString(referenceModel.getState()));
                 Date issueDate = referenceModel.getIssueDate();
                 issueDateLabelField.setValue(issueDate == null ? null : dtf.format(issueDate));
+
+                destinationTextField.setEnabled(true);
             }
         });
     }
@@ -135,6 +137,8 @@ public class ReferenceInfoPanel extends FormPanel {
                 destinationTextField.clear();
                 statusLabelField.clear();
                 issueDateLabelField.clear();
+
+                destinationTextField.setEnabled(false);
             }
         });
     }
