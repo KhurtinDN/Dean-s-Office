@@ -350,9 +350,14 @@ public class ReferenceQueueWindow extends Window {
 
     public void show(boolean lastSelect) {
         super.show();
-        loadTypeComboBox.setSimpleValue(LoadType.NOT_ISSUED);
         this.lastSelect = lastSelect;
-        reload();
+
+        if (lastSelect) {
+            loadTypeComboBox.setSimpleValue(LoadType.NOT_ISSUED);
+        } else {
+            reload();
+        }
+
     }
 
     private enum LoadType {
