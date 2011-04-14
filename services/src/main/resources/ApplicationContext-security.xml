@@ -11,11 +11,11 @@
         <security:intercept-url pattern="/css/**" filters="none"/>
         <security:intercept-url pattern="/icons/**" filters="none"/>
         <security:intercept-url pattern="/gxt-resources/**" filters="none"/>
-        <security:intercept-url pattern="/login.html*" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
+        <security:intercept-url pattern="/Login.html*" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
         <security:intercept-url pattern="/login/**" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
         <security:intercept-url pattern="/**" access="ROLE_USER"/>
-        <security:form-login login-page="/login.html" />
-        <security:logout logout-success-url="/login.html" />
+        <security:form-login login-page="/Login.html" />
+        <security:logout logout-success-url="/Login.html" />
     </security:http>
 
 
