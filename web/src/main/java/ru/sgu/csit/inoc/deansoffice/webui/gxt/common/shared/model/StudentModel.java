@@ -1,4 +1,4 @@
-package ru.sgu.csit.inoc.deansoffice.webui.gxt.students.shared.model;
+package ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.model;
 
 import java.io.Serializable;
 

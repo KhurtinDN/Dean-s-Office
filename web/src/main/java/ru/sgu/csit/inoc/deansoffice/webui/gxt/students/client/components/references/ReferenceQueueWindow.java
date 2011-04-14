@@ -26,9 +26,9 @@ import com.google.gwt.user.client.Element;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.mvc.events.AppEvents;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.services.ReferenceService;
-import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.shared.model.ReferenceModel;
-import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.shared.model.StudentModel;
-import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.shared.utils.ReferenceModelUtil;
+import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.model.ReferenceModel;
+import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.model.StudentModel;
+import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.utils.ReferenceModelUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -352,7 +352,7 @@ public class ReferenceQueueWindow extends Window {
         super.show();
         this.lastSelect = lastSelect;
 
-        if (lastSelect) {
+        if (lastSelect && !LoadType.NOT_ISSUED.equals(loadTypeComboBox.getSimpleValue())) {
             loadTypeComboBox.setSimpleValue(LoadType.NOT_ISSUED);
         } else {
             reload();

@@ -1,8 +1,8 @@
 package ru.sgu.csit.inoc.deansoffice.webui.gxt.students.server.utils;
 
 import ru.sgu.csit.inoc.deansoffice.domain.Group;
-import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.shared.model.GroupModel;
-import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.shared.model.SpecialityModel;
+import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.model.GroupModel;
+import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.model.SpecialityModel;
 
 import java.util.ArrayList;
 import java.util.List;

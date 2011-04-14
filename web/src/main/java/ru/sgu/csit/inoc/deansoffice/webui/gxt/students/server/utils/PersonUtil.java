@@ -1,7 +1,7 @@
 package ru.sgu.csit.inoc.deansoffice.webui.gxt.students.server.utils;
 
 import ru.sgu.csit.inoc.deansoffice.domain.Person;
-import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.shared.model.PersonModel;
+import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.model.PersonModel;
 
 /**
  * User: Khurtin Denis ( KhurtinDN (a) gmail.com )

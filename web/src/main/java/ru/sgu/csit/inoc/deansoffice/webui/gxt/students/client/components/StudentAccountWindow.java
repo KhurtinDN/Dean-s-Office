@@ -19,7 +19,7 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.constants.ErrorCode;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.mvc.events.AppEvents;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.services.StudentService;
-import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.shared.model.StudentDetailsModel;
+import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.model.StudentDetailsModel;
 
 /**
  * User: KhurtinDN ( KhurtinDN@gmail.com )

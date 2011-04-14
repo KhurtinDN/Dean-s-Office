@@ -12,7 +12,7 @@ import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.components.referen
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.constants.ErrorCode;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.mvc.events.AppEvents;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.services.ReferenceService;
-import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.shared.model.ReferenceModel;
+import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.model.ReferenceModel;
 
 import java.util.ArrayList;
 import java.util.List;

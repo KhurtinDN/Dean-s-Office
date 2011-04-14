@@ -12,9 +12,9 @@ import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.services.AppServic
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.server.utils.FacultyUtil;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.server.utils.GroupUtil;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.server.utils.SpecialityUtil;
-import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.shared.model.FacultyModel;
-import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.shared.model.GroupModel;
-import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.shared.model.SpecialityModel;
+import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.model.FacultyModel;
+import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.model.GroupModel;
+import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.model.SpecialityModel;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;

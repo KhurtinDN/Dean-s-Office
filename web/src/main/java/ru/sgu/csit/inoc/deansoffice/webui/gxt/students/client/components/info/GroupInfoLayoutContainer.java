@@ -11,7 +11,7 @@ import com.google.gwt.user.client.Element;
 import com.google.gwt.user.client.ui.Image;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.constants.ErrorCode;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.mvc.events.AppEvents;
-import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.shared.model.GroupModel;
+import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.model.GroupModel;
 
 /**
  * User: Khurtin Denis (KhurtinDN@gmail.com)

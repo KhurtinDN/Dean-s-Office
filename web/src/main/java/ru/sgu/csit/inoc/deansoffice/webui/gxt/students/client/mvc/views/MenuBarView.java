@@ -39,14 +39,16 @@ public class MenuBarView extends View {
             }
         }));
 
-        Menu orderMenu = new Menu();
+        Menu referenceMenu = new Menu();
 
-        orderMenu.add(new MenuItem("Очередь справок", new SelectionListener<MenuEvent>() {
+        referenceMenu.add(new MenuItem("Очередь справок", new SelectionListener<MenuEvent>() {
             @Override
             public void componentSelected(MenuEvent ce) {
                 Dispatcher.forwardEvent(AppEvents.ReferenceQueueCall);
             }
         }));
+
+        Menu orderMenu = new Menu();
 
         orderMenu.add(new MenuItem("Создать новый приказ", new SelectionListener<MenuEvent>() {
             @Override
@@ -73,6 +75,7 @@ public class MenuBarView extends View {
 
         menuBar = new MenuBar();
         menuBar.add(new MenuBarItem("Файл", fileMenu));
+        menuBar.add(new MenuBarItem("Справки", referenceMenu));
         menuBar.add(new MenuBarItem("Приказы", orderMenu));
         menuBar.add(new MenuBarItem("Помощь", helpMenu));
     }

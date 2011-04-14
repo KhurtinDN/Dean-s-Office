@@ -12,9 +12,9 @@ import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.user.client.Element;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.components.FormUtil;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.mvc.events.AppEvents;
-import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.shared.model.ReferenceModel;
-import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.shared.utils.ReferenceModelUtil;
-import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.shared.utils.StudentModelUtil;
+import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.model.ReferenceModel;
+import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.utils.ReferenceModelUtil;
+import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.utils.StudentModelUtil;
 
 import java.util.Date;
 

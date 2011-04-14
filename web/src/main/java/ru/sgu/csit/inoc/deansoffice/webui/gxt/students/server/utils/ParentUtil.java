@@ -1,7 +1,7 @@
 package ru.sgu.csit.inoc.deansoffice.webui.gxt.students.server.utils;
 
 import ru.sgu.csit.inoc.deansoffice.domain.Parent;
-import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.shared.model.ParentModel;
+import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.model.ParentModel;
 
 /**
  * User: Khurtin Denis ( KhurtinDN (a) gmail.com )

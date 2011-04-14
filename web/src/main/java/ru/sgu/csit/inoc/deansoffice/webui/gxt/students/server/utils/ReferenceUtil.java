@@ -3,8 +3,8 @@ package ru.sgu.csit.inoc.deansoffice.webui.gxt.students.server.utils;
 import ru.sgu.csit.inoc.deansoffice.dao.StudentDAO;
 import ru.sgu.csit.inoc.deansoffice.domain.Reference;
 import ru.sgu.csit.inoc.deansoffice.domain.Student;
-import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.shared.model.ReferenceModel;
-import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.shared.model.StudentModel;
+import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.model.ReferenceModel;
+import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.model.StudentModel;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,9 +1,9 @@
 package ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.services;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
-import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.shared.model.FacultyModel;
-import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.shared.model.GroupModel;
-import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.shared.model.SpecialityModel;
+import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.model.FacultyModel;
+import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.model.GroupModel;
+import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.model.SpecialityModel;
 
 import java.util.List;
 import java.util.Map;

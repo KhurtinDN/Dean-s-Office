@@ -15,9 +15,9 @@ import com.extjs.gxt.ui.client.widget.grid.*;
 import com.extjs.gxt.ui.client.widget.grid.ColumnData;
 import com.extjs.gxt.ui.client.widget.layout.*;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.components.FormUtil;
-import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.shared.model.DirectiveModel;
-import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.shared.model.OrderModel;
-import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.shared.model.PersonModel;
+import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.model.DirectiveModel;
+import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.model.OrderModel;
+import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.model.PersonModel;
 
 import java.util.ArrayList;
 import java.util.List;

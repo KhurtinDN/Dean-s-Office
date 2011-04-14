@@ -21,9 +21,9 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.constants.AppConstants;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.constants.ErrorCode;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.services.AppService;
-import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.shared.model.FacultyModel;
-import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.shared.model.GroupModel;
-import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.shared.model.SpecialityModel;
+import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.model.FacultyModel;
+import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.model.GroupModel;
+import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.model.SpecialityModel;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.mvc.events.AppEvents;
 
 import java.util.List;
@@ -105,6 +105,8 @@ public class NavigationPanel extends ContentPanel {
                 TreeStore<BaseModel> treeStore = new TreeStore<BaseModel>();
                 TreePanel<BaseModel> treePanel = new TreePanel<BaseModel>(treeStore);
                 treePanel.setDisplayProperty("name");
+                treePanel.getStyle().setNodeOpenIcon(IconHelper.createStyle("speciality-icon"));
+                treePanel.getStyle().setNodeCloseIcon(IconHelper.createStyle("speciality-icon"));
                 treePanel.getStyle().setLeafIcon(IconHelper.createStyle("group-icon"));
 
                 treePanel.getSelectionModel().addSelectionChangedListener(studentsPanel == null ?

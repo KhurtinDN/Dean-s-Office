@@ -18,10 +18,10 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.constants.ErrorCode;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.mvc.events.AppEvents;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.services.StudentService;
-import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.shared.model.GroupModel;
-import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.shared.model.SpecialityModel;
-import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.shared.model.StudentModel;
-import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.shared.utils.StudentModelUtil;
+import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.model.GroupModel;
+import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.model.SpecialityModel;
+import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.model.StudentModel;
+import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.utils.StudentModelUtil;
 
 import java.util.ArrayList;
 import java.util.List;

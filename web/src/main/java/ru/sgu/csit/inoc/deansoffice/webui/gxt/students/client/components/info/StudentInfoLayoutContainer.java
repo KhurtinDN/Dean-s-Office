@@ -15,9 +15,9 @@ import com.google.gwt.user.client.*;
 import com.google.gwt.user.client.ui.Image;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.components.StudentAccountWindow;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.mvc.events.AppEvents;
-import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.shared.model.ReferenceModel;
-import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.shared.model.StudentModel;
-import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.shared.utils.StudentModelUtil;
+import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.model.ReferenceModel;
+import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.model.StudentModel;
+import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.utils.StudentModelUtil;
 
 /**
  * User: Khurtin Denis (KhurtinDN@gmail.com)

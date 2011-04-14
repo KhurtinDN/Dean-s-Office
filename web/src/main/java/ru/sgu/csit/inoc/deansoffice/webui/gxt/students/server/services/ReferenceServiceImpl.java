@@ -10,7 +10,7 @@ import ru.sgu.csit.inoc.deansoffice.dao.StudentDAO;
 import ru.sgu.csit.inoc.deansoffice.domain.Reference;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.services.ReferenceService;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.server.utils.ReferenceUtil;
-import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.shared.model.ReferenceModel;
+import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.model.ReferenceModel;
 
 import java.util.*;
 

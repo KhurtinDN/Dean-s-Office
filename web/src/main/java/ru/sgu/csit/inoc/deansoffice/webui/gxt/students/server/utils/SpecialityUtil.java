@@ -1,7 +1,7 @@
 package ru.sgu.csit.inoc.deansoffice.webui.gxt.students.server.utils;
 
 import ru.sgu.csit.inoc.deansoffice.domain.Speciality;
-import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.shared.model.SpecialityModel;
+import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.model.SpecialityModel;
 
 /**
  * User: Khurtin Denis ( KhurtinDN (a) gmail.com )

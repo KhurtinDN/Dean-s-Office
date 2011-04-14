@@ -1,7 +1,6 @@
-package ru.sgu.csit.inoc.deansoffice.webui.gxt.students.shared.model;
+package ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.model;
 
 import com.extjs.gxt.ui.client.data.BaseModel;
-import com.google.gwt.user.client.rpc.IsSerializable;
 
 /**
  * User: Khurtin Denis (KhurtinDN@gmail.com)

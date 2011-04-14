@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE module PUBLIC "-//Google Inc.//DTD Google Web Toolkit 2.0//EN"
+        "http://google-web-toolkit.googlecode.com/svn/releases/2.0/distro-source/core/src/gwt-module.dtd">
+<module rename-to="students">
+
+    <inherits name="ru.sgu.csit.inoc.deansoffice.webui.gxt.common.Common"/>
+
+    <entry-point class="ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.Students"/>
+
+</module>

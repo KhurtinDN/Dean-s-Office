@@ -19,7 +19,7 @@ import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.constants.AppConst
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.mvc.controllers.AppController;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.mvc.events.AppEvents;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.services.AppService;
-import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.shared.model.FacultyModel;
+import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.model.FacultyModel;
 
 /**
  * User: Khurtin Denis (KhurtinDN@gmail.com)

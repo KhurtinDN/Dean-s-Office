@@ -14,8 +14,8 @@ import com.google.gwt.user.client.Element;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.components.NavigationPanel;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.components.StudentsPanel;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.mvc.events.AppEvents;
-import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.shared.model.ReferenceModel;
-import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.shared.model.StudentModel;
+import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.model.ReferenceModel;
+import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.model.StudentModel;
 
 /**
  * User: hd KhurtinDN (dog) gmail.com

@@ -7,8 +7,8 @@ import com.extjs.gxt.ui.client.mvc.View;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.components.StudentsPanel;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.mvc.controllers.StudentsController;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.mvc.events.AppEvents;
-import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.shared.model.GroupModel;
-import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.shared.model.SpecialityModel;
+import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.model.GroupModel;
+import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.model.SpecialityModel;
 
 /**
  * User: Khurtin Denis (KhurtinDN@gmail.com)

@@ -8,9 +8,10 @@ import com.extjs.gxt.ui.client.widget.form.LabelField;
 import com.extjs.gxt.ui.client.widget.layout.FlowData;
 import com.extjs.gxt.ui.client.widget.layout.FormLayout;
 import com.google.gwt.user.client.Element;
+import com.google.gwt.user.client.ui.Image;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.constants.ErrorCode;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.mvc.events.AppEvents;
-import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.shared.model.SpecialityModel;
+import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.model.SpecialityModel;
 
 /**
  * User: Khurtin Denis (KhurtinDN@gmail.com)
@@ -32,6 +33,9 @@ public class SpecialityInfoLayoutContainer extends LayoutContainer {
         formLayout.setLabelWidth(140);
         fieldSet.setLayout(formLayout);
 
+        Image image = new Image("icons/speciality128x128.png");
+        image.setHeight("100px");
+
         fullNameLabelField = new LabelField();
         fullNameLabelField.setName("fullName");
         fullNameLabelField.setFieldLabel("Полное имя:");
@@ -50,6 +54,7 @@ public class SpecialityInfoLayoutContainer extends LayoutContainer {
         codeLabelField.setLabelStyle("font-weight: bold");
         codeLabelField.setAutoWidth(true);
 
+        fieldSet.add(image);
         fieldSet.add(shortNameLabelField);
         fieldSet.add(fullNameLabelField);
         fieldSet.add(codeLabelField);

@@ -1,6 +1,6 @@
-package ru.sgu.csit.inoc.deansoffice.webui.gxt.students.shared.utils;
+package ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.utils;
 
-import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.shared.model.PersonModel;
+import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.model.PersonModel;
 
 /**
  * User: Khurtin Denis ( KhurtinDN (a) gmail.com )

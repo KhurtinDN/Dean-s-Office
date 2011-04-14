@@ -9,7 +9,7 @@ import ru.sgu.csit.inoc.deansoffice.dao.StudentDAO;
 import ru.sgu.csit.inoc.deansoffice.domain.*;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.services.StudentService;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.server.utils.StudentUtil;
-import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.shared.model.*;
+import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.model.*;
 
 import java.util.List;
 

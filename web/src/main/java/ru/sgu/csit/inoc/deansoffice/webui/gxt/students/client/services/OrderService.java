@@ -3,7 +3,7 @@ package ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.services;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
-import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.shared.model.OrderModel;
+import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.model.OrderModel;
 
 import java.util.List;
 

@@ -7,7 +7,7 @@ import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.components.orders.
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.components.orders.OrderQueueWindow;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.mvc.controllers.OrderController;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.mvc.events.AppEvents;
-import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.shared.model.OrderModel;
+import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.model.OrderModel;
 
 /**
  * User: Khurtin Denis ( KhurtinDN (a) gmail.com )

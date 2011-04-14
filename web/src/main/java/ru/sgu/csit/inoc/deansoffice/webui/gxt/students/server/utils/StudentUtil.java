@@ -1,7 +1,7 @@
 package ru.sgu.csit.inoc.deansoffice.webui.gxt.students.server.utils;
 
 import ru.sgu.csit.inoc.deansoffice.domain.*;
-import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.shared.model.*;
+import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.model.*;
 
 import java.util.ArrayList;
 import java.util.List;

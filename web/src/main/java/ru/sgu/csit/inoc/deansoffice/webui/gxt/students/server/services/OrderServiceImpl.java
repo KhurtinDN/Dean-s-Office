@@ -2,7 +2,7 @@ package ru.sgu.csit.inoc.deansoffice.webui.gxt.students.server.services;
 
 import org.springframework.stereotype.Service;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.services.OrderService;
-import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.shared.model.OrderModel;
+import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.model.OrderModel;
 
 import java.util.ArrayList;
 import java.util.List;

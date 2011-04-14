@@ -1,6 +1,6 @@
-package ru.sgu.csit.inoc.deansoffice.webui.gxt.students.shared.utils;
+package ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.utils;
 
-import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.shared.model.PassportModel;
+import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.model.PassportModel;
 
 import java.util.List;
 

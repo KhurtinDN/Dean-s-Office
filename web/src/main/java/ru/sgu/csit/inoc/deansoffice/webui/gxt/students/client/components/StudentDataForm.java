@@ -17,9 +17,9 @@ import com.extjs.gxt.ui.client.widget.layout.*;
 import com.extjs.gxt.ui.client.widget.layout.ColumnData;
 import com.google.gwt.i18n.client.DateTimeFormat;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.mvc.events.AppEvents;
-import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.shared.model.*;
-import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.shared.utils.PassportModelUtil;
-import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.shared.utils.PersonModelUtil;
+import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.model.*;
+import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.utils.PassportModelUtil;
+import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.utils.PersonModelUtil;
 
 import java.util.ArrayList;
 import java.util.List;
