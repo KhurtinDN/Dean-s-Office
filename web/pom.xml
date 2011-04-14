@@ -13,6 +13,8 @@
     <packaging>war</packaging>
 
     <properties>
+        <webappDirectory>${project.build.directory}/${project.build.finalName}</webappDirectory>
+        <gwtMavenPlugin.version>2.1.0</gwtMavenPlugin.version>
         <gwt.version>2.1.1</gwt.version>
         <gxt.version>2.2.0</gxt.version>
         <spring.version>3.0.3.RELEASE</spring.version>
@@ -83,26 +85,27 @@
     </dependencies>
 
     <build>
-        <outputDirectory>war/WEB-INF/classes</outputDirectory>
+        <!-- Generate compiled stuff in the folder used for developing mode -->
+        <outputDirectory>${webappDirectory}/WEB-INF/classes</outputDirectory>
+
         <plugins>
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>gwt-maven-plugin</artifactId>
-                <version>1.2</version>
+                <version>${gwtMavenPlugin.version}</version>
                 <executions>
                     <execution>
                         <goals>
                             <goal>compile</goal>
-                            <!--<goal>generateAsync</goal>-->
                             <goal>test</goal>
+                            <!--<goal>i18n</goal>-->
+                            <!--<goal>generateAsync</goal>-->
                         </goals>
                     </execution>
                 </executions>
                 <configuration>
-                    <hostedWebapp>
-                        ${project.build.directory}/${project.build.finalName}
-                    </hostedWebapp>
-                    <runTarget>index.html</runTarget>
+                    <runTarget>DeansOffice.html</runTarget>
+                    <hostedWebapp>${webappDirectory}</hostedWebapp>
                 </configuration>
             </plugin>
             <!--
