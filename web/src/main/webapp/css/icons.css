@@ -2,22 +2,26 @@
     background: url(../icons/group16x16.png) no-repeat center left !important;
 }
 
+.speciality-icon {
+    background: url(../icons/speciality16x16.png) no-repeat center left !important;
+}
+
 .addButton-icon {
-    background: url(../gxt-resources/images/default/dd/drop-add.gif) no-repeat center left !important;
+    background: url(../icons/add16x16.png) no-repeat center left !important;
 }
 
 .removeButton-icon {
-    background: url(../gxt-resources/images/default/dd/drop-no.gif) no-repeat center left !important;
+    background: url(../icons/remove16x16.png) no-repeat center left !important;
 }
 
 .pdfButton-icon {
-    background: url(../gxt-resources/images/default/editor/tb-source.gif) no-repeat center left !important;
+    background: url(../icons/pdf16x16.png) no-repeat center left !important;
 }
 
 .readyButton-icon {
-    background: url(../gxt-resources/images/default/dd/drop-yes.gif) no-repeat center left !important;
+    background: url(../icons/ready16x16.png) no-repeat center left !important;
 }
 
 .issueButton-icon {
-    background: url(../gxt-resources/images/default/grid/drop-yes.gif) no-repeat center left !important;
+    background: url(../icons/issue16x16.png) no-repeat center left !important;
 }
