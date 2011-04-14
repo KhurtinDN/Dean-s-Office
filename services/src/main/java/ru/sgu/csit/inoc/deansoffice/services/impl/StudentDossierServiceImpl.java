@@ -112,7 +112,16 @@ public class StudentDossierServiceImpl extends DocumentServiceImpl implements St
 
         Passport firstPassport = student.getAdditionalData().getPassports().get(0);
         Passport lastPassport;
+        /*Passport actualPasport = null;
 
+        for (Passport currentPassport : student.getAdditionalData().getPassports()) {
+            if (currentPassport.isActual()) {
+                actualPasport = currentPassport;
+                break;
+            }
+        }
+        report.addValue("Student.citizenship", actualPasport.getCitizenship());
+        */
         if (student.getAdditionalData().getPassports().size() > 1) {
             lastPassport = student.getAdditionalData().getPassports().get(
                     student.getAdditionalData().getPassports().size() - 1);
