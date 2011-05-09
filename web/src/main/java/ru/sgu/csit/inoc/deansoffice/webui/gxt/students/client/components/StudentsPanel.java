@@ -7,21 +7,19 @@ import com.extjs.gxt.ui.client.dnd.GridDragSource;
 import com.extjs.gxt.ui.client.event.Events;
 import com.extjs.gxt.ui.client.event.Listener;
 import com.extjs.gxt.ui.client.event.SelectionChangedEvent;
-import com.extjs.gxt.ui.client.mvc.AppEvent;
 import com.extjs.gxt.ui.client.mvc.Dispatcher;
 import com.extjs.gxt.ui.client.store.ListStore;
 import com.extjs.gxt.ui.client.widget.ContentPanel;
 import com.extjs.gxt.ui.client.widget.grid.*;
 import com.extjs.gxt.ui.client.widget.layout.FitLayout;
 import com.google.gwt.user.client.Element;
-import com.google.gwt.user.client.rpc.AsyncCallback;
-import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.constants.ErrorCode;
-import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.mvc.events.AppEvents;
+import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.utils.BaseAsyncCallback;
+import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.mvc.events.StudentEvents;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.services.StudentService;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.model.GroupModel;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.model.SpecialityModel;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.model.StudentModel;
-import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.utils.StudentModelUtil;
+import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.model.util.StudentModelUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -76,7 +74,7 @@ public class StudentsPanel extends ContentPanel {
                         public void handleEvent(SelectionChangedEvent<StudentModel> be) {
                             StudentModel studentModel = be.getSelectedItem();
                             if (studentModel != null) {
-                                Dispatcher.forwardEvent(AppEvents.StudentSelected, studentModel);
+                                Dispatcher.forwardEvent(StudentEvents.StudentSelected, studentModel);
                             }
                         }
                     });
@@ -117,12 +115,12 @@ public class StudentsPanel extends ContentPanel {
 
     public void showGroup(GroupModel groupModel) {
         mask(GXT.MESSAGES.loadMask_msg());
-        StudentService.App.getInstance().loadStudentList(groupModel.getId(), studentAsyncCallback);
+        StudentService.Util.getInstance().loadStudentList(groupModel.getId(), studentAsyncCallback);
     }
 
     public void showSpecialityByCourse(SpecialityModel specialityModel, Integer course) {
         mask(GXT.MESSAGES.loadMask_msg());
-        StudentService.App.getInstance().loadStudentListBySpecialityIdAndCourse(specialityModel.getId(), course,
+        StudentService.Util.getInstance().loadStudentListBySpecialityIdAndCourse(specialityModel.getId(), course,
                 studentAsyncCallback);
     }
 
@@ -130,14 +128,7 @@ public class StudentsPanel extends ContentPanel {
         new GridDragSource(grid);
     }
 
-    private class StudentAsyncCallback implements AsyncCallback<List<StudentModel>> {
-        @Override
-        public void onFailure(Throwable caught) {
-            AppEvent appEvent = new AppEvent(AppEvents.Error, ErrorCode.ServerReturnError);
-            appEvent.setData("throwable", caught);
-            Dispatcher.forwardEvent(appEvent);
-        }
-
+    private class StudentAsyncCallback extends BaseAsyncCallback<List<StudentModel>> {
         @Override
         public void onSuccess(List<StudentModel> students) {
             studentListStore.removeAll();

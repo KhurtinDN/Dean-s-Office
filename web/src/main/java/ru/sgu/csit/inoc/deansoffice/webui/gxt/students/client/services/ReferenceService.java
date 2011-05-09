@@ -34,7 +34,7 @@ public interface ReferenceService extends RemoteService {
     void readyReferences(List<Long> referenceIdList);
     void issueReferences(List<Long> referenceIdList);
 
-    public static class App {
+    public static class Util {
         private static final ReferenceServiceAsync ourInstance = GWT.create(ReferenceService.class);
 
         public static ReferenceServiceAsync getInstance() {

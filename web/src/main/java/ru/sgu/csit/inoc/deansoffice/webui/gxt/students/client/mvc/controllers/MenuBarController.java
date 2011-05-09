@@ -2,7 +2,7 @@ package ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.mvc.controllers;
 
 import com.extjs.gxt.ui.client.mvc.AppEvent;
 import com.extjs.gxt.ui.client.mvc.Controller;
-import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.mvc.events.AppEvents;
+import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.mvc.events.CommonEvents;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.mvc.views.MenuBarView;
 
 /**
@@ -14,7 +14,7 @@ public class MenuBarController extends Controller {
     private MenuBarView menuBarView;
 
     public MenuBarController() {
-        registerEventTypes(AppEvents.Init);
+        registerEventTypes(CommonEvents.Init);
     }
 
     @Override

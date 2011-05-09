@@ -15,7 +15,7 @@ import com.extjs.gxt.ui.client.widget.layout.BorderLayout;
 import com.extjs.gxt.ui.client.widget.layout.BorderLayoutData;
 import com.extjs.gxt.ui.client.widget.layout.FitLayout;
 import com.google.gwt.user.client.rpc.AsyncCallback;
-import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.mvc.events.AppEvents;
+import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.mvc.events.StudentEvents;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.services.OrderService;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.model.OrderModel;
 
@@ -54,7 +54,7 @@ public class OrderQueueWindow extends Window {
         RpcProxy<List<OrderModel>> proxy = new RpcProxy<List<OrderModel>>() {
             @Override
             protected void load(Object loadConfig, AsyncCallback<List<OrderModel>> listAsyncCallback) {
-                OrderService.App.getInstance().loadOrders(listAsyncCallback);
+                OrderService.Util.getInstance().loadOrders(listAsyncCallback);
             }
         };
         loader = new BaseListLoader<ListLoadResult<OrderModel>>(proxy);
@@ -69,14 +69,14 @@ public class OrderQueueWindow extends Window {
         contentPanel.addButton(new Button("Создать новый", new SelectionListener<ButtonEvent>() {
             @Override
             public void componentSelected(ButtonEvent ce) {
-                Dispatcher.forwardEvent(AppEvents.AddNewOrderCall);
+                Dispatcher.forwardEvent(StudentEvents.AddNewOrderCall);
             }
         }));
 
         contentPanel.addButton(new Button("Изменить выбранный", new SelectionListener<ButtonEvent>() {
             @Override
             public void componentSelected(ButtonEvent ce) {
-                Dispatcher.forwardEvent(AppEvents.EditOrderCall);
+                Dispatcher.forwardEvent(StudentEvents.EditOrderCall);
             }
         }));
 

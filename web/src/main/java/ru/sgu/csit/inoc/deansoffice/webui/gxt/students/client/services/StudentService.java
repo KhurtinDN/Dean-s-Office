@@ -24,7 +24,7 @@ public interface StudentService extends RemoteService {
 
     void saveStudentDetails(StudentDetailsModel studentDetailsModel);
 
-    public static class App {
+    public static class Util {
         private static final StudentServiceAsync ourInstance = GWT.create(StudentService.class);
 
         public static StudentServiceAsync getInstance() {

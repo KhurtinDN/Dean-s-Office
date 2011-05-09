@@ -18,10 +18,10 @@ import java.util.Map;
 @RemoteServiceRelativePath("GWTServices/AppService")
 public interface AppService extends RemoteService {
 
-    public FacultyModel loadFaculty();
-    public List<Map<SpecialityModel, List<GroupModel>>> loadMenuData(Long facultyId);
+    List<Map<SpecialityModel, List<GroupModel>>> loadMenuData(Long facultyId);
+    FacultyModel loadActiveFaculty();
 
-    public static class App {
+    public static class Util {
         private static final AppServiceAsync ourInstance = GWT.create(AppService.class);
 
         public static AppServiceAsync getInstance() {

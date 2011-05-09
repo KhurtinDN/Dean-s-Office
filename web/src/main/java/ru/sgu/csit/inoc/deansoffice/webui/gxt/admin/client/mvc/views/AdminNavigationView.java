@@ -4,9 +4,10 @@ import com.extjs.gxt.ui.client.event.EventType;
 import com.extjs.gxt.ui.client.mvc.AppEvent;
 import com.extjs.gxt.ui.client.mvc.Dispatcher;
 import com.extjs.gxt.ui.client.mvc.View;
-import ru.sgu.csit.inoc.deansoffice.webui.gxt.admin.client.components.AdminNavigationPanel;
+import ru.sgu.csit.inoc.deansoffice.webui.gxt.admin.client.components.NavigationPanel;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.admin.client.mvc.controllers.AdminNavigationController;
-import ru.sgu.csit.inoc.deansoffice.webui.gxt.admin.client.mvc.events.AdminAppEvents;
+import ru.sgu.csit.inoc.deansoffice.webui.gxt.admin.client.mvc.events.AdminEvents;
+import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.mvc.events.CommonEvents;
 
 /**
  * User: Denis Khurtin ( KhurtinDN (a) gmail.com )
@@ -14,7 +15,7 @@ import ru.sgu.csit.inoc.deansoffice.webui.gxt.admin.client.mvc.events.AdminAppEv
  * Time: 9:23 PM
  */
 public class AdminNavigationView extends View {
-    private AdminNavigationPanel adminNavigationPanel;
+    private NavigationPanel navigationPanel;
 
     public AdminNavigationView(AdminNavigationController controller) {
         super(controller);
@@ -24,19 +25,21 @@ public class AdminNavigationView extends View {
     protected void initialize() {
         super.initialize();
 
-        adminNavigationPanel = new AdminNavigationPanel();
+        navigationPanel = new NavigationPanel();
     }
 
     @Override
     protected void handleEvent(AppEvent event) {
         EventType eventType = event.getType();
 
-        if (eventType.equals(AdminAppEvents.Init)) {
-            onInit(event);
+        if (eventType.equals(CommonEvents.Init)) {
+            onInit();
+        } else {
+            navigationPanel.reload();
         }
     }
 
-    private void onInit(AppEvent event) {
-        Dispatcher.forwardEvent(AdminAppEvents.NavigationPanelReady, adminNavigationPanel);
+    private void onInit() {
+        Dispatcher.forwardEvent(AdminEvents.NavigationPanelReady, navigationPanel);
     }
 }

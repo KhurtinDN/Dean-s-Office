@@ -7,6 +7,7 @@ import java.io.Serializable;
  * Date: 1/27/11
  * Time: 2:02 PM
  */
+@SuppressWarnings({"UnusedDeclaration"})
 public class StudentModel extends PersonModel {
     private Division division;
     private StudyForm studyForm;
@@ -51,19 +52,19 @@ public class StudentModel extends PersonModel {
     }
 
     public Division getDivision() {
-        return division;
+        return get("division");
     }
 
     public void setDivision(Division division) {
-        this.division = division;
+        set("division", division);
     }
 
     public StudyForm getStudyForm() {
-        return studyForm;
+        return get("studyForm");
     }
 
     public void setStudyForm(StudyForm studyForm) {
-        this.studyForm = studyForm;
+        set("studyForm", studyForm);
     }
 
     public Long getPhotoId() {

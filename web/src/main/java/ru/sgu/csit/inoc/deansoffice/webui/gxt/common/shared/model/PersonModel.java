@@ -8,6 +8,7 @@ import java.util.Date;
  * Date: 2/8/11
  * Time: 11:03 AM
  */
+@SuppressWarnings({"UnusedDeclaration"})
 public class PersonModel extends DtoModel {
     private Sex sex;
 
@@ -67,11 +68,10 @@ public class PersonModel extends DtoModel {
     }
 
     public Sex getSex() {
-        return sex;
+        return get("sex");
     }
 
     public void setSex(Sex sex) {
-        this.sex = sex;
         set("sex", sex);
     }
 

@@ -11,8 +11,9 @@ import com.extjs.gxt.ui.client.widget.menu.MenuBar;
 import com.extjs.gxt.ui.client.widget.menu.MenuBarItem;
 import com.extjs.gxt.ui.client.widget.menu.MenuItem;
 import com.google.gwt.user.client.Window;
+import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.mvc.events.CommonEvents;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.mvc.controllers.MenuBarController;
-import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.mvc.events.AppEvents;
+import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.mvc.events.StudentEvents;
 
 /**
  * User: Khurtin Denis (KhurtinDN@gmail.com)
@@ -44,7 +45,7 @@ public class MenuBarView extends View {
         referenceMenu.add(new MenuItem("Очередь справок", new SelectionListener<MenuEvent>() {
             @Override
             public void componentSelected(MenuEvent ce) {
-                Dispatcher.forwardEvent(AppEvents.ReferenceQueueCall);
+                Dispatcher.forwardEvent(StudentEvents.ReferenceQueueCall);
             }
         }));
 
@@ -53,14 +54,14 @@ public class MenuBarView extends View {
         orderMenu.add(new MenuItem("Создать новый приказ", new SelectionListener<MenuEvent>() {
             @Override
             public void componentSelected(MenuEvent ce) {
-                Dispatcher.forwardEvent(AppEvents.AddNewOrderCall);
+                Dispatcher.forwardEvent(StudentEvents.AddNewOrderCall);
             }
         }));
 
         orderMenu.add(new MenuItem("Очередь приказов", new SelectionListener<MenuEvent>() {
             @Override
             public void componentSelected(MenuEvent ce) {
-                Dispatcher.forwardEvent(AppEvents.OrderQueueCall);
+                Dispatcher.forwardEvent(StudentEvents.OrderQueueCall);
             }
         }));
 
@@ -69,7 +70,7 @@ public class MenuBarView extends View {
         helpMenu.add(new MenuItem("Справка", new SelectionListener<MenuEvent>() {
             @Override
             public void componentSelected(MenuEvent ce) {
-                Dispatcher.forwardEvent(AppEvents.Info, "Справочная информация находится в разработке.");
+                Dispatcher.forwardEvent(CommonEvents.Info, "Справочная информация находится в разработке.");
             }
         }));
 
@@ -84,12 +85,12 @@ public class MenuBarView extends View {
     protected void handleEvent(AppEvent event) {
         EventType eventType = event.getType();
 
-        if (eventType.equals(AppEvents.Init)) {
-            onInit(event);
+        if (eventType.equals(CommonEvents.Init)) {
+            onInit();
         }
     }
 
-    private void onInit(AppEvent event) {
-        Dispatcher.forwardEvent(AppEvents.MenuBarReady, menuBar);
+    private void onInit() {
+        Dispatcher.forwardEvent(StudentEvents.MenuBarReady, menuBar);
     }
 }

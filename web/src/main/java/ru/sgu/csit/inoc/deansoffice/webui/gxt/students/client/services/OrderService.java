@@ -15,9 +15,9 @@ import java.util.List;
 @RemoteServiceRelativePath("GWTServices/OrderService")
 public interface OrderService extends RemoteService {
 
-    public List<OrderModel> loadOrders();
+    List<OrderModel> loadOrders();
 
-    public static class App {
+    public static class Util {
         private static final OrderServiceAsync ourInstance = GWT.create(OrderService.class);
 
         public static OrderServiceAsync getInstance() {

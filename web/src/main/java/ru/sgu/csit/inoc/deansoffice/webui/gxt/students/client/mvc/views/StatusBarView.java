@@ -6,8 +6,9 @@ import com.extjs.gxt.ui.client.mvc.Dispatcher;
 import com.extjs.gxt.ui.client.mvc.View;
 import com.extjs.gxt.ui.client.widget.Status;
 import com.extjs.gxt.ui.client.widget.toolbar.ToolBar;
+import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.mvc.events.CommonEvents;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.mvc.controllers.StatusBarController;
-import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.mvc.events.AppEvents;
+import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.mvc.events.StudentEvents;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.model.GroupModel;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.model.SpecialityModel;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.model.StudentModel;
@@ -41,34 +42,34 @@ public class StatusBarView extends View {
     protected void handleEvent(AppEvent event) {
         EventType eventType = event.getType();
 
-        if (eventType.equals(AppEvents.Init)) {
-            onInit(event);
-        } else if (eventType.equals(AppEvents.UIReady)) {
-            onUIReady(event);
-        } else if (eventType.equals(AppEvents.Info) || eventType.equals(AppEvents.InfoWithConfirmation)) {
+        if (eventType.equals(CommonEvents.Init)) {
+            onInit();
+        } else if (eventType.equals(StudentEvents.UIReady)) {
+            onUIReady();
+        } else if (eventType.equals(CommonEvents.Info) || eventType.equals(CommonEvents.InfoWithConfirmation)) {
             onInfo(event);
-        } else if (eventType.equals(AppEvents.Error)) {
+        } else if (eventType.equals(CommonEvents.Error)) {
             onError(event);
-        } else if (eventType.equals(AppEvents.SpecialitySelected)) {
+        } else if (eventType.equals(StudentEvents.SpecialitySelected)) {
             onSpecialitySelected(event);
-        } else if (eventType.equals(AppEvents.GroupSelected)) {
+        } else if (eventType.equals(StudentEvents.GroupSelected)) {
             onGroupSelected(event);
-        } else if (eventType.equals(AppEvents.StudentSelected)) {
+        } else if (eventType.equals(StudentEvents.StudentSelected)) {
             onStudentSelected(event);
         }
     }
 
-    private void onInit(AppEvent event) {
+    private void onInit() {
         status.setWidth("100%");
         status.setBox(true);
         setStatus("Инициализация");
 
         toolBar.add(status);
 
-        Dispatcher.forwardEvent(AppEvents.StatusBarReady, toolBar);
+        Dispatcher.forwardEvent(StudentEvents.StatusBarReady, toolBar);
     }
 
-    private void onUIReady(AppEvent event) {
+    private void onUIReady() {
         setStatus("Приложение готово к работе");
     }
 

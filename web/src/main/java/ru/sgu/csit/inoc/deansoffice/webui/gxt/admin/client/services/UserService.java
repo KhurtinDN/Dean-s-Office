@@ -12,12 +12,12 @@ import java.util.List;
  * Date: 4/12/11
  * Time: 3:43 PM
  */
-@RemoteServiceRelativePath("GWTServices/UserService")
+@RemoteServiceRelativePath("GWTServices/AdminUserService")
 public interface UserService extends RemoteService {
 
     List<UserModel> loadUsers();
 
-    public static class App {
+    public static class Util {
         private static final UserServiceAsync ourInstance = GWT.create(UserService.class);
 
         public static UserServiceAsync getInstance() {

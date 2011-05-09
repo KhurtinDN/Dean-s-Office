@@ -2,7 +2,8 @@ package ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.mvc.controllers;
 
 import com.extjs.gxt.ui.client.mvc.AppEvent;
 import com.extjs.gxt.ui.client.mvc.Controller;
-import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.mvc.events.AppEvents;
+import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.mvc.events.CommonEvents;
+import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.mvc.events.StudentEvents;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.mvc.views.AppView;
 
 /**
@@ -14,14 +15,10 @@ public class AppController extends Controller {
     private AppView appView;
 
     public AppController() {
-        registerEventTypes(AppEvents.Init);
-        registerEventTypes(AppEvents.Error);
-        registerEventTypes(AppEvents.NavigationPanelReady);
-        registerEventTypes(AppEvents.StudentsPanelReady);
-        registerEventTypes(AppEvents.InformationPanelReady);
-        registerEventTypes(AppEvents.UIReady);
-        registerEventTypes(AppEvents.MenuBarReady);
-        registerEventTypes(AppEvents.StatusBarReady);
+        registerEventTypes(CommonEvents.Init, CommonEvents.Error);
+        registerEventTypes(StudentEvents.UIReady, StudentEvents.MenuBarReady, StudentEvents.StatusBarReady);
+        registerEventTypes(StudentEvents.NavigationPanelReady);
+        registerEventTypes(StudentEvents.StudentsPanelReady, StudentEvents.InformationPanelReady);
     }
 
     @Override

@@ -12,7 +12,7 @@ import java.util.List;
  * Date: 4/12/11
  * Time: 8:10 PM
  */
-@Service("UserService")
+@Service("AdminUserService")
 public class UserServiceImpl implements UserService {
     @Override
     public List<UserModel> loadUsers() {

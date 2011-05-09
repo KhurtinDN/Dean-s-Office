@@ -31,13 +31,24 @@ public class GroupUtil {
             return null;
         }
 
-        GroupModel groupModel = new GroupModel();
-        groupModel.setId(group.getId());
-        groupModel.setName(group.getName());
-        groupModel.setCourse(group.getCourse());
-        groupModel.setSpecialityName(specialityModel.getName());
+        GroupModel groupModel = convertGroupToGroupModel(group);
+        groupModel.setSpeciality(specialityModel);
 
         return groupModel;
+    }
+
+    public static List<GroupModel> convertGroupListToGroupModelList(List<Group> groupList) {
+        if (groupList == null) {
+            return null;
+        }
+
+        List<GroupModel> groupModelList = new ArrayList<GroupModel>(groupList.size());
+
+        for (Group group : groupList) {
+            groupModelList.add(convertGroupToGroupModel(group));
+        }
+
+        return groupModelList;
     }
 
     public static List<GroupModel> convertGroupListToGroupModelList(List<Group> groupList,

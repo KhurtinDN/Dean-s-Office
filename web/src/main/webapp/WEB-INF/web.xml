@@ -47,6 +47,7 @@
 
     <servlet-mapping>
         <servlet-name>SpringGwtRemoteServiceServlet</servlet-name>
+        <url-pattern>/admin/GWTServices/*</url-pattern>
         <url-pattern>/students/GWTServices/*</url-pattern>
     </servlet-mapping>
 

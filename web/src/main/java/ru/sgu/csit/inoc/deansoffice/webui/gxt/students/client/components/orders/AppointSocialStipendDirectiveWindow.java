@@ -16,9 +16,9 @@ import com.extjs.gxt.ui.client.widget.layout.BorderLayoutData;
 import com.extjs.gxt.ui.client.widget.layout.FitLayout;
 import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.user.client.Element;
+import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.mvc.events.CommonEvents;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.components.NavigationPanel;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.components.StudentsPanel;
-import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.mvc.events.AppEvents;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.model.StudentModel;
 
 import java.util.ArrayList;
@@ -59,7 +59,7 @@ public class AppointSocialStipendDirectiveWindow extends AbstractDirectiveWindow
                 StudentModel studentModel = studentGrid.getSelectionModel().getSelectedItem();
 
                 if (studentModel == null) {
-                    Dispatcher.forwardEvent(AppEvents.InfoWithConfirmation,
+                    Dispatcher.forwardEvent(CommonEvents.InfoWithConfirmation,
                             "Выберите, пожалуйста, студента со стипендией!");
                 } else {
                     studentGrid.startEditing(studentListStore.indexOf(studentModel), 2);
@@ -72,7 +72,7 @@ public class AppointSocialStipendDirectiveWindow extends AbstractDirectiveWindow
                 StudentModel studentModel = studentGrid.getSelectionModel().getSelectedItem();
 
                 if (studentModel == null) {
-                    Dispatcher.forwardEvent(AppEvents.InfoWithConfirmation,
+                    Dispatcher.forwardEvent(CommonEvents.InfoWithConfirmation,
                             "Выберите, пожалуйста, студента со стипендией!");
                 } else {
                     studentGrid.startEditing(studentListStore.indexOf(studentModel), 3);
@@ -85,7 +85,7 @@ public class AppointSocialStipendDirectiveWindow extends AbstractDirectiveWindow
                 StudentModel studentModel = studentGrid.getSelectionModel().getSelectedItem();
 
                 if (studentModel == null) {
-                    Dispatcher.forwardEvent(AppEvents.InfoWithConfirmation,
+                    Dispatcher.forwardEvent(CommonEvents.InfoWithConfirmation,
                             "Выберите, пожалуйста, старосту для удаления!");
                 } else {
                     studentGrid.stopEditing();

@@ -23,4 +23,22 @@ public class DtoModel extends BaseModel {
     public void setId(Long id) {
         set("id", id);
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+
+        if (obj == null) {
+            return false;
+        }
+
+        if (obj instanceof DtoModel) {
+            DtoModel dtoModel = (DtoModel) obj;
+            return !(getId() == null || dtoModel.getId() == null) && getId().equals(dtoModel.getId());
+        }
+
+        return super.equals(obj);
+    }
 }

@@ -1,3 +1,11 @@
+.users-icon {
+    background: url(../icons/users16x16.png) no-repeat center left !important;
+}
+
+.staff-icon {
+    background: url(../icons/staff16x16.png) no-repeat center left !important;
+}
+
 .group-icon {
     background: url(../icons/group16x16.png) no-repeat center left !important;
 }
@@ -6,8 +14,20 @@
     background: url(../icons/speciality16x16.png) no-repeat center left !important;
 }
 
+.faculties-icon {
+    background: url(../icons/faculties16x16.png) no-repeat center left !important;
+}
+
+.faculty-icon {
+    background: url(../icons/faculty16x16.png) no-repeat center left !important;
+}
+
 .addButton-icon {
     background: url(../icons/add16x16.png) no-repeat center left !important;
+}
+
+.editButton-icon {
+    background: url(../icons/edit16x16.png) no-repeat center left !important;
 }
 
 .removeButton-icon {

@@ -6,7 +6,7 @@ import com.extjs.gxt.ui.client.mvc.View;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.components.orders.OrderDialog;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.components.orders.OrderQueueWindow;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.mvc.controllers.OrderController;
-import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.mvc.events.AppEvents;
+import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.mvc.events.StudentEvents;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.model.OrderModel;
 
 /**
@@ -27,23 +27,23 @@ public class OrderView extends View {
     protected void handleEvent(AppEvent event) {
         EventType eventType = event.getType();
 
-        if (eventType.equals(AppEvents.OrderQueueCall)) {
-            onOrderQueueCall(event);
-        } else if (eventType.equals(AppEvents.AddNewOrderCall)) {
-            onAddNewOrderCall(event);
-        } else if (eventType.equals(AppEvents.EditOrderCall)) {
+        if (eventType.equals(StudentEvents.OrderQueueCall)) {
+            onOrderQueueCall();
+        } else if (eventType.equals(StudentEvents.AddNewOrderCall)) {
+            onAddNewOrderCall();
+        } else if (eventType.equals(StudentEvents.EditOrderCall)) {
             onEditOrderCall(event);
         }
     }
 
-    private void onOrderQueueCall(AppEvent event) {
+    private void onOrderQueueCall() {
         if (orderQueueWindow == null) {
             orderQueueWindow = new OrderQueueWindow();
         }
         orderQueueWindow.show();
     }
 
-    private void onAddNewOrderCall(AppEvent event) {
+    private void onAddNewOrderCall() {
         if (orderDialog == null) {
             orderDialog = new OrderDialog();
         }
@@ -54,6 +54,6 @@ public class OrderView extends View {
         if (orderDialog == null) {
             orderDialog = new OrderDialog();
         }
-        orderDialog.showEditOrderDialog( (OrderModel) event.getData() );
+        orderDialog.showEditOrderDialog( event.<OrderModel>getData() );
     }
 }

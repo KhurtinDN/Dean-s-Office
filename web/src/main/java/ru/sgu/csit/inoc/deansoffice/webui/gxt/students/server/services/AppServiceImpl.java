@@ -8,11 +8,12 @@ import ru.sgu.csit.inoc.deansoffice.dao.SpecialityDAO;
 import ru.sgu.csit.inoc.deansoffice.domain.Faculty;
 import ru.sgu.csit.inoc.deansoffice.domain.Group;
 import ru.sgu.csit.inoc.deansoffice.domain.Speciality;
+import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.exceptions.BadRequestException;
+import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.model.FacultyModel;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.services.AppService;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.server.utils.FacultyUtil;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.server.utils.GroupUtil;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.server.utils.SpecialityUtil;
-import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.model.FacultyModel;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.model.GroupModel;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.model.SpecialityModel;
 
@@ -38,21 +39,18 @@ public class AppServiceImpl implements AppService {
     private GroupDAO groupDAO;
 
     @Override
-    public FacultyModel loadFaculty() {
-        List<Faculty> facultyList = facultyDAO.findAll();     // todo: how to get strict ONE object
-
-        if (facultyList == null || facultyList.size() != 1) {
-            throw new RuntimeException("Faculty must be one object!"); // todo: how get csit?
+    public List<Map<SpecialityModel, List<GroupModel>>> loadMenuData(Long facultyId) {
+        if (facultyId == null) {
+            throw new BadRequestException("Id must be not null.");
         }
 
-        Faculty faculty = facultyList.get(0);
+        Faculty faculty = facultyDAO.findById(facultyId);
 
-        return FacultyUtil.convertFacultyToFacultyModel(faculty);
-    }
+        if (faculty == null) {
+            throw new BadRequestException("Requested id not found.");
+        }
 
-    @Override
-    public List<Map<SpecialityModel, List<GroupModel>>> loadMenuData(Long facultyId) {
-        Integer courseCount = facultyDAO.findById(facultyId).getCourseCount();
+        Integer courseCount = faculty.getCourseCount();
 
         List<Map<SpecialityModel, List<GroupModel>>> result =
                 new ArrayList<Map<SpecialityModel, List<GroupModel>>>(courseCount);
@@ -76,5 +74,11 @@ public class AppServiceImpl implements AppService {
         }
 
         return result;
+    }
+
+    @Override
+    public FacultyModel loadActiveFaculty() {
+        Faculty faculty = facultyDAO.findByShortName("КНиИТ").get(0); // todo: how get active faculty by user from session?
+        return FacultyUtil.convertFacultyToFacultyModel(faculty);
     }
 }

@@ -8,17 +8,18 @@ import java.util.Date;
  * Date: 3/25/11
  * Time: 10:05 AM
  */
+@SuppressWarnings({"UnusedDeclaration"})
 public class ReferenceModel extends DtoModel {
     private StudentModel student;
     private ReferenceType type;
     private ReferenceState state;
 
     public StudentModel getStudent() {
-        return student;
+        return get("student");
     }
 
-    public void setStudent(StudentModel studentModel) {
-        this.student = studentModel;
+    public void setStudent(StudentModel student) {
+        set("student", student);
     }
 
     public Date getRegistrationDate() {
@@ -30,11 +31,10 @@ public class ReferenceModel extends DtoModel {
     }
 
     public ReferenceType getType() {
-        return type;
+        return get("type");
     }
 
     public void setType(ReferenceType type) {
-        this.type = type;
         set("type", type);
     }
 
@@ -47,11 +47,10 @@ public class ReferenceModel extends DtoModel {
     }
 
     public ReferenceState getState() {
-        return state;
+        return get("state");
     }
 
     public void setState(ReferenceState state) {
-        this.state = state;
         set("state", state);
     }
 

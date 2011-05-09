@@ -11,9 +11,10 @@ import com.extjs.gxt.ui.client.widget.grid.Grid;
 import com.extjs.gxt.ui.client.widget.layout.BorderLayout;
 import com.extjs.gxt.ui.client.widget.layout.BorderLayoutData;
 import com.google.gwt.user.client.Element;
+import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.mvc.events.CommonEvents;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.components.NavigationPanel;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.components.StudentsPanel;
-import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.mvc.events.AppEvents;
+import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.mvc.events.StudentEvents;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.model.ReferenceModel;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.model.StudentModel;
 
@@ -39,13 +40,13 @@ public class AddReferenceDialog extends Window {
             public void componentSelected(ButtonEvent ce) {
                 StudentModel studentModel = studentModelGrid.getSelectionModel().getSelectedItem();
                 if (studentModel != null) {
-                    AppEvent appEvent = new AppEvent(AppEvents.RegistrationReference);
+                    AppEvent appEvent = new AppEvent(StudentEvents.RegistrationReference);
                     appEvent.setData("referenceType", ReferenceModel.ReferenceType.REFERENCE_1);
                     appEvent.setData("ownerId", studentModel.getId());
 
                     Dispatcher.forwardEvent(appEvent);
                 } else {
-                    Dispatcher.forwardEvent(AppEvents.InfoWithConfirmation, "Выберите, пожалуйста, студента!");
+                    Dispatcher.forwardEvent(CommonEvents.InfoWithConfirmation, "Выберите, пожалуйста, студента!");
                 }
             }
         }));
@@ -55,13 +56,13 @@ public class AddReferenceDialog extends Window {
             public void componentSelected(ButtonEvent ce) {
                 StudentModel studentModel = studentModelGrid.getSelectionModel().getSelectedItem();
                 if (studentModel != null) {
-                    AppEvent appEvent = new AppEvent(AppEvents.RegistrationReference);
+                    AppEvent appEvent = new AppEvent(StudentEvents.RegistrationReference);
                     appEvent.setData("referenceType", ReferenceModel.ReferenceType.REFERENCE_2);
                     appEvent.setData("ownerId", studentModel.getId());
 
                     Dispatcher.forwardEvent(appEvent);
                 } else {
-                    Dispatcher.forwardEvent(AppEvents.InfoWithConfirmation, "Выберите, пожалуйста, студента!");
+                    Dispatcher.forwardEvent(CommonEvents.InfoWithConfirmation, "Выберите, пожалуйста, студента!");
                 }
             }
         }));
@@ -71,13 +72,13 @@ public class AddReferenceDialog extends Window {
             public void componentSelected(ButtonEvent ce) {
                 StudentModel studentModel = studentModelGrid.getSelectionModel().getSelectedItem();
                 if (studentModel != null) {
-                    AppEvent appEvent = new AppEvent(AppEvents.RegistrationReference);
+                    AppEvent appEvent = new AppEvent(StudentEvents.RegistrationReference);
                     appEvent.setData("referenceType", ReferenceModel.ReferenceType.REFERENCE_3);
                     appEvent.setData("ownerId", studentModel.getId());
 
                     Dispatcher.forwardEvent(appEvent);
                 } else {
-                    Dispatcher.forwardEvent(AppEvents.InfoWithConfirmation, "Выберите, пожалуйста, студента!");
+                    Dispatcher.forwardEvent(StudentEvents.InfoWithConfirmation, "Выберите, пожалуйста, студента!");
                 }
             }
         }));*/

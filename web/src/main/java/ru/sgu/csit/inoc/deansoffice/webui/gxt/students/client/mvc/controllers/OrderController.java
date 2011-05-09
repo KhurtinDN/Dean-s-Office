@@ -2,7 +2,7 @@ package ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.mvc.controllers;
 
 import com.extjs.gxt.ui.client.mvc.AppEvent;
 import com.extjs.gxt.ui.client.mvc.Controller;
-import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.mvc.events.AppEvents;
+import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.mvc.events.StudentEvents;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.mvc.views.OrderView;
 
 /**
@@ -10,11 +10,12 @@ import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.mvc.views.OrderVie
  * Date: 3/9/11
  * Time: 1:04 PM
  */
-public class OrderController extends Controller {
+public class
+        OrderController extends Controller {
     private OrderView orderView;
 
     public OrderController() {
-        registerEventTypes(AppEvents.OrderQueueCall, AppEvents.AddNewOrderCall, AppEvents.EditOrderCall);
+        registerEventTypes(StudentEvents.OrderQueueCall, StudentEvents.AddNewOrderCall, StudentEvents.EditOrderCall);
     }
 
     @Override

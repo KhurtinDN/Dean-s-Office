@@ -2,7 +2,7 @@ package ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.mvc.controllers;
 
 import com.extjs.gxt.ui.client.mvc.AppEvent;
 import com.extjs.gxt.ui.client.mvc.Controller;
-import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.mvc.events.AppEvents;
+import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.mvc.events.StudentEvents;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.mvc.views.ReferenceView;
 
 /**
@@ -14,9 +14,9 @@ public class ReferenceController extends Controller {
     private ReferenceView referenceView;
 
     public ReferenceController() {
-        registerEventTypes(AppEvents.AddReference, AppEvents.RemoveReference, AppEvents.UpdateReference);
-        registerEventTypes(AppEvents.ReferenceQueueCall, AppEvents.RegistrationReference);
-        registerEventTypes(AppEvents.PrintReference, AppEvents.ReadyReference, AppEvents.IssueReference);
+        registerEventTypes(StudentEvents.AddReference, StudentEvents.RemoveReference, StudentEvents.UpdateReference);
+        registerEventTypes(StudentEvents.ReferenceQueueCall, StudentEvents.RegistrationReference);
+        registerEventTypes(StudentEvents.PrintReference, StudentEvents.ReadyReference, StudentEvents.IssueReference);
     }
 
     @Override

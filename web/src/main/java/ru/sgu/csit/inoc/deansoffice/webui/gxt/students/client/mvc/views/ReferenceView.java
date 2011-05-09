@@ -6,11 +6,11 @@ import com.extjs.gxt.ui.client.mvc.Controller;
 import com.extjs.gxt.ui.client.mvc.Dispatcher;
 import com.extjs.gxt.ui.client.mvc.View;
 import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.rpc.AsyncCallback;
+import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.utils.BaseAsyncCallback;
+import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.mvc.events.CommonEvents;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.components.references.AddReferenceDialog;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.components.references.ReferenceQueueWindow;
-import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.constants.ErrorCode;
-import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.mvc.events.AppEvents;
+import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.mvc.events.StudentEvents;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.services.ReferenceService;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.model.ReferenceModel;
 
@@ -40,26 +40,26 @@ public class ReferenceView extends View {
     protected void handleEvent(AppEvent event) {
         EventType eventType = event.getType();
 
-        if (eventType.equals(AppEvents.AddReference)) {
-            onAddReference(event);
-        } else if (eventType.equals(AppEvents.RemoveReference)) {
+        if (eventType.equals(StudentEvents.AddReference)) {
+            onAddReference();
+        } else if (eventType.equals(StudentEvents.RemoveReference)) {
             onRemoveReference(event);
-        } else if (eventType.equals(AppEvents.UpdateReference)) {
+        } else if (eventType.equals(StudentEvents.UpdateReference)) {
             onUpdateReference(event);
-        } else if (eventType.equals(AppEvents.ReferenceQueueCall)) {
+        } else if (eventType.equals(StudentEvents.ReferenceQueueCall)) {
             onReferenceQueueCall(event);
-        } else if (eventType.equals(AppEvents.RegistrationReference)) {
+        } else if (eventType.equals(StudentEvents.RegistrationReference)) {
             onRegistrationReference(event);
-        } else if (eventType.equals(AppEvents.PrintReference)) {
+        } else if (eventType.equals(StudentEvents.PrintReference)) {
             onPrintReference(event);
-        } else if (eventType.equals(AppEvents.ReadyReference)) {
+        } else if (eventType.equals(StudentEvents.ReadyReference)) {
             onReadyReference(event);
-        } else if (eventType.equals(AppEvents.IssueReference)) {
+        } else if (eventType.equals(StudentEvents.IssueReference)) {
             onIssueReference(event);
         }
     }
 
-    private void onAddReference(AppEvent event) {
+    private void onAddReference() {
         new AddReferenceDialog(referenceQueueWindow).show();
     }
 
@@ -71,18 +71,11 @@ public class ReferenceView extends View {
             referenceIdList.add(referenceModel.getId());
         }
 
-        ReferenceService.App.getInstance().removeReferences(referenceIdList, new AsyncCallback<Void>() {
-            @Override
-            public void onFailure(Throwable caught) {
-                AppEvent appEvent = new AppEvent(AppEvents.Error, ErrorCode.ServerReturnError);
-                appEvent.setData("throwable", caught);
-                Dispatcher.forwardEvent(appEvent);
-            }
-
+        ReferenceService.Util.getInstance().removeReferences(referenceIdList, new BaseAsyncCallback<Void>() {
             @Override
             public void onSuccess(Void result) {
                 referenceQueueWindow.reload();
-                Dispatcher.forwardEvent(AppEvents.Info, "Справки удалены успешно!");
+                Dispatcher.forwardEvent(CommonEvents.Info, "Справки удалены успешно!");
             }
         });
     }
@@ -90,18 +83,11 @@ public class ReferenceView extends View {
     private void onUpdateReference(AppEvent event) {
         ReferenceModel referenceModel = event.getData();
 
-        ReferenceService.App.getInstance().updateDestinationReference(referenceModel.getId(),
-                referenceModel.getDestination(), new AsyncCallback<Void>() {
-                    @Override
-                    public void onFailure(Throwable caught) {
-                        AppEvent appEvent = new AppEvent(AppEvents.Error, ErrorCode.ServerReturnError);
-                        appEvent.setData("throwable", caught);
-                        Dispatcher.forwardEvent(appEvent);
-                    }
-
+        ReferenceService.Util.getInstance().updateDestinationReference(referenceModel.getId(),
+                referenceModel.getDestination(), new BaseAsyncCallback<Void>() {
                     @Override
                     public void onSuccess(Void result) {
-                        Dispatcher.forwardEvent(AppEvents.Info, "Справка изменена успешно!");
+                        Dispatcher.forwardEvent(CommonEvents.Info, "Справка изменена успешно!");
                     }
                 });
     }
@@ -115,17 +101,10 @@ public class ReferenceView extends View {
         ReferenceModel.ReferenceType type = event.getData("referenceType");
         Long ownerId = event.getData("ownerId");
 
-        ReferenceService.App.getInstance().registrationReference(type, ownerId, new AsyncCallback<Void>() {
-            @Override
-            public void onFailure(Throwable caught) {
-                AppEvent appEvent = new AppEvent(AppEvents.Error, ErrorCode.ServerReturnError);
-                appEvent.setData("throwable", caught);
-                Dispatcher.forwardEvent(appEvent);
-            }
-
+        ReferenceService.Util.getInstance().registrationReference(type, ownerId, new BaseAsyncCallback<Void>() {
             @Override
             public void onSuccess(Void result) {
-                Dispatcher.forwardEvent(AppEvents.Info, "Справка добавлена успешно!");
+                Dispatcher.forwardEvent(CommonEvents.Info, "Справка добавлена успешно!");
             }
         });
     }
@@ -145,18 +124,11 @@ public class ReferenceView extends View {
 
         Window.open("../documents/references.pdf?referencesId=" + stringBuilder.toString(), "_blank", "");
 
-        ReferenceService.App.getInstance().printReferences(referenceIdList, new AsyncCallback<Void>() {
-            @Override
-            public void onFailure(Throwable caught) {
-                AppEvent appEvent = new AppEvent(AppEvents.Error, ErrorCode.ServerReturnError);
-                appEvent.setData("throwable", caught);
-                Dispatcher.forwardEvent(appEvent);
-            }
-
+        ReferenceService.Util.getInstance().printReferences(referenceIdList, new BaseAsyncCallback<Void>() {
             @Override
             public void onSuccess(Void result) {
                 referenceQueueWindow.reload();
-                Dispatcher.forwardEvent(AppEvents.Info, "Запрос на печать прошел успешно!");
+                Dispatcher.forwardEvent(CommonEvents.Info, "Запрос на печать прошел успешно!");
             }
         });
     }
@@ -169,18 +141,11 @@ public class ReferenceView extends View {
             referenceIdList.add(referenceModel.getId());
         }
 
-        ReferenceService.App.getInstance().readyReferences(referenceIdList, new AsyncCallback<Void>() {
-            @Override
-            public void onFailure(Throwable caught) {
-                AppEvent appEvent = new AppEvent(AppEvents.Error, ErrorCode.ServerReturnError);
-                appEvent.setData("throwable", caught);
-                Dispatcher.forwardEvent(appEvent);
-            }
-
+        ReferenceService.Util.getInstance().readyReferences(referenceIdList, new BaseAsyncCallback<Void>() {
             @Override
             public void onSuccess(Void result) {
                 referenceQueueWindow.reload();
-                Dispatcher.forwardEvent(AppEvents.Info, "Справки подготовлены успешно!");
+                Dispatcher.forwardEvent(CommonEvents.Info, "Справки подготовлены успешно!");
             }
         });
     }
@@ -193,18 +158,11 @@ public class ReferenceView extends View {
             referenceIdList.add(referenceModel.getId());
         }
 
-        ReferenceService.App.getInstance().issueReferences(referenceIdList, new AsyncCallback<Void>() {
-            @Override
-            public void onFailure(Throwable caught) {
-                AppEvent appEvent = new AppEvent(AppEvents.Error, ErrorCode.ServerReturnError);
-                appEvent.setData("throwable", caught);
-                Dispatcher.forwardEvent(appEvent);
-            }
-
+        ReferenceService.Util.getInstance().issueReferences(referenceIdList, new BaseAsyncCallback<Void>() {
             @Override
             public void onSuccess(Void result) {
                 referenceQueueWindow.reload();
-                Dispatcher.forwardEvent(AppEvents.Info, "Справки выданы успешно!");
+                Dispatcher.forwardEvent(CommonEvents.Info, "Справки выданы успешно!");
             }
         });
     }

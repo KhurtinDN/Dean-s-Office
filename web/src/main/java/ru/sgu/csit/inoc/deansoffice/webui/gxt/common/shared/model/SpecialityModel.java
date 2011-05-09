@@ -5,7 +5,9 @@ package ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.model;
  * Date: 1/27/11
  * Time: 2:04 PM
  */
+@SuppressWarnings({"UnusedDeclaration"})
 public class SpecialityModel extends DtoModel {
+    private FacultyModel faculty;
 
     public SpecialityModel() {
     }
@@ -37,5 +39,13 @@ public class SpecialityModel extends DtoModel {
 
     public void setCode(String code) {
         set("code", code);
+    }
+
+    public FacultyModel getFaculty() {
+        return get("faculty");
+    }
+
+    public void setFaculty(FacultyModel faculty) {
+        set("faculty", faculty);
     }
 }

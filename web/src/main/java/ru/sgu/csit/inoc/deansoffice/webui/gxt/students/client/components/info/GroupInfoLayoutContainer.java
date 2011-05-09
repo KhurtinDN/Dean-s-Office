@@ -9,8 +9,8 @@ import com.extjs.gxt.ui.client.widget.layout.FlowData;
 import com.extjs.gxt.ui.client.widget.layout.FormLayout;
 import com.google.gwt.user.client.Element;
 import com.google.gwt.user.client.ui.Image;
-import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.constants.ErrorCode;
-import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.mvc.events.AppEvents;
+import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.mvc.events.CommonEvents;
+import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.constants.ErrorCode;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.model.GroupModel;
 
 /**
@@ -66,10 +66,10 @@ public class GroupInfoLayoutContainer extends LayoutContainer {
     public void bind(GroupModel groupModel) {
         if (isRendered()) {
             nameLabelField.setText(groupModel.getName());
-            specialityLabelField.setText(groupModel.getSpecialityName());
+            specialityLabelField.setText(groupModel.getSpeciality().getName());
             courseLabelField.setText(groupModel.getCourse().toString());
         } else {
-            AppEvent appEvent = new AppEvent(AppEvents.Error, ErrorCode.DebugInformation);
+            AppEvent appEvent = new AppEvent(CommonEvents.Error, ErrorCode.DebugInformation);
             appEvent.setData("message", "GroupInfoLayoutContainer is not rendered!");
             Dispatcher.forwardEvent(appEvent);
         }

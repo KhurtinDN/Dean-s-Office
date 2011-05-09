@@ -8,17 +8,17 @@ import com.extjs.gxt.ui.client.mvc.Dispatcher;
 import com.extjs.gxt.ui.client.mvc.View;
 import com.extjs.gxt.ui.client.widget.Component;
 import com.extjs.gxt.ui.client.widget.ContentPanel;
-import com.extjs.gxt.ui.client.widget.Info;
 import com.extjs.gxt.ui.client.widget.Viewport;
 import com.extjs.gxt.ui.client.widget.layout.BorderLayout;
 import com.extjs.gxt.ui.client.widget.layout.BorderLayoutData;
 import com.extjs.gxt.ui.client.widget.layout.FitLayout;
-import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.RootLayoutPanel;
+import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.utils.BaseAsyncCallback;
+import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.mvc.events.CommonEvents;
+import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.mvc.events.StudentEvents;
+import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.services.AppService;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.constants.AppConstants;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.mvc.controllers.AppController;
-import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.mvc.events.AppEvents;
-import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.services.AppService;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.model.FacultyModel;
 
 /**
@@ -46,26 +46,26 @@ public class AppView extends View {
     protected void handleEvent(AppEvent event) {
         EventType eventType = event.getType();
 
-        if (eventType.equals(AppEvents.Init)) {
-            onInit(event);
-        } else if (eventType.equals(AppEvents.Error)) {
-            onError(event);
-        } else if (eventType.equals(AppEvents.NavigationPanelReady)) {
+        if (eventType.equals(CommonEvents.Init)) {
+            onInit();
+        } else if (eventType.equals(CommonEvents.Error)) {
+            onError();
+        } else if (eventType.equals(StudentEvents.NavigationPanelReady)) {
             onNavigationPanelReady(event);
-        } else if (eventType.equals(AppEvents.StudentsPanelReady)) {
+        } else if (eventType.equals(StudentEvents.StudentsPanelReady)) {
             onStudentsPanelReady(event);
-        } else if (eventType.equals(AppEvents.InformationPanelReady)) {
+        } else if (eventType.equals(StudentEvents.InformationPanelReady)) {
             onInformationPanelReady(event);
-        } else if (eventType.equals(AppEvents.MenuBarReady)) {
+        } else if (eventType.equals(StudentEvents.MenuBarReady)) {
             onMenuBarReady(event);
-        } else if (eventType.equals(AppEvents.StatusBarReady)) {
+        } else if (eventType.equals(StudentEvents.StatusBarReady)) {
             onStatusBarReady(event);
-        } else if (eventType.equals(AppEvents.UIReady)) {
-            onUIReady(event);
+        } else if (eventType.equals(StudentEvents.UIReady)) {
+            onUIReady();
         }
     }
 
-    private void onInit(AppEvent event) {
+    private void onInit() {
         viewportPanel.setHeaderVisible(false);
         viewportPanel.setLayout(new BorderLayout());
 
@@ -73,7 +73,7 @@ public class AppView extends View {
         viewport.add(viewportPanel);
     }
 
-    private void onError(AppEvent event) {
+    private void onError() {
     }
 
     private void onNavigationPanelReady(AppEvent event) {
@@ -111,32 +111,21 @@ public class AppView extends View {
     }
 
     private void onMenuBarReady(AppEvent event) {
-        Component component = event.getData();
-        if (component != null) {
-            viewportPanel.setTopComponent(component);
-        }
+        viewportPanel.setTopComponent(event.<Component>getData());
     }
 
     private void onStatusBarReady(AppEvent event) {
-        Component component = event.getData();
-        if (component != null) {
-            viewportPanel.setBottomComponent(component);
-        }
+        viewportPanel.setBottomComponent(event.<Component>getData());
     }
 
-    private void onUIReady(AppEvent event) {
+    private void onUIReady() {
         RootLayoutPanel.get().add(viewport);
 
-        AppService.App.getInstance().loadFaculty(new AsyncCallback<FacultyModel>() {
-            @Override
-            public void onFailure(Throwable caught) {
-                Info.display("Важное сообщение", "Сервер не доступен");
-            }
-
+        AppService.Util.getInstance().loadActiveFaculty(new BaseAsyncCallback<FacultyModel>() {
             @Override
             public void onSuccess(FacultyModel facultyModel) {
                 Registry.register(AppConstants.CURRENT_FACULTY, facultyModel);
-                Dispatcher.forwardEvent(AppEvents.FacultySelected, facultyModel);
+                Dispatcher.forwardEvent(StudentEvents.FacultySelected, facultyModel);
             }
         });
     }

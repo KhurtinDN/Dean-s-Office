@@ -10,11 +10,11 @@ import com.extjs.gxt.ui.client.widget.form.TextField;
 import com.google.gwt.core.client.Scheduler;
 import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.user.client.Element;
-import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.components.FormUtil;
-import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.mvc.events.AppEvents;
+import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.model.util.ReferenceModelUtil;
+import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.model.util.StudentModelUtil;
+import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.utils.FormUtil;
+import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.mvc.events.StudentEvents;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.model.ReferenceModel;
-import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.utils.ReferenceModelUtil;
-import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.utils.StudentModelUtil;
 
 import java.util.Date;
 
@@ -79,7 +79,7 @@ public class ReferenceInfoPanel extends FormPanel {
                 if (referenceModel != null) {
                     String destination = be.getValue() != null ? be.getValue().toString() : "";
                     referenceModel.setDestination(destination);
-                    Dispatcher.forwardEvent(AppEvents.UpdateReference, referenceModel);
+                    Dispatcher.forwardEvent(StudentEvents.UpdateReference, referenceModel);
                 }
             }
         });

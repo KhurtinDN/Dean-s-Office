@@ -24,11 +24,12 @@ import com.extjs.gxt.ui.client.widget.toolbar.ToolBar;
 import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.user.client.Element;
 import com.google.gwt.user.client.rpc.AsyncCallback;
-import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.mvc.events.AppEvents;
+import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.mvc.events.CommonEvents;
+import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.mvc.events.StudentEvents;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.services.ReferenceService;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.model.ReferenceModel;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.model.StudentModel;
-import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.utils.ReferenceModelUtil;
+import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.model.util.ReferenceModelUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -83,7 +84,7 @@ public class ReferenceQueueWindow extends Window {
         addButton.addSelectionListener(new SelectionListener<ButtonEvent>() {
             @Override
             public void componentSelected(ButtonEvent ce) {
-                Dispatcher.forwardEvent(AppEvents.AddReference);
+                Dispatcher.forwardEvent(StudentEvents.AddReference);
             }
         });
 
@@ -98,12 +99,12 @@ public class ReferenceQueueWindow extends Window {
                                 @Override
                                 public void handleEvent(MessageBoxEvent be) {
                                     if (be.getDialog().yesText.equals(be.getButtonClicked().getText())) {
-                                        Dispatcher.forwardEvent(AppEvents.RemoveReference, references);
+                                        Dispatcher.forwardEvent(StudentEvents.RemoveReference, references);
                                     }
                                 }
                             });
                 } else {
-                    Dispatcher.forwardEvent(AppEvents.InfoWithConfirmation, "Выберите справки для удаления");
+                    Dispatcher.forwardEvent(CommonEvents.InfoWithConfirmation, "Выберите справки для удаления");
                 }
             }
         });
@@ -114,9 +115,9 @@ public class ReferenceQueueWindow extends Window {
             public void componentSelected(ButtonEvent ce) {
                 List<ReferenceModel> references = grid.getSelectionModel().getSelectedItems();
                 if (references.size() > 0) {
-                    Dispatcher.forwardEvent(AppEvents.PrintReference, references);
+                    Dispatcher.forwardEvent(StudentEvents.PrintReference, references);
                 } else {
-                    Dispatcher.forwardEvent(AppEvents.InfoWithConfirmation, "Выберите справки для печати");
+                    Dispatcher.forwardEvent(CommonEvents.InfoWithConfirmation, "Выберите справки для печати");
                 }
             }
         });
@@ -127,9 +128,9 @@ public class ReferenceQueueWindow extends Window {
             public void componentSelected(ButtonEvent ce) {
                 List<ReferenceModel> references = grid.getSelectionModel().getSelectedItems();
                 if (references.size() > 0) {
-                    Dispatcher.forwardEvent(AppEvents.ReadyReference, references);
+                    Dispatcher.forwardEvent(StudentEvents.ReadyReference, references);
                 } else {
-                    Dispatcher.forwardEvent(AppEvents.InfoWithConfirmation, "Выберите готовые справки");
+                    Dispatcher.forwardEvent(CommonEvents.InfoWithConfirmation, "Выберите готовые справки");
                 }
             }
         });
@@ -140,9 +141,9 @@ public class ReferenceQueueWindow extends Window {
             public void componentSelected(ButtonEvent ce) {
                 List<ReferenceModel> references = grid.getSelectionModel().getSelectedItems();
                 if (references.size() > 0) {
-                    Dispatcher.forwardEvent(AppEvents.IssueReference, references);
+                    Dispatcher.forwardEvent(StudentEvents.IssueReference, references);
                 } else {
-                    Dispatcher.forwardEvent(AppEvents.InfoWithConfirmation, "Выберите выданные справки");
+                    Dispatcher.forwardEvent(CommonEvents.InfoWithConfirmation, "Выберите выданные справки");
                 }
             }
         });
@@ -194,22 +195,22 @@ public class ReferenceQueueWindow extends Window {
 
                 switch (loadTypeComboBox.getSimpleValue()) {
                     case ALL:
-                        ReferenceService.App.getInstance().loadAllReferences(pagingLoadConfig, asyncCallback);
+                        ReferenceService.Util.getInstance().loadAllReferences(pagingLoadConfig, asyncCallback);
                         break;
                     case NOT_ISSUED:
-                        ReferenceService.App.getInstance().loadNotIssuedReferences(pagingLoadConfig, asyncCallback);
+                        ReferenceService.Util.getInstance().loadNotIssuedReferences(pagingLoadConfig, asyncCallback);
                         break;
                     case REGISTERED:
-                        ReferenceService.App.getInstance().loadRegisteredReferences(pagingLoadConfig, asyncCallback);
+                        ReferenceService.Util.getInstance().loadRegisteredReferences(pagingLoadConfig, asyncCallback);
                         break;
                     case PROCESSED:
-                        ReferenceService.App.getInstance().loadProcessedReferences(pagingLoadConfig, asyncCallback);
+                        ReferenceService.Util.getInstance().loadProcessedReferences(pagingLoadConfig, asyncCallback);
                         break;
                     case READY:
-                        ReferenceService.App.getInstance().loadReadyReferences(pagingLoadConfig, asyncCallback);
+                        ReferenceService.Util.getInstance().loadReadyReferences(pagingLoadConfig, asyncCallback);
                         break;
                     case ISSUED:
-                        ReferenceService.App.getInstance().loadIssuedReferences(pagingLoadConfig, asyncCallback);
+                        ReferenceService.Util.getInstance().loadIssuedReferences(pagingLoadConfig, asyncCallback);
                         break;
                 }
             }
@@ -335,7 +336,6 @@ public class ReferenceQueueWindow extends Window {
     }
 
     public void reload() {
-        grid.getStore().removeAll();
         grid.getStore().getLoader().load();
     }
 

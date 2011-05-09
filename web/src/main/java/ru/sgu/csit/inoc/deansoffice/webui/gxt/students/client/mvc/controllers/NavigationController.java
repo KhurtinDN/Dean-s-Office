@@ -2,7 +2,8 @@ package ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.mvc.controllers;
 
 import com.extjs.gxt.ui.client.mvc.AppEvent;
 import com.extjs.gxt.ui.client.mvc.Controller;
-import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.mvc.events.AppEvents;
+import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.mvc.events.CommonEvents;
+import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.mvc.events.StudentEvents;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.mvc.views.NavigationView;
 
 /**
@@ -14,8 +15,8 @@ public class NavigationController extends Controller {
     private NavigationView navigationView;
 
     public NavigationController() {
-        registerEventTypes(AppEvents.Init);
-        registerEventTypes(AppEvents.FacultySelected);
+        registerEventTypes(CommonEvents.Init);
+        registerEventTypes(StudentEvents.FacultySelected);
     }
 
     @Override

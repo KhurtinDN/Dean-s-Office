@@ -57,7 +57,7 @@ public class UsersContentPanel extends ContentPanel {
         RpcProxy<List<UserModel>> proxy = new RpcProxy<List<UserModel>>() {
             @Override
             protected void load(Object loadConfig, AsyncCallback<List<UserModel>> async) {
-                UserService.App.getInstance().loadUsers(async);
+                UserService.Util.getInstance().loadUsers(async);
             }
         };
 

@@ -4,9 +4,7 @@ import com.extjs.gxt.ui.client.Style;
 import com.extjs.gxt.ui.client.core.XTemplate;
 import com.extjs.gxt.ui.client.event.ButtonEvent;
 import com.extjs.gxt.ui.client.event.SelectionListener;
-import com.extjs.gxt.ui.client.mvc.AppEvent;
 import com.extjs.gxt.ui.client.mvc.Dispatcher;
-import com.extjs.gxt.ui.client.util.Util;
 import com.extjs.gxt.ui.client.widget.*;
 import com.extjs.gxt.ui.client.widget.Window;
 import com.extjs.gxt.ui.client.widget.button.Button;
@@ -15,9 +13,8 @@ import com.extjs.gxt.ui.client.widget.layout.FitLayout;
 import com.extjs.gxt.ui.client.widget.layout.VBoxLayout;
 import com.extjs.gxt.ui.client.widget.layout.VBoxLayoutData;
 import com.google.gwt.user.client.*;
-import com.google.gwt.user.client.rpc.AsyncCallback;
-import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.constants.ErrorCode;
-import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.mvc.events.AppEvents;
+import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.utils.BaseAsyncCallback;
+import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.mvc.events.CommonEvents;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.services.StudentService;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.model.StudentDetailsModel;
 
@@ -49,7 +46,7 @@ public class StudentAccountWindow extends Window {
                 if (studentDataForm.isValid()) {
                     saveStudentDetailsModel();
                 } else {
-                    Dispatcher.forwardEvent(AppEvents.InfoWithConfirmation,
+                    Dispatcher.forwardEvent(CommonEvents.InfoWithConfirmation,
                             "Пожалуйста, корректно заполните все поля!");
                 }
             }
@@ -126,7 +123,7 @@ public class StudentAccountWindow extends Window {
     }
 
     public void showStudentAccount(Long studentId) {
-        StudentService.App.getInstance().loadStudentDetails(studentId, studentDetailsLoaderAsyncCallback);
+        StudentService.Util.getInstance().loadStudentDetails(studentId, studentDetailsLoaderAsyncCallback);
     }
 
     private void showStudentAccountWindow(StudentDetailsModel studentDetailsModel) {
@@ -135,7 +132,7 @@ public class StudentAccountWindow extends Window {
         XTemplate template = XTemplate.create(getHeaderTemplate());
 
         prepareStudentDetail(studentDetailsModel);
-        headerHtml.setHtml(template.applyTemplate(Util.getJsObject(studentDetailsModel, 1)));
+        headerHtml.setHtml(template.applyTemplate(com.extjs.gxt.ui.client.util.Util.getJsObject(studentDetailsModel, 1)));
 
         studentDataForm.addStyleName("studentDataForm");
         studentDataForm.setStudentDetails(studentDetailsModel);
@@ -145,7 +142,7 @@ public class StudentAccountWindow extends Window {
 
     private void saveStudentDetailsModel() {
         studentDetailsModel = studentDataForm.getStudentDetails();
-        StudentService.App.getInstance().saveStudentDetails(studentDetailsModel, studentDetailsSaverAsyncCallback);
+        StudentService.Util.getInstance().saveStudentDetails(studentDetailsModel, studentDetailsSaverAsyncCallback);
     }
 
     private void prepareStudentDetail(StudentDetailsModel studentDetailsModel) {
@@ -161,30 +158,14 @@ public class StudentAccountWindow extends Window {
         layout(true);
     }
 
-    private class StudentDetailsLoaderAsyncCallback implements AsyncCallback<StudentDetailsModel> {
-
-        @Override
-        public void onFailure(Throwable caught) {
-            AppEvent appEvent = new AppEvent(AppEvents.Error, ErrorCode.ServerReturnError);
-            appEvent.setData("throwable", caught);
-            Dispatcher.forwardEvent(appEvent);
-        }
-
+    private class StudentDetailsLoaderAsyncCallback extends BaseAsyncCallback<StudentDetailsModel> {
         @Override
         public void onSuccess(StudentDetailsModel studentDetailsModel) {
             showStudentAccountWindow(studentDetailsModel);
         }
     }
 
-    private class StudentDetailsSaverAsyncCallback implements AsyncCallback<Void> {
-
-        @Override
-        public void onFailure(Throwable caught) {
-            AppEvent appEvent = new AppEvent(AppEvents.Error, ErrorCode.ServerReturnError);
-            appEvent.setData("throwable", caught);
-            Dispatcher.forwardEvent(appEvent);
-        }
-
+    private class StudentDetailsSaverAsyncCallback extends BaseAsyncCallback<Void> {
         @Override
         public void onSuccess(Void result) {
             Info.display("Информация", "Информация о студенте обнавлена успешно!");

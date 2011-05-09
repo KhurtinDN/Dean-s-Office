@@ -13,11 +13,12 @@ import com.extjs.gxt.ui.client.widget.form.LabelField;
 import com.extjs.gxt.ui.client.widget.layout.*;
 import com.google.gwt.user.client.*;
 import com.google.gwt.user.client.ui.Image;
+import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.model.util.StudentModelUtil;
+import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.mvc.events.CommonEvents;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.components.StudentAccountWindow;
-import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.mvc.events.AppEvents;
+import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.mvc.events.StudentEvents;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.model.ReferenceModel;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.model.StudentModel;
-import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.utils.StudentModelUtil;
 
 /**
  * User: Khurtin Denis (KhurtinDN@gmail.com)
@@ -151,7 +152,7 @@ public class StudentInfoLayoutContainer extends LayoutContainer {
             @Override
             public void componentSelected(ButtonEvent ce) {
                 if (currentStudentModel != null) {
-                    AppEvent appEvent = new AppEvent(AppEvents.RegistrationReference);
+                    AppEvent appEvent = new AppEvent(StudentEvents.RegistrationReference);
                     appEvent.setData("referenceType", ReferenceModel.ReferenceType.REFERENCE_1);
                     appEvent.setData("ownerId", currentStudentModel.getId());
 
@@ -159,7 +160,7 @@ public class StudentInfoLayoutContainer extends LayoutContainer {
 //                    String url = "../documents/reference-1.pdf?studentId=" + currentStudentModel.getId();
 //                    Window.open(url, "_blank", "");
                 } else {
-                    Dispatcher.forwardEvent(AppEvents.InfoWithConfirmation,
+                    Dispatcher.forwardEvent(CommonEvents.InfoWithConfirmation,
                             "GroupInfoLayoutContainer is not rendered!");
                 }
             }
@@ -169,14 +170,14 @@ public class StudentInfoLayoutContainer extends LayoutContainer {
             @Override
             public void componentSelected(ButtonEvent ce) {
                 if (currentStudentModel != null) {
-                    AppEvent appEvent = new AppEvent(AppEvents.RegistrationReference);
+                    AppEvent appEvent = new AppEvent(StudentEvents.RegistrationReference);
                     appEvent.setData("referenceType", ReferenceModel.ReferenceType.REFERENCE_1);
                     appEvent.setData("ownerId", currentStudentModel.getId());
 
                     Dispatcher.forwardEvent(appEvent);
-                    Dispatcher.forwardEvent(AppEvents.ReferenceQueueCall, Boolean.TRUE);
+                    Dispatcher.forwardEvent(StudentEvents.ReferenceQueueCall, Boolean.TRUE);
                 } else {
-                    Dispatcher.forwardEvent(AppEvents.InfoWithConfirmation,
+                    Dispatcher.forwardEvent(CommonEvents.InfoWithConfirmation,
                             "GroupInfoLayoutContainer is not rendered!");
                 }
             }
@@ -205,7 +206,7 @@ public class StudentInfoLayoutContainer extends LayoutContainer {
             @Override
             public void componentSelected(ButtonEvent ce) {
                 if (currentStudentModel != null) {
-                    AppEvent appEvent = new AppEvent(AppEvents.RegistrationReference);
+                    AppEvent appEvent = new AppEvent(StudentEvents.RegistrationReference);
                     appEvent.setData("referenceType", ReferenceModel.ReferenceType.REFERENCE_2);
                     appEvent.setData("ownerId", currentStudentModel.getId());
 
@@ -213,7 +214,7 @@ public class StudentInfoLayoutContainer extends LayoutContainer {
 //                    String url = "../documents/reference-2.pdf?studentId=" + currentStudentModel.getId();
 //                    Window.open(url, "_blank", "");
                 } else {
-                    Dispatcher.forwardEvent(AppEvents.InfoWithConfirmation,
+                    Dispatcher.forwardEvent(CommonEvents.InfoWithConfirmation,
                             "GroupInfoLayoutContainer is not rendered!");
                 }
             }
@@ -223,14 +224,14 @@ public class StudentInfoLayoutContainer extends LayoutContainer {
             @Override
             public void componentSelected(ButtonEvent ce) {
                 if (currentStudentModel != null) {
-                    AppEvent appEvent = new AppEvent(AppEvents.RegistrationReference);
+                    AppEvent appEvent = new AppEvent(StudentEvents.RegistrationReference);
                     appEvent.setData("referenceType", ReferenceModel.ReferenceType.REFERENCE_2);
                     appEvent.setData("ownerId", currentStudentModel.getId());
 
                     Dispatcher.forwardEvent(appEvent);
-                    Dispatcher.forwardEvent(AppEvents.ReferenceQueueCall, Boolean.TRUE);
+                    Dispatcher.forwardEvent(StudentEvents.ReferenceQueueCall, Boolean.TRUE);
                 } else {
-                    Dispatcher.forwardEvent(AppEvents.InfoWithConfirmation,
+                    Dispatcher.forwardEvent(CommonEvents.InfoWithConfirmation,
                             "GroupInfoLayoutContainer is not rendered!");
                 }
             }
@@ -255,7 +256,7 @@ public class StudentInfoLayoutContainer extends LayoutContainer {
                 if (currentStudentModel != null) {
                     getStudentAccountWindow().showStudentAccount(currentStudentModel.getId());
                 } else {
-                    Dispatcher.forwardEvent(AppEvents.InfoWithConfirmation, "Выберите, пожалуйста, студента!");
+                    Dispatcher.forwardEvent(CommonEvents.InfoWithConfirmation, "Выберите, пожалуйста, студента!");
                 }
             }
         });

@@ -2,7 +2,8 @@ package ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.mvc.controllers;
 
 import com.extjs.gxt.ui.client.mvc.AppEvent;
 import com.extjs.gxt.ui.client.mvc.Controller;
-import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.mvc.events.AppEvents;
+import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.mvc.events.CommonEvents;
+import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.mvc.events.StudentEvents;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.mvc.views.StatusBarView;
 
 /**
@@ -14,9 +15,9 @@ public class StatusBarController extends Controller {
     private StatusBarView statusBarView;
 
     public StatusBarController() {
-        registerEventTypes(AppEvents.Init, AppEvents.UIReady);
-        registerEventTypes(AppEvents.Info, AppEvents.InfoWithConfirmation, AppEvents.Error);
-        registerEventTypes(AppEvents.SpecialitySelected, AppEvents.GroupSelected, AppEvents.StudentSelected);
+        registerEventTypes(CommonEvents.Init, StudentEvents.UIReady);
+        registerEventTypes(CommonEvents.Info, CommonEvents.InfoWithConfirmation, CommonEvents.Error);
+        registerEventTypes(StudentEvents.SpecialitySelected, StudentEvents.GroupSelected, StudentEvents.StudentSelected);
     }
 
     @Override

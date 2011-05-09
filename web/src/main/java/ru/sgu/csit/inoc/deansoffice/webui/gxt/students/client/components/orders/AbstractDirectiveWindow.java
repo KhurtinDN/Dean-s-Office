@@ -10,7 +10,7 @@ import com.extjs.gxt.ui.client.widget.form.TextArea;
 import com.extjs.gxt.ui.client.widget.layout.BorderLayout;
 import com.extjs.gxt.ui.client.widget.layout.BorderLayoutData;
 import com.google.gwt.user.client.Element;
-import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.components.FormUtil;
+import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.utils.FormUtil;
 
 /**
  * User: hd KhurtinDN (dog) gmail.com

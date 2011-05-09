@@ -7,6 +7,7 @@ import com.extjs.gxt.ui.client.event.ButtonEvent;
 import com.extjs.gxt.ui.client.event.SelectionListener;
 import com.extjs.gxt.ui.client.mvc.Dispatcher;
 import com.extjs.gxt.ui.client.store.ListStore;
+import com.extjs.gxt.ui.client.util.IconHelper;
 import com.extjs.gxt.ui.client.util.Margins;
 import com.extjs.gxt.ui.client.widget.ContentPanel;
 import com.extjs.gxt.ui.client.widget.LayoutContainer;
@@ -16,10 +17,10 @@ import com.extjs.gxt.ui.client.widget.grid.*;
 import com.extjs.gxt.ui.client.widget.layout.*;
 import com.extjs.gxt.ui.client.widget.layout.ColumnData;
 import com.google.gwt.i18n.client.DateTimeFormat;
-import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.mvc.events.AppEvents;
+import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.model.util.PassportModelUtil;
+import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.mvc.events.CommonEvents;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.model.*;
-import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.utils.PassportModelUtil;
-import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.utils.PersonModelUtil;
+import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.model.util.PersonModelUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -227,9 +228,8 @@ public class StudentDataForm extends FormPanel {
 
         passportContentPanel.add(passportGrid);
 
-        passportContentPanel.setButtonAlign(Style.HorizontalAlignment.CENTER);
-
-        passportContentPanel.addButton(new Button("Добавить новый паспорт", new SelectionListener<ButtonEvent>() {
+        Button addPassportButton = new Button("Добавить новый паспорт", IconHelper.createStyle("addButton-icon"));
+        addPassportButton.addSelectionListener(new SelectionListener<ButtonEvent>() {
             @Override
             public void componentSelected(ButtonEvent ce) {
                 PassportModel currentPassport =
@@ -242,20 +242,26 @@ public class StudentDataForm extends FormPanel {
                 passportListStore.add(passportModel);
                 rowEditor.startEditing(passportListStore.indexOf(passportModel), true);
             }
-        }));
+        });
 
-        passportContentPanel.addButton(new Button("Удалить выбранный паспорт", new SelectionListener<ButtonEvent>() {
+        Button removePassportButton = new Button("Удалить выбранный паспорт", IconHelper.createStyle("removeButton-icon"));
+        removePassportButton.addSelectionListener(new SelectionListener<ButtonEvent>() {
             @Override
             public void componentSelected(ButtonEvent ce) {
                 PassportModel passportModel = passportGrid.getSelectionModel().getSelectedItem();
                 if (passportModel == null) {
-                    Dispatcher.forwardEvent(AppEvents.InfoWithConfirmation, "Выберите, пожалуйста, паспорт!");
+                    Dispatcher.forwardEvent(CommonEvents.InfoWithConfirmation, "Выберите, пожалуйста, паспорт!");
                 } else {
                     rowEditor.stopEditing(false);
                     passportListStore.remove(passportModel);
                 }
             }
-        }));
+        });
+
+        passportContentPanel.setButtonAlign(Style.HorizontalAlignment.CENTER);
+
+        passportContentPanel.addButton(addPassportButton);
+        passportContentPanel.addButton(removePassportButton);
 
         return passportContentPanel;
     }

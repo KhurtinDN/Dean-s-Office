@@ -4,9 +4,10 @@ import com.extjs.gxt.ui.client.event.EventType;
 import com.extjs.gxt.ui.client.mvc.AppEvent;
 import com.extjs.gxt.ui.client.mvc.Dispatcher;
 import com.extjs.gxt.ui.client.mvc.View;
+import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.mvc.events.CommonEvents;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.components.info.InformationPanel;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.mvc.controllers.InformationController;
-import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.mvc.events.AppEvents;
+import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.mvc.events.StudentEvents;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.model.GroupModel;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.model.SpecialityModel;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.model.StudentModel;
@@ -34,19 +35,19 @@ public class InformationView extends View {
     protected void handleEvent(AppEvent event) {
         EventType eventType = event.getType();
 
-        if (eventType.equals(AppEvents.Init)) {
-            onInit(event);
-        } else if (eventType.equals(AppEvents.StudentSelected)) {
+        if (eventType.equals(CommonEvents.Init)) {
+            onInit();
+        } else if (eventType.equals(StudentEvents.StudentSelected)) {
             onStudentSelected(event);
-        } else if (eventType.equals(AppEvents.GroupSelected)) {
+        } else if (eventType.equals(StudentEvents.GroupSelected)) {
             onGroupSelected(event);
-        } else if (eventType.equals(AppEvents.SpecialitySelected)) {
+        } else if (eventType.equals(StudentEvents.SpecialitySelected)) {
             onSpecialitySelected(event);
         }
     }
 
-    private void onInit(AppEvent event) {
-        Dispatcher.forwardEvent(AppEvents.InformationPanelReady, informationPanel);
+    private void onInit() {
+        Dispatcher.forwardEvent(StudentEvents.InformationPanelReady, informationPanel);
     }
 
     private void onStudentSelected(AppEvent event) {

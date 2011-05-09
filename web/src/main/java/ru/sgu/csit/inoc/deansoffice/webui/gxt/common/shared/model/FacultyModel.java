@@ -5,6 +5,7 @@ package ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.model;
  * Date: 2/10/11
  * Time: 12:42 PM
  */
+@SuppressWarnings({"UnusedDeclaration"})
 public class FacultyModel extends DtoModel {
     private PersonModel dean;
 
@@ -32,11 +33,13 @@ public class FacultyModel extends DtoModel {
     }
 
     public PersonModel getDean() {
-        return dean;
+//        dean = get("dean");
+        return get("dean");
     }
 
     public void setDean(PersonModel dean) {
-        this.dean = dean;
+        set("dean", dean);
+//        this.dean = dean;
     }
 
     public Integer getCourseCount() {

@@ -17,14 +17,13 @@ import com.extjs.gxt.ui.client.widget.layout.FitLayout;
 import com.extjs.gxt.ui.client.widget.layout.VBoxLayout;
 import com.extjs.gxt.ui.client.widget.treepanel.TreePanel;
 import com.google.gwt.user.client.Element;
-import com.google.gwt.user.client.rpc.AsyncCallback;
+import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.utils.BaseAsyncCallback;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.constants.AppConstants;
-import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.constants.ErrorCode;
+import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.mvc.events.StudentEvents;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.services.AppService;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.model.FacultyModel;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.model.GroupModel;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.model.SpecialityModel;
-import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.mvc.events.AppEvents;
 
 import java.util.List;
 import java.util.Map;
@@ -84,17 +83,10 @@ public class NavigationPanel extends ContentPanel {
     public void reloadMenuData() {
         navigationContainer.removeAll();
         FacultyModel facultyModel = Registry.get(AppConstants.CURRENT_FACULTY);
-        AppService.App.getInstance().loadMenuData(facultyModel.getId(), new MenuLoader());
+        AppService.Util.getInstance().loadMenuData(facultyModel.getId(), new MenuLoader());
     }
 
-    private class MenuLoader implements AsyncCallback<List<Map<SpecialityModel, List<GroupModel>>>> {
-        @Override
-        public void onFailure(Throwable caught) {
-            AppEvent appEvent = new AppEvent(AppEvents.Error, ErrorCode.ServerReturnError);
-            appEvent.setData("throwable", caught);
-            Dispatcher.forwardEvent(appEvent);
-        }
-
+    private class MenuLoader extends BaseAsyncCallback<List<Map<SpecialityModel, List<GroupModel>>>> {
         @Override
         public void onSuccess(List<Map<SpecialityModel, List<GroupModel>>> resultList) {
             ContentPanel firstPanel = new ContentPanel(); // for normal fly expanding
@@ -149,11 +141,11 @@ public class NavigationPanel extends ContentPanel {
                 BaseModel baseModel = se.getSelectedItem();
 
                 if (baseModel instanceof SpecialityModel) {
-                    AppEvent appEvent = new AppEvent(AppEvents.SpecialitySelected, baseModel);
+                    AppEvent appEvent = new AppEvent(StudentEvents.SpecialitySelected, baseModel);
                     appEvent.setData("course", course);
                     Dispatcher.forwardEvent(appEvent);
                 } else if (baseModel instanceof GroupModel) {
-                    Dispatcher.forwardEvent(AppEvents.GroupSelected, baseModel);
+                    Dispatcher.forwardEvent(StudentEvents.GroupSelected, baseModel);
                 }
             }
         }
