@@ -13,6 +13,7 @@ import java.util.List;
  * Time: 9:58:32 AM
  */
 public interface GroupDAO extends BaseDAO<Group, Long> {
+    List<Group> findBySpecialityId(Long specialityId);
     List<Group> findByCourseAndSpeciality(Integer course, Speciality speciality);
     List<Group> findByCourseAndSpecialityId(Integer course, Long specialityId);
     List<Group> findByName(String name);

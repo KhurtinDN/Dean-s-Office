@@ -19,6 +19,15 @@ import java.util.List;
 public class GroupDAOImpl extends BaseDAOImpl<Group, Long> implements GroupDAO {
     @Override
     @SuppressWarnings("unchecked")
+    public List<Group> findBySpecialityId(Long specialityId) {
+//        DetachedCriteria criteria = createCriteriaForPersistentClass(
+//                Restrictions.eq("course", course), Restrictions.eq("speciality.id", specialityId));
+//        return (List<Group>) getHibernateTemplate().findByCriteria(criteria);
+        return (List<Group>) getHibernateTemplate().find("from Group g where g.speciality.id=?", specialityId);
+    }
+
+    @Override
+    @SuppressWarnings("unchecked")
     public List<Group> findByCourseAndSpeciality(Integer course, Speciality speciality) {
 //        DetachedCriteria criteria = createCriteriaForPersistentClass(
 //                Restrictions.eq("course", course), Restrictions.eq("speciality", speciality));
