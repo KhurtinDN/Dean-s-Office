@@ -106,7 +106,6 @@ public class App {
 //                order.setPrintTemplate(new Template(templName));
                 OrderService orderService = new OrderServiceImpl();//applicationContext.getBean(OrderService.class);
                 Faculty faculty = new Faculty();
-                faculty.setCourseCount(6);
                 faculty.setFullName("Компьютерных наук и информационных технологий");
                 faculty.setShortName("КНиИТ");
                 orderService.generatePrintForm(order, faculty, outputStream);

@@ -41,13 +41,4 @@ public class FacultyModel extends DtoModel {
         set("dean", dean);
 //        this.dean = dean;
     }
-
-    public Integer getCourseCount() {
-        return get("courseCount");
-    }
-
-    public void setCourseCount(Integer courseCount) {
-        set("courseCount", courseCount);
-    }
-
 }

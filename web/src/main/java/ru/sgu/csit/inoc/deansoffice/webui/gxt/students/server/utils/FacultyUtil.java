@@ -21,7 +21,6 @@ public class FacultyUtil {
         facultyModel.setId(faculty.getId());
         facultyModel.setName(faculty.getShortName());
         facultyModel.setFullName(faculty.getFullName());
-        facultyModel.setCourseCount(faculty.getCourseCount());
 
         Dean dean = faculty.getDean();
 
@@ -44,7 +43,6 @@ public class FacultyUtil {
         faculty.setId(facultyModel.getId());
         faculty.setShortName(facultyModel.getName());
         faculty.setFullName(facultyModel.getFullName());
-        faculty.setCourseCount(facultyModel.getCourseCount());
         faculty.setDean(dean);
 
         return faculty;

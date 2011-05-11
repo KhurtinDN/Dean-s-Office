@@ -89,19 +89,19 @@ public class GroupsGrid extends Grid<GroupModel> {
         nameColumnConfig.setEditor(new CellEditor(nameTextField));
 
         // Course column
-        ColumnConfig codeColumnConfig = new ColumnConfig("course", "Курс", 200);
+        ColumnConfig courseColumnConfig = new ColumnConfig("course", "Курс", 200);
 
-        NumberField codeNumberField = new NumberField();
-        codeNumberField.setPropertyEditorType(Integer.class);
-        codeNumberField.setAllowBlank(false);
+        NumberField courseNumberField = new NumberField();
+        courseNumberField.setPropertyEditorType(Integer.class);
+        courseNumberField.setAllowBlank(false);
 
-        codeColumnConfig.setEditor(new CellEditor(codeNumberField));
+        courseColumnConfig.setEditor(new CellEditor(courseNumberField));
 
         // Create and return ColumnModel
         List<ColumnConfig> columns = new ArrayList<ColumnConfig>();
         columns.add(nnColumnConfig);
         columns.add(nameColumnConfig);
-        columns.add(codeColumnConfig);
+        columns.add(courseColumnConfig);
 
         return new ColumnModel(columns);
     }

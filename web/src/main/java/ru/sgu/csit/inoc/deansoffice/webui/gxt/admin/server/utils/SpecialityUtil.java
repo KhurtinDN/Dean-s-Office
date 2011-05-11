@@ -34,6 +34,7 @@ public class SpecialityUtil {
         specialityModel.setFullName(speciality.getName());
         specialityModel.setName(speciality.getShortName());
         specialityModel.setCode(speciality.getCode());
+        specialityModel.setCourseCount(speciality.getCourseCount());
         specialityModel.setFaculty(facultyModel);
 
         return specialityModel;
@@ -78,6 +79,7 @@ public class SpecialityUtil {
         speciality.setName(specialityModel.getFullName());
         speciality.setShortName(specialityModel.getName());
         speciality.setCode(specialityModel.getCode());
+        speciality.setCourseCount(specialityModel.getCourseCount());
         speciality.setFaculty(faculty);
 
         return speciality;

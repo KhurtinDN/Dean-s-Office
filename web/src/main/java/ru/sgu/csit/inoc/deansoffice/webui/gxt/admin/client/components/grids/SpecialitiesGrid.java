@@ -2,6 +2,7 @@ package ru.sgu.csit.inoc.deansoffice.webui.gxt.admin.client.components.grids;
 
 import com.extjs.gxt.ui.client.data.*;
 import com.extjs.gxt.ui.client.store.ListStore;
+import com.extjs.gxt.ui.client.widget.form.NumberField;
 import com.extjs.gxt.ui.client.widget.form.TextField;
 import com.extjs.gxt.ui.client.widget.grid.*;
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -63,6 +64,10 @@ public class SpecialitiesGrid extends Grid<SpecialityModel> {
         TextField<String> codeTextField = new TextField<String>();
         codeTextField.setAllowBlank(false);
 
+        NumberField courseCountNumberField = new NumberField();
+        courseCountNumberField.setPropertyEditorType(Integer.class);
+        courseCountNumberField.setAllowBlank(false);
+
         ColumnConfig fullNameColumnConfig = new ColumnConfig("fullName", "Полное имя", 300);
         fullNameColumnConfig.setEditor(new CellEditor(fullNameTextField));
 
@@ -72,11 +77,15 @@ public class SpecialitiesGrid extends Grid<SpecialityModel> {
         ColumnConfig codeColumnConfig = new ColumnConfig("code", "Код", 200);
         codeColumnConfig.setEditor(new CellEditor(codeTextField));
 
+        ColumnConfig courseCountColumnConfig = new ColumnConfig("courseCount", "Количество курсов", 200);
+        courseCountColumnConfig.setEditor(new CellEditor(courseCountNumberField));
+
         List<ColumnConfig> columns = new ArrayList<ColumnConfig>();
         columns.add(nnColumnConfig);
         columns.add(fullNameColumnConfig);
         columns.add(nameColumnConfig);
         columns.add(codeColumnConfig);
+        columns.add(courseCountColumnConfig);
 
         return new ColumnModel(columns);
     }

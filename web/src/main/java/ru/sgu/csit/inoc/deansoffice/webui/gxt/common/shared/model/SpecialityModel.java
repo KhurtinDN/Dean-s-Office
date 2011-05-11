@@ -48,4 +48,12 @@ public class SpecialityModel extends DtoModel {
     public void setFaculty(FacultyModel faculty) {
         set("faculty", faculty);
     }
+
+    public Integer getCourseCount() {
+        return get("courseCount");
+    }
+
+    public void setCourseCount(Integer courseCount) {
+        set("courseCount", courseCount);
+    }
 }

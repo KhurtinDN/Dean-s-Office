@@ -16,6 +16,7 @@ import com.extjs.gxt.ui.client.widget.MessageBox;
 import com.extjs.gxt.ui.client.widget.button.Button;
 import com.extjs.gxt.ui.client.widget.form.ComboBox;
 import com.extjs.gxt.ui.client.widget.form.FormPanel;
+import com.extjs.gxt.ui.client.widget.form.NumberField;
 import com.extjs.gxt.ui.client.widget.form.TextField;
 import com.extjs.gxt.ui.client.widget.grid.*;
 import com.extjs.gxt.ui.client.widget.layout.*;
@@ -47,6 +48,7 @@ public class SpecialityPanel extends ContentPanel {
     private TextField<String> fullNameTextField = new TextField<String>();
     private TextField<String> nameTextField = new TextField<String>();
     private TextField<String> codeTextField = new TextField<String>();
+    private NumberField courseCountNumberField = new NumberField();
     private ComboBox<FacultyModel> facultiesComboBox = new ComboBox<FacultyModel>();
 
     private GroupsGrid groupsGrid = new GroupsGrid();
@@ -65,6 +67,10 @@ public class SpecialityPanel extends ContentPanel {
 
         codeTextField.setFieldLabel("Код");
         codeTextField.setAllowBlank(false);
+
+        courseCountNumberField.setFieldLabel("Количество курсов");
+        courseCountNumberField.setPropertyEditorType(Integer.class);
+        courseCountNumberField.setAllowBlank(false);
 
         facultiesComboBox.setFieldLabel("Факультет");
         facultiesComboBox.setTriggerAction(ComboBox.TriggerAction.ALL);
@@ -202,6 +208,9 @@ public class SpecialityPanel extends ContentPanel {
         LayoutContainer codeLayoutContainer = new LayoutContainer(new FormLayout(FormPanel.LabelAlign.TOP));
         codeLayoutContainer.add(codeTextField, FormUtil.wFormData);
 
+        LayoutContainer courseCountLayoutContainer = new LayoutContainer(new FormLayout(FormPanel.LabelAlign.TOP));
+        courseCountLayoutContainer.add(courseCountNumberField, FormUtil.wFormData);
+
         LayoutContainer facultiesLayoutContainer = new LayoutContainer(new FormLayout(FormPanel.LabelAlign.TOP));
         facultiesLayoutContainer.add(facultiesComboBox, FormUtil.wFormData);
 
@@ -212,6 +221,7 @@ public class SpecialityPanel extends ContentPanel {
                 currentSpecialityModel.setFullName(fullNameTextField.getValue());
                 currentSpecialityModel.setName(nameTextField.getValue());
                 currentSpecialityModel.setCode(codeTextField.getValue());
+                currentSpecialityModel.setCourseCount(courseCountNumberField.getValue().intValue());
                 currentSpecialityModel.setFaculty(facultiesComboBox.getValue());
 
                 SpecialityService.Util.getInstance().updateSpeciality(currentSpecialityModel,
@@ -232,6 +242,7 @@ public class SpecialityPanel extends ContentPanel {
                 fullNameTextField.setValue(currentSpecialityModel.getFullName());
                 nameTextField.setValue(currentSpecialityModel.getName());
                 codeTextField.setValue(currentSpecialityModel.getCode());
+                courseCountNumberField.setValue(currentSpecialityModel.getCourseCount());
                 facultiesComboBox.setValue(currentSpecialityModel.getFaculty());
             }
         });
@@ -241,9 +252,10 @@ public class SpecialityPanel extends ContentPanel {
         specialityLayoutContainer.setHeaderVisible(false);
 
         specialityLayoutContainer.add(fullNameLayoutContainer, new RowData(1, 1, new Margins(0, 5, 0, 5)));
-        specialityLayoutContainer.add(nameLayoutContainer, new RowData(200, 1, new Margins(0, 5, 0, 5)));
-        specialityLayoutContainer.add(codeLayoutContainer, new RowData(200, 1, new Margins(0, 5, 0, 5)));
-        specialityLayoutContainer.add(facultiesLayoutContainer, new RowData(200, 1, new Margins(0, 5, 0, 5)));
+        specialityLayoutContainer.add(nameLayoutContainer, new RowData(150, 1, new Margins(0, 5, 0, 5)));
+        specialityLayoutContainer.add(codeLayoutContainer, new RowData(150, 1, new Margins(0, 5, 0, 5)));
+        specialityLayoutContainer.add(courseCountLayoutContainer, new RowData(150, 1, new Margins(0, 5, 0, 5)));
+        specialityLayoutContainer.add(facultiesLayoutContainer, new RowData(150, 1, new Margins(0, 5, 0, 5)));
 
         specialityLayoutContainer.addButton(saveButton);
         specialityLayoutContainer.addButton(cancelButton);
@@ -263,6 +275,7 @@ public class SpecialityPanel extends ContentPanel {
         fullNameTextField.setValue(specialityModel.getFullName());
         nameTextField.setValue(specialityModel.getName());
         codeTextField.setValue(specialityModel.getCode());
+        courseCountNumberField.setValue(specialityModel.getCourseCount());
         facultiesComboBox.setValue(specialityModel.getFaculty());
 
         groupsGrid.reload(specialityModel.getId());

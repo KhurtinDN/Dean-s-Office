@@ -13,6 +13,7 @@ public class Speciality extends PersistentItem {
     private String name;
     private String shortName;
     private String code;
+    private Integer courseCount;
 
     @ManyToOne(cascade = CascadeType.MERGE)
     @PrimaryKeyJoinColumn
@@ -48,5 +49,13 @@ public class Speciality extends PersistentItem {
 
     public void setFaculty(Faculty faculty) {
         this.faculty = faculty;
+    }
+
+    public Integer getCourseCount() {
+        return courseCount;
+    }
+
+    public void setCourseCount(Integer courseCount) {
+        this.courseCount = courseCount;
     }
 }

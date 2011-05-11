@@ -69,7 +69,6 @@ public class TestMain {
         faculty.setShortName("КНиИТ");
         faculty.setDean(dean);
         faculty.setRector(rector);
-        faculty.setCourseCount(6);
         facultyDAO.save(faculty);
 
         coordinatorDAO.save(new Coordinator("Проректор по учебно-организационной работе"));
@@ -94,6 +93,7 @@ public class TestMain {
             speciality.setShortName("ПМИ");
             speciality.setCode("1");
             speciality.setFaculty(faculty);
+            speciality.setCourseCount(5);
             specialityDAO.save(speciality);
 
             speciality = new Speciality();
@@ -101,6 +101,7 @@ public class TestMain {
             speciality.setShortName("ВМ");
             speciality.setCode("2");
             speciality.setFaculty(faculty);
+            speciality.setCourseCount(5);
             specialityDAO.save(speciality);
 
             speciality = new Speciality();
@@ -108,6 +109,7 @@ public class TestMain {
             speciality.setShortName("КБ");
             speciality.setCode("3");
             speciality.setFaculty(faculty);
+            speciality.setCourseCount(6);
             specialityDAO.save(speciality);
         }
     }
@@ -115,7 +117,7 @@ public class TestMain {
     private void createGroups() {
         List<Speciality> specialityList = specialityDAO.findAll();
         for (Speciality speciality : specialityList) {
-            int courseCount = speciality.getFaculty().getCourseCount();
+            int courseCount = speciality.getCourseCount();
             for (int groupCount = 1; groupCount <= 2; ++groupCount) {
                 for (int course = 1; course <= courseCount; ++course) {
                     Group group = new Group();
@@ -132,13 +134,19 @@ public class TestMain {
         List<Group> groupList = groupDAO.findAll();
 
         List<EnrollmentOrder> orders = new ArrayList<EnrollmentOrder>();
+
         Integer courseCount = 0;
-        if (!groupList.isEmpty()) {
-            courseCount = groupList.get(0).getSpeciality().getFaculty().getCourseCount();
+
+        for (Speciality speciality : specialityDAO.findAll()) {
+            if (speciality.getCourseCount() > courseCount) {
+                courseCount = speciality.getCourseCount();
+            }
         }
+
         for (int i = 0; i < courseCount; ++i) {
-            orders.add(StudentGenerator.getRandomEnrollmentOrder(i + 1));
-            enrollmentOrderDAO.save(orders.get(orders.size() - 1));
+            EnrollmentOrder enrollmentOrder = StudentGenerator.getRandomEnrollmentOrder(i + 1);
+            orders.add(enrollmentOrder);
+            enrollmentOrderDAO.save(enrollmentOrder);
         }
 
         for (Group group : groupList) {
@@ -153,6 +161,7 @@ public class TestMain {
                 studentDAO.save(student);
             }
         }
+
     }
 
     private static class StudentGenerator {

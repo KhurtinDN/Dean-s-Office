@@ -39,7 +39,7 @@ public class AppServiceImpl implements AppService {
     private GroupDAO groupDAO;
 
     @Override
-    public List<Map<SpecialityModel, List<GroupModel>>> loadMenuData(Long facultyId) {
+    public List<Map<SpecialityModel, List<GroupModel>>> loadMenuData(Long facultyId) { // todo: recode this bad method
         if (facultyId == null) {
             throw new BadRequestException("Id must be not null.");
         }
@@ -50,27 +50,26 @@ public class AppServiceImpl implements AppService {
             throw new BadRequestException("Requested id not found.");
         }
 
-        Integer courseCount = faculty.getCourseCount();
+        List<Map<SpecialityModel, List<GroupModel>>> result = new ArrayList<Map<SpecialityModel, List<GroupModel>>>();
 
-        List<Map<SpecialityModel, List<GroupModel>>> result =
-                new ArrayList<Map<SpecialityModel, List<GroupModel>>>(courseCount);
+        List<Speciality> specialityList = specialityDAO.findByFacultyId(facultyId);
 
-        for (int course = 1; course <= courseCount; ++course) {
-            Map<SpecialityModel, List<GroupModel>> specialityGroupMap =
-                    new LinkedHashMap<SpecialityModel, List<GroupModel>>();
+        for (Speciality speciality : specialityList) {
+            SpecialityModel specialityModel = SpecialityUtil.convertSpecialityToSpecialityModel(speciality);
 
-            for (Speciality speciality : specialityDAO.findByFacultyId(facultyId)) {
-                List<Group> groupList = groupDAO.findByCourseAndSpecialityId(course, speciality.getId());
-
-                SpecialityModel specialityModel = SpecialityUtil.convertSpecialityToSpecialityModel(speciality);
-
+            for (int course = 0; course < speciality.getCourseCount(); ++course) {
+                List<Group> groupList = groupDAO.findByCourseAndSpecialityId(course + 1, speciality.getId());
                 List<GroupModel> groupModelList =
                         GroupUtil.convertGroupListToGroupModelList(groupList, specialityModel);
 
+                while (result.size() <= course) {
+                    result.add(new LinkedHashMap<SpecialityModel, List<GroupModel>>());
+                }
+
+                Map<SpecialityModel, List<GroupModel>> specialityGroupMap = result.get(course);
+
                 specialityGroupMap.put(specialityModel, groupModelList);
             }
-
-            result.add(specialityGroupMap);
         }
 
         return result;

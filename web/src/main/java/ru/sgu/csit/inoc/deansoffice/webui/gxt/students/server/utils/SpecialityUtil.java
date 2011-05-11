@@ -19,6 +19,7 @@ public class SpecialityUtil {
         specialityModel.setFullName(speciality.getName());
         specialityModel.setName(speciality.getShortName());
         specialityModel.setCode(speciality.getCode());
+        specialityModel.setCourseCount(speciality.getCourseCount());
 
         return specialityModel;
     }
