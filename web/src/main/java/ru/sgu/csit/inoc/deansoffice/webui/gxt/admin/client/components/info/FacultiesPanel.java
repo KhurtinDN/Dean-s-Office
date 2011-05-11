@@ -6,9 +6,10 @@ import com.extjs.gxt.ui.client.util.IconHelper;
 import com.extjs.gxt.ui.client.widget.ContentPanel;
 import com.extjs.gxt.ui.client.widget.MessageBox;
 import com.extjs.gxt.ui.client.widget.button.Button;
-import com.extjs.gxt.ui.client.widget.form.FormPanel;
 import com.extjs.gxt.ui.client.widget.grid.*;
 import com.extjs.gxt.ui.client.widget.layout.FitLayout;
+import com.extjs.gxt.ui.client.widget.toolbar.SeparatorToolItem;
+import com.extjs.gxt.ui.client.widget.toolbar.ToolBar;
 import com.google.gwt.user.client.Element;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.admin.client.mvc.events.AdminEvents;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.utils.BaseAsyncCallback;
@@ -25,7 +26,7 @@ import java.util.List;
  * Date: 4/15/11
  * Time: 10:44 PM
  */
-public class FacultiesPanel extends FormPanel {
+public class FacultiesPanel extends ContentPanel {
     private FacultiesGrid facultiesGrid = new FacultiesGrid();
     private RowEditor<FacultyModel> rowEditor = new RowEditor<FacultyModel>();
 
@@ -141,14 +142,18 @@ public class FacultiesPanel extends FormPanel {
             }
         });
 
+        ToolBar facultiesGridToolBar = new ToolBar();
+        facultiesGridToolBar.add(addFacultyButton);
+        facultiesGridToolBar.add(new SeparatorToolItem());
+        facultiesGridToolBar.add(editFacultyButton);
+        facultiesGridToolBar.add(new SeparatorToolItem());
+        facultiesGridToolBar.add(removeFacultyButton);
+
         ContentPanel facultiesGridPanel = new ContentPanel(new FitLayout());
-        facultiesGridPanel.setHeading("Список факультетов");
-
+//        facultiesGridPanel.setHeading("Список факультетов");
+        facultiesGridPanel.setHeaderVisible(false);
+        facultiesGridPanel.setTopComponent(facultiesGridToolBar);
         facultiesGridPanel.add(facultiesGrid);
-
-        facultiesGridPanel.addButton(addFacultyButton);
-        facultiesGridPanel.addButton(editFacultyButton);
-        facultiesGridPanel.addButton(removeFacultyButton);
 
         add(facultiesGridPanel);
 

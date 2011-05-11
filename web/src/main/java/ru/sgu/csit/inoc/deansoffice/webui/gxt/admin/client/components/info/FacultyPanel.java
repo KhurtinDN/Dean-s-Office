@@ -19,6 +19,8 @@ import com.extjs.gxt.ui.client.widget.form.FormPanel;
 import com.extjs.gxt.ui.client.widget.form.TextField;
 import com.extjs.gxt.ui.client.widget.grid.*;
 import com.extjs.gxt.ui.client.widget.layout.*;
+import com.extjs.gxt.ui.client.widget.toolbar.SeparatorToolItem;
+import com.extjs.gxt.ui.client.widget.toolbar.ToolBar;
 import com.google.gwt.user.client.Element;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.admin.client.mvc.events.AdminEvents;
@@ -41,7 +43,7 @@ import java.util.List;
  * Date: 4/15/11
  * Time: 10:44 PM
  */
-public class FacultyPanel extends FormPanel {
+public class FacultyPanel extends ContentPanel {
     private TextField<String> fullNameTextField = new TextField<String>();
     private TextField<String> nameTextField = new TextField<String>();
     private ComboBox<PersonModel> deansComboBox = new ComboBox<PersonModel>();
@@ -51,20 +53,17 @@ public class FacultyPanel extends FormPanel {
     private FacultyModel currentFacultyModel;
 
     public FacultyPanel() {
-        setHeading("Факультет");
+        setHeading("Информация о факультете");
         setLayout(new RowLayout(Style.Orientation.VERTICAL));
 
         fullNameTextField.setFieldLabel("Полное имя");
         fullNameTextField.setAllowBlank(false);
-        fullNameTextField.addListener(Events.Change, new FacultyUpdateListener("fullName"));
 
         nameTextField.setFieldLabel("Имя");
         nameTextField.setAllowBlank(false);
-        nameTextField.addListener(Events.Change, new FacultyUpdateListener("name"));
 
         deansComboBox.setFieldLabel("Декан");
         deansComboBox.setTriggerAction(ComboBox.TriggerAction.ALL);
-        deansComboBox.addListener(Events.Change, new FacultyUpdateListener("dean"));
         deansComboBox.setDisplayField("fullName");
 
         RpcProxy<List<PersonModel>> proxy = new RpcProxy<List<PersonModel>>() {
@@ -190,54 +189,29 @@ public class FacultyPanel extends FormPanel {
             }
         });
 
-        LayoutContainer fullNameLayoutContainer = new LayoutContainer(new FormLayout(LabelAlign.TOP));
+        ToolBar specialityGridToolBar = new ToolBar();
+        specialityGridToolBar.add(addSpecialityButton);
+        specialityGridToolBar.add(new SeparatorToolItem());
+        specialityGridToolBar.add(editSpecialityButton);
+        specialityGridToolBar.add(new SeparatorToolItem());
+        specialityGridToolBar.add(removeSpecialityButton);
+
+        LayoutContainer fullNameLayoutContainer = new LayoutContainer(new FormLayout(FormPanel.LabelAlign.TOP));
         fullNameLayoutContainer.add(fullNameTextField, FormUtil.wFormData);
 
-        LayoutContainer nameLayoutContainer = new LayoutContainer(new FormLayout(LabelAlign.TOP));
+        LayoutContainer nameLayoutContainer = new LayoutContainer(new FormLayout(FormPanel.LabelAlign.TOP));
         nameLayoutContainer.add(nameTextField, FormUtil.wFormData);
 
-        LayoutContainer deansLayoutContainer = new LayoutContainer(new FormLayout(LabelAlign.TOP));
+        LayoutContainer deansLayoutContainer = new LayoutContainer(new FormLayout(FormPanel.LabelAlign.TOP));
         deansLayoutContainer.add(deansComboBox, FormUtil.wFormData);
 
-        LayoutContainer facultyLayoutContainer = new LayoutContainer(new RowLayout(Style.Orientation.HORIZONTAL));
-        facultyLayoutContainer.add(fullNameLayoutContainer, new RowData(1, 1, new Margins(0, 5, 0, 0)));
-        facultyLayoutContainer.add(nameLayoutContainer, new RowData(200, 1, new Margins(0, 5, 0, 5)));
-        facultyLayoutContainer.add(deansLayoutContainer, new RowData(300, 1, new Margins(0, 0, 0, 5)));
-
-        ContentPanel specialityGridPanel = new ContentPanel(new FitLayout());
-        specialityGridPanel.setHeading("Список специальностей");
-
-        specialityGridPanel.add(specialitiesGrid);
-        specialityGridPanel.addButton(addSpecialityButton);
-        specialityGridPanel.addButton(editSpecialityButton);
-        specialityGridPanel.addButton(removeSpecialityButton);
-
-        add(facultyLayoutContainer, new RowData(1, 60));
-        add(specialityGridPanel, new RowData(1, 1));
-    }
-
-    public void bind(FacultyModel facultyModel) {
-        this.currentFacultyModel = facultyModel;
-        setHeading("Факультет '" + facultyModel.getFullName() + "'");
-
-        fullNameTextField.setValue(facultyModel.getFullName());
-        nameTextField.setValue(facultyModel.getName());
-        deansComboBox.setValue(facultyModel.getDean());
-
-        specialitiesGrid.reload(currentFacultyModel.getId());
-    }
-
-    private class FacultyUpdateListener implements Listener<FieldEvent> {
-        private String field;
-
-        private FacultyUpdateListener(String field) {
-            this.field = field;
-        }
-
-        @Override
-        public void handleEvent(FieldEvent be) {
-            if (currentFacultyModel != null) {
-                currentFacultyModel.set(field, be.getValue());
+        Button saveButton = new Button("Сохранить", IconHelper.createStyle("saveButton-icon"));
+        saveButton.addSelectionListener(new SelectionListener<ButtonEvent>() {
+            @Override
+            public void componentSelected(ButtonEvent ce) {
+                currentFacultyModel.setFullName(fullNameTextField.getValue());
+                currentFacultyModel.setName(nameTextField.getValue());
+                currentFacultyModel.setDean(deansComboBox.getValue());
 
                 FacultyService.Util.getInstance().updateFaculty(currentFacultyModel, new BaseAsyncCallback<Void>() {
                     @Override
@@ -247,6 +221,45 @@ public class FacultyPanel extends FormPanel {
                     }
                 });
             }
-        }
+        });
+
+        Button cancelButton = new Button("Отменить", IconHelper.createStyle("cancelButton-icon"));
+        cancelButton.addSelectionListener(new SelectionListener<ButtonEvent>() {
+            @Override
+            public void componentSelected(ButtonEvent ce) {
+                fullNameTextField.setValue(currentFacultyModel.getFullName());
+                nameTextField.setValue(currentFacultyModel.getName());
+                deansComboBox.setValue(currentFacultyModel.getDean());
+            }
+        });
+
+        ContentPanel facultyDataPanel = new ContentPanel(new RowLayout(Style.Orientation.HORIZONTAL));
+        facultyDataPanel.setFrame(true);
+        facultyDataPanel.setHeaderVisible(false);
+
+        facultyDataPanel.add(fullNameLayoutContainer, new RowData(1, 1, new Margins(0, 5, 0, 5)));
+        facultyDataPanel.add(nameLayoutContainer, new RowData(200, 1, new Margins(0, 5, 0, 5)));
+        facultyDataPanel.add(deansLayoutContainer, new RowData(300, 1, new Margins(0, 5, 0, 5)));
+
+        facultyDataPanel.addButton(saveButton);
+        facultyDataPanel.addButton(cancelButton);
+
+        ContentPanel specialityGridPanel = new ContentPanel(new FitLayout());
+        specialityGridPanel.setHeading("Список специальностей");
+        specialityGridPanel.setTopComponent(specialityGridToolBar);
+        specialityGridPanel.add(specialitiesGrid);
+
+        add(facultyDataPanel, new RowData(1, 100));
+        add(specialityGridPanel, new RowData(1, 1));
+    }
+
+    public void bind(FacultyModel facultyModel) {
+        this.currentFacultyModel = facultyModel;
+
+        fullNameTextField.setValue(facultyModel.getFullName());
+        nameTextField.setValue(facultyModel.getName());
+        deansComboBox.setValue(facultyModel.getDean());
+
+        specialitiesGrid.reload(currentFacultyModel.getId());
     }
 }

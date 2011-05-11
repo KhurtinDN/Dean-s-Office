@@ -19,6 +19,8 @@ import com.extjs.gxt.ui.client.widget.form.FormPanel;
 import com.extjs.gxt.ui.client.widget.form.TextField;
 import com.extjs.gxt.ui.client.widget.grid.*;
 import com.extjs.gxt.ui.client.widget.layout.*;
+import com.extjs.gxt.ui.client.widget.toolbar.SeparatorToolItem;
+import com.extjs.gxt.ui.client.widget.toolbar.ToolBar;
 import com.google.gwt.user.client.Element;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.admin.client.mvc.events.AdminEvents;
@@ -41,7 +43,7 @@ import java.util.List;
  * Date: 4/15/11
  * Time: 10:44 PM
  */
-public class SpecialityPanel extends FormPanel {
+public class SpecialityPanel extends ContentPanel {
     private TextField<String> fullNameTextField = new TextField<String>();
     private TextField<String> nameTextField = new TextField<String>();
     private TextField<String> codeTextField = new TextField<String>();
@@ -52,24 +54,20 @@ public class SpecialityPanel extends FormPanel {
     private SpecialityModel currentSpecialityModel;
 
     public SpecialityPanel() {
-        setHeading("Специальность");
+        setHeading("Информация о специальность");
         setLayout(new RowLayout(Style.Orientation.VERTICAL));
 
         fullNameTextField.setFieldLabel("Полное имя");
         fullNameTextField.setAllowBlank(false);
-        fullNameTextField.addListener(Events.Change, new SpecialityUpdateListener("fullName"));
 
         nameTextField.setFieldLabel("Имя");
         nameTextField.setAllowBlank(false);
-        nameTextField.addListener(Events.Change, new SpecialityUpdateListener("name"));
 
         codeTextField.setFieldLabel("Код");
         codeTextField.setAllowBlank(false);
-        codeTextField.addListener(Events.Change, new SpecialityUpdateListener("code"));
 
         facultiesComboBox.setFieldLabel("Факультет");
         facultiesComboBox.setTriggerAction(ComboBox.TriggerAction.ALL);
-        facultiesComboBox.addListener(Events.Change, new SpecialityUpdateListener("faculty"));
         facultiesComboBox.setDisplayField("name");
 
         RpcProxy<List<FacultyModel>> proxy = new RpcProxy<List<FacultyModel>>() {
@@ -188,59 +186,33 @@ public class SpecialityPanel extends FormPanel {
             }
         });
 
-        LayoutContainer fullNameLayoutContainer = new LayoutContainer(new FormLayout(LabelAlign.TOP));
+        ToolBar groupGridToolBar = new ToolBar();
+        groupGridToolBar.add(addGroupButton);
+        groupGridToolBar.add(new SeparatorToolItem());
+        groupGridToolBar.add(editGroupButton);
+        groupGridToolBar.add(new SeparatorToolItem());
+        groupGridToolBar.add(removeGroupButton);
+
+        LayoutContainer fullNameLayoutContainer = new LayoutContainer(new FormLayout(FormPanel.LabelAlign.TOP));
         fullNameLayoutContainer.add(fullNameTextField, FormUtil.wFormData);
 
-        LayoutContainer nameLayoutContainer = new LayoutContainer(new FormLayout(LabelAlign.TOP));
+        LayoutContainer nameLayoutContainer = new LayoutContainer(new FormLayout(FormPanel.LabelAlign.TOP));
         nameLayoutContainer.add(nameTextField, FormUtil.wFormData);
 
-        LayoutContainer codeLayoutContainer = new LayoutContainer(new FormLayout(LabelAlign.TOP));
+        LayoutContainer codeLayoutContainer = new LayoutContainer(new FormLayout(FormPanel.LabelAlign.TOP));
         codeLayoutContainer.add(codeTextField, FormUtil.wFormData);
 
-        LayoutContainer facultiesLayoutContainer = new LayoutContainer(new FormLayout(LabelAlign.TOP));
+        LayoutContainer facultiesLayoutContainer = new LayoutContainer(new FormLayout(FormPanel.LabelAlign.TOP));
         facultiesLayoutContainer.add(facultiesComboBox, FormUtil.wFormData);
 
-        LayoutContainer specialityLayoutContainer = new LayoutContainer(new RowLayout(Style.Orientation.HORIZONTAL));
-        specialityLayoutContainer.add(fullNameLayoutContainer, new RowData(1, 1, new Margins(0, 5, 0, 0)));
-        specialityLayoutContainer.add(nameLayoutContainer, new RowData(200, 1, new Margins(0, 5, 0, 5)));
-        specialityLayoutContainer.add(codeLayoutContainer, new RowData(200, 1, new Margins(0, 5, 0, 5)));
-        specialityLayoutContainer.add(facultiesLayoutContainer, new RowData(200, 1, new Margins(0, 0, 0, 5)));
-
-        ContentPanel groupGridPanel = new ContentPanel(new FitLayout());
-        groupGridPanel.setHeading("Список групп");
-
-        groupGridPanel.add(groupsGrid);
-        groupGridPanel.addButton(addGroupButton);
-        groupGridPanel.addButton(editGroupButton);
-        groupGridPanel.addButton(removeGroupButton);
-
-        add(specialityLayoutContainer, new RowData(1, 60));
-        add(groupGridPanel, new RowData(1, 1));
-    }
-
-    public void bind(SpecialityModel specialityModel) {
-        this.currentSpecialityModel = specialityModel;
-        setHeading("Специальность '" + specialityModel.getFullName() + "'");
-
-        fullNameTextField.setValue(specialityModel.getFullName());
-        nameTextField.setValue(specialityModel.getName());
-        codeTextField.setValue(specialityModel.getCode());
-        facultiesComboBox.setValue(specialityModel.getFaculty());
-
-        groupsGrid.reload(specialityModel.getId());
-    }
-
-    private class SpecialityUpdateListener implements Listener<FieldEvent> {
-        private String field;
-
-        private SpecialityUpdateListener(String field) {
-            this.field = field;
-        }
-
-        @Override
-        public void handleEvent(FieldEvent be) {
-            if (currentSpecialityModel != null) {
-                currentSpecialityModel.set(field, be.getValue());
+        Button saveButton = new Button("Сохранить", IconHelper.createStyle("saveButton-icon"));
+        saveButton.addSelectionListener(new SelectionListener<ButtonEvent>() {
+            @Override
+            public void componentSelected(ButtonEvent ce) {
+                currentSpecialityModel.setFullName(fullNameTextField.getValue());
+                currentSpecialityModel.setName(nameTextField.getValue());
+                currentSpecialityModel.setCode(codeTextField.getValue());
+                currentSpecialityModel.setFaculty(facultiesComboBox.getValue());
 
                 SpecialityService.Util.getInstance().updateSpeciality(currentSpecialityModel,
                         new BaseAsyncCallback<Void>() {
@@ -251,6 +223,48 @@ public class SpecialityPanel extends FormPanel {
                             }
                         });
             }
-        }
+        });
+
+        Button cancelButton = new Button("Отменить", IconHelper.createStyle("cancelButton-icon"));
+        cancelButton.addSelectionListener(new SelectionListener<ButtonEvent>() {
+            @Override
+            public void componentSelected(ButtonEvent ce) {
+                fullNameTextField.setValue(currentSpecialityModel.getFullName());
+                nameTextField.setValue(currentSpecialityModel.getName());
+                codeTextField.setValue(currentSpecialityModel.getCode());
+                facultiesComboBox.setValue(currentSpecialityModel.getFaculty());
+            }
+        });
+
+        ContentPanel specialityLayoutContainer = new ContentPanel(new RowLayout(Style.Orientation.HORIZONTAL));
+        specialityLayoutContainer.setFrame(true);
+        specialityLayoutContainer.setHeaderVisible(false);
+
+        specialityLayoutContainer.add(fullNameLayoutContainer, new RowData(1, 1, new Margins(0, 5, 0, 5)));
+        specialityLayoutContainer.add(nameLayoutContainer, new RowData(200, 1, new Margins(0, 5, 0, 5)));
+        specialityLayoutContainer.add(codeLayoutContainer, new RowData(200, 1, new Margins(0, 5, 0, 5)));
+        specialityLayoutContainer.add(facultiesLayoutContainer, new RowData(200, 1, new Margins(0, 5, 0, 5)));
+
+        specialityLayoutContainer.addButton(saveButton);
+        specialityLayoutContainer.addButton(cancelButton);
+
+        ContentPanel groupGridPanel = new ContentPanel(new FitLayout());
+        groupGridPanel.setHeading("Список групп");
+        groupGridPanel.setTopComponent(groupGridToolBar);
+        groupGridPanel.add(groupsGrid);
+
+        add(specialityLayoutContainer, new RowData(1, 100));
+        add(groupGridPanel, new RowData(1, 1));
+    }
+
+    public void bind(SpecialityModel specialityModel) {
+        this.currentSpecialityModel = specialityModel;
+
+        fullNameTextField.setValue(specialityModel.getFullName());
+        nameTextField.setValue(specialityModel.getName());
+        codeTextField.setValue(specialityModel.getCode());
+        facultiesComboBox.setValue(specialityModel.getFaculty());
+
+        groupsGrid.reload(specialityModel.getId());
     }
 }

@@ -45,3 +45,11 @@
 .issueButton-icon {
     background: url(../icons/issue16x16.png) no-repeat center left !important;
 }
+
+.saveButton-icon {
+    background: url(../icons/ready16x16.png) no-repeat center left !important;
+}
+
+.cancelButton-icon {
+    background: url(../icons/remove16x16.png) no-repeat center left !important;
+}
