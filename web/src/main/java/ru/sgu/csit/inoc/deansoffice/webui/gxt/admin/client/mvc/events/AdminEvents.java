@@ -32,4 +32,12 @@ public class AdminEvents {
     public static final EventType GroupAdded = new EventType();
     public static final EventType GroupChanged = new EventType();
     public static final EventType GroupsDeleted = new EventType();
+
+    public static final EventType UserAdded = new EventType();
+    public static final EventType UserChanged = new EventType();
+    public static final EventType UserDeleted = new EventType();
+
+    public static final EventType StaffAdded = new EventType();
+    public static final EventType StaffChanged = new EventType();
+    public static final EventType StaffDeleted = new EventType();
 }

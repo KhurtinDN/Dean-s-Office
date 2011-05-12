@@ -28,7 +28,6 @@ import java.util.List;
  */
 public class FacultiesPanel extends ContentPanel {
     private FacultiesGrid facultiesGrid = new FacultiesGrid();
-    private RowEditor<FacultyModel> rowEditor = new RowEditor<FacultyModel>();
 
     public FacultiesPanel() {
         setHeading("Факультеты");
@@ -39,6 +38,7 @@ public class FacultiesPanel extends ContentPanel {
     protected void onRender(Element target, int index) {
         super.onRender(target, index);
 
+        final RowEditor<FacultyModel> rowEditor = new RowEditor<FacultyModel>();
         rowEditor.setClicksToEdit(EditorGrid.ClicksToEdit.TWO);
         rowEditor.addListener(Events.AfterEdit, new Listener<RowEditorEvent>() {
             @Override

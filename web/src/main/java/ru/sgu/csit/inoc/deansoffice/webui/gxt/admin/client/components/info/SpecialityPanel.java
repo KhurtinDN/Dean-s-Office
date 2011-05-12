@@ -106,6 +106,7 @@ public class SpecialityPanel extends ContentPanel {
                         groupsGrid.getStore().commitChanges();
                         unmask();
                         Dispatcher.forwardEvent(CommonEvents.Info, "Группа успешно изменена!");
+                        Dispatcher.forwardEvent(AdminEvents.GroupChanged);
                     }
                 });
             }
@@ -129,6 +130,7 @@ public class SpecialityPanel extends ContentPanel {
                         unmask();
 
                         Dispatcher.forwardEvent(CommonEvents.Info, "Группа успешно добавлена!");
+                        Dispatcher.forwardEvent(AdminEvents.GroupAdded);
                     }
                 });
             }
@@ -183,6 +185,7 @@ public class SpecialityPanel extends ContentPanel {
 
                                                         unmask();
                                                         Dispatcher.forwardEvent(CommonEvents.Info, "Группа успешно удалена!");
+                                                        Dispatcher.forwardEvent(AdminEvents.GroupsDeleted);
                                                     }
                                                 });
                                     }

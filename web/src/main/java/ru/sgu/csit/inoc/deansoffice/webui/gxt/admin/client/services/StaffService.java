@@ -18,6 +18,10 @@ public interface StaffService extends RemoteService {
     List<PersonModel> loadStaffList();
     List<PersonModel> loadDeanList();
 
+    PersonModel create();
+    void update(PersonModel personModel);
+    void delete(List<Long> personIdList);
+
     public static class Util {
         private static final StaffServiceAsync ourInstance = GWT.create(StaffService.class);
 
@@ -26,3 +30,4 @@ public interface StaffService extends RemoteService {
         }
     }
 }
+

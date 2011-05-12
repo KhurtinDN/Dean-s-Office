@@ -18,12 +18,25 @@ import java.util.List;
  */
 @Service("AdminStaffService")
 public class StaffServiceImpl implements StaffService {
+    private List<PersonModel> staffList = new ArrayList<PersonModel>(); // todo: implement
+    {
+        PersonModel personModel = new PersonModel();
+        personModel.setId((long) staffList.size());
+        personModel.setFullName("Петров Петр Петрович");
+        staffList.add(personModel);
+
+        personModel = new PersonModel();
+        personModel.setId((long) staffList.size());
+        personModel.setFullName("Кузьма Кузьмич");
+        staffList.add(personModel);
+    }
+
     @Autowired
     private DeanDAO deanDAO;
 
     @Override
     public List<PersonModel> loadStaffList() {
-        return new ArrayList<PersonModel>();  // todo: implement
+        return staffList;
     }
 
     @Override
@@ -38,5 +51,30 @@ public class StaffServiceImpl implements StaffService {
         }
 
         return deanModelList;
+    }
+
+    @Override
+    public PersonModel create() {
+        PersonModel personModel = new PersonModel();
+        personModel.setId((long) staffList.size());
+        staffList.add(personModel);
+
+        return personModel;
+    }
+
+    @Override
+    public void update(PersonModel personModel) {
+        staffList.set(personModel.getId().intValue(), personModel);
+    }
+
+    @Override
+    public void delete(List<Long> personIdList) {
+        List<PersonModel> personModelList = new ArrayList<PersonModel>(personIdList.size());
+
+        for (Long id : personIdList) {
+            personModelList.add(staffList.get(id.intValue()));
+        }
+
+        staffList.removeAll(personModelList);
     }
 }

@@ -17,6 +17,10 @@ public interface UserService extends RemoteService {
 
     List<UserModel> loadUsers();
 
+    UserModel create();
+    void update(UserModel userModel);
+    void delete(List<Long> userIdList);
+
     public static class Util {
         private static final UserServiceAsync ourInstance = GWT.create(UserService.class);
 
