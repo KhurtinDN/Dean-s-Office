@@ -60,6 +60,11 @@ public class BaseDAOImpl<T, ID extends Serializable> extends HibernateDaoSupport
     }
 
     @Override
+    public boolean deleteById(ID id) {
+        return getHibernateTemplate().bulkUpdate("delete from " + getPersistentClass().getName() + " s where s.id=?", id) > 0;
+    }
+
+    @Override
     @SuppressWarnings("unchecked")
     public T findById(ID id) {
 //        DetachedCriteria criteria = createCriteriaForPersistentClass(Restrictions.eq("id", id));

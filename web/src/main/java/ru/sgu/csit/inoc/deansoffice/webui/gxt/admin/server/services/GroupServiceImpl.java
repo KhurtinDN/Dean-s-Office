@@ -61,8 +61,7 @@ public class GroupServiceImpl implements GroupService {
     @Override
     public void delete(List<Long> groupIdList) {
         for (Long groupId : groupIdList) {
-            Group group = groupDAO.findById(groupId); // todo: remove by ID
-            groupDAO.delete(group);
+            groupDAO.deleteById(groupId);
         }
     }
 }

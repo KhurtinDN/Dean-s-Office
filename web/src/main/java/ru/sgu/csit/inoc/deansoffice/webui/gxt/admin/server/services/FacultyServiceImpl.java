@@ -58,8 +58,7 @@ public class FacultyServiceImpl implements FacultyService {
     @Override
     public void deleteFaculties(List<Long> facultyIdList) {
         for (Long facultyId : facultyIdList) {
-            Faculty faculty = facultyDAO.findById(facultyId); // todo: remove by ID
-            facultyDAO.delete(faculty);
+            facultyDAO.deleteById(facultyId);
         }
     }
 }

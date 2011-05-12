@@ -14,6 +14,7 @@ public interface BaseDAO<T, ID extends Serializable> {
     void saveOrUpdate(T entity);
     void update(T transientObject);
     void delete(T persistentObject);
+    boolean deleteById(ID id);
     T findById(ID id);
     List<T> findAll();
 }

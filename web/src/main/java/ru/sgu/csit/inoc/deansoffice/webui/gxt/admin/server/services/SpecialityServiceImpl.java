@@ -73,8 +73,7 @@ public class SpecialityServiceImpl implements SpecialityService {
     @Override
     public void deleteSpecialities(List<Long> specialityIdList) {
         for (Long specialityId : specialityIdList) {
-            Speciality speciality = specialityDAO.findById(specialityId); // todo: remove by ID
-            specialityDAO.delete(speciality);
+            specialityDAO.deleteById(specialityId);
         }
     }
 }

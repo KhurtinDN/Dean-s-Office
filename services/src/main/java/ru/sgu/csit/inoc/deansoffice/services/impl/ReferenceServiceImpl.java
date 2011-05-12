@@ -190,8 +190,7 @@ public class ReferenceServiceImpl extends DocumentServiceImpl implements Referen
     @Override
     public void removeReferencesById(List<Long> referenceIds) {
         for (Long referenceId : referenceIds) {
-            Reference reference = referenceDAO.findById(referenceId);
-            referenceDAO.delete(reference); // todo: need implement deleteById
+            referenceDAO.deleteById(referenceId);
         }
     }
 }
