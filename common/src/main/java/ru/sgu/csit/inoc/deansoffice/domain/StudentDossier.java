@@ -1,8 +1,8 @@
 package ru.sgu.csit.inoc.deansoffice.domain;
 
+import com.google.common.base.Objects;
+
 import javax.persistence.Entity;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 /**
  * User: XX (freecoder.xx@gmail.com)
@@ -11,4 +11,10 @@ import java.util.Date;
  */
 @Entity
 public class StudentDossier extends Document {
+    @Override
+    public String toString() {
+        return Objects.toStringHelper(this)
+                .addValue(super.toString())
+                .toString();
+    }
 }

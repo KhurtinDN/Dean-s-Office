@@ -1,10 +1,11 @@
 package ru.sgu.csit.inoc.deansoffice.domain;
 
+import com.google.common.base.Objects;
+
 import javax.persistence.*;
 import java.util.*;
 
 /**
- * .
  * User: hd (KhurtinDN(a)gmail.com)
  * Date: Aug 27, 2010
  * Time: 12:28:25 PM
@@ -56,6 +57,42 @@ public class Order extends Document {
         CREATED, IN_PROCESS, COMPLETED
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        Order that = (Order) o;
+
+        return super.equals(that) &&
+                Objects.equal(this.state, that.state) &&
+                Objects.equal(this.directives, that.directives) &&
+                Objects.equal(this.data, that.data);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(
+                super.hashCode(),
+                state,
+                directives,
+                data);
+    }
+
+    @Override
+    public String toString() {
+        return Objects.toStringHelper(this)
+                .addValue(super.toString())
+                .add("state", state)
+                .add("directives", directives)
+                .add("data", data)
+                .toString();
+    }
+
     @Entity
     public static class OrderData extends PersistentItem {
         private String note;
@@ -94,6 +131,42 @@ public class Order extends Document {
 
         public void setCoordinators(List<Coordinator> coordinators) {
             this.coordinators = coordinators;
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) {
+                return true;
+            }
+            if (o == null || getClass() != o.getClass()) {
+                return false;
+            }
+
+            OrderData that = (OrderData) o;
+
+            return super.equals(that) &&
+                    Objects.equal(this.note, that.note) &&
+                    Objects.equal(this.supervisor, that.supervisor) &&
+                    Objects.equal(this.coordinators, that.coordinators);
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hashCode(
+                    supervisor.hashCode(),
+                    note,
+                    supervisor,
+                    coordinators);
+        }
+
+        @Override
+        public String toString() {
+            return Objects.toStringHelper(this)
+                    .addValue(super.toString())
+                    .add("note", note)
+                    .add("supervisor", supervisor)
+                    .add("coordinators", coordinators)
+                    .toString();
         }
     }
 }

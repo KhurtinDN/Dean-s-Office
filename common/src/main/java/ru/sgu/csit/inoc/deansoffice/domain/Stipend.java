@@ -1,10 +1,11 @@
 package ru.sgu.csit.inoc.deansoffice.domain;
 
+import com.google.common.base.Objects;
+
 import javax.persistence.Entity;
 import java.util.Date;
 
 /**
- * Created by IntelliJ IDEA.
  * User: MesheryakovAV
  * Date: 04.03.11
  * Time: 10:31
@@ -50,5 +51,44 @@ public class Stipend extends PersistentItem {
 
     public static enum StipendType {
         SOCIAL, REGULAR, HEIGHTENED
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        Stipend that = (Stipend) o;
+
+        return super.equals(that) &&
+                Objects.equal(this.type, that.type) &&
+                Objects.equal(this.startDate, that.startDate) &&
+                Objects.equal(this.endDate, that.endDate) &&
+                Objects.equal(this.value, that.value);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(
+                super.hashCode(),
+                type,
+                startDate,
+                endDate,
+                value);
+    }
+
+    @Override
+    public String toString() {
+        return Objects.toStringHelper(this)
+                .addValue(super.toString())
+                .add("type", type)
+                .add("startDate", startDate)
+                .add("endDate", endDate)
+                .add("value", value)
+                .toString();
     }
 }

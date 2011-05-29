@@ -1,5 +1,7 @@
 package ru.sgu.csit.inoc.deansoffice.domain;
 
+import com.google.common.base.Objects;
+
 import javax.persistence.Entity;
 import java.util.Date;
 
@@ -27,5 +29,38 @@ public class EnrollmentOrder extends Order {
 
     public void setReleaseDate(Date releaseDate) {
         this.releaseDate = releaseDate;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        EnrollmentOrder that = (EnrollmentOrder) o;
+
+        return super.equals(that) &&
+                Objects.equal(this.enrollmentDate, that.enrollmentDate) &&
+                Objects.equal(this.releaseDate, that.releaseDate);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(
+                super.hashCode(),
+                enrollmentDate,
+                releaseDate);
+    }
+
+    @Override
+    public String toString() {
+        return Objects.toStringHelper(this)
+                .addValue(super.toString())
+                .add("enrollmentDate", enrollmentDate)
+                .add("releaseDate", releaseDate)
+                .toString();
     }
 }

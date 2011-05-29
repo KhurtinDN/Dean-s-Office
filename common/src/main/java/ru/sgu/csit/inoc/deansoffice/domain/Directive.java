@@ -1,9 +1,10 @@
 package ru.sgu.csit.inoc.deansoffice.domain;
 
+import com.google.common.base.Objects;
+
 import javax.persistence.*;
 
 /**
- * Created by IntelliJ IDEA.
  * User: MesheryakovAV
  * Date: 28.02.11
  * Time: 11:29
@@ -32,6 +33,39 @@ public abstract class Directive extends PersistentItem {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        Directive that = (Directive) o;
+
+        return super.equals(that) &&
+                Objects.equal(this.data, that.data) &&
+                Objects.equal(this.type, that.type);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(
+                super.hashCode(),
+                data,
+                type);
+    }
+
+    @Override
+    public String toString() {
+        return Objects.toStringHelper(this)
+                .addValue(super.toString())
+                .add("data", data)
+                .add("type", type)
+                .toString();
     }
 
     @Entity
@@ -73,6 +107,45 @@ public abstract class Directive extends PersistentItem {
 
         public void setSourceData(DirectiveSourceData sourceData) {
             this.sourceData = sourceData;
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) {
+                return true;
+            }
+            if (o == null || getClass() != o.getClass()) {
+                return false;
+            }
+
+            DirectiveData that = (DirectiveData) o;
+
+            return super.equals(that) &&
+                    Objects.equal(this.description, that.description) &&
+                    Objects.equal(this.body, that.body) &&
+                    Objects.equal(this.grounds, that.grounds) &&
+                    Objects.equal(this.sourceData, that.sourceData);
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hashCode(
+                    super.hashCode(),
+                    description,
+                    body,
+                    grounds,
+                    sourceData);
+        }
+
+        @Override
+        public String toString() {
+            return Objects.toStringHelper(this)
+                    .addValue(super.toString())
+                    .add("description", description)
+                    .add("body", body)
+                    .add("grounds", grounds)
+                    .add("sourceData", sourceData)
+                    .toString();
         }
     }
 }

@@ -1,14 +1,11 @@
 package ru.sgu.csit.inoc.deansoffice.domain;
 
-import org.hibernate.annotations.Type;
+import com.google.common.base.Objects;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.Lob;
 import javax.persistence.Transient;
 
 /**
- * Created by IntelliJ IDEA.
  * User: MesheryakovAV
  * Date: 23.12.10
  * Time: 13:15
@@ -38,5 +35,38 @@ public class Photo extends PersistentItem {
 
     public void setFileName(String fileName) {
         this.fileName = fileName;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        Photo that = (Photo) o;
+
+        return super.equals(that) &&
+                Objects.equal(this.fileName, that.fileName) &&
+                Objects.equal(this.data, that.data);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(
+                super.hashCode(),
+                fileName,
+                data);
+    }
+
+    @Override
+    public String toString() {
+        return Objects.toStringHelper(this)
+                .addValue(super.toString())
+                .add("fileName", fileName)
+                .add("data", data)
+                .toString();
     }
 }

@@ -1,5 +1,7 @@
 package ru.sgu.csit.inoc.deansoffice.domain;
 
+import com.google.common.base.Objects;
+
 import javax.persistence.Entity;
 
 /**
@@ -9,4 +11,10 @@ import javax.persistence.Entity;
  */
 @Entity
 public class Rector extends Leader {
+    @Override
+    public String toString() {
+        return Objects.toStringHelper(this)
+                .addValue(super.toString())
+                .toString();
+    }
 }

@@ -1,10 +1,11 @@
 package ru.sgu.csit.inoc.deansoffice.domain;
 
+import com.google.common.base.Objects;
+
 import javax.persistence.*;
 import java.util.Date;
 
 /**
- * Created by IntelliJ IDEA.
  * User: MesheryakovAV
  * Date: 23.12.10
  * Time: 14:01
@@ -89,5 +90,53 @@ public class Passport extends Person {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        Passport that = (Passport) o;
+
+        return super.equals(that) &&
+                Objects.equal(this.actual, that.actual) &&
+                Objects.equal(this.series, that.series) &&
+                Objects.equal(this.number, that.number) &&
+                Objects.equal(this.issuingOrganization, that.issuingOrganization) &&
+                Objects.equal(this.issuedDate, that.issuedDate) &&
+                Objects.equal(this.citizenship, that.citizenship) &&
+                Objects.equal(this.address, that.address);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(
+                super.hashCode(),
+                actual,
+                series,
+                number,
+                issuingOrganization,
+                issuedDate,
+                citizenship,
+                address);
+    }
+
+    @Override
+    public String toString() {
+        return Objects.toStringHelper(this)
+                .addValue(super.toString())
+                .add("actual", actual)
+                .add("series", series)
+                .add("number", number)
+                .add("issuingOrganization", issuingOrganization)
+                .add("issuedDate", issuedDate)
+                .add("citizenship", citizenship)
+                .add("address", address)
+                .toString();
     }
 }

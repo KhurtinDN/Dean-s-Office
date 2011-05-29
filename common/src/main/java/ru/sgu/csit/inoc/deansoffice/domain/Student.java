@@ -1,5 +1,7 @@
 package ru.sgu.csit.inoc.deansoffice.domain;
 
+import com.google.common.base.Objects;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -141,6 +143,63 @@ public class Student extends Person {
         CAPTAIN
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || !(o instanceof Student)) {
+            return false;
+        }
+
+        Student that = (Student) o;
+
+        return super.equals(o) &&
+                Objects.equal(this.studentIdNumber, that.studentIdNumber) &&
+                Objects.equal(this.course, that.course) &&
+                Objects.equal(this.group, that.group) &&
+                Objects.equal(this.speciality, that.speciality) &&
+                Objects.equal(this.division, that.division) &&
+                Objects.equal(this.studyForm, that.studyForm) &&
+                Objects.equal(this.role, that.role) &&
+                Objects.equal(this.enrollmentOrder, that.enrollmentOrder) &&
+                Objects.equal(this.additionalData, that.additionalData) &&
+                Objects.equal(this.stipends, that.stipends);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(
+                super.hashCode(),
+                studentIdNumber,
+                course,
+                group,
+                speciality,
+                division,
+                studyForm,
+                role,
+                enrollmentOrder,
+                additionalData,
+                stipends);
+    }
+
+    @Override
+    public String toString() {
+        return Objects.toStringHelper(this)
+                .addValue(super.toString())
+                .add("studentIdNumber", studentIdNumber)
+                .add("course", course)
+                .add("group", group)
+                .add("speciality", speciality)
+                .add("division", division)
+                .add("studyForm", studyForm)
+                .add("role", role)
+                .add("enrollmentOrder", enrollmentOrder)
+                .add("additionalData", additionalData)
+                .add("stipends", stipends)
+                .toString();
+    }
+
     @Entity
     public static class AdditionalStudentData extends PersistentItem {
         //@OneToOne(fetch = FetchType.LAZY)
@@ -266,6 +325,66 @@ public class Student extends Person {
 
         public void setActualAddress(String actualAddress) {
             this.actualAddress = actualAddress;
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) {
+                return true;
+            }
+            if (o == null || !(o instanceof AdditionalStudentData)) {
+                return false;
+            }
+
+            AdditionalStudentData that = (AdditionalStudentData) o;
+
+            return super.equals(o) &&
+                    Objects.equal(this.photo, that.photo) &&
+                    Objects.equal(this.birthPlace, that.birthPlace) &&
+                    Objects.equal(this.education, that.education) &&
+                    Objects.equal(this.workInfo, that.workInfo) &&
+                    Objects.equal(this.passports, that.passports) &&
+                    Objects.equal(this.maritalStatus, that.maritalStatus) &&
+                    Objects.equal(this.childrenInfo, that.childrenInfo) &&
+                    Objects.equal(this.father, that.father) &&
+                    Objects.equal(this.mother, that.mother) &&
+                    Objects.equal(this.oldAddress, that.oldAddress) &&
+                    Objects.equal(this.actualAddress, that.actualAddress);
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hashCode(
+                    super.hashCode(),
+                    photo,
+                    birthPlace,
+                    education,
+                    workInfo,
+                    passports,
+                    maritalStatus,
+                    childrenInfo,
+                    father,
+                    mother,
+                    oldAddress,
+                    actualAddress);
+        }
+
+        @Override
+        public String toString() {
+            return Objects.toStringHelper(this)
+                    .addValue(super.toString())
+                    .add("photo", photo)
+                    .add("birthPlace", birthPlace)
+                    .add("education", education)
+                    .add("workInfo", workInfo)
+                    .add("passports", passports)
+                    .add("maritalStatus", maritalStatus)
+                    .add("childrenInfo", childrenInfo)
+                    .add("father", father)
+                    .add("mother", mother)
+                    .add("oldAddress", oldAddress)
+                    .add("actualAddress", actualAddress)
+                    .toString();
         }
     }
 }

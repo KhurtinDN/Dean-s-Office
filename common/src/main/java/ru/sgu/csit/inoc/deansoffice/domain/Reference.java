@@ -1,5 +1,7 @@
 package ru.sgu.csit.inoc.deansoffice.domain;
 
+import com.google.common.base.Objects;
+
 import javax.persistence.Entity;
 import java.util.Date;
 
@@ -66,10 +68,55 @@ public class Reference extends Document {
     }
 
     public static enum ReferenceType {
-        REFERENCE_1, REFERENCE_2, REFERENCE_3;
+        REFERENCE_1, REFERENCE_2, REFERENCE_3
     }
 
     public static enum ReferenceState {
-        REGISTERED, PROCESSED, READY, ISSUED;
+        REGISTERED, PROCESSED, READY, ISSUED
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        Reference that = (Reference) o;
+
+        return super.equals(that) &&
+                Objects.equal(this.type, that.type) &&
+                Objects.equal(this.state, that.state) &&
+                Objects.equal(this.registeredDate, that.registeredDate) &&
+                Objects.equal(this.issuedDate, that.issuedDate) &&
+                Objects.equal(this.purpose, that.purpose) &&
+                Objects.equal(this.ownerId, that.ownerId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(
+                super.hashCode(),
+                type,
+                state,
+                registeredDate,
+                issuedDate,
+                purpose,
+                ownerId);
+    }
+
+    @Override
+    public String toString() {
+        return Objects.toStringHelper(this)
+                .addValue(super.toString())
+                .add("type", type)
+                .add("state", state)
+                .add("registeredDate", registeredDate)
+                .add("issuedDate", issuedDate)
+                .add("purpose", purpose)
+                .add("ownerId", ownerId)
+                .toString();
     }
 }

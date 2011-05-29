@@ -1,10 +1,11 @@
 package ru.sgu.csit.inoc.deansoffice.domain;
 
+import com.google.common.base.Objects;
+
 import javax.persistence.MappedSuperclass;
 import java.util.Date;
 
 /**
- * .
  * User: hd (KhurtinDN(a)gmail.com)
  * Date: Aug 27, 2010
  * Time: 11:30:09 AM
@@ -100,5 +101,56 @@ public abstract class Person extends PersistentItem {
 
     public enum Sex {
         MALE, FEMALE, UNKNOWN
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || !(o instanceof Person)) {
+            return false;
+        }
+
+        Person that = (Person) o;
+
+        return super.equals(that) &&
+                Objects.equal(this.birthday, that.birthday) &&
+                Objects.equal(this.sex, that.sex) &&
+                Objects.equal(this.firstName, that.firstName) &&
+                Objects.equal(this.middleName, that.middleName) &&
+                Objects.equal(this.lastName, that.lastName) &&
+                Objects.equal(this.firstNameDative, that.firstNameDative) &&
+                Objects.equal(this.middleNameDative, that.middleNameDative) &&
+                Objects.equal(this.lastNameDative, that.lastNameDative);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(
+                super.hashCode(),
+                birthday,
+                sex,
+                firstName,
+                middleName,
+                lastName,
+                firstNameDative,
+                middleNameDative,
+                lastNameDative);
+    }
+
+    @Override
+    public String toString() {
+        return Objects.toStringHelper(this)
+                .addValue(super.toString())
+                .add("birthday", birthday)
+                .add("sex", sex)
+                .add("firstName", firstName)
+                .add("middleName", middleName)
+                .add("lastName", lastName)
+                .add("firstNameDative", firstNameDative)
+                .add("middleNameDative", middleNameDative)
+                .add("lastNameDative", lastNameDative)
+                .toString();
     }
 }

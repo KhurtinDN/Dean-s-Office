@@ -1,5 +1,7 @@
 package ru.sgu.csit.inoc.deansoffice.domain;
 
+import com.google.common.base.Objects;
+
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -7,7 +9,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Created by IntelliJ IDEA.
  * User: MesheryakovAV
  * Date: 28.02.11
  * Time: 12:41
@@ -22,6 +23,13 @@ public class Directive1 extends Directive {
         data.setDescription("Следующих студентов 1 курса назначить старостами групп.");
         data.setGrounds("Представление декана с резолюцией проректора по УОР.");
         //data.setSourceData(new SourceData());
+    }
+
+    @Override
+    public String toString() {
+        return Objects.toStringHelper(this)
+                .addValue(super.toString())
+                .toString();
     }
 
     @Entity
@@ -48,6 +56,36 @@ public class Directive1 extends Directive {
 
         public void setCaptains(Map<Group, Student> captains) {
             this.captains = captains;
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) {
+                return true;
+            }
+            if (o == null || getClass() != o.getClass()) {
+                return false;
+            }
+
+            SourceData that = (SourceData) o;
+
+            return super.equals(that) &&
+                    Objects.equal(this.captains, that.captains);
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hashCode(
+                    super.hashCode(),
+                    captains);
+        }
+
+        @Override
+        public String toString() {
+            return Objects.toStringHelper(this)
+                    .addValue(super.toString())
+                    .add("captains", captains)
+                    .toString();
         }
     }
 }

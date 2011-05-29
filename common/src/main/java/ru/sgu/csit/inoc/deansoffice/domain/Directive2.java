@@ -1,5 +1,7 @@
 package ru.sgu.csit.inoc.deansoffice.domain;
 
+import com.google.common.base.Objects;
+
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -7,7 +9,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Created by IntelliJ IDEA.
  * User: MesheryakovAV
  * Date: 04.03.11
  * Time: 10:38
@@ -19,6 +20,13 @@ public class Directive2 extends Directive {
 
         data.setDescription("Следующим студентам факультета назначить выплату социальной стипендии");
         data.setGrounds("справки УСЗН, решение стипендиальной комиссии");
+    }
+
+    @Override
+    public String toString() {
+        return Objects.toStringHelper(this)
+                .addValue(super.toString())
+                .toString();
     }
 
     @Entity
@@ -45,6 +53,36 @@ public class Directive2 extends Directive {
 
         public void setStudents(Map<Student, Stipend> students) {
             this.students = students;
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) {
+                return true;
+            }
+            if (o == null || getClass() != o.getClass()) {
+                return false;
+            }
+
+            SourceData that = (SourceData) o;
+
+            return super.equals(that) &&
+                    Objects.equal(this.students, that.students);
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hashCode(
+                    super.hashCode(),
+                    students);
+        }
+
+        @Override
+        public String toString() {
+            return Objects.toStringHelper(this)
+                    .addValue(super.toString())
+                    .add("students", students)
+                    .toString();
         }
     }
 }
