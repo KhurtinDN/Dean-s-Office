@@ -23,7 +23,7 @@ public abstract class Person extends PersistentItem {
     protected String middleNameDative;
     protected String lastNameDative;
 
-    public String generateShortName(boolean directOrder) {
+    public String generateShortName(final boolean directOrder) {
         String shortName = lastName;
         String initials = firstName.substring(0,1) + "." + middleName.substring(0,1) + ".";
 
@@ -39,7 +39,7 @@ public abstract class Person extends PersistentItem {
         return birthday;
     }
 
-    public void setBirthday(Date birthday) {
+    public void setBirthday(final Date birthday) {
         this.birthday = birthday;
     }
 
@@ -47,7 +47,7 @@ public abstract class Person extends PersistentItem {
         return firstName;
     }
 
-    public void setFirstName(String firstName) {
+    public void setFirstName(final String firstName) {
         this.firstName = firstName;
     }
 
@@ -55,7 +55,7 @@ public abstract class Person extends PersistentItem {
         return middleName;
     }
 
-    public void setMiddleName(String middleName) {
+    public void setMiddleName(final String middleName) {
         this.middleName = middleName;
     }
 
@@ -63,7 +63,7 @@ public abstract class Person extends PersistentItem {
         return lastName;
     }
 
-    public void setLastName(String lastName) {
+    public void setLastName(final String lastName) {
         this.lastName = lastName;
     }
 
@@ -71,7 +71,7 @@ public abstract class Person extends PersistentItem {
         return firstNameDative;
     }
 
-    public void setFirstNameDative(String firstNameDative) {
+    public void setFirstNameDative(final String firstNameDative) {
         this.firstNameDative = firstNameDative;
     }
 
@@ -79,7 +79,7 @@ public abstract class Person extends PersistentItem {
         return middleNameDative;
     }
 
-    public void setMiddleNameDative(String middleNameDative) {
+    public void setMiddleNameDative(final String middleNameDative) {
         this.middleNameDative = middleNameDative;
     }
 
@@ -87,7 +87,7 @@ public abstract class Person extends PersistentItem {
         return lastNameDative;
     }
 
-    public void setLastNameDative(String lastNameDative) {
+    public void setLastNameDative(final String lastNameDative) {
         this.lastNameDative = lastNameDative;
     }
 
@@ -95,7 +95,7 @@ public abstract class Person extends PersistentItem {
         return sex;
     }
 
-    public void setSex(Sex sex) {
+    public void setSex(final Sex sex) {
         this.sex = sex;
     }
 
@@ -104,7 +104,7 @@ public abstract class Person extends PersistentItem {
     }
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(final Object o) {
         if (this == o) {
             return true;
         }
@@ -112,7 +112,7 @@ public abstract class Person extends PersistentItem {
             return false;
         }
 
-        Person that = (Person) o;
+        final Person that = (Person) o;
 
         return super.equals(that) &&
                 Objects.equal(this.birthday, that.birthday) &&

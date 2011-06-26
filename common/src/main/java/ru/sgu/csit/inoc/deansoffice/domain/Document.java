@@ -23,7 +23,7 @@ public class Document extends PersistentItem /* implements Report */ {
         return number;
     }
 
-    public void setNumber(String number) {
+    public void setNumber(final String number) {
         this.number = number;
     }
 
@@ -31,7 +31,7 @@ public class Document extends PersistentItem /* implements Report */ {
         return signedDate;
     }
 
-    public void setSignedDate(Date signedDate) {
+    public void setSignedDate(final Date signedDate) {
         this.signedDate = signedDate;
     }
 
@@ -39,12 +39,12 @@ public class Document extends PersistentItem /* implements Report */ {
         return printTemplate;
     }
 
-    public void setPrintTemplate(Template printTemplate) {
+    public void setPrintTemplate(final Template printTemplate) {
         this.printTemplate = printTemplate;
     }
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(final Object o) {
         if (this == o) {
             return true;
         }
@@ -52,7 +52,7 @@ public class Document extends PersistentItem /* implements Report */ {
             return false;
         }
 
-        Document that = (Document) o;
+        final Document that = (Document) o;
 
         return super.equals(that) &&
                 Objects.equal(this.number, that.number) &&
@@ -77,5 +77,20 @@ public class Document extends PersistentItem /* implements Report */ {
                 .add("signedDate", signedDate)
                 .add("printTemplate", printTemplate)
                 .toString();
+    }
+
+    public static Document make(
+            final Long id,
+            final String number,
+            final Date signedDate,
+            final Template template) {
+
+        final Document document = new Document();
+        document.setId(id);
+        document.setNumber(number);
+        document.setSignedDate(signedDate);
+        document.setPrintTemplate(template);
+
+        return document;
     }
 }

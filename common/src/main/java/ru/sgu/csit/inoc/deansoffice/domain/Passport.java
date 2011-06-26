@@ -23,7 +23,7 @@ public class Passport extends Person {
     public Passport() {
     }
 
-    public Passport(Person person) {
+    public Passport(final Person person) {
         // ????
         setSex(person.getSex());
 
@@ -40,7 +40,7 @@ public class Passport extends Person {
         return actual;
     }
 
-    public void setActual(boolean actual) {
+    public void setActual(final boolean actual) {
         this.actual = actual;
     }
 
@@ -48,7 +48,7 @@ public class Passport extends Person {
         return series;
     }
 
-    public void setSeries(String series) {
+    public void setSeries(final String series) {
         this.series = series;
     }
 
@@ -56,7 +56,7 @@ public class Passport extends Person {
         return number;
     }
 
-    public void setNumber(String number) {
+    public void setNumber(final String number) {
         this.number = number;
     }
 
@@ -64,7 +64,7 @@ public class Passport extends Person {
         return issuingOrganization;
     }
 
-    public void setIssuingOrganization(String issuingOrganization) {
+    public void setIssuingOrganization(final String issuingOrganization) {
         this.issuingOrganization = issuingOrganization;
     }
 
@@ -72,7 +72,7 @@ public class Passport extends Person {
         return issuedDate;
     }
 
-    public void setIssuedDate(Date issuedDate) {
+    public void setIssuedDate(final Date issuedDate) {
         this.issuedDate = issuedDate;
     }
 
@@ -80,7 +80,7 @@ public class Passport extends Person {
         return citizenship;
     }
 
-    public void setCitizenship(String citizenship) {
+    public void setCitizenship(final String citizenship) {
         this.citizenship = citizenship;
     }
 
@@ -88,12 +88,12 @@ public class Passport extends Person {
         return address;
     }
 
-    public void setAddress(String address) {
+    public void setAddress(final String address) {
         this.address = address;
     }
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(final Object o) {
         if (this == o) {
             return true;
         }
@@ -101,7 +101,7 @@ public class Passport extends Person {
             return false;
         }
 
-        Passport that = (Passport) o;
+        final Passport that = (Passport) o;
 
         return super.equals(that) &&
                 Objects.equal(this.actual, that.actual) &&
@@ -138,5 +138,42 @@ public class Passport extends Person {
                 .add("citizenship", citizenship)
                 .add("address", address)
                 .toString();
+    }
+
+    public static Passport make(
+            final Long id,
+            final Sex sex,
+            final String firstName,
+            final String middleName,
+            final String lastName,
+            final String firstNameDative,
+            final String middleNameDative,
+            final String lastNameDative,
+            final boolean actual,
+            final String series,
+            final String number,
+            final String issuingOrganization,
+            final Date issuedDate,
+            final String citizenship,
+            final String address) {
+
+        final Passport passport = new Passport();
+        passport.setId(id);
+        passport.setSex(sex);
+        passport.setFirstName(firstName);
+        passport.setMiddleName(middleName);
+        passport.setLastName(lastName);
+        passport.setFirstNameDative(firstNameDative);
+        passport.setMiddleNameDative(middleNameDative);
+        passport.setLastNameDative(lastNameDative);
+        passport.setActual(actual);
+        passport.setSeries(series);
+        passport.setNumber(number);
+        passport.setIssuingOrganization(issuingOrganization);
+        passport.setIssuedDate(issuedDate);
+        passport.setCitizenship(citizenship);
+        passport.setAddress(address);
+
+        return passport;
     }
 }

@@ -32,6 +32,19 @@ public class Directive1 extends Directive {
                 .toString();
     }
 
+    public static Directive1 make(
+            final Long id,
+            final DirectiveData data,
+            final String type) {
+
+        final Directive1 directive1 = new Directive1();
+        directive1.setId(id);
+        directive1.setData(data);
+        directive1.setType(type);
+
+        return directive1;
+    }
+
     @Entity
     public static class SourceData extends DirectiveSourceData {
         @ElementCollection(fetch = FetchType.EAGER)
@@ -41,11 +54,11 @@ public class Directive1 extends Directive {
             captains.put(group, student);
         }
 
-        public Student removeCaptain(Group group) {
+        public Student removeCaptain(final Group group) {
             return captains.remove(group);
         }
 
-        public Student getCaptain(Group group) {
+        public Student getCaptain(final Group group) {
             return captains.get(group);
         }
 
@@ -54,12 +67,12 @@ public class Directive1 extends Directive {
             return captains;
         }
 
-        public void setCaptains(Map<Group, Student> captains) {
+        public void setCaptains(final Map<Group, Student> captains) {
             this.captains = captains;
         }
 
         @Override
-        public boolean equals(Object o) {
+        public boolean equals(final Object o) {
             if (this == o) {
                 return true;
             }
@@ -67,7 +80,7 @@ public class Directive1 extends Directive {
                 return false;
             }
 
-            SourceData that = (SourceData) o;
+            final SourceData that = (SourceData) o;
 
             return super.equals(that) &&
                     Objects.equal(this.captains, that.captains);
@@ -86,6 +99,17 @@ public class Directive1 extends Directive {
                     .addValue(super.toString())
                     .add("captains", captains)
                     .toString();
+        }
+
+        public static SourceData make(
+                final Long id,
+                final Map<Group, Student> captains) {
+
+            final SourceData sourceData = new SourceData();
+            sourceData.setId(id);
+            sourceData.setCaptains(captains);
+
+            return sourceData;
         }
     }
 }

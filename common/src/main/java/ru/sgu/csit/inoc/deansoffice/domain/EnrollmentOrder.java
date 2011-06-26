@@ -4,6 +4,7 @@ import com.google.common.base.Objects;
 
 import javax.persistence.Entity;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by XX (MesheryakovAV)
@@ -19,7 +20,7 @@ public class EnrollmentOrder extends Order {
         return enrollmentDate;
     }
 
-    public void setEnrollmentDate(Date enrollmentDate) {
+    public void setEnrollmentDate(final Date enrollmentDate) {
         this.enrollmentDate = enrollmentDate;
     }
 
@@ -27,12 +28,12 @@ public class EnrollmentOrder extends Order {
         return releaseDate;
     }
 
-    public void setReleaseDate(Date releaseDate) {
+    public void setReleaseDate(final Date releaseDate) {
         this.releaseDate = releaseDate;
     }
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(final Object o) {
         if (this == o) {
             return true;
         }
@@ -40,7 +41,7 @@ public class EnrollmentOrder extends Order {
             return false;
         }
 
-        EnrollmentOrder that = (EnrollmentOrder) o;
+        final EnrollmentOrder that = (EnrollmentOrder) o;
 
         return super.equals(that) &&
                 Objects.equal(this.enrollmentDate, that.enrollmentDate) &&
@@ -62,5 +63,30 @@ public class EnrollmentOrder extends Order {
                 .add("enrollmentDate", enrollmentDate)
                 .add("releaseDate", releaseDate)
                 .toString();
+    }
+
+    public static EnrollmentOrder make(
+            final Long id,
+            final String number,
+            final Date signedDate,
+            final Template template,
+            final OrderState state,
+            final List<Directive> directives,
+            final OrderData data,
+            final Date enrollmentDate,
+            final Date releaseDate) {
+
+        final EnrollmentOrder enrollmentOrder = new EnrollmentOrder();
+        enrollmentOrder.setId(id);
+        enrollmentOrder.setNumber(number);
+        enrollmentOrder.setSignedDate(signedDate);
+        enrollmentOrder.setPrintTemplate(template);
+        enrollmentOrder.setState(state);
+        enrollmentOrder.setDirectives(directives);
+        enrollmentOrder.setData(data);
+        enrollmentOrder.setEnrollmentDate(enrollmentDate);
+        enrollmentOrder.setReleaseDate(releaseDate);
+
+        return enrollmentOrder;
     }
 }

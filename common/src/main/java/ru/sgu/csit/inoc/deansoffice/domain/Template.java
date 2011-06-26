@@ -17,7 +17,7 @@ public class Template extends PersistentItem {
     public Template() {
     }
 
-    public Template(String fileName) {
+    public Template(final String fileName) {
         this.fileName = fileName;
     }
 
@@ -25,7 +25,7 @@ public class Template extends PersistentItem {
         return fileName;
     }
 
-    public void setFileName(String fileName) {
+    public void setFileName(final String fileName) {
         this.fileName = fileName;
     }
 
@@ -33,16 +33,16 @@ public class Template extends PersistentItem {
         return type;
     }
 
-    public void setType(TemplType type) {
+    public void setType(final TemplType type) {
         this.type = type;
     }
 
     public static enum TemplType {
-        XML, TEX
+        XML
     }
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(final Object o) {
         if (this == o) {
             return true;
         }
@@ -50,7 +50,7 @@ public class Template extends PersistentItem {
             return false;
         }
 
-        Template that = (Template) o;
+        final Template that = (Template) o;
 
         return super.equals(that) &&
                 Objects.equal(this.fileName, that.fileName) &&
@@ -72,5 +72,18 @@ public class Template extends PersistentItem {
                 .add("fileName", fileName)
                 .add("type", type)
                 .toString();
+    }
+
+    public static Template make(
+            final Long id,
+            final String fileName,
+            final TemplType type) {
+
+        final Template template = new Template();
+        template.setId(id);
+        template.setFileName(fileName);
+        template.setType(type);
+
+        return template;
     }
 }

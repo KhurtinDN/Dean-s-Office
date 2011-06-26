@@ -21,7 +21,7 @@ public class Stipend extends PersistentItem {
         return type;
     }
 
-    public void setType(StipendType type) {
+    public void setType(final StipendType type) {
         this.type = type;
     }
 
@@ -29,7 +29,7 @@ public class Stipend extends PersistentItem {
         return startDate;
     }
 
-    public void setStartDate(Date startDate) {
+    public void setStartDate(final Date startDate) {
         this.startDate = startDate;
     }
 
@@ -37,7 +37,7 @@ public class Stipend extends PersistentItem {
         return endDate;
     }
 
-    public void setEndDate(Date endDate) {
+    public void setEndDate(final Date endDate) {
         this.endDate = endDate;
     }
 
@@ -45,7 +45,7 @@ public class Stipend extends PersistentItem {
         return value;
     }
 
-    public void setValue(Integer value) {
+    public void setValue(final Integer value) {
         this.value = value;
     }
 
@@ -54,7 +54,7 @@ public class Stipend extends PersistentItem {
     }
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(final Object o) {
         if (this == o) {
             return true;
         }
@@ -62,7 +62,7 @@ public class Stipend extends PersistentItem {
             return false;
         }
 
-        Stipend that = (Stipend) o;
+        final Stipend that = (Stipend) o;
 
         return super.equals(that) &&
                 Objects.equal(this.type, that.type) &&
@@ -90,5 +90,22 @@ public class Stipend extends PersistentItem {
                 .add("endDate", endDate)
                 .add("value", value)
                 .toString();
+    }
+
+    public static Stipend make(
+            final Long id,
+            final StipendType type,
+            final Date startDate,
+            final Date endDate,
+            final Integer value) {
+
+        final Stipend stipend = new Stipend();
+        stipend.setId(id);
+        stipend.setType(type);
+        stipend.setStartDate(startDate);
+        stipend.setEndDate(endDate);
+        stipend.setValue(value);
+
+        return stipend;
     }
 }

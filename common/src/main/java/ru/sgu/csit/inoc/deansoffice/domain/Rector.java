@@ -17,4 +17,23 @@ public class Rector extends Leader {
                 .addValue(super.toString())
                 .toString();
     }
+
+    public static Rector make(
+            final Long id,
+            final String firstName,
+            final String middleName,
+            final String lastName,
+            final String degree,
+            final String position) {
+
+        final Rector rector = new Rector();
+        rector.setId(id);
+        rector.setFirstName(firstName);
+        rector.setMiddleName(middleName);
+        rector.setLastName(lastName);
+        rector.setDegree(degree);
+        rector.setPosition(position);
+
+        return rector;
+    }
 }

@@ -18,7 +18,7 @@ public class Leader extends Person {
         return position;
     }
 
-    public void setPosition(String position) {
+    public void setPosition(final String position) {
         this.position = position;
     }
 
@@ -26,12 +26,12 @@ public class Leader extends Person {
         return degree;
     }
 
-    public void setDegree(String degree) {
+    public void setDegree(final String degree) {
         this.degree = degree;
     }
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(final Object o) {
         if (this == o) {
             return true;
         }
@@ -39,7 +39,7 @@ public class Leader extends Person {
             return false;
         }
 
-        Leader that = (Leader) o;
+        final Leader that = (Leader) o;
 
         return super.equals(that) &&
                 Objects.equal(this.degree, that.degree) &&
@@ -61,5 +61,24 @@ public class Leader extends Person {
                 .add("degree", degree)
                 .add("position", position)
                 .toString();
+    }
+
+    public static Leader make(
+            final Long id,
+            final String firstName,
+            final String middleName,
+            final String lastName,
+            final String degree,
+            final String position) {
+
+        Leader leader = new Leader();
+        leader.setId(id);
+        leader.setFirstName(firstName);
+        leader.setMiddleName(middleName);
+        leader.setLastName(lastName);
+        leader.setDegree(degree);
+        leader.setPosition(position);
+
+        return leader;
     }
 }

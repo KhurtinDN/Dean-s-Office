@@ -20,7 +20,7 @@ public class Parent extends Person {
         return address;
     }
 
-    public void setAddress(String address) {
+    public void setAddress(final String address) {
         this.address = address;
     }
 
@@ -28,7 +28,7 @@ public class Parent extends Person {
         return phoneNumbers;
     }
 
-    public void setPhoneNumbers(String phoneNumbers) {
+    public void setPhoneNumbers(final String phoneNumbers) {
         this.phoneNumbers = phoneNumbers;
     }
 
@@ -36,12 +36,12 @@ public class Parent extends Person {
         return workInfo;
     }
 
-    public void setWorkInfo(String workInfo) {
+    public void setWorkInfo(final String workInfo) {
         this.workInfo = workInfo;
     }
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(final Object o) {
         if (this == o) {
             return true;
         }
@@ -49,7 +49,7 @@ public class Parent extends Person {
             return false;
         }
 
-        Parent that = (Parent) o;
+        final Parent that = (Parent) o;
 
         return super.equals(that) &&
                 Objects.equal(this.address, that.address) &&
@@ -74,5 +74,26 @@ public class Parent extends Person {
                 .add("workInfo", workInfo)
                 .add("phoneNumbers", phoneNumbers)
                 .toString();
+    }
+
+    public static Parent make(
+            final Long id,
+            final String firstName,
+            final String middleName,
+            final String lastName,
+            final String address,
+            final String workInfo,
+            final String phoneNumbers) {
+
+        final Parent parent = new Parent();
+        parent.setId(id);
+        parent.setFirstName(firstName);
+        parent.setMiddleName(middleName);
+        parent.setLastName(lastName);
+        parent.setAddress(address);
+        parent.setWorkInfo(workInfo);
+        parent.setPhoneNumbers(phoneNumbers);
+
+        return parent;
     }
 }

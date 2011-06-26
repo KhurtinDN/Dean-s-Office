@@ -3,6 +3,7 @@ package ru.sgu.csit.inoc.deansoffice.domain;
 import com.google.common.base.Objects;
 
 import javax.persistence.Entity;
+import java.util.Date;
 
 /**
  * User: XX (freecoder.xx@gmail.com)
@@ -16,5 +17,20 @@ public class StudentDossier extends Document {
         return Objects.toStringHelper(this)
                 .addValue(super.toString())
                 .toString();
+    }
+
+    public static StudentDossier make(
+            final Long id,
+            final String number,
+            final Date signedDate,
+            final Template printTemplate) {
+
+        final StudentDossier studentDossier = new StudentDossier();
+        studentDossier.setId(id);
+        studentDossier.setNumber(number);
+        studentDossier.setSignedDate(signedDate);
+        studentDossier.setPrintTemplate(printTemplate);
+
+        return studentDossier;
     }
 }

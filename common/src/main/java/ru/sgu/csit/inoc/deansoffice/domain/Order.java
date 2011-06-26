@@ -29,7 +29,11 @@ public class Order extends Document {
         state = Order.OrderState.CREATED;
     }
 
-    public void addDirective(Directive directive) {
+    public void setDirectives(final List<Directive> directives) {
+        this.directives = directives;
+    }
+
+    public void addDirective(final Directive directive) {
         directives.add(directive);
     }
 
@@ -41,7 +45,7 @@ public class Order extends Document {
         return state;
     }
 
-    public void setState(OrderState state) {
+    public void setState(final OrderState state) {
         this.state = state;
     }
 
@@ -49,7 +53,7 @@ public class Order extends Document {
         return data;
     }
 
-    public void setData(OrderData data) {
+    public void setData(final OrderData data) {
         this.data = data;
     }
 
@@ -58,7 +62,7 @@ public class Order extends Document {
     }
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(final Object o) {
         if (this == o) {
             return true;
         }
@@ -66,7 +70,7 @@ public class Order extends Document {
             return false;
         }
 
-        Order that = (Order) o;
+        final Order that = (Order) o;
 
         return super.equals(that) &&
                 Objects.equal(this.state, that.state) &&
@@ -108,7 +112,7 @@ public class Order extends Document {
             return note;
         }
 
-        public void setNote(String note) {
+        public void setNote(final String note) {
             this.note = note;
         }
 
@@ -116,7 +120,7 @@ public class Order extends Document {
             return supervisor;
         }
 
-        public void setSupervisor(Leader supervisor) {
+        public void setSupervisor(final Leader supervisor) {
             this.supervisor = supervisor;
         }
 
@@ -125,16 +129,16 @@ public class Order extends Document {
             return coordinators;
         }
 
-        public void addCoordinator(Coordinator coordinator) {
+        public void addCoordinator(final Coordinator coordinator) {
             coordinators.add(coordinator);
         }
 
-        public void setCoordinators(List<Coordinator> coordinators) {
+        public void setCoordinators(final List<Coordinator> coordinators) {
             this.coordinators = coordinators;
         }
 
         @Override
-        public boolean equals(Object o) {
+        public boolean equals(final Object o) {
             if (this == o) {
                 return true;
             }
@@ -142,7 +146,7 @@ public class Order extends Document {
                 return false;
             }
 
-            OrderData that = (OrderData) o;
+            final OrderData that = (OrderData) o;
 
             return super.equals(that) &&
                     Objects.equal(this.note, that.note) &&
@@ -167,6 +171,21 @@ public class Order extends Document {
                     .add("supervisor", supervisor)
                     .add("coordinators", coordinators)
                     .toString();
+        }
+
+        public static OrderData make(
+                final Long id,
+                final String note,
+                final Leader supervisor,
+                final List<Coordinator> coordinators) {
+
+            final OrderData orderData = new OrderData();
+            orderData.setId(id);
+            orderData.setNote(note);
+            orderData.setSupervisor(supervisor);
+            orderData.setCoordinators(coordinators);
+
+            return orderData;
         }
     }
 }

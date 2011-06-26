@@ -26,7 +26,7 @@ public class Faculty extends PersistentItem {
         return fullName;
     }
 
-    public void setFullName(String fullName) {
+    public void setFullName(final String fullName) {
         this.fullName = fullName;
     }
 
@@ -34,7 +34,7 @@ public class Faculty extends PersistentItem {
         return shortName;
     }
 
-    public void setShortName(String shortName) {
+    public void setShortName(final String shortName) {
         this.shortName = shortName;
     }
 
@@ -42,7 +42,7 @@ public class Faculty extends PersistentItem {
         return dean;
     }
 
-    public void setDean(Dean dean) {
+    public void setDean(final Dean dean) {
         this.dean = dean;
     }
 
@@ -50,12 +50,12 @@ public class Faculty extends PersistentItem {
         return rector;
     }
 
-    public void setRector(Rector rector) {
+    public void setRector(final Rector rector) {
         this.rector = rector;
     }
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(final Object o) {
         if (this == o) {
             return true;
         }
@@ -63,7 +63,7 @@ public class Faculty extends PersistentItem {
             return false;
         }
 
-        Faculty that = (Faculty) o;
+        final Faculty that = (Faculty) o;
 
         return super.equals(that) &&
                 Objects.equal(this.fullName, that.fullName) &&
@@ -91,5 +91,22 @@ public class Faculty extends PersistentItem {
                 .add("dean", dean)
                 .add("rector", rector)
                 .toString();
+    }
+
+    public static Faculty make(
+            final Long id,
+            final String fullName,
+            final String shortName,
+            final Dean dean,
+            final Rector rector) {
+
+        final Faculty faculty = new Faculty();
+        faculty.setId(id);
+        faculty.setFullName(fullName);
+        faculty.setShortName(shortName);
+        faculty.setDean(dean);
+        faculty.setRector(rector);
+
+        return faculty;
     }
 }

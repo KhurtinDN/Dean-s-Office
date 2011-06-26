@@ -25,7 +25,7 @@ public class Photo extends PersistentItem {
         return data;
     }
 
-    public void setData(byte[] data) {
+    public void setData(final byte[] data) {
         this.data = data;
     }
 
@@ -33,12 +33,12 @@ public class Photo extends PersistentItem {
         return fileName;
     }
 
-    public void setFileName(String fileName) {
+    public void setFileName(final String fileName) {
         this.fileName = fileName;
     }
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(final Object o) {
         if (this == o) {
             return true;
         }
@@ -46,7 +46,7 @@ public class Photo extends PersistentItem {
             return false;
         }
 
-        Photo that = (Photo) o;
+        final Photo that = (Photo) o;
 
         return super.equals(that) &&
                 Objects.equal(this.fileName, that.fileName) &&
@@ -68,5 +68,18 @@ public class Photo extends PersistentItem {
                 .add("fileName", fileName)
                 .add("data", data)
                 .toString();
+    }
+
+    public static Photo make(
+            final Long id,
+            final String fileName,
+            final byte[] data) {
+
+        final Photo photo = new Photo();
+        photo.setId(id);
+        photo.setFileName(fileName);
+        photo.setData(data);
+
+        return photo;
     }
 }

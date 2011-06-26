@@ -16,7 +16,7 @@ public class Coordinator extends PersistentItem {
     public Coordinator() {
     }
 
-    public Coordinator(String position) {
+    public Coordinator(final String position) {
         this.position = position;
     }
 
@@ -24,12 +24,12 @@ public class Coordinator extends PersistentItem {
         return position;
     }
 
-    public void setPosition(String position) {
+    public void setPosition(final String position) {
         this.position = position;
     }
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(final Object o) {
         if (this == o) {
             return true;
         }
@@ -37,7 +37,7 @@ public class Coordinator extends PersistentItem {
             return false;
         }
 
-        Coordinator that = (Coordinator) o;
+        final Coordinator that = (Coordinator) o;
 
         return super.equals(that) &&
                 Objects.equal(this.position, that.position);
@@ -56,5 +56,16 @@ public class Coordinator extends PersistentItem {
                 .addValue(super.toString())
                 .add("position", position)
                 .toString();
+    }
+
+    public static Coordinator make(
+            final Long id,
+            final String position) {
+
+        final Coordinator coordinator = new Coordinator();
+        coordinator.setId(id);
+        coordinator.setPosition(position);
+
+        return coordinator;
     }
 }

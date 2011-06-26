@@ -23,7 +23,7 @@ public abstract class Directive extends PersistentItem {
         return data;
     }
 
-    public void setData(DirectiveData data) {
+    public void setData(final DirectiveData data) {
         this.data = data;
     }
 
@@ -31,12 +31,12 @@ public abstract class Directive extends PersistentItem {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(final String type) {
         this.type = type;
     }
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(final Object o) {
         if (this == o) {
             return true;
         }
@@ -44,7 +44,7 @@ public abstract class Directive extends PersistentItem {
             return false;
         }
 
-        Directive that = (Directive) o;
+        final Directive that = (Directive) o;
 
         return super.equals(that) &&
                 Objects.equal(this.data, that.data) &&
@@ -81,7 +81,7 @@ public abstract class Directive extends PersistentItem {
             return description;
         }
 
-        public void setDescription(String description) {
+        public void setDescription(final String description) {
             this.description = description;
         }
 
@@ -89,7 +89,7 @@ public abstract class Directive extends PersistentItem {
             return body;
         }
 
-        public void setBody(String body) {
+        public void setBody(final String body) {
             this.body = body;
         }
 
@@ -97,7 +97,7 @@ public abstract class Directive extends PersistentItem {
             return grounds;
         }
 
-        public void setGrounds(String grounds) {
+        public void setGrounds(final String grounds) {
             this.grounds = grounds;
         }
 
@@ -105,12 +105,12 @@ public abstract class Directive extends PersistentItem {
             return sourceData;
         }
 
-        public void setSourceData(DirectiveSourceData sourceData) {
+        public void setSourceData(final DirectiveSourceData sourceData) {
             this.sourceData = sourceData;
         }
 
         @Override
-        public boolean equals(Object o) {
+        public boolean equals(final Object o) {
             if (this == o) {
                 return true;
             }
@@ -118,7 +118,7 @@ public abstract class Directive extends PersistentItem {
                 return false;
             }
 
-            DirectiveData that = (DirectiveData) o;
+            final DirectiveData that = (DirectiveData) o;
 
             return super.equals(that) &&
                     Objects.equal(this.description, that.description) &&

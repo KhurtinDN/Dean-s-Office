@@ -17,4 +17,23 @@ public class Dean extends Leader {
                 .addValue(super.toString())
                 .toString();
     }
+
+    public static Dean make(
+            final Long id,
+            final String firstName,
+            final String middleName,
+            final String lastName,
+            final String degree,
+            final String position) {
+
+        final Dean dean = new Dean();
+        dean.setId(id);
+        dean.setFirstName(firstName);
+        dean.setMiddleName(middleName);
+        dean.setLastName(lastName);
+        dean.setDegree(degree);
+        dean.setPosition(position);
+
+        return dean;
+    }
 }

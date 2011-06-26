@@ -28,7 +28,7 @@ public class Speciality extends PersistentItem {
         return name;
     }
 
-    public void setName(String name) {
+    public void setName(final String name) {
         this.name = name;
     }
 
@@ -36,7 +36,7 @@ public class Speciality extends PersistentItem {
         return shortName;
     }
 
-    public void setShortName(String shortName) {
+    public void setShortName(final String shortName) {
         this.shortName = shortName;
     }
 
@@ -44,7 +44,7 @@ public class Speciality extends PersistentItem {
         return code;
     }
 
-    public void setCode(String code) {
+    public void setCode(final String code) {
         this.code = code;
     }
 
@@ -52,7 +52,7 @@ public class Speciality extends PersistentItem {
         return faculty;
     }
 
-    public void setFaculty(Faculty faculty) {
+    public void setFaculty(final Faculty faculty) {
         this.faculty = faculty;
     }
 
@@ -60,12 +60,12 @@ public class Speciality extends PersistentItem {
         return courseCount;
     }
 
-    public void setCourseCount(Integer courseCount) {
+    public void setCourseCount(final Integer courseCount) {
         this.courseCount = courseCount;
     }
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(final Object o) {
         if (this == o) {
             return true;
         }
@@ -73,7 +73,7 @@ public class Speciality extends PersistentItem {
             return false;
         }
 
-        Speciality that = (Speciality) o;
+        final Speciality that = (Speciality) o;
 
         return super.equals(that) &&
                 Objects.equal(this.name, that.name) &&
@@ -104,5 +104,24 @@ public class Speciality extends PersistentItem {
                 .add("courseCount", courseCount)
                 .add("faculty", faculty)
                 .toString();
+    }
+
+    public static Speciality make(
+            final Long id,
+            final String name,
+            final String shortName,
+            final String code,
+            final Integer courseCount,
+            final Faculty faculty) {
+
+        final Speciality speciality = new Speciality();
+        speciality.setId(id);
+        speciality.setName(name);
+        speciality.setShortName(shortName);
+        speciality.setCode(code);
+        speciality.setCourseCount(courseCount);
+        speciality.setFaculty(faculty);
+
+        return speciality;
     }
 }

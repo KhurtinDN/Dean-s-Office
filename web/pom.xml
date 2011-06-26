@@ -12,6 +12,8 @@
     <artifactId>web</artifactId>
     <packaging>war</packaging>
 
+    <name>web</name>
+
     <properties>
         <webappDirectory>${project.build.directory}/${project.build.finalName}</webappDirectory>
         <gwtMavenPlugin.version>2.1.0</gwtMavenPlugin.version>

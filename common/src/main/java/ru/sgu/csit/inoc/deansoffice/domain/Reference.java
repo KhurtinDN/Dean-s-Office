@@ -23,7 +23,7 @@ public class Reference extends Document {
         return type;
     }
 
-    public void setType(ReferenceType type) {
+    public void setType(final ReferenceType type) {
         this.type = type;
     }
 
@@ -31,7 +31,7 @@ public class Reference extends Document {
         return state;
     }
 
-    public void setState(ReferenceState state) {
+    public void setState(final ReferenceState state) {
         this.state = state;
     }
 
@@ -39,7 +39,7 @@ public class Reference extends Document {
         return registeredDate;
     }
 
-    public void setRegisteredDate(Date registeredDate) {
+    public void setRegisteredDate(final Date registeredDate) {
         this.registeredDate = registeredDate;
     }
 
@@ -47,7 +47,7 @@ public class Reference extends Document {
         return issuedDate;
     }
 
-    public void setIssuedDate(Date issuedDate) {
+    public void setIssuedDate(final Date issuedDate) {
         this.issuedDate = issuedDate;
     }
 
@@ -55,7 +55,7 @@ public class Reference extends Document {
         return purpose;
     }
 
-    public void setPurpose(String purpose) {
+    public void setPurpose(final String purpose) {
         this.purpose = purpose;
     }
 
@@ -63,7 +63,7 @@ public class Reference extends Document {
         return ownerId;
     }
 
-    public void setOwnerId(Long ownerId) {
+    public void setOwnerId(final Long ownerId) {
         this.ownerId = ownerId;
     }
 
@@ -76,7 +76,7 @@ public class Reference extends Document {
     }
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(final Object o) {
         if (this == o) {
             return true;
         }
@@ -84,7 +84,7 @@ public class Reference extends Document {
             return false;
         }
 
-        Reference that = (Reference) o;
+        final Reference that = (Reference) o;
 
         return super.equals(that) &&
                 Objects.equal(this.type, that.type) &&
@@ -118,5 +118,32 @@ public class Reference extends Document {
                 .add("purpose", purpose)
                 .add("ownerId", ownerId)
                 .toString();
+    }
+
+    public static Reference make(
+            final Long id,
+            final String number,
+            final Date signedDate,
+            final Template printTemplate,
+            final ReferenceType type,
+            final ReferenceState state,
+            final Date registeredDate,
+            final Date issuedDate,
+            final String purpose,
+            final Long ownerId) {
+
+        final Reference reference = new Reference();
+        reference.setId(id);
+        reference.setNumber(number);
+        reference.setSignedDate(signedDate);
+        reference.setPrintTemplate(printTemplate);
+        reference.setType(type);
+        reference.setState(state);
+        reference.setRegisteredDate(registeredDate);
+        reference.setIssuedDate(issuedDate);
+        reference.setPurpose(purpose);
+        reference.setOwnerId(ownerId);
+
+        return reference;
     }
 }

@@ -19,12 +19,12 @@ public abstract class PersistentItem {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(final Long id) {
         this.id = id;
     }
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(final Object o) {
         if (this == o) {
             return true;
         }
@@ -32,7 +32,7 @@ public abstract class PersistentItem {
             return false;
         }
 
-        PersistentItem that = (PersistentItem) o;
+        final PersistentItem that = (PersistentItem) o;
 
         return Objects.equal(this.id, that.id);
     }

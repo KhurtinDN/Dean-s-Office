@@ -3,10 +3,7 @@ package ru.sgu.csit.inoc.deansoffice.domain;
 import com.google.common.base.Objects;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  * .
@@ -50,7 +47,7 @@ public class Student extends Person {
         return studentIdNumber;
     }
 
-    public void setStudentIdNumber(String studentIdNumber) {
+    public void setStudentIdNumber(final String studentIdNumber) {
         this.studentIdNumber = studentIdNumber;
     }
 
@@ -58,7 +55,7 @@ public class Student extends Person {
         return course;
     }
 
-    public void setCourse(Integer course) {
+    public void setCourse(final Integer course) {
         this.course = course;
     }
 
@@ -66,7 +63,7 @@ public class Student extends Person {
         return group;
     }
 
-    public void setGroup(Group group) {
+    public void setGroup(final Group group) {
         this.group = group;
     }
 
@@ -74,7 +71,7 @@ public class Student extends Person {
         return speciality;
     }
 
-    public void setSpeciality(Speciality speciality) {
+    public void setSpeciality(final Speciality speciality) {
         this.speciality = speciality;
     }
 
@@ -82,7 +79,7 @@ public class Student extends Person {
         return division;
     }
 
-    public void setDivision(Division division) {
+    public void setDivision(final Division division) {
         this.division = division;
     }
 
@@ -90,7 +87,7 @@ public class Student extends Person {
         return studyForm;
     }
 
-    public void setStudyForm(StudyForm studyForm) {
+    public void setStudyForm(final StudyForm studyForm) {
         this.studyForm = studyForm;
     }
 
@@ -98,7 +95,7 @@ public class Student extends Person {
         return enrollmentOrder;
     }
 
-    public void setEnrollmentOrder(EnrollmentOrder enrollmentOrder) {
+    public void setEnrollmentOrder(final EnrollmentOrder enrollmentOrder) {
         this.enrollmentOrder = enrollmentOrder;
     }
 
@@ -107,7 +104,7 @@ public class Student extends Person {
         return additionalData;
     }
 
-    public void setAdditionalData(AdditionalStudentData additionalData) {
+    public void setAdditionalData(final AdditionalStudentData additionalData) {
         this.additionalData = additionalData;
     }
 
@@ -115,7 +112,7 @@ public class Student extends Person {
         return role;
     }
 
-    public void setRole(Role role) {
+    public void setRole(final Role role) {
         this.role = role;
     }
 
@@ -123,11 +120,11 @@ public class Student extends Person {
         return stipends;
     }
 
-    public void setStipends(Set<Stipend> stipends) {
+    public void setStipends(final Set<Stipend> stipends) {
         this.stipends = stipends;
     }
 
-    public void addStipend(Stipend stipend) {
+    public void addStipend(final Stipend stipend) {
         stipends.add(stipend);
     }
 
@@ -144,7 +141,7 @@ public class Student extends Person {
     }
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(final Object o) {
         if (this == o) {
             return true;
         }
@@ -152,7 +149,7 @@ public class Student extends Person {
             return false;
         }
 
-        Student that = (Student) o;
+        final Student that = (Student) o;
 
         return super.equals(o) &&
                 Objects.equal(this.studentIdNumber, that.studentIdNumber) &&
@@ -200,6 +197,49 @@ public class Student extends Person {
                 .toString();
     }
 
+    public static Student make(
+            final Long id,
+            final Date birthday,
+            final Sex sex,
+            final String firstName,
+            final String middleName,
+            final String lastName,
+            final String firstNameDative,
+            final String middleNameDative,
+            final String lastNameDative,
+            final Integer course,
+            final Group group,
+            final Speciality speciality,
+            final Division division,
+            final StudyForm studyForm,
+            final Role role,
+            final EnrollmentOrder enrollmentOrder,
+            final AdditionalStudentData additionalStudentData,
+            final Set<Stipend> stipends) {
+
+        Student student = new Student();
+        student.setId(id);
+        student.setBirthday(birthday);
+        student.setSex(sex);
+        student.setFirstName(firstName);
+        student.setMiddleName(middleName);
+        student.setLastName(lastName);
+        student.setFirstNameDative(firstNameDative);
+        student.setMiddleNameDative(middleNameDative);
+        student.setLastNameDative(lastNameDative);
+        student.setCourse(course);
+        student.setGroup(group);
+        student.setSpeciality(speciality);
+        student.setDivision(division);
+        student.setStudyForm(studyForm);
+        student.setRole(role);
+        student.setEnrollmentOrder(enrollmentOrder);
+        student.setAdditionalData(additionalStudentData);
+        student.setStipends(stipends);
+
+        return student;
+    }
+
     @Entity
     public static class AdditionalStudentData extends PersistentItem {
         //@OneToOne(fetch = FetchType.LAZY)
@@ -235,7 +275,7 @@ public class Student extends Person {
             return photo;
         }
 
-        public void setPhoto(Photo photo) {
+        public void setPhoto(final Photo photo) {
             this.photo = photo;
         }
 
@@ -243,7 +283,7 @@ public class Student extends Person {
             return birthPlace;
         }
 
-        public void setBirthPlace(String birthPlace) {
+        public void setBirthPlace(final String birthPlace) {
             this.birthPlace = birthPlace;
         }
 
@@ -251,7 +291,7 @@ public class Student extends Person {
             return education;
         }
 
-        public void setEducation(String education) {
+        public void setEducation(final String education) {
             this.education = education;
         }
 
@@ -259,7 +299,7 @@ public class Student extends Person {
             return workInfo;
         }
 
-        public void setWorkInfo(String workInfo) {
+        public void setWorkInfo(final String workInfo) {
             this.workInfo = workInfo;
         }
 
@@ -268,11 +308,11 @@ public class Student extends Person {
             return passports;
         }
 
-        public void setPassports(List<Passport> passports) {
+        public void setPassports(final List<Passport> passports) {
             this.passports = passports;
         }
 
-        public void addPassport(Passport passport) {
+        public void addPassport(final Passport passport) {
             if (this.passports == null) {
                 this.passports = new ArrayList<Passport>();
             }
@@ -283,7 +323,7 @@ public class Student extends Person {
             return maritalStatus;
         }
 
-        public void setMaritalStatus(String maritalStatus) {
+        public void setMaritalStatus(final String maritalStatus) {
             this.maritalStatus = maritalStatus;
         }
 
@@ -291,7 +331,7 @@ public class Student extends Person {
             return childrenInfo;
         }
 
-        public void setChildrenInfo(String childrenInfo) {
+        public void setChildrenInfo(final String childrenInfo) {
             this.childrenInfo = childrenInfo;
         }
 
@@ -299,7 +339,7 @@ public class Student extends Person {
             return father;
         }
 
-        public void setFather(Parent father) {
+        public void setFather(final Parent father) {
             this.father = father;
         }
 
@@ -307,7 +347,7 @@ public class Student extends Person {
             return mother;
         }
 
-        public void setMother(Parent mother) {
+        public void setMother(final Parent mother) {
             this.mother = mother;
         }
 
@@ -315,7 +355,7 @@ public class Student extends Person {
             return oldAddress;
         }
 
-        public void setOldAddress(String oldAddress) {
+        public void setOldAddress(final String oldAddress) {
             this.oldAddress = oldAddress;
         }
 
@@ -323,12 +363,12 @@ public class Student extends Person {
             return actualAddress;
         }
 
-        public void setActualAddress(String actualAddress) {
+        public void setActualAddress(final String actualAddress) {
             this.actualAddress = actualAddress;
         }
 
         @Override
-        public boolean equals(Object o) {
+        public boolean equals(final Object o) {
             if (this == o) {
                 return true;
             }
@@ -336,7 +376,7 @@ public class Student extends Person {
                 return false;
             }
 
-            AdditionalStudentData that = (AdditionalStudentData) o;
+            final AdditionalStudentData that = (AdditionalStudentData) o;
 
             return super.equals(o) &&
                     Objects.equal(this.photo, that.photo) &&
@@ -385,6 +425,37 @@ public class Student extends Person {
                     .add("oldAddress", oldAddress)
                     .add("actualAddress", actualAddress)
                     .toString();
+        }
+
+        public static AdditionalStudentData make(
+                final Long id,
+                final Photo photo,
+                final String birthPlace,
+                final String education,
+                final String workInfo,
+                final List<Passport> passports,
+                final String maritalStatus,
+                final String childrenInfo,
+                final Parent father,
+                final Parent mother,
+                final String oldAddress,
+                final String actualAddress) {
+
+            final AdditionalStudentData additionalStudentData = new AdditionalStudentData();
+            additionalStudentData.setId(id);
+            additionalStudentData.setPhoto(photo);
+            additionalStudentData.setBirthPlace(birthPlace);
+            additionalStudentData.setEducation(education);
+            additionalStudentData.setWorkInfo(workInfo);
+            additionalStudentData.setPassports(passports);
+            additionalStudentData.setMaritalStatus(maritalStatus);
+            additionalStudentData.setChildrenInfo(childrenInfo);
+            additionalStudentData.setFather(father);
+            additionalStudentData.setMother(mother);
+            additionalStudentData.setOldAddress(oldAddress);
+            additionalStudentData.setActualAddress(actualAddress);
+
+            return additionalStudentData;
         }
     }
 }

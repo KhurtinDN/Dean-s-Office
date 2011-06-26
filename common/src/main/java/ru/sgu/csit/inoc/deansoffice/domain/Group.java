@@ -23,7 +23,7 @@ public class Group extends PersistentItem {
         return name;
     }
 
-    public void setName(String name) {
+    public void setName(final String name) {
         this.name = name;
     }
 
@@ -31,7 +31,7 @@ public class Group extends PersistentItem {
         return course;
     }
 
-    public void setCourse(Integer course) {
+    public void setCourse(final Integer course) {
         this.course = course;
     }
 
@@ -39,12 +39,12 @@ public class Group extends PersistentItem {
         return speciality;
     }
 
-    public void setSpeciality(Speciality speciality) {
+    public void setSpeciality(final Speciality speciality) {
         this.speciality = speciality;
     }
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(final Object o) {
         if (this == o) {
             return true;
         }
@@ -52,7 +52,7 @@ public class Group extends PersistentItem {
             return false;
         }
 
-        Group that = (Group) o;
+        final Group that = (Group) o;
 
         return super.equals(that) &&
                 Objects.equal(this.name, that.name) &&
@@ -77,5 +77,20 @@ public class Group extends PersistentItem {
                 .add("course", course)
                 .add("speciality", speciality)
                 .toString();
+    }
+
+    public static Group make(
+            final Long id,
+            final String name,
+            final Integer course,
+            final Speciality speciality) {
+
+        final Group group = new Group();
+        group.setId(id);
+        group.setName(name);
+        group.setCourse(course);
+        group.setSpeciality(speciality);
+
+        return group;
     }
 }

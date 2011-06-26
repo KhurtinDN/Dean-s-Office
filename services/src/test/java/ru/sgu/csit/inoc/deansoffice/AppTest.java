@@ -3,28 +3,28 @@ package ru.sgu.csit.inoc.deansoffice;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import org.hibernate.Hibernate;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-import org.springframework.orm.hibernate3.HibernateTemplate;
 import ru.sgu.csit.inoc.deansoffice.dao.GroupDAO;
 import ru.sgu.csit.inoc.deansoffice.dao.PhotoDAO;
 import ru.sgu.csit.inoc.deansoffice.dao.StudentDAO;
 import ru.sgu.csit.inoc.deansoffice.dao.impl.GroupDAOImpl;
 import ru.sgu.csit.inoc.deansoffice.dao.impl.PhotoDAOImpl;
 import ru.sgu.csit.inoc.deansoffice.dao.impl.StudentDAOImpl;
-import ru.sgu.csit.inoc.deansoffice.domain.*;
-import ru.sgu.csit.inoc.deansoffice.reports.ReportPdfProcessor;
-import ru.sgu.csit.inoc.deansoffice.reports.reportsutil.Report;
-import ru.sgu.csit.inoc.deansoffice.services.DocumentService;
+import ru.sgu.csit.inoc.deansoffice.domain.Group;
+import ru.sgu.csit.inoc.deansoffice.domain.Reference;
+import ru.sgu.csit.inoc.deansoffice.domain.Student;
+import ru.sgu.csit.inoc.deansoffice.domain.StudentDossier;
 import ru.sgu.csit.inoc.deansoffice.services.PhotoService;
 import ru.sgu.csit.inoc.deansoffice.services.ReferenceService;
 import ru.sgu.csit.inoc.deansoffice.services.StudentDossierService;
 import ru.sgu.csit.inoc.deansoffice.services.impl.PhotoServiceImpl;
-import ru.sgu.csit.inoc.deansoffice.services.impl.ReferenceServiceImpl;
 import ru.sgu.csit.inoc.deansoffice.services.impl.StudentDossierServiceImpl;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,7 +46,7 @@ public class AppTest
      * @return the suite of tests being tested
      */
     public static Test suite() {
-        return new TestSuite(ru.sgu.csit.inoc.deansoffice.AppTest.class);
+        return new TestSuite(AppTest.class);
     }
 
     /**
