@@ -19,6 +19,10 @@ public abstract class Person extends PersistentItem {
     protected String middleName;
     protected String lastName;
 
+    protected String firstNameGenitive;
+    protected String middleNameGenitive;
+    protected String lastNameGenitive;
+
     protected String firstNameDative;
     protected String middleNameDative;
     protected String lastNameDative;
@@ -65,6 +69,30 @@ public abstract class Person extends PersistentItem {
 
     public void setLastName(final String lastName) {
         this.lastName = lastName;
+    }
+
+    public String getFirstNameGenitive() {
+        return firstNameGenitive;
+    }
+
+    public void setFirstNameGenitive(final String firstNameGenitive) {
+        this.firstNameGenitive = firstNameGenitive;
+    }
+
+    public String getMiddleNameGenitive() {
+        return middleNameGenitive;
+    }
+
+    public void setMiddleNameGenitive(final String middleNameGenitive) {
+        this.middleNameGenitive = middleNameGenitive;
+    }
+
+    public String getLastNameGenitive() {
+        return lastNameGenitive;
+    }
+
+    public void setLastNameGenitive(final String lastNameGenitive) {
+        this.lastNameGenitive = lastNameGenitive;
     }
 
     public String getFirstNameDative() {
@@ -120,6 +148,9 @@ public abstract class Person extends PersistentItem {
                 Objects.equal(this.firstName, that.firstName) &&
                 Objects.equal(this.middleName, that.middleName) &&
                 Objects.equal(this.lastName, that.lastName) &&
+                Objects.equal(this.firstNameGenitive, that.firstNameGenitive) &&
+                Objects.equal(this.middleNameGenitive, that.middleNameGenitive) &&
+                Objects.equal(this.lastNameGenitive, that.lastNameGenitive) &&
                 Objects.equal(this.firstNameDative, that.firstNameDative) &&
                 Objects.equal(this.middleNameDative, that.middleNameDative) &&
                 Objects.equal(this.lastNameDative, that.lastNameDative);
@@ -134,6 +165,9 @@ public abstract class Person extends PersistentItem {
                 firstName,
                 middleName,
                 lastName,
+                firstNameGenitive,
+                middleNameGenitive,
+                lastNameGenitive,
                 firstNameDative,
                 middleNameDative,
                 lastNameDative);
@@ -148,6 +182,9 @@ public abstract class Person extends PersistentItem {
                 .add("firstName", firstName)
                 .add("middleName", middleName)
                 .add("lastName", lastName)
+                .add("firstNameGenitive", firstNameGenitive)
+                .add("middleNameGenitive", middleNameGenitive)
+                .add("lastNameGenitive", lastNameGenitive)
                 .add("firstNameDative", firstNameDative)
                 .add("middleNameDative", middleNameDative)
                 .add("lastNameDative", lastNameDative)
