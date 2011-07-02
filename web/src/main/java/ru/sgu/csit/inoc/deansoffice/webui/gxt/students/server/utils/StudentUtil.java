@@ -172,4 +172,63 @@ public class StudentUtil extends PersonUtil {
             additionalStudentData.setMother(mother);
         }
     }
+
+    public static void populateStudentByStudentModel(Student student, StudentModel studentModel) {
+        if (student == null || studentModel == null) {
+            throw new IllegalArgumentException("Arguments must be not null.");
+        }
+
+        student.setFirstName(studentModel.getFirstName());
+        student.setFirstNameGenitive(studentModel.getFirstNameGenitive());
+        student.setFirstNameDative(studentModel.getFirstNameDative());
+
+        student.setLastName(studentModel.getLastName());
+        student.setLastNameGenitive(studentModel.getLastNameGenitive());
+        student.setLastNameDative(studentModel.getLastNameDative());
+
+        student.setMiddleName(studentModel.getMiddleName());
+        student.setMiddleNameGenitive(studentModel.getMiddleNameGenitive());
+        student.setMiddleNameDative(studentModel.getMiddleNameDative());
+
+        Student.AdditionalStudentData additionalStudentData = student.getAdditionalData();
+        if (additionalStudentData == null) {
+            additionalStudentData = new Student.AdditionalStudentData();
+        }
+        student.setAdditionalData(additionalStudentData);
+
+        student.setDivision(convertStudentModelDivisionToStudentDivision(studentModel.getDivision()));
+        student.setStudyForm(convertStudentModelStudyFormStudentStudyForm(studentModel.getStudyForm()));
+    }
+
+    public static Student.Division convertStudentModelDivisionToStudentDivision(StudentModel.Division division) {
+        if (division == null) {
+            return null;
+        }
+
+        switch (division) {
+            case INTRAMURAL:
+                return Student.Division.INTRAMURAL;
+            case EXTRAMURAL:
+                return Student.Division.EXTRAMURAL;
+            case EVENINGSTUDY:
+                return Student.Division.EVENINGSTUDY;
+            default:
+                return null;
+        }
+    }
+
+    public static Student.StudyForm convertStudentModelStudyFormStudentStudyForm(StudentModel.StudyForm studyForm) {
+        if (studyForm == null) {
+            return null;
+        }
+
+        switch (studyForm) {
+            case BUDGET:
+                return Student.StudyForm.BUDGET;
+            case COMMERCIAL:
+                return Student.StudyForm.COMMERCIAL;
+            default:
+                return null;
+        }
+    }
 }

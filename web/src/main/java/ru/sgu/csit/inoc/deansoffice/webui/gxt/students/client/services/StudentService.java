@@ -15,14 +15,13 @@ import java.util.List;
  */
 @RemoteServiceRelativePath("GWTServices/StudentService")
 public interface StudentService extends RemoteService {
-
     List<StudentModel> loadStudentList(Long groupId);
-
     List<StudentModel> loadStudentListBySpecialityIdAndCourse(Long specialityId, Integer course);
-
     StudentDetailsModel loadStudentDetails(Long studentId);
-
     void saveStudentDetails(StudentDetailsModel studentDetailsModel);
+
+    void saveStudent(StudentModel studentModel);
+    void deleteStudents(List<Long> studentIdList);
 
     public static class Util {
         private static final StudentServiceAsync ourInstance = GWT.create(StudentService.class);

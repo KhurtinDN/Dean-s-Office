@@ -51,6 +51,54 @@ public class PersonModel extends DtoModel {
         set("lastName", lastName);
     }
 
+    public String getFirstNameGenitive() {
+        return get("firstNameGenitive");
+    }
+
+    public void setFirstNameGenitive(String firstNameGenitive) {
+        set("firstNameGenitive", firstNameGenitive);
+    }
+
+    public String getMiddleNameGenitive() {
+        return get("middleNameGenitive");
+    }
+
+    public void setMiddleNameGenitive(String middleNameGenitive) {
+        set("middleNameGenitive", middleNameGenitive);
+    }
+
+    public String getLastNameGenitive() {
+        return get("lastNameGenitive");
+    }
+
+    public void setLastNameGenitive(String lastNameGenitive) {
+        set("lastNameGenitive", lastNameGenitive);
+    }
+
+    public String getFirstNameDative() {
+        return get("firstNameDative");
+    }
+
+    public void setFirstNameDative(String firstNameDative) {
+        set("firstNameDative", firstNameDative);
+    }
+
+    public String getMiddleNameDative() {
+        return get("middleNameDative");
+    }
+
+    public void setMiddleNameDative(String middleNameDative) {
+        set("middleNameDative", middleNameDative);
+    }
+
+    public String getLastNameDative() {
+        return get("lastNameDative");
+    }
+
+    public void setLastNameDative(String lastNameDative) {
+        set("lastNameDative", lastNameDative);
+    }
+
     public Date getBirthday() {
         return get("birthday");
     }
