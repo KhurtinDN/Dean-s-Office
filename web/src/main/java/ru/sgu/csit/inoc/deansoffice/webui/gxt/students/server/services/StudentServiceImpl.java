@@ -82,7 +82,7 @@ public class StudentServiceImpl implements StudentService {
         StudentUtil.populateStudentByStudentModel(student, studentModel);
 
         if (student.getSpeciality() == null) {
-            List<Speciality> specialities = specialitytDAO.findByName(studentModel.getSpecialityName());
+            List<Speciality> specialities = specialitytDAO.findByShortName(studentModel.getSpecialityName());
             if (specialities == null || specialities.size() != 1) {
                 throw new RuntimeException("Specialty not specified.");
             }
