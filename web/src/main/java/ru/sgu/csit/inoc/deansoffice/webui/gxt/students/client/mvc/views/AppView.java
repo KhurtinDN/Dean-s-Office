@@ -102,7 +102,7 @@ public class AppView extends View {
         Component component = event.getData();
 
         if (component != null) {
-            BorderLayoutData eastLayoutData = new BorderLayoutData(Style.LayoutRegion.EAST, 400, 200, 500);
+            BorderLayoutData eastLayoutData = new BorderLayoutData(Style.LayoutRegion.EAST, 500, 200, 500);
             eastLayoutData.setCollapsible(true);
             eastLayoutData.setSplit(true);
 
