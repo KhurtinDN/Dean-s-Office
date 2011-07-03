@@ -21,7 +21,7 @@
 
     <filter-mapping>
         <filter-name>springSecurityFilterChain</filter-name>
-        <url-pattern>/abc*</url-pattern> <!--todo: delete abc-->
+        <url-pattern>/*</url-pattern> <!--todo: delete abc-->
     </filter-mapping>
 
     <!-- Фильтр для возможности ленивой загрузки данных (не проверено)
