@@ -19,6 +19,12 @@ import java.util.List;
 public class SpecialityDAOImpl extends BaseDAOImpl<Speciality, Long> implements SpecialityDAO {
     @Override
     @SuppressWarnings("unchecked")
+    public List<Speciality> findByName(String name) {
+        return (List<Speciality>) getHibernateTemplate().find("from Speciality s where s.name=?", name);
+    }
+
+    @Override
+    @SuppressWarnings("unchecked")
     public List<Speciality> findByShortName(String shortName) {
 //        DetachedCriteria criteria = createCriteriaForPersistentClass(Restrictions.eq("shortName", shortName));
 //        return (List<Speciality>) getHibernateTemplate().findByCriteria(criteria);
