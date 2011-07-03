@@ -100,9 +100,12 @@ public class StudentInfoLayoutContainer extends LayoutContainer {
         documentFieldSet.setLayout(new FlowLayout());
         documentFieldSet.setHeading("Документы");
 
-        documentFieldSet.add(createReference1(), new FlowData(0, 0, 0, 0));
-        documentFieldSet.add(createReference2(), new FlowData(10, 0, 0, 0));
-        documentFieldSet.add(createStudentAccount(), new FlowData(10, 0, 0, 0));
+        documentFieldSet.add(createReference("Справка #1", ReferenceModel.ReferenceType.REFERENCE_1),
+                new FlowData(0, 0, 0, 0));
+        documentFieldSet.add(createReference("Справка #2", ReferenceModel.ReferenceType.REFERENCE_2),
+                new FlowData(10, 0, 0, 0));
+        documentFieldSet.add(createStudentAccount(),
+                new FlowData(10, 0, 0, 0));
 
         add(infoFieldSet, new VBoxLayoutData(new Margins(5)));
         add(documentFieldSet, new VBoxLayoutData(new Margins(5)));
@@ -132,14 +135,14 @@ public class StudentInfoLayoutContainer extends LayoutContainer {
         return layoutContainer;
     }
 
-    private LayoutContainer createReference1() {
+    private LayoutContainer createReference(final String name, final ReferenceModel.ReferenceType type) {
         HBoxLayout hBoxLayout = new HBoxLayout();
         hBoxLayout.setPadding(new Padding(5));
 
         LayoutContainer layoutContainer = new LayoutContainer(hBoxLayout);
         layoutContainer.setBorders(true);
 
-        Label referenceLabel = new Label("Справка #1");
+        Label referenceLabel = new Label(name);
         referenceLabel.addStyleName("x-form-item");
         referenceLabel.setStyleAttribute("fontWeight", "bold");
         layoutContainer.add(referenceLabel);
@@ -153,7 +156,7 @@ public class StudentInfoLayoutContainer extends LayoutContainer {
             public void componentSelected(ButtonEvent ce) {
                 if (currentStudentModel != null) {
                     AppEvent appEvent = new AppEvent(StudentEvents.RegistrationReference);
-                    appEvent.setData("referenceType", ReferenceModel.ReferenceType.REFERENCE_1);
+                    appEvent.setData("referenceType", type);
                     appEvent.setData("ownerId", currentStudentModel.getId());
 
                     Dispatcher.forwardEvent(appEvent);
@@ -171,61 +174,7 @@ public class StudentInfoLayoutContainer extends LayoutContainer {
             public void componentSelected(ButtonEvent ce) {
                 if (currentStudentModel != null) {
                     AppEvent appEvent = new AppEvent(StudentEvents.RegistrationReference);
-                    appEvent.setData("referenceType", ReferenceModel.ReferenceType.REFERENCE_1);
-                    appEvent.setData("ownerId", currentStudentModel.getId());
-
-                    Dispatcher.forwardEvent(appEvent);
-                    Dispatcher.forwardEvent(StudentEvents.ReferenceQueueCall, Boolean.TRUE);
-                } else {
-                    Dispatcher.forwardEvent(CommonEvents.InfoWithConfirmation,
-                            "GroupInfoLayoutContainer is not rendered!");
-                }
-            }
-        }));
-
-        return layoutContainer;
-    }
-
-    private LayoutContainer createReference2() {
-        HBoxLayout hBoxLayout = new HBoxLayout();
-        hBoxLayout.setPadding(new Padding(5));
-
-        LayoutContainer layoutContainer = new LayoutContainer(hBoxLayout);
-        layoutContainer.setBorders(true);
-
-        Label referenceLabel = new Label("Справка #2");
-        referenceLabel.addStyleName("x-form-item");
-        referenceLabel.setStyleAttribute("fontWeight", "bold");
-        layoutContainer.add(referenceLabel);
-
-        HBoxLayoutData flex = new HBoxLayoutData(new Margins(0, 5, 0, 0));
-        flex.setFlex(1);
-        layoutContainer.add(new Text(), flex);
-
-        layoutContainer.add(new Button("Добавить в очередь", new SelectionListener<ButtonEvent>() {
-            @Override
-            public void componentSelected(ButtonEvent ce) {
-                if (currentStudentModel != null) {
-                    AppEvent appEvent = new AppEvent(StudentEvents.RegistrationReference);
-                    appEvent.setData("referenceType", ReferenceModel.ReferenceType.REFERENCE_2);
-                    appEvent.setData("ownerId", currentStudentModel.getId());
-
-                    Dispatcher.forwardEvent(appEvent);
-//                    String url = "../documents/reference-2.pdf?studentId=" + currentStudentModel.getId();
-//                    Window.open(url, "_blank", "");
-                } else {
-                    Dispatcher.forwardEvent(CommonEvents.InfoWithConfirmation,
-                            "GroupInfoLayoutContainer is not rendered!");
-                }
-            }
-        }), new HBoxLayoutData(0, 5, 0, 5));
-
-        layoutContainer.add(new Button("Добавить в очередь как...", new SelectionListener<ButtonEvent>() {
-            @Override
-            public void componentSelected(ButtonEvent ce) {
-                if (currentStudentModel != null) {
-                    AppEvent appEvent = new AppEvent(StudentEvents.RegistrationReference);
-                    appEvent.setData("referenceType", ReferenceModel.ReferenceType.REFERENCE_2);
+                    appEvent.setData("referenceType", type);
                     appEvent.setData("ownerId", currentStudentModel.getId());
 
                     Dispatcher.forwardEvent(appEvent);

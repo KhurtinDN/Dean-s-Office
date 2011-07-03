@@ -27,66 +27,55 @@ public class InformationPanel extends ContentPanel {
         setHeading("Свойства");
         setLayout(new FitLayout());
 
-        studentInfoLayoutContainer = new StudentInfoLayoutContainer();
-        groupInfoLayoutContainer = new GroupInfoLayoutContainer();
-        specialityInfoLayoutContainer = new SpecialityInfoLayoutContainer();
-        facultyInfoLayoutContainer = new FacultyInfoLayoutContainer();
-
-        add(studentInfoLayoutContainer);
-        add(groupInfoLayoutContainer);
-        add(specialityInfoLayoutContainer);
-        add(facultyInfoLayoutContainer);
-
-        studentInfoLayoutContainer.setVisible(false);
-        groupInfoLayoutContainer.setVisible(false);
-        specialityInfoLayoutContainer.setVisible(false);
-        facultyInfoLayoutContainer.setVisible(false);
         showFacultyInformation();
     }
 
     public void showStudentInformation(StudentModel studentModel) {
-        studentInfoLayoutContainer.bind(studentModel);
-
-        if (currentLayoutContainer != studentInfoLayoutContainer) {
-            if (currentLayoutContainer != null) {
-                currentLayoutContainer.setVisible(false);
-            }
-            currentLayoutContainer = studentInfoLayoutContainer;
-            currentLayoutContainer.setVisible(true);
+        if (studentInfoLayoutContainer == null) {
+            studentInfoLayoutContainer = new StudentInfoLayoutContainer();
         }
+
+        showInformation(studentInfoLayoutContainer);
+
+        studentInfoLayoutContainer.bind(studentModel);
     }
 
     public void showGroupInformation(GroupModel groupModel) {
-        groupInfoLayoutContainer.bind(groupModel);
-
-        if (currentLayoutContainer != groupInfoLayoutContainer) {
-            if (currentLayoutContainer != null) {
-                currentLayoutContainer.setVisible(false);
-            }
-            currentLayoutContainer = groupInfoLayoutContainer;
-            currentLayoutContainer.setVisible(true);
+        if (groupInfoLayoutContainer == null) {
+            groupInfoLayoutContainer = new GroupInfoLayoutContainer();
         }
+
+        showInformation(groupInfoLayoutContainer);
+
+        groupInfoLayoutContainer.bind(groupModel);
     }
 
     public void showSpecialityInformation(SpecialityModel specialityModel) {
-        specialityInfoLayoutContainer.bind(specialityModel);
-
-        if (currentLayoutContainer != specialityInfoLayoutContainer) {
-            if (currentLayoutContainer != null) {
-                currentLayoutContainer.setVisible(false);
-            }
-            currentLayoutContainer = specialityInfoLayoutContainer;
-            currentLayoutContainer.setVisible(true);
+        if (specialityInfoLayoutContainer == null) {
+            specialityInfoLayoutContainer = new SpecialityInfoLayoutContainer();
         }
+
+        showInformation(specialityInfoLayoutContainer);
+
+        specialityInfoLayoutContainer.bind(specialityModel);
     }
 
     public void showFacultyInformation() {
-        if (currentLayoutContainer != facultyInfoLayoutContainer) {
+        if (specialityInfoLayoutContainer == null) {
+            facultyInfoLayoutContainer = new FacultyInfoLayoutContainer();
+        }
+
+        showInformation(facultyInfoLayoutContainer);
+    }
+
+    private void showInformation(final LayoutContainer layoutContainer) {
+        if (currentLayoutContainer != layoutContainer) {
             if (currentLayoutContainer != null) {
-                currentLayoutContainer.setVisible(false);
+                remove(currentLayoutContainer);
             }
-            currentLayoutContainer = facultyInfoLayoutContainer;
-            currentLayoutContainer.setVisible(true);
+            currentLayoutContainer = layoutContainer;
+            add(currentLayoutContainer);
+            layout(true);
         }
     }
 }
