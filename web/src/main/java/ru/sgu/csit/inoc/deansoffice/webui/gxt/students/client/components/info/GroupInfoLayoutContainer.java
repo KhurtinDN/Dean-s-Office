@@ -4,6 +4,7 @@ import com.extjs.gxt.ui.client.data.BaseModel;
 import com.extjs.gxt.ui.client.data.ModelData;
 import com.extjs.gxt.ui.client.event.ButtonEvent;
 import com.extjs.gxt.ui.client.event.SelectionListener;
+import com.extjs.gxt.ui.client.mvc.Dispatcher;
 import com.extjs.gxt.ui.client.store.ListStore;
 import com.extjs.gxt.ui.client.util.IconHelper;
 import com.extjs.gxt.ui.client.widget.LayoutContainer;
@@ -18,7 +19,10 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Image;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.model.GroupModel;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.model.StudentModel;
+import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.utils.BaseAsyncCallback;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.utils.FormUtil;
+import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.mvc.events.StudentEvents;
+import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.services.StudentService;
 
 /**
  * User: Khurtin Denis (KhurtinDN@gmail.com)
@@ -152,24 +156,34 @@ public class GroupInfoLayoutContainer extends LayoutContainer {
             saveButton.addSelectionListener(new SelectionListener<ButtonEvent>() {
                 @Override
                 public void componentSelected(ButtonEvent ce) {
-                    final StudentModel studentModel = new StudentModel();
-                    studentModel.setLastName(lastNameTextField.getValue());
-                    studentModel.setFirstName(firstNameTextField.getValue());
-                    studentModel.setMiddleName(middleNameTextField.getValue());
-
-                    studentModel.setStudyForm(studyFormComboBox.getValue().<StudentModel.StudyForm>get("studyForm"));
-                    studentModel.setDivision(StudentModel.Division.INTRAMURAL);
-
-                    studentModel.setGroupName(currentGroupModel.getName());
-                    studentModel.setSpecialityName(currentGroupModel.getSpeciality().getName());
-                    studentModel.setCourse(currentGroupModel.getCourse());
-
-//                    studentModel.setPhotoId(31L);
-
                     if (validateForm()) {
-                        clearForm();
+                        final StudentModel studentModel = new StudentModel();
+                        studentModel.setLastName(lastNameTextField.getValue());
+                        studentModel.setFirstName(firstNameTextField.getValue());
+                        studentModel.setMiddleName(middleNameTextField.getValue());
 
-                        // todo save student
+                        studentModel.setLastNameGenitive(lastNameGenitiveTextField.getValue());
+                        studentModel.setFirstNameGenitive(firstNameGenitiveTextField.getValue());
+                        studentModel.setMiddleNameGenitive(middleNameGenitiveTextField.getValue());
+
+                        studentModel.setLastNameDative(lastNameDativeTextField.getValue());
+                        studentModel.setFirstNameDative(firstNameDativeTextField.getValue());
+                        studentModel.setMiddleNameDative(middleNameDativeTextField.getValue());
+
+                        studentModel.setStudyForm(studyFormComboBox.getValue().<StudentModel.StudyForm>get("studyForm"));
+                        studentModel.setDivision(StudentModel.Division.INTRAMURAL);
+
+                        studentModel.setGroupName(currentGroupModel.getName());
+                        studentModel.setSpecialityName(currentGroupModel.getSpeciality().getName());
+                        studentModel.setCourse(currentGroupModel.getCourse());
+
+                        StudentService.Util.getInstance().saveStudent(studentModel, new BaseAsyncCallback<Void>() {
+                            @Override
+                            public void onSuccess(Void result) {
+                                Dispatcher.forwardEvent(StudentEvents.GroupSelected, currentGroupModel);
+                                clearForm();
+                            }
+                        });
                     }
                 }
             });
@@ -217,57 +231,61 @@ public class GroupInfoLayoutContainer extends LayoutContainer {
         }
 
         private boolean validateForm() {
+            if (!validateTextField(lastNameTextField)) {
+                Window.alert("Введите корректно фамилию студента");
+                return false;
+            }
+
+            if (!validateTextField(firstNameTextField)) {
+                Window.alert("Введите корректно имя студента");
+                return false;
+            }
+
+            if (!validateTextField(middleNameTextField)) {
+                Window.alert("Введите корректно отчество студента");
+                return false;
+            }
+
+            if (!validateTextField(lastNameGenitiveTextField)) {
+                Window.alert("Введите корректно фамилию студента в родительном падеже");
+                return false;
+            }
+
+            if (!validateTextField(firstNameGenitiveTextField)) {
+                Window.alert("Введите корректно имя студента в родительном падеже");
+                return false;
+            }
+
+            if (!validateTextField(middleNameGenitiveTextField)) {
+                Window.alert("Введите корректно отчество студента в родительном падеже");
+                return false;
+            }
+
+            if (!validateTextField(lastNameDativeTextField)) {
+                Window.alert("Введите корректно фамилию студента в дательном падеже");
+                return false;
+            }
+
+            if (!validateTextField(firstNameDativeTextField)) {
+                Window.alert("Введите корректно имя студента в дательном падеже");
+                return false;
+            }
+
+            if (!validateTextField(middleNameDativeTextField)) {
+                Window.alert("Введите корректно отчество студента в дательном падеже");
+                return false;
+            }
+
             if (studyFormComboBox.getValue() == null) {
                 Window.alert("Введите форму обучения");
                 return false;
             }
 
-            if (lastNameTextField.getValue().isEmpty()) {
-                Window.alert("Введите корректно фамилию студента");
-                return false;
-            }
-
-            if (firstNameTextField.getValue().isEmpty()) {
-                Window.alert("Введите корректно имя студента");
-                return false;
-            }
-
-            if (middleNameTextField.getValue().isEmpty()) {
-                Window.alert("Введите корректно отчество студента");
-                return false;
-            }
-
-            if (lastNameGenitiveTextField.getValue().isEmpty()) {
-                Window.alert("Введите корректно фамилию студента в родительном падеже");
-                return false;
-            }
-
-            if (firstNameGenitiveTextField.getValue().isEmpty()) {
-                Window.alert("Введите корректно имя студента в родительном падеже");
-                return false;
-            }
-
-            if (middleNameGenitiveTextField.getValue().isEmpty()) {
-                Window.alert("Введите корректно отчество студента в родительном падеже");
-                return false;
-            }
-
-            if (lastNameDativeTextField.getValue().isEmpty()) {
-                Window.alert("Введите корректно фамилию студента в дательном падеже");
-                return false;
-            }
-
-            if (firstNameDativeTextField.getValue().isEmpty()) {
-                Window.alert("Введите корректно имя студента в дательном падеже");
-                return false;
-            }
-
-            if (middleNameDativeTextField.getValue().isEmpty()) {
-                Window.alert("Введите корректно отчество студента в дательном падеже");
-                return false;
-            }
-
             return true;
+        }
+
+        private boolean validateTextField(TextField<String> field) {
+            return field.getValue() != null && !field.getValue().isEmpty();
         }
 
         private void clearForm() {
