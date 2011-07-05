@@ -42,9 +42,9 @@ public class TestMain {
         TestMain testMain = new TestMain();
 
         testMain.createFaculty();
-        testMain.createSpecialities();
-        testMain.createGroups();
-        testMain.createStudents();
+        testMain.createSpecialitiesAndGroups();
+//        testMain.createGroups();
+//        testMain.createStudents();
     }
 
     private void createFaculty() {
@@ -91,7 +91,7 @@ public class TestMain {
             Speciality speciality = new Speciality();
             speciality.setName("Прикладная математика и информатика");
             speciality.setShortName("ПМИ");
-            speciality.setCode("1");
+            speciality.setCode("010501");
             speciality.setFaculty(faculty);
             speciality.setCourseCount(5);
             specialityDAO.save(speciality);
@@ -99,7 +99,7 @@ public class TestMain {
             speciality = new Speciality();
             speciality.setName("Вычислительные машины, комплексы, системы, сети");
             speciality.setShortName("ВМ");
-            speciality.setCode("2");
+            speciality.setCode("230101");
             speciality.setFaculty(faculty);
             speciality.setCourseCount(5);
             specialityDAO.save(speciality);
@@ -107,10 +107,217 @@ public class TestMain {
             speciality = new Speciality();
             speciality.setName("Компьютерная безопасность");
             speciality.setShortName("КБ");
-            speciality.setCode("3");
+            speciality.setCode("090");
             speciality.setFaculty(faculty);
             speciality.setCourseCount(6);
             specialityDAO.save(speciality);
+
+            speciality = new Speciality();
+            speciality.setName("Информатика и вычислительная техника (направление)");
+            speciality.setShortName("ИВТ");
+            speciality.setCode("230100");
+            speciality.setFaculty(faculty);
+            speciality.setCourseCount(4);
+            specialityDAO.save(speciality);
+
+            speciality = new Speciality();
+            speciality.setName("Прикладная математика и информатика (направление)");
+            speciality.setShortName("ПМИ (н)");
+            speciality.setCode("010500");
+            speciality.setFaculty(faculty);
+            speciality.setCourseCount(4);
+            specialityDAO.save(speciality);
+        }
+    }
+
+    private void createSpecialitiesAndGroups() {
+        List<Faculty> facultyList = facultyDAO.findAll();
+
+        for (Faculty faculty : facultyList) {
+
+            Speciality speciality = new Speciality();
+            speciality.setName("Прикладная математика и информатика");
+            speciality.setShortName("ПМИ");
+            speciality.setCode("010501");
+            speciality.setFaculty(faculty);
+            speciality.setCourseCount(5);
+            specialityDAO.save(speciality);
+
+            Group group = new Group();
+            group.setName("211");
+            group.setCourse(2);
+            group.setSpeciality(speciality);
+            groupDAO.save(group);
+
+            group = new Group();
+            group.setName("311");
+            group.setCourse(3);
+            group.setSpeciality(speciality);
+            groupDAO.save(group);
+
+            group = new Group();
+            group.setName("411");
+            group.setCourse(4);
+            group.setSpeciality(speciality);
+            groupDAO.save(group);
+
+            group = new Group();
+            group.setName("511");
+            group.setCourse(5);
+            group.setSpeciality(speciality);
+            groupDAO.save(group);
+
+            speciality = new Speciality();
+            speciality.setName("Вычислительные машины, комплексы, системы, сети");
+            speciality.setShortName("ВМ");
+            speciality.setCode("230101");
+            speciality.setFaculty(faculty);
+            speciality.setCourseCount(5);
+            specialityDAO.save(speciality);
+
+            group = new Group();
+            group.setName("221");
+            group.setCourse(2);
+            group.setSpeciality(speciality);
+            groupDAO.save(group);
+
+            group = new Group();
+            group.setName("222");
+            group.setCourse(2);
+            group.setSpeciality(speciality);
+            groupDAO.save(group);
+
+            group = new Group();
+            group.setName("321");
+            group.setCourse(3);
+            group.setSpeciality(speciality);
+            groupDAO.save(group);
+
+            group = new Group();
+            group.setName("421");
+            group.setCourse(4);
+            group.setSpeciality(speciality);
+            groupDAO.save(group);
+
+            group = new Group();
+            group.setName("521");
+            group.setCourse(5);
+            group.setSpeciality(speciality);
+            groupDAO.save(group);
+
+            group = new Group();
+            group.setName("522");
+            group.setCourse(5);
+            group.setSpeciality(speciality);
+            groupDAO.save(group);
+
+            speciality = new Speciality();
+            speciality.setName("Компьютерная безопасность");
+            speciality.setShortName("КБ");
+            speciality.setCode("090");
+            speciality.setFaculty(faculty);
+            speciality.setCourseCount(6);
+            specialityDAO.save(speciality);
+
+            group = new Group();
+            group.setName("131");
+            group.setCourse(1);
+            group.setSpeciality(speciality);
+            groupDAO.save(group);
+
+            group = new Group();
+            group.setName("132");
+            group.setCourse(1);
+            group.setSpeciality(speciality);
+            groupDAO.save(group);
+
+            group = new Group();
+            group.setName("231");
+            group.setCourse(2);
+            group.setSpeciality(speciality);
+            groupDAO.save(group);
+
+            group = new Group();
+            group.setName("232");
+            group.setCourse(2);
+            group.setSpeciality(speciality);
+            groupDAO.save(group);
+
+            group = new Group();
+            group.setName("331");
+            group.setCourse(3);
+            group.setSpeciality(speciality);
+            groupDAO.save(group);
+
+            group = new Group();
+            group.setName("332");
+            group.setCourse(3);
+            group.setSpeciality(speciality);
+            groupDAO.save(group);
+
+            group = new Group();
+            group.setName("431");
+            group.setCourse(4);
+            group.setSpeciality(speciality);
+            groupDAO.save(group);
+
+            group = new Group();
+            group.setName("531");
+            group.setCourse(5);
+            group.setSpeciality(speciality);
+            groupDAO.save(group);
+
+            group = new Group();
+            group.setName("631");
+            group.setCourse(6);
+            group.setSpeciality(speciality);
+            groupDAO.save(group);
+
+            group = new Group();
+            group.setName("632");
+            group.setCourse(6);
+            group.setSpeciality(speciality);
+            groupDAO.save(group);
+
+            speciality = new Speciality();
+            speciality.setName("Информатика и вычислительная техника (направление)");
+            speciality.setShortName("ИВТ");
+            speciality.setCode("230100");
+            speciality.setFaculty(faculty);
+            speciality.setCourseCount(4);
+            specialityDAO.save(speciality);
+
+            group = new Group();
+            group.setName("251");
+            group.setCourse(2);
+            group.setSpeciality(speciality);
+            groupDAO.save(group);
+
+            group = new Group();
+            group.setName("351");
+            group.setCourse(2);
+            group.setSpeciality(speciality);
+            groupDAO.save(group);
+
+            speciality = new Speciality();
+            speciality.setName("Прикладная математика и информатика (направление)");
+            speciality.setShortName("ПМИ (н)");
+            speciality.setCode("010500");
+            speciality.setFaculty(faculty);
+            speciality.setCourseCount(4);
+            specialityDAO.save(speciality);
+
+            group = new Group();
+            group.setName("341");
+            group.setCourse(3);
+            group.setSpeciality(speciality);
+            groupDAO.save(group);
+
+            group = new Group();
+            group.setName("441");
+            group.setCourse(4);
+            group.setSpeciality(speciality);
+            groupDAO.save(group);
         }
     }
 

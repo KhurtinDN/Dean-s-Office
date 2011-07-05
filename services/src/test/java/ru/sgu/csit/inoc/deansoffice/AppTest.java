@@ -85,7 +85,7 @@ public class AppTest
         */
         Group group = groupDAO.findAll().get(0);
         List<Student> students = studentDAO.findByGroup(group);
-        Student student = students.get(0);//new Student();
+        Student student = students.get(students.size() / 2);//new Student();
         try {
             photoService.loadData(student.getAdditionalData().getPhoto());
         } catch (IOException e) {
@@ -148,10 +148,12 @@ public class AppTest
         ReferenceService referenceService = applicationContext.getBean(ReferenceService.class);
         for (int i = 0; i < students.size(); ++i) {
             Student theStudent = students.get(i);
+            if (theStudent.getEnrollmentOrder() != null) {     //
             Reference reference = new Reference();
             reference.setType(Reference.ReferenceType.REFERENCE_1);
             reference.setOwnerId(theStudent.getId());
             references.add(reference);
+            }                                                  //
         }
         referenceService.generatePrintForm(references, outputStream);
     }
