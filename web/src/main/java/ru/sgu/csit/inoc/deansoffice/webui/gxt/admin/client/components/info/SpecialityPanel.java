@@ -98,7 +98,7 @@ public class SpecialityPanel extends ContentPanel {
             public void handleEvent(RowEditorEvent rowEditorEvent) {
                 mask("Сохраниние измененной группы");
 
-                GroupModel groupModel = groupsGrid.getStore().getAt(rowEditorEvent.getRowIndex());
+                GroupModel groupModel = (GroupModel) rowEditorEvent.getRecord().getModel();
 
                 GroupService.Util.getInstance().update(groupModel, new BaseAsyncCallback<Void>() {
                     @Override
