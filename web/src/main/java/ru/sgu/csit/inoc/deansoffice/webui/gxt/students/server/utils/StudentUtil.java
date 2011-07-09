@@ -144,6 +144,9 @@ public class StudentUtil extends PersonUtil {
         additionalStudentData.setPassports(
                 PassportUtil.convertPassportModelListsToPassportList(studentDetailsModel.getPassports()));
 
+        additionalStudentData.setOldAddress(studentDetailsModel.getOldAddress());
+        additionalStudentData.setActualAddress(studentDetailsModel.getAddress());
+
         if (studentDetailsModel.getFather() == null) {
             additionalStudentData.setFather(null);
         } else {
