@@ -1,6 +1,5 @@
 package ru.sgu.csit.inoc;
 
-import freemarker.template.TemplateException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import ru.sgu.csit.inoc.deansoffice.aos.Register;
@@ -9,18 +8,12 @@ import ru.sgu.csit.inoc.deansoffice.dao.LeaderDAO;
 import ru.sgu.csit.inoc.deansoffice.dao.StipendDAO;
 import ru.sgu.csit.inoc.deansoffice.dao.StudentDAO;
 import ru.sgu.csit.inoc.deansoffice.domain.*;
-import ru.sgu.csit.inoc.deansoffice.reports.ReportPdfProcessor;
-import ru.sgu.csit.inoc.deansoffice.reports.reportsutil.Report;
-import ru.sgu.csit.inoc.deansoffice.reports.reportsutil.Templater;
-import ru.sgu.csit.inoc.deansoffice.services.DirectiveService;
 import ru.sgu.csit.inoc.deansoffice.services.OrderService;
-import ru.sgu.csit.inoc.deansoffice.services.impl.DirectiveServiceImpl;
 import ru.sgu.csit.inoc.deansoffice.services.impl.OrderServiceImpl;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
