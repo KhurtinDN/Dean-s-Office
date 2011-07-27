@@ -16,7 +16,7 @@ import java.util.*;
  * Date: Sep 10, 2010
  * Time: 11:14:30 AM
  */
-public class TestMain {
+public class CreateDB {
     private static ApplicationContext applicationContext = new ClassPathXmlApplicationContext("ApplicationContext.xml");
 
     private StudentDAO studentDAO = applicationContext.getBean(StudentDAO.class);
@@ -39,12 +39,13 @@ public class TestMain {
     private final Integer COUNT_STUDENTS_IN_GROUP = 10;
 
     public static void main(String[] args) {
-        TestMain testMain = new TestMain();
+        CreateDB createDB = new CreateDB();
 
-        testMain.createFaculty();
-        testMain.createSpecialitiesAndGroups();
-//        testMain.createGroups();
-//        testMain.createStudents();
+        createDB.createFaculty();
+        createDB.createSpecialitiesAndGroups();
+//        createDB.createSpecialities();
+//        createDB.createGroups();
+//        createDB.createStudents();
     }
 
     private void createFaculty() {
@@ -323,12 +324,16 @@ public class TestMain {
 
     private void createGroups() {
         List<Speciality> specialityList = specialityDAO.findAll();
+
+        int specialityNumber = 0;
+
         for (Speciality speciality : specialityList) {
+            ++specialityNumber;
             int courseCount = speciality.getCourseCount();
-            for (int groupCount = 1; groupCount <= 2; ++groupCount) {
+            for (int groupNumber = 1; groupNumber <= 2; ++groupNumber) {
                 for (int course = 1; course <= courseCount; ++course) {
                     Group group = new Group();
-                    group.setName(course + speciality.getCode() + groupCount);
+                    group.setName(String.format("%d%d%d", course, specialityNumber, groupNumber));
                     group.setCourse(course);
                     group.setSpeciality(speciality);
                     groupDAO.save(group);

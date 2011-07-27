@@ -57,7 +57,7 @@
     </bean>
 
     <!-- Apply transactions to all methods in our service layer. -->
-    <tx:advice id="txAdviceForTest" transaction-manager="transactionManager">
+    <tx:advice id="txAdviceForTest" transaction-manager="transactionManagerForTest">
         <!-- the transactional semantics... -->
         <tx:attributes>
             <tx:method name="save*" propagation="REQUIRES_NEW"/>

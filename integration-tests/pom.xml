@@ -70,14 +70,21 @@
     </dependencies>
 
     <build>
-        <resources>
-            <resource>
-                <directory>src/main/resources</directory>
+        <testResources>
+            <testResource>
+                <directory>src/test/resources</directory>
+                <excludes>
+                    <exclude>ApplicationContext-persistence.xml</exclude>
+                </excludes>
+                <filtering>false</filtering>
+            </testResource>
+            <testResource>
+                <directory>src/test/resources</directory>
                 <includes>
                     <include>ApplicationContext-persistence.xml</include>
                 </includes>
                 <filtering>true</filtering>
-            </resource>
-        </resources>
+            </testResource>
+        </testResources>
     </build>
 </project>
