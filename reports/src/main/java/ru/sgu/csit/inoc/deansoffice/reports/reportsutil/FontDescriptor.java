@@ -1,5 +1,6 @@
 package ru.sgu.csit.inoc.deansoffice.reports.reportsutil;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
@@ -10,43 +11,48 @@ import java.util.Properties;
  * Time: 12:07:40
  */
 public class FontDescriptor {
-    public final static int firstLineIndent = 40;
-
-    public static String[] FONT_LSERIF = null;
-    public static String[] FONT_LSANS = null;
-    public static String[] FONT_LMONO = null;
+    public static final String[] FONT_LSERIF;
+    public static final String[] FONT_LSANS;
+    public static final String[] FONT_LMONO;
 
     static {
-        Properties properties = new Properties();
+        final Properties properties = new Properties();
 
-        InputStream propertiesInputStream = FontDescriptor.class.getResourceAsStream("/fonts.properties");
+        final InputStream propertiesInputStream = FontDescriptor.class.getResourceAsStream("/fonts.properties");
         if (propertiesInputStream != null) {
             try {
                 properties.load(propertiesInputStream);
             } catch (IOException e) {
-                throw new RuntimeException();
+                throw new RuntimeException("Failed to load properties from fonts.properties.", e);
             }
+        } else {
+            throw new RuntimeException("fonts.properties not found in the classpath.");
+        }
+
+        String dir = properties.getProperty("FontDirectory");
+        if (!dir.isEmpty() && !dir.endsWith(File.separator)) {
+            dir += File.separator;
         }
 
         FONT_LSERIF = new String[] {
-                properties.getProperty("SerifRegular", "/home/hd/liberation-fonts/LiberationSerif-Regular.ttf"),
-                properties.getProperty("SerifBold", "/home/hd/liberation-fonts/LiberationSerif-Bold.ttf"),
-                properties.getProperty("SerifItalic", "/home/hd/liberation-fonts/LiberationSerif-Italic.ttf"),
-                properties.getProperty("SerifBoldItalic", "/home/hd/liberation-fonts/LiberationSerif-BoldItalic.ttf")
+                dir + properties.getProperty("SerifRegular"),
+                dir + properties.getProperty("SerifBold"),
+                dir + properties.getProperty("SerifItalic"),
+                dir + properties.getProperty("SerifBoldItalic")
         };
 
         FONT_LSANS = new String[] {
-                properties.getProperty("SansRegular", "/home/hd/liberation-fonts/LiberationSerif-Regular.ttf"),
-                properties.getProperty("SansBold", "/home/hd/liberation-fonts/LiberationSerif-Bold.ttf"),
-                properties.getProperty("SansItalic", "/home/hd/liberation-fonts/LiberationSerif-Italic.ttf"),
-                properties.getProperty("SansBoldItalic", "/home/hd/liberation-fonts/LiberationSerif-BoldItalic.ttf")
+                dir + properties.getProperty("SansRegular"),
+                dir + properties.getProperty("SansBold"),
+                dir + properties.getProperty("SansItalic"),
+                dir + properties.getProperty("SansBoldItalic")
         };
 
         FONT_LMONO = new String[] {
-                properties.getProperty("MonoRegular", "/home/hd/liberation-fonts/LiberationSerif-Regular.ttf"),
-                properties.getProperty("MonoBold", "/home/hd/liberation-fonts/LiberationSerif-Bold.ttf"),
-                properties.getProperty("MonoItalic", "/home/hd/liberation-fonts/LiberationSerif-Italic.ttf"),
-                properties.getProperty("MonoBoldItalic", "/home/hd/liberation-fonts/LiberationSerif-BoldItalic.ttf")
+                dir + properties.getProperty("MonoRegular"),
+                dir + properties.getProperty("MonoBold"),
+                dir + properties.getProperty("MonoItalic"),
+                dir + properties.getProperty("MonoBoldItalic")
         };
     }
 }
