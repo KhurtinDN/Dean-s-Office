@@ -1,10 +1,13 @@
 package ru.sgu.csit.inoc.deansoffice.aos;
 
 import org.junit.Test;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.junit.runner.RunWith;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import ru.sgu.csit.inoc.deansoffice.dao.*;
-import ru.sgu.csit.inoc.deansoffice.dao.impl.*;
 import ru.sgu.csit.inoc.deansoffice.domain.*;
 
 import java.util.ArrayList;
@@ -18,8 +21,42 @@ import static org.junit.Assert.assertTrue;
  * Date: 28.02.11
  * Time: 12:46
  */
+@ContextConfiguration(locations = {"classpath:ApplicationContext.xml"})
+@RunWith(SpringJUnit4ClassRunner.class)
 public class RegisterTest {
-    private static ApplicationContext applicationContext = new ClassPathXmlApplicationContext("ApplicationContext.xml");
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(RegisterTest.class);
+
+    @Autowired
+    GroupDAO groupDAO;
+
+    @Autowired
+    StudentDAO studentDAO;
+
+    @Autowired
+    OrderDAO orderDAO;
+
+    @Autowired
+    OrderDataDAO orderDataDAO;
+
+    @Autowired
+    DirectiveDAO directiveDAO;
+
+    @Autowired
+    DirectiveSourceDataDAO directiveSourceDataDAO;
+
+    @Autowired
+    Directive1DAO directive1DAO;
+
+    @Autowired
+    DirectiveDataDAO directiveDataDAO;
+
+    @Autowired
+    SourceData1DAO sourceData1DAO;
+
+    @Autowired
+    LeaderDAO leaderDAO;
+
     private static List<Leader> leaders = new ArrayList<Leader>();
     //private static Register register;
 
@@ -36,30 +73,30 @@ public class RegisterTest {
 
     @Test
     public void createOrder() {
-        System.out.println("-- testCreateOrder -----");
+        LOGGER.info("-- testCreateOrder -----");
         Register register = new Register(leaders);
         register.createNewOrder();
         assertTrue("Создание приказа.",
                 register.getCurrentOrder().getState().equals(Order.OrderState.CREATED));
-        System.out.println("------------------------\n");
+        LOGGER.info("------------------------\n");
     }
 
     @Test
     public void makeDirective() {
-        System.out.println("-- testMakeDirective ---");
+        LOGGER.info("-- testMakeDirective ---");
         Register register = new Register(leaders);
         register.createNewOrder();
         Directive.DirectiveData dirData = register.makeDirective(Directive.APPOINT_CAPTAINS);
 
         assertTrue("Создание директивы type1.",
                 !dirData.getDescription().isEmpty());
-        System.out.println(dirData.getDescription());
-        System.out.println("------------------------\n");
+        LOGGER.info(dirData.getDescription());
+        LOGGER.info("------------------------\n");
     }
 
     @Test
     public void addDirective() {
-        System.out.println("-- testAddDirective ----");
+        LOGGER.info("-- testAddDirective ----");
         Register register = new Register(leaders);
         register.createNewOrder();
 
@@ -71,16 +108,16 @@ public class RegisterTest {
         assertTrue("Добавление директивы type1.",
                 register.getCurrentOrder().getDirectives().get(0)
                         .getData().getDescription().equals(NEW_DESC));
-        System.out.println(register.getCurrentOrder().getDirectives().get(0)
+        LOGGER.info(register.getCurrentOrder().getDirectives().get(0)
                 .getData().getDescription());
-        System.out.println(register.getCurrentOrder().getDirectives().get(0)
+        LOGGER.info(register.getCurrentOrder().getDirectives().get(0)
                 .getData().getGrounds());
-        System.out.println("------------------------\n");
+        LOGGER.info("------------------------\n");
     }
 
     @Test
     public void enterOrderData() {
-        System.out.println("-- testEnterOrderData --");
+        LOGGER.info("-- testEnterOrderData --");
         Register register = new Register(leaders);
         register.createNewOrder();
 
@@ -96,15 +133,15 @@ public class RegisterTest {
 
         assertTrue("Добавление данных приказа.",
                 register.getCurrentOrder().getData().getNote().equals(NOTE));
-        System.out.println(register.getCurrentOrder().getData().getNote());
-        System.out.println(register.getCurrentOrder().getData()
+        LOGGER.info(register.getCurrentOrder().getData().getNote());
+        LOGGER.info(register.getCurrentOrder().getData()
                 .getSupervisor().generateShortName(true));
-        System.out.println("------------------------\n");
+        LOGGER.info("------------------------\n");
     }
 
     @Test
     public void endCreateOrder() {
-        System.out.println("-- testEndCreateOrder --");
+        LOGGER.info("-- testEndCreateOrder --");
         Register register = new Register(leaders);
         register.createNewOrder();
 
@@ -123,14 +160,14 @@ public class RegisterTest {
         assertTrue("Завершение создания приказа.", register.getOrders().get(0)
                 .getState().equals(Order.OrderState.IN_PROCESS));
         for (Order order : register.getOrders()) {
-            System.out.println(order.getData().getNote() + " : " + order.getState());
+            LOGGER.info(order.getData().getNote() + " : " + order.getState());
         }
-        System.out.println("------------------------\n");
+        LOGGER.info("------------------------\n");
     }
 
 //    @Test
 //    public void approveOrder() {
-//        System.out.println("-- testApproveOrder ----");
+//        LOGGER.info("-- testApproveOrder ----");
 //        Register register = new Register(leaders);
 //        for (int i = 0; i < 3; ++i) {
 //            register.createNewOrder();
@@ -147,38 +184,29 @@ public class RegisterTest {
 //            assertTrue("Завершение создания приказа.", register.endCreateOrder());
 //        }
 //        for (Order order : register.getOrders()) {
-//            System.out.println(order.getData().getNote() + " : " + order.getState());
+//            LOGGER.info(order.getData().getNote() + " : " + order.getState());
 //        }
-//        System.out.println("Провожу приказ...");
+//        LOGGER.info("Провожу приказ...");
 //        register.approveOrder("1-01-1", new Date());
 //        assertTrue("Проведение приказа.", register.getOrders().get(0)
 //                .getState().equals(Order.OrderState.COMPLETED));
 //        for (Order order : register.getOrders()) {
-//            System.out.println(order.getData().getNote() + " : " + order.getState());
+//            LOGGER.info(order.getData().getNote() + " : " + order.getState());
 //        }
-//        System.out.println("Провожу приказ...");
+//        LOGGER.info("Провожу приказ...");
 //        register.approveOrder("1-01-1", new Date());
 //        assertTrue("Проведение приказа.", register.getOrders().get(1)
 //                .getState().equals(Order.OrderState.COMPLETED));
 //        for (Order order : register.getOrders()) {
-//            System.out.println(order.getData().getNote() + " : " + order.getState());
+//            LOGGER.info(order.getData().getNote() + " : " + order.getState());
 //        }
-//        System.out.println("------------------------\n");
+//        LOGGER.info("------------------------\n");
 //    }
 
     @Test
     public void saveOrderFromDB() {
-        System.out.println("-- testSaveOrderFromDB ----");
+        LOGGER.info("-- testSaveOrderFromDB ----");
         Register register = new Register(leaders);
-
-        OrderDAO orderDAO = applicationContext.getBean(OrderDAOImpl.class);
-        OrderDataDAO orderDataDAO = applicationContext.getBean(OrderDataDAOImpl.class);
-        DirectiveDAO directiveDAO = applicationContext.getBean(DirectiveDAOImpl.class);
-        DirectiveSourceDataDAO directiveSourceDataDAO = applicationContext.getBean(DirectiveSourceDataDAOImpl.class);
-        Directive1DAO directive1DAO = applicationContext.getBean(Directive1DAOImpl.class);
-        DirectiveDataDAO directiveDataDAO = applicationContext.getBean(DirectiveDataDAOImpl.class);
-        SourceData1DAO sourceData1DAO = applicationContext.getBean(SourceData1DAOImpl.class);
-        LeaderDAO leaderDAO = applicationContext.getBean(LeaderDAOImpl.class);
 
         for (int i = 0; i < 3; ++i) {
             register.createNewOrder();
@@ -195,9 +223,9 @@ public class RegisterTest {
             assertTrue("Завершение создания приказа.", register.endCreateOrder());
         }
         for (Order order : register.getOrders()) {
-            System.out.println(order.getData().getNote() + " : " + order.getState());
+            LOGGER.info(order.getData().getNote() + " : " + order.getState());
         }
-        System.out.println("Сохраняю приказ...");
+        LOGGER.info("Сохраняю приказ...");
         Order.OrderData currentOrderData = register.getCurrentOrder().getData();
         leaderDAO.save(currentOrderData.getSupervisor());
         orderDataDAO.save(currentOrderData);
@@ -209,25 +237,13 @@ public class RegisterTest {
 //            }
         }
         orderDAO.save(register.getCurrentOrder());
-        System.out.println("------------------------\n");
+        LOGGER.info("------------------------\n");
     }
 
     @Test
     public void approveOrderFromDB() {
-        System.out.println("-- testApproveOrderFromDB ----");
+        LOGGER.info("-- testApproveOrderFromDB ----");
         Register register = new Register(leaders);
-
-        GroupDAO groupDAO = applicationContext.getBean(GroupDAOImpl.class);
-        StudentDAO studentDAO = applicationContext.getBean(StudentDAOImpl.class);
-
-        OrderDAO orderDAO = applicationContext.getBean(OrderDAOImpl.class);
-        OrderDataDAO orderDataDAO = applicationContext.getBean(OrderDataDAOImpl.class);
-        DirectiveDAO directiveDAO = applicationContext.getBean(DirectiveDAOImpl.class);
-        DirectiveSourceDataDAO directiveSourceDataDAO = applicationContext.getBean(DirectiveSourceDataDAOImpl.class);
-        Directive1DAO directive1DAO = applicationContext.getBean(Directive1DAOImpl.class);
-        DirectiveDataDAO directiveDataDAO = applicationContext.getBean(DirectiveDataDAOImpl.class);
-        SourceData1DAO sourceData1DAO = applicationContext.getBean(SourceData1DAOImpl.class);
-        LeaderDAO leaderDAO = applicationContext.getBean(LeaderDAOImpl.class);
 
         for (int i = 0; i < 3; ++i) {
             register.createNewOrder();
@@ -251,9 +267,9 @@ public class RegisterTest {
             assertTrue("Завершение создания приказа.", register.endCreateOrder());
         }
         for (Order order : register.getOrders()) {
-            System.out.println(order.getData().getNote() + " : " + order.getState());
+            LOGGER.info(order.getData().getNote() + " : " + order.getState());
         }
-        System.out.println("Сохраняю приказ...");
+        LOGGER.info("Сохраняю приказ...");
         Order.OrderData currentOrderData = register.getCurrentOrder().getData();
         leaderDAO.save(currentOrderData.getSupervisor());
         orderDataDAO.save(currentOrderData);
@@ -265,20 +281,20 @@ public class RegisterTest {
 //            }
         }
         orderDAO.save(register.getCurrentOrder());
-        System.out.println("Провожу приказ...");
+        LOGGER.info("Провожу приказ...");
         register.approveOrder("1-01-1", new Date());
         assertTrue("Проведение приказа.", register.getOrders().get(0)
                 .getState().equals(Order.OrderState.COMPLETED));
         for (Order order : register.getOrders()) {
-            System.out.println(order.getData().getNote() + " : " + order.getState());
+            LOGGER.info(order.getData().getNote() + " : " + order.getState());
         }
-//        System.out.println("Провожу приказ...");
+//        LOGGER.info("Провожу приказ...");
 //        register.approveOrder("1-01-1", new Date());
 //        assertTrue("Проведение приказа.", register.getOrders().get(1)
 //                .getState().equals(Order.OrderState.COMPLETED));
 //        for (Order order : register.getOrders()) {
-//            System.out.println(order.getData().getNote() + " : " + order.getState());
+//            LOGGER.info(order.getData().getNote() + " : " + order.getState());
 //        }
-        System.out.println("------------------------\n");
+        LOGGER.info("------------------------\n");
     }
 }
