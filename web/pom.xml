@@ -73,19 +73,30 @@
     <build>
         <finalName>DeansOffice</finalName>
 
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+            </resource>
+            <resource>
+                <directory>src/main/webapp.filtered</directory>
+                <filtering>true</filtering>
+                <targetPath>${project.build.directory}/${project.build.finalName}</targetPath>
+            </resource>
+        </resources>
+
         <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-war-plugin</artifactId>
-                <configuration>
-                    <webResources>
-                        <resource>
-                            <directory>src/main/webapp.filtered</directory>
-                            <filtering>true</filtering>
-                        </resource>
-                    </webResources>
-                </configuration>
-            </plugin>
+            <!--<plugin>-->
+                <!--<groupId>org.apache.maven.plugins</groupId>-->
+                <!--<artifactId>maven-war-plugin</artifactId>-->
+                <!--<configuration>-->
+                    <!--<webResources> // todo: filtering webResources not support Intellij Idea 10.5 -->
+                        <!--<resource>-->
+                            <!--<directory>src/main/webapp.filtered</directory>-->
+                            <!--<filtering>true</filtering>-->
+                        <!--</resource>-->
+                    <!--</webResources>-->
+                <!--</configuration>-->
+            <!--</plugin>-->
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>gwt-maven-plugin</artifactId>
