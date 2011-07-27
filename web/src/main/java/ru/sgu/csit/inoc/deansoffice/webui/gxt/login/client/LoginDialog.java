@@ -32,7 +32,7 @@ public class LoginDialog extends Window {
         formPanel.addListener(Events.Submit, new Listener<FormEvent>() {
             @Override
             public void handleEvent(FormEvent be) {
-                com.google.gwt.user.client.Window.open("/", "_self", "");
+                com.google.gwt.user.client.Window.open(GWT.getHostPageBaseURL(), "_self", "");
             }
         });
 
