@@ -15,7 +15,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.*;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +27,8 @@ import java.util.List;
  * Time: 9:11:09 AM
  */
 public class DocumentServlet extends HttpServlet {
+    private static final String DOC = "/documents/";
+
     private ReferenceService referenceService;
     private StudentDossierService studentDossierService;
 
@@ -49,7 +52,17 @@ public class DocumentServlet extends HttpServlet {
     @Override
     protected void service(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String documentType = request.getRequestURI().substring("/documents/".length());
+
+        final String requestURI = request.getRequestURI();
+
+        int index = requestURI.indexOf(DOC);
+
+        if (index < 0) {
+            response.sendError(HttpServletResponse.SC_BAD_REQUEST);
+            return;
+        }
+
+        String documentType = requestURI.substring(index + DOC.length());
 
         if (documentType.startsWith("references.pdf")) {
 

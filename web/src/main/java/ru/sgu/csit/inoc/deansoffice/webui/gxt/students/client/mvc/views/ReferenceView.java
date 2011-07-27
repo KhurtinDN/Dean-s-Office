@@ -5,14 +5,15 @@ import com.extjs.gxt.ui.client.mvc.AppEvent;
 import com.extjs.gxt.ui.client.mvc.Controller;
 import com.extjs.gxt.ui.client.mvc.Dispatcher;
 import com.extjs.gxt.ui.client.mvc.View;
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.Window;
-import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.utils.BaseAsyncCallback;
+import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.model.ReferenceModel;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.mvc.events.CommonEvents;
+import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.utils.BaseAsyncCallback;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.components.references.AddReferenceDialog;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.components.references.ReferenceQueueWindow;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.mvc.events.StudentEvents;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.services.ReferenceService;
-import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.model.ReferenceModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -117,12 +118,14 @@ public class ReferenceView extends View {
             referenceIdList.add(referenceModel.getId());
         }
 
-        StringBuilder stringBuilder = new StringBuilder();
+        StringBuilder urlBuilder = new StringBuilder(GWT.getHostPageBaseURL());
+        urlBuilder.append("documents/references.pdf?referencesId=");
+
         for (Long referenceId : referenceIdList) {
-            stringBuilder.append(referenceId).append(",");
+            urlBuilder.append(referenceId).append(",");
         }
 
-        Window.open("../documents/references.pdf?referencesId=" + stringBuilder.toString(), "_blank", "");
+        Window.open(urlBuilder.toString(), "_blank", "");
 
         ReferenceService.Util.getInstance().printReferences(referenceIdList, new BaseAsyncCallback<Void>() {
             @Override
