@@ -14,12 +14,7 @@
 
     <name>web</name>
 
-    <properties>
-        <webappDirectory>${project.build.directory}/${project.build.finalName}</webappDirectory>
-    </properties>
-
     <dependencies>
-
         <dependency>
             <groupId>ru.sgu.csit.inoc</groupId>
             <artifactId>common</artifactId>
@@ -76,10 +71,21 @@
     </dependencies>
 
     <build>
-        <outputDirectory>${webappDirectory}/WEB-INF/classes</outputDirectory>
         <finalName>DeansOffice</finalName>
 
         <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <configuration>
+                    <webResources>
+                        <resource>
+                            <directory>src/main/webapp.filtered</directory>
+                            <filtering>true</filtering>
+                        </resource>
+                    </webResources>
+                </configuration>
+            </plugin>
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>gwt-maven-plugin</artifactId>

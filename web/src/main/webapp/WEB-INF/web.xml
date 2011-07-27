@@ -8,10 +8,7 @@
 
     <context-param>
          <param-name>contextConfigLocation</param-name>
-         <param-value>
-             classpath:ApplicationContext.xml
-             classpath:ApplicationContext-security.xml
-         </param-value>  
+         <param-value>WEB-INF/ApplicationContext.xml</param-value>
      </context-param>
 
     <filter>
