@@ -19,12 +19,12 @@ public class Register {
     private Order currentOrder;
     private Directive currentDirective;
     private Order.OrderData currentOrderData;
-    private List<Leader> leaders = new ArrayList<Leader>();
+    private List<Employee> leaders = new ArrayList<Employee>();
     private List<String> allCoordinators = new ArrayList<String>();
     private List<Directive> allDirectives = new ArrayList<Directive>();
     private DirectiveProcessor directiveProcessor = new DirectiveProcessor();
 
-    public Register(List<Leader> leaders) {
+    public Register(List<Employee> leaders) {
         allCoordinators.add("Проректор по учебно-организационной работе");
         allCoordinators.add("Начальник учебного управления");
         allCoordinators.add("Начальник юридического отдела");
@@ -82,9 +82,7 @@ public class Register {
 //    }
 
     public void approveOrder(String number, Date signedDate) {
-        for (int i = 0; i < orders.size(); ++i) {
-            Order order = orders.get(i);
-
+        for (Order order : orders) {
             if (order.getState().equals(Order.OrderState.IN_PROCESS)) {
                 order.setNumber(number);
                 order.setSignedDate(signedDate);
@@ -103,7 +101,7 @@ public class Register {
         return orders;
     }
 
-    public List<Leader> getLeaders() {
+    public List<Employee> getLeaders() {
         return leaders;
     }
 

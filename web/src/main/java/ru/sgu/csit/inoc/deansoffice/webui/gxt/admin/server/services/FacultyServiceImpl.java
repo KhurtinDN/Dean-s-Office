@@ -2,9 +2,9 @@ package ru.sgu.csit.inoc.deansoffice.webui.gxt.admin.server.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ru.sgu.csit.inoc.deansoffice.dao.DeanDAO;
+import ru.sgu.csit.inoc.deansoffice.dao.EmployeeDAO;
 import ru.sgu.csit.inoc.deansoffice.dao.FacultyDAO;
-import ru.sgu.csit.inoc.deansoffice.domain.Dean;
+import ru.sgu.csit.inoc.deansoffice.domain.Employee;
 import ru.sgu.csit.inoc.deansoffice.domain.Faculty;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.admin.client.services.FacultyService;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.admin.server.utils.FacultyUtil;
@@ -19,10 +19,12 @@ import java.util.List;
  */
 @Service("AdminFacultyService")
 public class FacultyServiceImpl implements FacultyService {
+
     @Autowired
     private FacultyDAO facultyDAO;
+
     @Autowired
-    private DeanDAO deanDAO;
+    private EmployeeDAO employeeDAO;
 
     @Override
     public List<FacultyModel> loadFaculties() {
@@ -44,10 +46,10 @@ public class FacultyServiceImpl implements FacultyService {
 
     @Override
     public void updateFaculty(FacultyModel facultyModel) {
-        Dean dean = null;
+        Employee dean = null;
 
         if (facultyModel.getDean() != null) {
-            dean = deanDAO.findById(facultyModel.getDean().getId());
+            dean = employeeDAO.findDeanById(facultyModel.getDean().getId());
         }
 
         Faculty faculty = FacultyUtil.convertFacultyModelToFaculty(facultyModel, dean);

@@ -1,6 +1,6 @@
 package ru.sgu.csit.inoc.deansoffice.webui.gxt.students.server.utils;
 
-import ru.sgu.csit.inoc.deansoffice.domain.Dean;
+import ru.sgu.csit.inoc.deansoffice.domain.Employee;
 import ru.sgu.csit.inoc.deansoffice.domain.Faculty;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.server.util.PersonUtil;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.model.FacultyModel;
@@ -22,7 +22,7 @@ public class FacultyUtil {
         facultyModel.setName(faculty.getShortName());
         facultyModel.setFullName(faculty.getFullName());
 
-        Dean dean = faculty.getDean();
+        Employee dean = faculty.getDean();
 
         if (dean != null) {
             PersonModel deanModel = new PersonModel();
@@ -34,7 +34,7 @@ public class FacultyUtil {
         return facultyModel;
     }
 
-    public static Faculty convertFacultyModelToFaculty(FacultyModel facultyModel, Dean dean) {
+    public static Faculty convertFacultyModelToFaculty(FacultyModel facultyModel, Employee dean) {
         if (facultyModel == null) {
             return null;
         }

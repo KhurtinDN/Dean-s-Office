@@ -1,5 +1,6 @@
 package ru.sgu.csit.inoc.deansoffice;
 
+import com.google.common.collect.Lists;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import ru.sgu.csit.inoc.deansoffice.dao.*;
@@ -17,53 +18,49 @@ import java.util.*;
  * Time: 11:14:30 AM
  */
 public class CreateDB {
-    private static ApplicationContext applicationContext = new ClassPathXmlApplicationContext("ApplicationContext.xml");
+    private ApplicationContext applicationContext = new ClassPathXmlApplicationContext("ApplicationContext.xml");
 
     private StudentDAO studentDAO = applicationContext.getBean(StudentDAO.class);
     private GroupDAO groupDAO = applicationContext.getBean(GroupDAO.class);
     private SpecialityDAO specialityDAO = applicationContext.getBean(SpecialityDAO.class);
     private FacultyDAO facultyDAO = applicationContext.getBean(FacultyDAO.class);
-    private DeanDAO deanDAO = applicationContext.getBean(DeanDAO.class);
-    private RectorDAO rectorDAO = applicationContext.getBean(RectorDAO.class);
     private EnrollmentOrderDAO enrollmentOrderDAO = applicationContext.getBean(EnrollmentOrderDAO.class);
 
-    private static ParentDAO parentDAO = applicationContext.getBean(ParentDAO.class);
-    private static PhotoDAO photoDAO = applicationContext.getBean(PhotoDAO.class);
-    private static PassportDAO passportDAO = applicationContext.getBean(PassportDAO.class);
-    private static AdditionalStudentDataDAO additionalDataDAO = applicationContext.getBean(AdditionalStudentDataDAO.class);
-    private static CoordinatorDAO coordinatorDAO = applicationContext.getBean(CoordinatorDAO.class);
-    private static DirectiveDAO directiveDAO = applicationContext.getBean(DirectiveDAO.class);
-    private static Directive1DAO directive1DAO = applicationContext.getBean(Directive1DAO.class);
-    private static Directive2DAO directive2DAO = applicationContext.getBean(Directive2DAO.class);
+    private ParentDAO parentDAO = applicationContext.getBean(ParentDAO.class);
+    private PhotoDAO photoDAO = applicationContext.getBean(PhotoDAO.class);
+    private EmployeeDAO employeeDAO = applicationContext.getBean(EmployeeDAO.class);
+    private DirectiveDAO directiveDAO = applicationContext.getBean(DirectiveDAO.class);
 
-    private final Integer COUNT_STUDENTS_IN_GROUP = 10;
+    private static final Integer COUNT_STUDENTS_IN_GROUP = 10;
 
     public static void main(String[] args) {
         CreateDB createDB = new CreateDB();
 
         createDB.createFaculty();
-        createDB.createSpecialitiesAndGroups();
-//        createDB.createSpecialities();
-//        createDB.createGroups();
-//        createDB.createStudents();
+//        createDB.createSpecialitiesAndGroups();
+        createDB.createSpecialities();
+        createDB.createGroups();
+        createDB.createStudents();
     }
 
     private void createFaculty() {
-        Dean dean = new Dean();
+        Employee dean = new Employee();
+        dean.setPosition("Декан факультета");
+
         dean.setFirstName("Антонина");
         dean.setMiddleName("Гавриловна");
         dean.setLastName("Федорова");
         dean.setPosition("Декан факультета КНиИТ");
         dean.setDegree("к.ф.-м.н., доцент");
-        deanDAO.save(dean);
+        employeeDAO.save(dean);
 
-        Rector rector = new Rector();
+        Employee rector = new Employee();
         rector.setFirstName("Леонид");
         rector.setMiddleName("Юрьевич");
         rector.setLastName("Коссович");
         rector.setPosition("Ректор СГУ");
         rector.setDegree("д.ф.-м.н., профессор");
-        rectorDAO.save(rector);
+        employeeDAO.save(rector);
 
         Faculty faculty = new Faculty();
         faculty.setFullName("Компьютерных наук и информационных технологий");
@@ -72,63 +69,24 @@ public class CreateDB {
         faculty.setRector(rector);
         facultyDAO.save(faculty);
 
-        coordinatorDAO.save(new Coordinator("Проректор по учебно-организационной работе"));
-        coordinatorDAO.save(new Coordinator("Начальник учебного управления"));
-        coordinatorDAO.save(new Coordinator("Начальник юридического отдела"));
-        coordinatorDAO.save(new Coordinator("Декан факультета"));
-        coordinatorDAO.save(new Coordinator("Начальник общего отдела"));
+
+        List<String> positions = Lists.newArrayList(
+                "Проректор по учебно-организационной работе",
+                "Начальник учебного управления",
+                "Начальник юридического отдела",
+                "Начальник общего отдела"
+        );
+
+        for (String position : positions) {
+            Employee coordinator = new Employee();
+            coordinator.setPosition(position);
+            employeeDAO.save(coordinator);
+        }
 
         Directive1 directive1 = new Directive1();
         directiveDAO.save(directive1);
         Directive2 directive2 = new Directive2();
         directiveDAO.save(directive2);
-    }
-
-    private void createSpecialities() {
-        List<Faculty> facultyList = facultyDAO.findAll();
-
-        for (Faculty faculty : facultyList) {
-
-            Speciality speciality = new Speciality();
-            speciality.setName("Прикладная математика и информатика");
-            speciality.setShortName("ПМИ");
-            speciality.setCode("010501");
-            speciality.setFaculty(faculty);
-            speciality.setCourseCount(5);
-            specialityDAO.save(speciality);
-
-            speciality = new Speciality();
-            speciality.setName("Вычислительные машины, комплексы, системы, сети");
-            speciality.setShortName("ВМ");
-            speciality.setCode("230101");
-            speciality.setFaculty(faculty);
-            speciality.setCourseCount(5);
-            specialityDAO.save(speciality);
-
-            speciality = new Speciality();
-            speciality.setName("Компьютерная безопасность");
-            speciality.setShortName("КБ");
-            speciality.setCode("090");
-            speciality.setFaculty(faculty);
-            speciality.setCourseCount(6);
-            specialityDAO.save(speciality);
-
-            speciality = new Speciality();
-            speciality.setName("Информатика и вычислительная техника (направление)");
-            speciality.setShortName("ИВТ");
-            speciality.setCode("230100");
-            speciality.setFaculty(faculty);
-            speciality.setCourseCount(4);
-            specialityDAO.save(speciality);
-
-            speciality = new Speciality();
-            speciality.setName("Прикладная математика и информатика (направление)");
-            speciality.setShortName("ПМИ (н)");
-            speciality.setCode("010500");
-            speciality.setFaculty(faculty);
-            speciality.setCourseCount(4);
-            specialityDAO.save(speciality);
-        }
     }
 
     private void createSpecialitiesAndGroups() {
@@ -322,6 +280,53 @@ public class CreateDB {
         }
     }
 
+    private void createSpecialities() {
+        List<Faculty> facultyList = facultyDAO.findAll();
+
+        for (Faculty faculty : facultyList) {
+
+            Speciality speciality = new Speciality();
+            speciality.setName("Прикладная математика и информатика");
+            speciality.setShortName("ПМИ");
+            speciality.setCode("010501");
+            speciality.setFaculty(faculty);
+            speciality.setCourseCount(5);
+            specialityDAO.save(speciality);
+
+            speciality = new Speciality();
+            speciality.setName("Вычислительные машины, комплексы, системы, сети");
+            speciality.setShortName("ВМ");
+            speciality.setCode("230101");
+            speciality.setFaculty(faculty);
+            speciality.setCourseCount(5);
+            specialityDAO.save(speciality);
+
+            speciality = new Speciality();
+            speciality.setName("Компьютерная безопасность");
+            speciality.setShortName("КБ");
+            speciality.setCode("090");
+            speciality.setFaculty(faculty);
+            speciality.setCourseCount(6);
+            specialityDAO.save(speciality);
+
+            speciality = new Speciality();
+            speciality.setName("Информатика и вычислительная техника (направление)");
+            speciality.setShortName("ИВТ");
+            speciality.setCode("230100");
+            speciality.setFaculty(faculty);
+            speciality.setCourseCount(4);
+            specialityDAO.save(speciality);
+
+            speciality = new Speciality();
+            speciality.setName("Прикладная математика и информатика (направление)");
+            speciality.setShortName("ПМИ (н)");
+            speciality.setCode("010500");
+            speciality.setFaculty(faculty);
+            speciality.setCourseCount(4);
+            specialityDAO.save(speciality);
+        }
+    }
+
     private void createGroups() {
         List<Speciality> specialityList = specialityDAO.findAll();
 
@@ -355,15 +360,17 @@ public class CreateDB {
             }
         }
 
+        final StudentGenerator studentGenerator = new StudentGenerator();
+
         for (int i = 0; i < courseCount; ++i) {
-            EnrollmentOrder enrollmentOrder = StudentGenerator.getRandomEnrollmentOrder(i + 1);
+            EnrollmentOrder enrollmentOrder = studentGenerator.getRandomEnrollmentOrder(i + 1);
             orders.add(enrollmentOrder);
             enrollmentOrderDAO.save(enrollmentOrder);
         }
 
         for (Group group : groupList) {
             for (int studentCount = 1; studentCount <= COUNT_STUDENTS_IN_GROUP; ++studentCount) {
-                Student student = StudentGenerator.getRandomStudent();
+                Student student = studentGenerator.getRandomStudent();
 
                 student.setCourse(group.getCourse());
                 student.setGroup(group);
@@ -376,34 +383,34 @@ public class CreateDB {
 
     }
 
-    private static class StudentGenerator {
-        private static Random generator = new Random(new Date().getTime());
+    private class StudentGenerator {
+        private Random generator = new Random(new Date().getTime());
 
-        private static String[][] lastNames = {{"Иванов", "Петров", "Захаров", "Клочко", "Кузнецов", "Алексеев", "Свиридов",
+        private String[][] lastNames = {{"Иванов", "Петров", "Захаров", "Клочко", "Кузнецов", "Алексеев", "Свиридов",
                 "Яковлев", "Нечаев", "Куприн", "Снегов", "Дубровский", "Шефер", "Привалов", "Горбовский", "Печкин"},
                 {"Иванова", "Петрова", "Захарова", "Клочко", "Кузнецова", "Алексеева", "Свиридова",
                         "Яковлева", "Нечаева", "Куприна", "Снегова", "Дубровская", "Шефер", "Привалова", "Горбовская", "Печкина"}};
-        private static String[][] lastNamesDative = {{"Иванову", "Петрову", "Захарову", "Клочко", "Кузнецову", "Алексееву", "Свиридову",
+        private String[][] lastNamesDative = {{"Иванову", "Петрову", "Захарову", "Клочко", "Кузнецову", "Алексееву", "Свиридову",
                 "Яковлеву", "Нечаеву", "Куприну", "Снегову", "Дубровскому", "Шефер", "Привалову", "Горбовскому", "Печкину"},
                 {"Ивановой", "Петровой", "Захаровой", "Клочко", "Кузнецовой", "Алексеевой", "Свиридовой",
                         "Яковлевой", "Нечаевой", "Куприной", "Снеговой", "Дубровской", "Шефер", "Приваловой", "Горбовской", "Печкиной"}};
 
-        private static String[][] firstNames = {{"Иван", "Пётр", "Александр", "Семён", "Николай", "Алексей", "Юрий",
+        private String[][] firstNames = {{"Иван", "Пётр", "Александр", "Семён", "Николай", "Алексей", "Юрий",
                 "Борис", "Сергей", "Андрей", "Олег", "Степан", "Максим", "Дмитрий", "Владимир", "Виктор", "Денис"},
                 {"Светлана", "Екатерина", "Александра", "Надежда", "Анна", "Юлия", "Томара", "Наталия",
                         "Елена", "Мария", "Марина", "Ольга", "Зульфия", "Алёна", "Лидия", "Антонина", "Анастасия", "Виктория"}};
-        private static String[][] firstNamesDative = {{"Ивану", "Петру", "Александру", "Семёну", "Николаю", "Алексею", "Юрию",
+        private String[][] firstNamesDative = {{"Ивану", "Петру", "Александру", "Семёну", "Николаю", "Алексею", "Юрию",
                 "Борису", "Сергею", "Андрею", "Олегу", "Степану", "Максиму", "Дмитрию", "Владимиру", "Виктору", "Денису"},
                 {"Светлане", "Екатерине", "Александре", "Надежде", "Анне", "Юлии", "Томаре", "Наталии",
                         "Елене", "Марии", "Марине", "Ольге", "Зульфие", "Алёне", "Лидии", "Антонине", "Анастасии", "Виктории"}};
 
-        private static String[][] middleNames = {{"Иванович", "Петрович", "Александрович", "Семёнович", "Николаевич", "Алексеевич",
+        private String[][] middleNames = {{"Иванович", "Петрович", "Александрович", "Семёнович", "Николаевич", "Алексеевич",
                 "Юрьевич", "Борисович", "Сергеевич", "Андреевич", "Олегович", "Степанович", "Максимович", "Дмитриевич",
                 "Владимирович", "Викторович", "Денисович"},
                 {"Ивановна", "Петровна", "Александровна", "Семёновна", "Николаевна", "Алексеевна",
                         "Юрьевна", "Борисовна", "Сергеевна", "Андреевна", "Олеговна", "Степановна", "Максимовна", "Дмитриевна",
                         "Владимировна", "Викторовна", "Денисовна"}};
-        private static String[][] middleNamesDative = {{"Ивановичу", "Петровичу", "Александровичу", "Семёновичу", "Николаевичу", "Алексеевичу",
+        private String[][] middleNamesDative = {{"Ивановичу", "Петровичу", "Александровичу", "Семёновичу", "Николаевичу", "Алексеевичу",
                 "Юрьевичу", "Борисовичу", "Сергеевичу", "Андреевичу", "Олеговичу", "Степановичу", "Максимовичу", "Дмитриевичу",
                 "Владимировичу", "Викторовичу", "Денисовичу"},
                 {"Ивановне", "Петровне", "Александровне", "Семёновне", "Николаевне", "Алексеевне",
@@ -413,7 +420,7 @@ public class CreateDB {
         public StudentGenerator() {
         }
 
-        public static EnrollmentOrder getRandomEnrollmentOrder(int course) {
+        public EnrollmentOrder getRandomEnrollmentOrder(int course) {
             EnrollmentOrder enrolOrder = new EnrollmentOrder();
 
             enrolOrder.setNumber("22-" + generator.nextInt(10) + generator.nextInt(10)
@@ -425,7 +432,7 @@ public class CreateDB {
             return enrolOrder;
         }
 
-        public static Student getRandomStudent() {
+        public Student getRandomStudent() {
             Student student = new Student();
             int sex = generator.nextInt(2);
             Integer nameIndex = generator.nextInt(firstNames[sex].length);
@@ -454,7 +461,7 @@ public class CreateDB {
             return student;
         }
 
-        private static Student.StudyForm getRandomStudyForm() {
+        private Student.StudyForm getRandomStudyForm() {
             switch (generator.nextInt(3)) {
                 case 1:
                     return Student.StudyForm.COMMERCIAL;
@@ -462,7 +469,7 @@ public class CreateDB {
             return Student.StudyForm.BUDGET;
         }
 
-        public static Student.AdditionalStudentData getRandomAdditionalData(Student student) {
+        public Student.AdditionalStudentData getRandomAdditionalData(Student student) {
             Student.AdditionalStudentData additionalData = new Student.AdditionalStudentData();
             Passport passport = new Passport(student);
             String address = "Российская Федерация, г. Саратов, ул. Астраханская, д. 77, кв. 13";
@@ -494,7 +501,7 @@ public class CreateDB {
             PhotoService photoService = new PhotoServiceImpl();
             Photo photo;
             try {
-                photo = photoService.loadFromFile("C:/temp/photo.jpg");
+                photo = photoService.loadFromFile("/home/hd/temp/photo.jpg");
             } catch (IOException e) {
                 throw new RuntimeException("Photo not found!!!", e);
             }
@@ -508,7 +515,7 @@ public class CreateDB {
             return additionalData;
         }
 
-        public static Parent getRandomParent(Person.Sex sexValue) {
+        public Parent getRandomParent(Person.Sex sexValue) {
             Parent parent = new Parent();
 
             int sex = sexValue == Person.Sex.MALE ? 0 : 1;

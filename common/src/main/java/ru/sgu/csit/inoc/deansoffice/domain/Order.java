@@ -3,7 +3,8 @@ package ru.sgu.csit.inoc.deansoffice.domain;
 import com.google.common.base.Objects;
 
 import javax.persistence.*;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * User: hd (KhurtinDN(a)gmail.com)
@@ -26,7 +27,7 @@ public class Order extends Document {
     private OrderData data;
 
     public Order() {
-        state = Order.OrderState.CREATED;
+        this.state = OrderState.CREATED;
     }
 
     public void setDirectives(final List<Directive> directives) {
@@ -102,11 +103,11 @@ public class Order extends Document {
         private String note;
         @ManyToOne(cascade = CascadeType.MERGE)
         @PrimaryKeyJoinColumn
-        private Leader supervisor;
+        private Employee supervisor;
 
         @ElementCollection(fetch = FetchType.EAGER)
         @OrderColumn
-        private List<Coordinator> coordinators = new ArrayList<Coordinator>();
+        private List<Employee> coordinators = new ArrayList<Employee>();
 
         public String getNote() {
             return note;
@@ -116,24 +117,24 @@ public class Order extends Document {
             this.note = note;
         }
 
-        public Leader getSupervisor() {
+        public Employee getSupervisor() {
             return supervisor;
         }
 
-        public void setSupervisor(final Leader supervisor) {
+        public void setSupervisor(final Employee supervisor) {
             this.supervisor = supervisor;
         }
 
         @ElementCollection
-        public List<Coordinator> getCoordinators() {
+        public List<Employee> getCoordinators() {
             return coordinators;
         }
 
-        public void addCoordinator(final Coordinator coordinator) {
+        public void addCoordinator(final Employee coordinator) {
             coordinators.add(coordinator);
         }
 
-        public void setCoordinators(final List<Coordinator> coordinators) {
+        public void setCoordinators(final List<Employee> coordinators) {
             this.coordinators = coordinators;
         }
 
@@ -176,8 +177,8 @@ public class Order extends Document {
         public static OrderData make(
                 final Long id,
                 final String note,
-                final Leader supervisor,
-                final List<Coordinator> coordinators) {
+                final Employee supervisor,
+                final List<Employee> coordinators) {
 
             final OrderData orderData = new OrderData();
             orderData.setId(id);

@@ -1,12 +1,13 @@
 package ru.sgu.csit.inoc.deansoffice.webui.gxt.admin.server.services;
 
+import com.google.common.collect.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ru.sgu.csit.inoc.deansoffice.dao.DeanDAO;
-import ru.sgu.csit.inoc.deansoffice.domain.Dean;
+import ru.sgu.csit.inoc.deansoffice.dao.EmployeeDAO;
+import ru.sgu.csit.inoc.deansoffice.domain.Employee;
+import ru.sgu.csit.inoc.deansoffice.webui.gxt.admin.client.services.StaffService;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.server.util.PersonUtil;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.model.PersonModel;
-import ru.sgu.csit.inoc.deansoffice.webui.gxt.admin.client.services.StaffService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +19,7 @@ import java.util.List;
  */
 @Service("AdminStaffService")
 public class StaffServiceImpl implements StaffService {
-    private List<PersonModel> staffList = new ArrayList<PersonModel>(); // todo: implement
+    private List<PersonModel> staffList = Lists.newArrayList(); // todo: implement
     {
         PersonModel personModel = new PersonModel();
         personModel.setId((long) staffList.size());
@@ -32,7 +33,7 @@ public class StaffServiceImpl implements StaffService {
     }
 
     @Autowired
-    private DeanDAO deanDAO;
+    private EmployeeDAO employeeDAO;
 
     @Override
     public List<PersonModel> loadStaffList() {
@@ -41,10 +42,10 @@ public class StaffServiceImpl implements StaffService {
 
     @Override
     public List<PersonModel> loadDeanList() {
-        List<Dean> deanList = deanDAO.findAll();
+        List<Employee> deanList = employeeDAO.findAllDeans();
         List<PersonModel> deanModelList = new ArrayList<PersonModel>(deanList.size());
 
-        for (Dean dean : deanList) {
+        for (Employee dean : deanList) {
             PersonModel deanModel = new PersonModel();
             PersonUtil.populatePersonModelByPerson(deanModel, dean);
             deanModelList.add(deanModel);

@@ -1,5 +1,6 @@
 package ru.sgu.csit.inoc.deansoffice.aos;
 
+import com.google.common.collect.Lists;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
@@ -10,7 +11,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import ru.sgu.csit.inoc.deansoffice.dao.*;
 import ru.sgu.csit.inoc.deansoffice.domain.*;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -55,13 +55,13 @@ public class RegisterTest {
     SourceData1DAO sourceData1DAO;
 
     @Autowired
-    LeaderDAO leaderDAO;
+    EmployeeDAO employeeDAO;
 
-    private static List<Leader> leaders = new ArrayList<Leader>();
+    private static List<Employee> leaders = Lists.newArrayList();
     //private static Register register;
 
     static {
-        Leader rector = new Leader();
+        Employee rector = new Employee();
         rector.setPosition("Ректор СГУ");
         rector.setDegree("профессор, д.ф.-м.н.");
         rector.setFirstName("Леонид");
@@ -227,7 +227,7 @@ public class RegisterTest {
         }
         LOGGER.info("Сохраняю приказ...");
         Order.OrderData currentOrderData = register.getCurrentOrder().getData();
-        leaderDAO.save(currentOrderData.getSupervisor());
+        employeeDAO.save(currentOrderData.getSupervisor());
         orderDataDAO.save(currentOrderData);
         for (Directive directive : register.getCurrentOrder().getDirectives()) {
 //            if (Directive.APPOINT_CAPTAINS.equals(directive.getType())) {
@@ -271,7 +271,7 @@ public class RegisterTest {
         }
         LOGGER.info("Сохраняю приказ...");
         Order.OrderData currentOrderData = register.getCurrentOrder().getData();
-        leaderDAO.save(currentOrderData.getSupervisor());
+        employeeDAO.save(currentOrderData.getSupervisor());
         orderDataDAO.save(currentOrderData);
         for (Directive directive : register.getCurrentOrder().getDirectives()) {
 //            if (Directive.APPOINT_CAPTAINS.equals(directive.getType())) {

@@ -291,14 +291,14 @@ public class StudentTestCase {
                                 generateId(),
                                 "test-faculty",
                                 "tst-fac",
-                                Dean.make(
+                                Employee.make(
                                         generateId(),
                                         "dean-first",
                                         "dean-middle",
                                         "dean-last",
                                         "dean-deg",
                                         "dean-pos"),
-                                Rector.make(generateId(),
+                                Employee.make(generateId(),
                                         "rec-first",
                                         "rec-middle",
                                         "rec-last",
@@ -338,8 +338,15 @@ public class StudentTestCase {
                         Order.OrderData.make(
                                 generateId(),
                                 "test-note",
-                                Leader.make(generateId(), "lead-fir", "lead-mid", "lead-last", "lead-deg", "lead-pos"),
-                                ImmutableList.<Coordinator>of(Coordinator.make(generateId(), "pos"))
+                                Employee.make(generateId(), "lead-fir", "lead-mid", "lead-last", "lead-deg", "lead-pos"),
+                                ImmutableList.of(
+                                        Employee.make(
+                                                generateId(),
+                                                "coordinator-fir",
+                                                "coordinator-mid",
+                                                "coordinator-last",
+                                                "coordinator-deg",
+                                                "coordinator-pos"))
                         ),
                         new Date(444L),
                         new Date(555L)),

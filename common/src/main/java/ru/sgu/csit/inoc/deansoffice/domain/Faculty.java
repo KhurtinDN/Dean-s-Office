@@ -2,7 +2,10 @@ package ru.sgu.csit.inoc.deansoffice.domain;
 
 import com.google.common.base.Objects;
 
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
 
 /**
  * User: hd (KhurtinDN(a)gmail.com)
@@ -16,11 +19,11 @@ public class Faculty extends PersistentItem {
                          
     @ManyToOne(cascade = CascadeType.MERGE)
     @PrimaryKeyJoinColumn
-    private Dean dean;
+    private Employee dean;
 
     @ManyToOne(cascade = CascadeType.MERGE)
     @PrimaryKeyJoinColumn
-    private Rector rector;
+    private Employee rector;
 
     public String getFullName() {
         return fullName;
@@ -38,19 +41,19 @@ public class Faculty extends PersistentItem {
         this.shortName = shortName;
     }
 
-    public Dean getDean() {
+    public Employee getDean() {
         return dean;
     }
 
-    public void setDean(final Dean dean) {
+    public void setDean(final Employee dean) {
         this.dean = dean;
     }
 
-    public Rector getRector() {
+    public Employee getRector() {
         return rector;
     }
 
-    public void setRector(final Rector rector) {
+    public void setRector(final Employee rector) {
         this.rector = rector;
     }
 
@@ -97,8 +100,8 @@ public class Faculty extends PersistentItem {
             final Long id,
             final String fullName,
             final String shortName,
-            final Dean dean,
-            final Rector rector) {
+            final Employee dean,
+            final Employee rector) {
 
         final Faculty faculty = new Faculty();
         faculty.setId(id);

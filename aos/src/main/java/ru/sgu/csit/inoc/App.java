@@ -3,8 +3,8 @@ package ru.sgu.csit.inoc;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import ru.sgu.csit.inoc.deansoffice.aos.Register;
+import ru.sgu.csit.inoc.deansoffice.dao.EmployeeDAO;
 import ru.sgu.csit.inoc.deansoffice.dao.GroupDAO;
-import ru.sgu.csit.inoc.deansoffice.dao.LeaderDAO;
 import ru.sgu.csit.inoc.deansoffice.dao.StipendDAO;
 import ru.sgu.csit.inoc.deansoffice.dao.StudentDAO;
 import ru.sgu.csit.inoc.deansoffice.domain.*;
@@ -25,7 +25,7 @@ public class App {
     private static StudentDAO studentDAO = applicationContext.getBean(StudentDAO.class);
     private static GroupDAO groupDAO = applicationContext.getBean(GroupDAO.class);
     private static StipendDAO stipendDAO = applicationContext.getBean(StipendDAO.class);
-    private static LeaderDAO leaderDAO = applicationContext.getBean(LeaderDAO.class);
+    private static EmployeeDAO employeeDAO = applicationContext.getBean(EmployeeDAO.class);
 
     public static void main(String[] args) {
         Shell shell = new Shell();
@@ -37,11 +37,11 @@ public class App {
 
         private static Scanner scanner = new Scanner(System.in);
 
-        private static List<Leader> leaders = new ArrayList<Leader>();
+        private static List<Employee> leaders = new ArrayList<Employee>();
         private static Register register;
 
         static {
-//            Rector rector = new Rector();
+//            Employee rector = new Employee();
 //            rector.setPosition("Ректор СГУ");
 //            rector.setDegree("профессор, д.ф.-м.н.");
 //            rector.setFirstName("Леонид");
@@ -49,7 +49,7 @@ public class App {
 //            rector.setLastName("Коссович");
 
 //            leaders.add(rector);
-            leaders = leaderDAO.findAll();
+            leaders = employeeDAO.findAll();
             register = new Register(leaders);
         }
 
@@ -140,15 +140,18 @@ public class App {
                 } else if ("3".equals(command)) {
                     println("Выберите супервизора:");
                     for (int i = 0; i < leaders.size(); ++i) {
-                        Leader leader = leaders.get(i);
+                        Employee leader = leaders.get(i);
 
                         println((i + 1) + ". " + leader.getPosition() + ", " + leader.getDegree() + " - "
                                 + leader.generateShortName(true));
                     }
                     state = 3;
                 } else if ("4".equals(command)) {
-                    for (String coordinator : register.getAllCoordinators()) {
-                        register.getCurrentOrderData().addCoordinator(new Coordinator(coordinator));
+                    for (String position : register.getAllCoordinators()) {
+                        Employee coordinator = new Employee();
+                        coordinator.setPosition(position);
+
+                        register.getCurrentOrderData().addCoordinator(coordinator);
                     }
                     register.enterOrderData(register.getCurrentOrderData());
                     println("Выбраны все доступные координаторы.");
@@ -206,7 +209,7 @@ public class App {
             } else if (state == 3) {
                 try {
                     int index = Integer.valueOf(command) - 1;
-                    Leader leader = leaders.get(index);
+                    Employee leader = leaders.get(index);
 
                     register.getCurrentOrderData().setSupervisor(leader);
                     register.enterOrderData(register.getCurrentOrderData());
@@ -270,7 +273,7 @@ public class App {
                                     ? order.getData().getSupervisor().generateShortName(true) : ""));
                     println("4. Согласовано:");
                     if (order.getData() != null) {
-                        for (Coordinator coordinator : order.getData().getCoordinators()) {
+                        for (Employee coordinator : order.getData().getCoordinators()) {
                             println("  " + coordinator.getPosition());
                         }
                     }

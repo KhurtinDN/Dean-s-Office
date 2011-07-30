@@ -2,14 +2,11 @@ package ru.sgu.csit.inoc.deansoffice.services.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ru.sgu.csit.inoc.deansoffice.dao.LeaderDAO;
 import ru.sgu.csit.inoc.deansoffice.dao.OrderDAO;
 import ru.sgu.csit.inoc.deansoffice.domain.Directive;
 import ru.sgu.csit.inoc.deansoffice.domain.Order;
 import ru.sgu.csit.inoc.deansoffice.services.ApproveOrderService;
 import ru.sgu.csit.inoc.deansoffice.services.DirectiveService;
-
-import java.util.List;
 
 /**
  * Created by IntelliJ IDEA.
@@ -19,8 +16,6 @@ import java.util.List;
  */
 @Service
 public class ApproveOrderServiceImpl implements ApproveOrderService {
-//    @Autowired
-//    private LeaderDAO leaderDAO;
     @Autowired
     private OrderDAO orderDAO;
 

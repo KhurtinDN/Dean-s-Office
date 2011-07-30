@@ -1,20 +1,14 @@
 package ru.sgu.csit.inoc.deansoffice.services.impl;
 
+import com.google.common.collect.Maps;
 import freemarker.template.TemplateException;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 import ru.sgu.csit.inoc.deansoffice.domain.*;
 import ru.sgu.csit.inoc.deansoffice.reports.ReportPdfProcessor;
-import ru.sgu.csit.inoc.deansoffice.reports.reportsutil.Report;
 import ru.sgu.csit.inoc.deansoffice.reports.reportsutil.ReportXml;
 import ru.sgu.csit.inoc.deansoffice.reports.reportsutil.Templater;
-import ru.sgu.csit.inoc.deansoffice.services.DirectiveService;
 import ru.sgu.csit.inoc.deansoffice.services.OrderService;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -28,7 +22,7 @@ public class OrderServiceImpl extends DocumentServiceImpl implements OrderServic
 //    @Autowired
 //    private DirectiveService directiveService;
 
-    private Map rootMap = new HashMap();
+    private Map<String, Object> rootMap = Maps.newHashMap();
 
     private void build(ReportXml report, Order order, Faculty faculty) {
         putDefaultValues(report.getValuesMap());
@@ -41,12 +35,12 @@ public class OrderServiceImpl extends DocumentServiceImpl implements OrderServic
         } catch (NullPointerException e) { // если нет примечания, то ничего не делаем
         }
         report.addValue("ORDER_NOTE", note != null ? ("[" + note + "]") : "");
-        Leader supervisor = order.getData().getSupervisor();
+        Employee supervisor = order.getData().getSupervisor();
         report.addValue("SUPERVISOR_POSITION", supervisor.getPosition());
         report.addValue("SUPERVISOR_DEGREE", supervisor.getDegree());
         report.addValue("SUPERVISOR_NAME", supervisor.generateShortName(true));
         String coordinators = "";
-        for (Coordinator coordinator : order.getData().getCoordinators()) {
+        for (Employee coordinator : order.getData().getCoordinators()) {
             coordinators += coordinator.getPosition() + "\n";
         }
         report.addValue("COORDINATORS_LIST", coordinators);

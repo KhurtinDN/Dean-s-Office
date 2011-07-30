@@ -5,12 +5,13 @@ import com.google.common.base.Objects;
 import javax.persistence.Entity;
 
 /**
- * User: MesheryakovAV
- * Date: 28.02.11
- * Time: 12:18
+ * Date: 7/10/11
+ * Time: 11:57 AM
+ *
+ * @author Denis Khurtin
  */
 @Entity
-public class Leader extends Person {
+public class Employee extends Person {
     private String degree;
     private String position;
 
@@ -39,7 +40,7 @@ public class Leader extends Person {
             return false;
         }
 
-        final Leader that = (Leader) o;
+        final Employee that = (Employee) o;
 
         return super.equals(that) &&
                 Objects.equal(this.degree, that.degree) &&
@@ -63,7 +64,7 @@ public class Leader extends Person {
                 .toString();
     }
 
-    public static Leader make(
+    public static Employee make(
             final Long id,
             final String firstName,
             final String middleName,
@@ -71,14 +72,14 @@ public class Leader extends Person {
             final String degree,
             final String position) {
 
-        Leader leader = new Leader();
-        leader.setId(id);
-        leader.setFirstName(firstName);
-        leader.setMiddleName(middleName);
-        leader.setLastName(lastName);
-        leader.setDegree(degree);
-        leader.setPosition(position);
+        Employee employee = new Employee();
+        employee.setId(id);
+        employee.setFirstName(firstName);
+        employee.setMiddleName(middleName);
+        employee.setLastName(lastName);
+        employee.setDegree(degree);
+        employee.setPosition(position);
 
-        return leader;
+        return employee;
     }
 }
