@@ -1,5 +1,6 @@
 package ru.sgu.csit.inoc.deansoffice;
 
+import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
@@ -26,6 +27,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import static junit.framework.Assert.assertTrue;
 
 /**
  * Unit test for simple App.
@@ -80,11 +83,11 @@ public class AppTest {
 
         csit.setFullName("факультет компьютерных наук и информационных технологий");
         csit.setShortName("КНиИТ");
-        csit.setDean(new Dean());
+        csit.setDean(new Employee());
         csit.getDean().setFirstName("Антонина");
         csit.getDean().setMiddleName("Гавриловна");
         csit.getDean().setLastName("Фёдорова");
-        csit.setRector(new Rector());
+        csit.setRector(new Employee());
         csit.getRector().setFirstName("Леонид");
         csit.getRector().setMiddleName("Юрьевич");
         csit.getRector().setLastName("Коссович");
@@ -133,5 +136,10 @@ public class AppTest {
             }                                                  //
         }
         referenceService.generatePrintForm(references, outputStream);
+    }
+
+    @Test
+    public void stab() {
+        assertTrue(true);
     }
 }
