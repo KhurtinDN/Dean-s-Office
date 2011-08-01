@@ -1,7 +1,5 @@
 package ru.sgu.csit.inoc.deansoffice.dao.impl;
 
-import org.hibernate.criterion.DetachedCriteria;
-import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 import ru.sgu.csit.inoc.deansoffice.dao.StudentDAO;
 import ru.sgu.csit.inoc.deansoffice.domain.Group;
@@ -40,7 +38,7 @@ public class StudentDAOImpl extends BaseDAOImpl<Student, Long> implements Studen
 //        DetachedCriteria criteria = createCriteriaForPersistentClass(
 //                Restrictions.eq("course", course), Restrictions.eq("speciality.id", specialityId));
 //        return (List<Student>) getHibernateTemplate().findByCriteria(criteria);
-        return (List<Student>) getHibernateTemplate().find("from Student s where s.speciality.id=? and s.course=?",
+        return (List<Student>) getHibernateTemplate().find("from Student s where s.speciality.id=? and s.group.course=?",
                 specialityId, course);
     }
 

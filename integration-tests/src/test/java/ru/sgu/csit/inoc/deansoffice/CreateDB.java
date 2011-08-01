@@ -372,7 +372,6 @@ public class CreateDB {
             for (int studentCount = 1; studentCount <= COUNT_STUDENTS_IN_GROUP; ++studentCount) {
                 Student student = studentGenerator.getRandomStudent();
 
-                student.setCourse(group.getCourse());
                 student.setGroup(group);
                 student.setSpeciality(group.getSpeciality());
                 student.setEnrollmentOrder(orders.get(group.getCourse() - 1));

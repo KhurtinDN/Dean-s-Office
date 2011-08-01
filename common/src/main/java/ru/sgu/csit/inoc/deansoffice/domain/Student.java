@@ -17,8 +17,6 @@ public class Student extends Person {
      *  This is number of student ticket.
      */
     private String studentIdNumber;
-    
-    private Integer course;
 
     @ManyToOne(cascade = CascadeType.MERGE)
     @PrimaryKeyJoinColumn
@@ -49,14 +47,6 @@ public class Student extends Person {
 
     public void setStudentIdNumber(final String studentIdNumber) {
         this.studentIdNumber = studentIdNumber;
-    }
-
-    public Integer getCourse() {
-        return course;
-    }
-
-    public void setCourse(final Integer course) {
-        this.course = course;
     }
 
     public Group getGroup() {
@@ -153,7 +143,6 @@ public class Student extends Person {
 
         return super.equals(o) &&
                 Objects.equal(this.studentIdNumber, that.studentIdNumber) &&
-                Objects.equal(this.course, that.course) &&
                 Objects.equal(this.group, that.group) &&
                 Objects.equal(this.speciality, that.speciality) &&
                 Objects.equal(this.division, that.division) &&
@@ -169,7 +158,6 @@ public class Student extends Person {
         return Objects.hashCode(
                 super.hashCode(),
                 studentIdNumber,
-                course,
                 group,
                 speciality,
                 division,
@@ -185,7 +173,6 @@ public class Student extends Person {
         return Objects.toStringHelper(this)
                 .addValue(super.toString())
                 .add("studentIdNumber", studentIdNumber)
-                .add("course", course)
                 .add("group", group)
                 .add("speciality", speciality)
                 .add("division", division)
@@ -207,7 +194,6 @@ public class Student extends Person {
             final String firstNameDative,
             final String middleNameDative,
             final String lastNameDative,
-            final Integer course,
             final Group group,
             final Speciality speciality,
             final Division division,
@@ -227,7 +213,6 @@ public class Student extends Person {
         student.setFirstNameDative(firstNameDative);
         student.setMiddleNameDative(middleNameDative);
         student.setLastNameDative(lastNameDative);
-        student.setCourse(course);
         student.setGroup(group);
         student.setSpeciality(speciality);
         student.setDivision(division);

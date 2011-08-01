@@ -3,10 +3,14 @@ package ru.sgu.csit.inoc.deansoffice.webui.gxt.students.server.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.sgu.csit.inoc.deansoffice.dao.*;
-import ru.sgu.csit.inoc.deansoffice.domain.*;
+import ru.sgu.csit.inoc.deansoffice.domain.Group;
+import ru.sgu.csit.inoc.deansoffice.domain.Passport;
+import ru.sgu.csit.inoc.deansoffice.domain.Speciality;
+import ru.sgu.csit.inoc.deansoffice.domain.Student;
+import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.model.StudentDetailsModel;
+import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.model.StudentModel;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.services.StudentService;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.server.utils.StudentUtil;
-import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.model.*;
 
 import java.util.List;
 
@@ -94,9 +98,6 @@ public class StudentServiceImpl implements StudentService {
                 throw new RuntimeException("Group not specified.");
             }
             student.setGroup(groups.get(0));
-        }
-        if (student.getCourse() == null) {
-            student.setCourse(student.getGroup().getCourse());
         }
 
         studentDAO.save(student);

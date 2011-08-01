@@ -1,8 +1,12 @@
 package ru.sgu.csit.inoc.deansoffice.webui.gxt.students.server.utils;
 
-import ru.sgu.csit.inoc.deansoffice.domain.*;
+import ru.sgu.csit.inoc.deansoffice.domain.Parent;
+import ru.sgu.csit.inoc.deansoffice.domain.Student;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.server.util.PersonUtil;
-import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.model.*;
+import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.model.ParentModel;
+import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.model.SpecialityModel;
+import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.model.StudentDetailsModel;
+import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.model.StudentModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +34,7 @@ public class StudentUtil extends PersonUtil {
 
             studentModel.setGroupName(student.getGroup().getName());
             studentModel.setSpecialityName(student.getSpeciality().getName());
-            studentModel.setCourse(student.getCourse());
+            studentModel.setCourse(student.getGroup().getCourse());
 
             if (student.getAdditionalData() != null && student.getAdditionalData().getPhoto() != null) {
                 studentModel.setPhotoId(student.getAdditionalData().getPhoto().getId());
@@ -60,7 +64,7 @@ public class StudentUtil extends PersonUtil {
 
         studentDetailsModel.setSpecialityName(student.getSpeciality().getName());
         studentDetailsModel.setGroupName(student.getGroup().getName());
-        studentDetailsModel.setCourse(student.getCourse());
+        studentDetailsModel.setCourse(student.getGroup().getCourse());
 
         if (student.getAdditionalData() != null) {
             Student.AdditionalStudentData additionalStudentData = student.getAdditionalData();

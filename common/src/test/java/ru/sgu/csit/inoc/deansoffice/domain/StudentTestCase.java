@@ -138,17 +138,6 @@ public class StudentTestCase {
     }
 
     @Test
-    public void testEqualsWhenContentDiffersInCourse() {
-        final Student testee1 = new Student();
-        testee1.setCourse(1);
-
-        final Student testee2 = new Student();
-        testee2.setCourse(2);
-
-        testWhenObjectsAreDifferent(testee1, testee2);
-    }
-
-    @Test
     public void testEqualsWhenContentDiffersInGroup() {
         final Group group1 = new Group();
         group1.setId(1L);
@@ -315,7 +304,6 @@ public class StudentTestCase {
                 "Ивану",
                 "Ивановичу",
                 "Иванову",
-                course,
                 Group.make(
                         generateId(),
                         "test-group",

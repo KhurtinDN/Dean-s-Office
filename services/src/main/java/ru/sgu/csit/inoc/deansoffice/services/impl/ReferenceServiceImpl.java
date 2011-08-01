@@ -4,7 +4,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.sgu.csit.inoc.deansoffice.dao.ReferenceDAO;
 import ru.sgu.csit.inoc.deansoffice.dao.StudentDAO;
-import ru.sgu.csit.inoc.deansoffice.domain.*;
+import ru.sgu.csit.inoc.deansoffice.domain.EnrollmentOrder;
+import ru.sgu.csit.inoc.deansoffice.domain.Reference;
+import ru.sgu.csit.inoc.deansoffice.domain.Student;
+import ru.sgu.csit.inoc.deansoffice.domain.Template;
 import ru.sgu.csit.inoc.deansoffice.reports.ReportPdfProcessor;
 import ru.sgu.csit.inoc.deansoffice.reports.reportsutil.Report;
 import ru.sgu.csit.inoc.deansoffice.reports.reportsutil.ReportXml;
@@ -50,7 +53,7 @@ public class ReferenceServiceImpl extends DocumentServiceImpl implements Referen
         report.addValue("Student.firstName_dat", student.getFirstNameDative());
         report.addValue("Student.middleName_dat", student.getMiddleNameDative());
 
-        report.addValue("Student.courseNumber", student.getCourse().toString());
+        report.addValue("Student.courseNumber", student.getGroup().getCourse().toString());
 
         EnrollmentOrder order = student.getEnrollmentOrder();
         String division = "неизвестного";

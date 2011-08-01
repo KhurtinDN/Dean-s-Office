@@ -36,7 +36,7 @@ public class StudentDossierServiceImpl extends DocumentServiceImpl implements St
         report.addValue("Student.firstName", student.getFirstName());
         report.addValue("Student.middleName", student.getMiddleName());
 
-        report.addValue("Student.courseNumber", student.getCourse().toString());
+        report.addValue("Student.courseNumber", student.getGroup().getCourse().toString());
         report.addValue("Student.speciality", student.getSpeciality().getShortName());
         report.addValue("Student.specialityCode", student.getSpeciality().getCode());
 

@@ -94,14 +94,14 @@ public class StudentDAOImplTest {
         Set<Integer> courses = new HashSet<Integer>();
         for (Student student : students) {
             specialities.add(student.getSpeciality());
-            courses.add(student.getCourse());
+            courses.add(student.getGroup().getCourse());
         }
         for (Integer course : courses) {
             for (Speciality speciality : specialities) {
                 Integer count = 0;
                 for (Student student : students) {
                     if (student.getSpeciality().getId().equals(speciality.getId())
-                            && student.getCourse().equals(course)) {
+                            && student.getGroup().getCourse().equals(course)) {
                         count++;
                     }
                 }
