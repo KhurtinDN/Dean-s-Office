@@ -287,12 +287,17 @@ public class StudentTestCase {
                                         "dean-last",
                                         "dean-deg",
                                         "dean-pos"),
-                                Employee.make(generateId(),
-                                        "rec-first",
-                                        "rec-middle",
-                                        "rec-last",
-                                        "rec-deg",
-                                        "rec-pos")));
+                                Administration.make(
+                                        generateId(),
+                                        "SSU",
+                                        Employee.make(
+                                                generateId(),
+                                                "rec-first",
+                                                "rec-middle",
+                                                "rec-last",
+                                                "rec-deg",
+                                                "rec-pos"))
+                        ));
 
         return Student.make(
                 generateId(),

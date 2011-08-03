@@ -24,6 +24,7 @@ public class CreateDB {
     private GroupDAO groupDAO = applicationContext.getBean(GroupDAO.class);
     private SpecialityDAO specialityDAO = applicationContext.getBean(SpecialityDAO.class);
     private FacultyDAO facultyDAO = applicationContext.getBean(FacultyDAO.class);
+    private AdministrationDAO administrationDAO = applicationContext.getBean(AdministrationDAO.class);
     private EnrollmentOrderDAO enrollmentOrderDAO = applicationContext.getBean(EnrollmentOrderDAO.class);
 
     private ParentDAO parentDAO = applicationContext.getBean(ParentDAO.class);
@@ -32,6 +33,7 @@ public class CreateDB {
     private DirectiveDAO directiveDAO = applicationContext.getBean(DirectiveDAO.class);
 
     private static final Integer COUNT_STUDENTS_IN_GROUP = 10;
+    private static final String PHOTO_FILE_NAME = "/home/hd/temp/photo.jpg";
 
     public static void main(String[] args) {
         CreateDB createDB = new CreateDB();
@@ -62,11 +64,16 @@ public class CreateDB {
         rector.setDegree("д.ф.-м.н., профессор");
         employeeDAO.save(rector);
 
+        Administration administration = new Administration();
+        administration.setName("Саратовский государственный университет");
+        administration.setRector(rector);
+        administrationDAO.save(administration);
+
         Faculty faculty = new Faculty();
         faculty.setFullName("Компьютерных наук и информационных технологий");
         faculty.setShortName("КНиИТ");
         faculty.setDean(dean);
-        faculty.setRector(rector);
+        faculty.setAdministration(administration);
         facultyDAO.save(faculty);
 
 
@@ -500,7 +507,7 @@ public class CreateDB {
             PhotoService photoService = new PhotoServiceImpl();
             Photo photo;
             try {
-                photo = photoService.loadFromFile("/home/hd/temp/photo.jpg");
+                photo = photoService.loadFromFile(PHOTO_FILE_NAME);
             } catch (IOException e) {
                 throw new RuntimeException("Photo not found!!!", e);
             }

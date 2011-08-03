@@ -23,7 +23,7 @@ public class Faculty extends PersistentItem {
 
     @ManyToOne(cascade = CascadeType.MERGE)
     @PrimaryKeyJoinColumn
-    private Employee rector;
+    private Administration administration;
 
     public String getFullName() {
         return fullName;
@@ -49,12 +49,12 @@ public class Faculty extends PersistentItem {
         this.dean = dean;
     }
 
-    public Employee getRector() {
-        return rector;
+    public Administration getAdministration() {
+        return administration;
     }
 
-    public void setRector(final Employee rector) {
-        this.rector = rector;
+    public void setAdministration(final Administration administration) {
+        this.administration = administration;
     }
 
     @Override
@@ -72,7 +72,7 @@ public class Faculty extends PersistentItem {
                 Objects.equal(this.fullName, that.fullName) &&
                 Objects.equal(this.shortName, that.shortName) &&
                 Objects.equal(this.dean, that.dean) &&
-                Objects.equal(this.rector, that.rector);
+                Objects.equal(this.administration, that.administration);
     }
 
     @Override
@@ -82,7 +82,7 @@ public class Faculty extends PersistentItem {
                 fullName,
                 shortName,
                 dean,
-                rector);
+                administration);
     }
 
     @Override
@@ -92,7 +92,7 @@ public class Faculty extends PersistentItem {
                 .add("fullName", fullName)
                 .add("shortName", shortName)
                 .add("dean", dean)
-                .add("rector", rector)
+                .add("administration", administration)
                 .toString();
     }
 
@@ -101,14 +101,14 @@ public class Faculty extends PersistentItem {
             final String fullName,
             final String shortName,
             final Employee dean,
-            final Employee rector) {
+            final Administration administration) {
 
         final Faculty faculty = new Faculty();
         faculty.setId(id);
         faculty.setFullName(fullName);
         faculty.setShortName(shortName);
         faculty.setDean(dean);
-        faculty.setRector(rector);
+        faculty.setAdministration(administration);
 
         return faculty;
     }

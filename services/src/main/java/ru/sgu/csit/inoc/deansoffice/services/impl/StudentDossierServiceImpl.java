@@ -27,8 +27,8 @@ public class StudentDossierServiceImpl extends DocumentServiceImpl implements St
 
         report.addValue("FACULTY_DEAN", student.getSpeciality().getFaculty().getDean().generateShortName(true));
 
-        report.addValue("RECTOR", student.getSpeciality().getFaculty().getRector().generateShortName(true));
-        report.addValue("RECTOR_DEGREE", student.getSpeciality().getFaculty().getRector().getDegree());
+        report.addValue("RECTOR", student.getSpeciality().getFaculty().getAdministration().getRector().generateShortName(true));
+        report.addValue("RECTOR_DEGREE", student.getSpeciality().getFaculty().getAdministration().getRector().getDegree());
 
         report.addValue("Student.fullName", student.getLastName() + " "
                 + student.getFirstName() + " " + student.getMiddleName());
