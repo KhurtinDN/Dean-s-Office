@@ -17,22 +17,26 @@ import com.extjs.gxt.ui.client.widget.button.Button;
 import com.extjs.gxt.ui.client.widget.form.ComboBox;
 import com.extjs.gxt.ui.client.widget.form.FormPanel;
 import com.extjs.gxt.ui.client.widget.form.TextField;
-import com.extjs.gxt.ui.client.widget.grid.*;
-import com.extjs.gxt.ui.client.widget.layout.*;
+import com.extjs.gxt.ui.client.widget.grid.EditorGrid;
+import com.extjs.gxt.ui.client.widget.grid.RowEditor;
+import com.extjs.gxt.ui.client.widget.layout.FitLayout;
+import com.extjs.gxt.ui.client.widget.layout.FormLayout;
+import com.extjs.gxt.ui.client.widget.layout.RowData;
+import com.extjs.gxt.ui.client.widget.layout.RowLayout;
 import com.extjs.gxt.ui.client.widget.toolbar.SeparatorToolItem;
 import com.extjs.gxt.ui.client.widget.toolbar.ToolBar;
 import com.google.gwt.user.client.Element;
 import com.google.gwt.user.client.rpc.AsyncCallback;
-import ru.sgu.csit.inoc.deansoffice.webui.gxt.admin.client.mvc.events.AdminEvents;
-import ru.sgu.csit.inoc.deansoffice.webui.gxt.admin.client.services.SpecialityService;
-import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.utils.BaseAsyncCallback;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.admin.client.components.grids.SpecialitiesGrid;
+import ru.sgu.csit.inoc.deansoffice.webui.gxt.admin.client.mvc.events.AdminEvents;
+import ru.sgu.csit.inoc.deansoffice.webui.gxt.admin.client.services.FacultyService;
+import ru.sgu.csit.inoc.deansoffice.webui.gxt.admin.client.services.SpecialityService;
+import ru.sgu.csit.inoc.deansoffice.webui.gxt.admin.client.services.StaffService;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.model.FacultyModel;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.model.PersonModel;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.model.SpecialityModel;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.mvc.events.CommonEvents;
-import ru.sgu.csit.inoc.deansoffice.webui.gxt.admin.client.services.FacultyService;
-import ru.sgu.csit.inoc.deansoffice.webui.gxt.admin.client.services.StaffService;
+import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.utils.BaseAsyncCallback;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.utils.FormUtil;
 
 import java.util.ArrayList;
@@ -88,7 +92,7 @@ public class FacultyPanel extends ContentPanel {
             public void handleEvent(RowEditorEvent rowEditorEvent) {
                 mask("Сохраниние измененной специальности");
 
-                SpecialityModel specialityModel = specialitiesGrid.getStore().getAt(rowEditorEvent.getRowIndex());
+                SpecialityModel specialityModel = (SpecialityModel) rowEditorEvent.getRecord().getModel();
 
                 SpecialityService.Util.getInstance().updateSpeciality(specialityModel, new BaseAsyncCallback<Void>() {
                     @Override

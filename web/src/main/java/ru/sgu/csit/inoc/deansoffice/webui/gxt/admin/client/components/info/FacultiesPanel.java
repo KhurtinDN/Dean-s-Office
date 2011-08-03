@@ -6,17 +6,18 @@ import com.extjs.gxt.ui.client.util.IconHelper;
 import com.extjs.gxt.ui.client.widget.ContentPanel;
 import com.extjs.gxt.ui.client.widget.MessageBox;
 import com.extjs.gxt.ui.client.widget.button.Button;
-import com.extjs.gxt.ui.client.widget.grid.*;
+import com.extjs.gxt.ui.client.widget.grid.EditorGrid;
+import com.extjs.gxt.ui.client.widget.grid.RowEditor;
 import com.extjs.gxt.ui.client.widget.layout.FitLayout;
 import com.extjs.gxt.ui.client.widget.toolbar.SeparatorToolItem;
 import com.extjs.gxt.ui.client.widget.toolbar.ToolBar;
 import com.google.gwt.user.client.Element;
-import ru.sgu.csit.inoc.deansoffice.webui.gxt.admin.client.mvc.events.AdminEvents;
-import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.utils.BaseAsyncCallback;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.admin.client.components.grids.FacultiesGrid;
+import ru.sgu.csit.inoc.deansoffice.webui.gxt.admin.client.mvc.events.AdminEvents;
+import ru.sgu.csit.inoc.deansoffice.webui.gxt.admin.client.services.FacultyService;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.model.FacultyModel;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.mvc.events.CommonEvents;
-import ru.sgu.csit.inoc.deansoffice.webui.gxt.admin.client.services.FacultyService;
+import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.utils.BaseAsyncCallback;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,7 +45,7 @@ public class FacultiesPanel extends ContentPanel {
             @Override
             public void handleEvent(RowEditorEvent rowEditorEvent) {
                 facultiesGrid.mask("Сохраниние измененного факультета");
-                FacultyModel facultyModel = facultiesGrid.getStore().getAt(rowEditorEvent.getRowIndex());
+                FacultyModel facultyModel = (FacultyModel) rowEditorEvent.getRecord().getModel();
 
                 FacultyService.Util.getInstance().updateFaculty(facultyModel, new BaseAsyncCallback<Void>() {
                     @Override

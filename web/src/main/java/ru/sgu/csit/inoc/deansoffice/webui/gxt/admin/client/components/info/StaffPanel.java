@@ -41,7 +41,7 @@ public class StaffPanel extends ContentPanel {
             public void handleEvent(RowEditorEvent rowEditorEvent) {
                 mask("Сохраниние измененного сотрудника");
 
-                PersonModel personModel = staffGrid.getStore().getAt(rowEditorEvent.getRowIndex());
+                PersonModel personModel = (PersonModel) rowEditorEvent.getRecord().getModel();
 
                 StaffService.Util.getInstance().update(personModel, new BaseAsyncCallback<Void>() {
                     @Override

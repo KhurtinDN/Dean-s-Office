@@ -41,7 +41,7 @@ public class UserPanel extends ContentPanel {
             public void handleEvent(RowEditorEvent rowEditorEvent) {
                 mask("Сохраниние измененного пользователя");
 
-                UserModel userModel = usersGrid.getStore().getAt(rowEditorEvent.getRowIndex());
+                UserModel userModel = (UserModel) rowEditorEvent.getRecord().getModel();
 
                 UserService.Util.getInstance().update(userModel, new BaseAsyncCallback<Void>() {
                     @Override
