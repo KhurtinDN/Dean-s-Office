@@ -76,11 +76,21 @@
         <resources>
             <resource>
                 <directory>src/main/resources</directory>
+                <excludes>
+                    <exclude>fonts.properties</exclude>
+                </excludes>
             </resource>
             <resource>
                 <directory>src/main/webapp.filtered</directory>
                 <filtering>true</filtering>
                 <targetPath>${project.build.directory}/${project.build.finalName}</targetPath>
+            </resource>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+                <includes>
+                    <include>fonts.properties</include>
+                </includes>
             </resource>
         </resources>
 
