@@ -6,6 +6,7 @@
         <groupId>ru.sgu.csit.inoc</groupId>
         <artifactId>DeansOffice</artifactId>
         <version>1.0-SNAPSHOT</version>
+        <relativePath>..</relativePath>
     </parent>
 
     <artifactId>integration-tests</artifactId>
@@ -63,8 +64,8 @@
         </dependency>
 
         <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
+            <groupId>ru.sgu.csit.inoc</groupId>
+            <artifactId>test-utils</artifactId>
             <scope>test</scope>
         </dependency>
     </dependencies>
