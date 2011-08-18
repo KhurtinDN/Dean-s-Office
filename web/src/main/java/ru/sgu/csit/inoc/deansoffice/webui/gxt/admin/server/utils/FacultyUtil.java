@@ -3,8 +3,8 @@ package ru.sgu.csit.inoc.deansoffice.webui.gxt.admin.server.utils;
 import ru.sgu.csit.inoc.deansoffice.domain.Employee;
 import ru.sgu.csit.inoc.deansoffice.domain.Faculty;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.server.util.PersonUtil;
+import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.model.EmployeeModel;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.model.FacultyModel;
-import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.model.PersonModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,19 +20,19 @@ public class FacultyUtil {
             return null;
         }
 
-        PersonModel deanModel = null;
+        EmployeeModel deanModel = null;
 
         Employee dean = faculty.getDean();
 
         if (dean != null) {
-            deanModel = new PersonModel();
+            deanModel = new EmployeeModel();
             PersonUtil.populatePersonModelByPerson(deanModel, dean);
         }
 
         return convertFacultyToFacultyModel(faculty, deanModel);
     }
 
-    public static FacultyModel convertFacultyToFacultyModel(Faculty faculty, PersonModel dean) {
+    public static FacultyModel convertFacultyToFacultyModel(Faculty faculty, EmployeeModel dean) {
         if (faculty == null) {
             return null;
         }
@@ -74,7 +74,7 @@ public class FacultyUtil {
         return facultyModelList;
     }
 
-    public static List<FacultyModel> convertFacultyListToFacultyModelList(List<Faculty> facultyList, PersonModel dean) {
+    public static List<FacultyModel> convertFacultyListToFacultyModelList(List<Faculty> facultyList, EmployeeModel dean) {
         if (facultyList == null) {
             return null;
         }

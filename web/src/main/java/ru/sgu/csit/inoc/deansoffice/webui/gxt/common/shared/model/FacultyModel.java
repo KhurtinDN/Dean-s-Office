@@ -7,7 +7,7 @@ package ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.model;
  */
 @SuppressWarnings({"UnusedDeclaration"})
 public class FacultyModel extends DtoModel {
-    private PersonModel dean;
+    private EmployeeModel dean;
 
     public FacultyModel() {
     }
@@ -32,12 +32,12 @@ public class FacultyModel extends DtoModel {
         set("name", name);
     }
 
-    public PersonModel getDean() {
+    public EmployeeModel getDean() {
 //        dean = get("dean");
         return get("dean");
     }
 
-    public void setDean(PersonModel dean) {
+    public void setDean(EmployeeModel dean) {
         set("dean", dean);
 //        this.dean = dean;
     }

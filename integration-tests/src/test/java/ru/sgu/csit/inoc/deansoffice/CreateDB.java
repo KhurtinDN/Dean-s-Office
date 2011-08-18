@@ -32,6 +32,8 @@ public class CreateDB {
     private EmployeeDAO employeeDAO = applicationContext.getBean(EmployeeDAO.class);
     private DirectiveDAO directiveDAO = applicationContext.getBean(DirectiveDAO.class);
 
+    private final Generator generator = new Generator();
+
     private static final Integer COUNT_STUDENTS_IN_GROUP = 10;
     private static final String PHOTO_FILE_NAME = "/home/hd/temp/photo.jpg";
 
@@ -85,8 +87,7 @@ public class CreateDB {
         );
 
         for (String position : positions) {
-            Employee coordinator = new Employee();
-            coordinator.setPosition(position);
+            Employee coordinator = generator.getRandomEmployee(position);
             employeeDAO.save(coordinator);
         }
 
@@ -367,17 +368,15 @@ public class CreateDB {
             }
         }
 
-        final StudentGenerator studentGenerator = new StudentGenerator();
-
         for (int i = 0; i < courseCount; ++i) {
-            EnrollmentOrder enrollmentOrder = studentGenerator.getRandomEnrollmentOrder(i + 1);
+            EnrollmentOrder enrollmentOrder = generator.getRandomEnrollmentOrder(i + 1);
             orders.add(enrollmentOrder);
             enrollmentOrderDAO.save(enrollmentOrder);
         }
 
         for (Group group : groupList) {
             for (int studentCount = 1; studentCount <= COUNT_STUDENTS_IN_GROUP; ++studentCount) {
-                Student student = studentGenerator.getRandomStudent();
+                Student student = generator.getRandomStudent();
 
                 student.setGroup(group);
                 student.setSpeciality(group.getSpeciality());
@@ -389,7 +388,7 @@ public class CreateDB {
 
     }
 
-    private class StudentGenerator {
+    private class Generator {
         private Random generator = new Random(new Date().getTime());
 
         private String[][] lastNames = {{"Иванов", "Петров", "Захаров", "Клочко", "Кузнецов", "Алексеев", "Свиридов",
@@ -423,9 +422,6 @@ public class CreateDB {
                         "Юрьевне", "Борисовне", "Сергеевне", "Андреевне", "Олеговне", "Степановне", "Максимовне", "Дмитриевне",
                         "Владимировне", "Викторовне", "Денисовне"}};
 
-        public StudentGenerator() {
-        }
-
         public EnrollmentOrder getRandomEnrollmentOrder(int course) {
             EnrollmentOrder enrolOrder = new EnrollmentOrder();
 
@@ -438,25 +434,22 @@ public class CreateDB {
             return enrolOrder;
         }
 
+        public Employee getRandomEmployee(final String position) {
+            final Employee employee = new Employee();
+
+            populatePerson(employee, Person.Sex.values()[generator.nextInt(2)]);
+            employee.setPosition(position);
+
+            return employee;
+        }
+
         public Student getRandomStudent() {
-            Student student = new Student();
-            int sex = generator.nextInt(2);
-            Integer nameIndex = generator.nextInt(firstNames[sex].length);
+            final Student student = new Student();
 
-            student.setSex(sex == 0 ? Person.Sex.MALE : Person.Sex.FEMALE);
-            student.setFirstName(firstNames[sex][nameIndex]);
-            student.setFirstNameDative(firstNamesDative[sex][nameIndex]);
-
-            nameIndex = generator.nextInt(lastNames[sex].length);
-            student.setLastName(lastNames[sex][nameIndex]);
-            student.setLastNameDative(lastNamesDative[sex][nameIndex]);
-
-            nameIndex = generator.nextInt(middleNames[sex].length);
-            student.setMiddleName(middleNames[sex][nameIndex]);
-            student.setMiddleNameDative(middleNamesDative[sex][nameIndex]);
+            populatePerson(student, Person.Sex.values()[generator.nextInt(2)]);
 
             student.setStudyForm(getRandomStudyForm());
-            student.setStudentIdNumber("" + ((int) (Math.random() * 100000)));
+            student.setStudentIdNumber(Long.toString((long) (Math.random() * 100000)));
             student.setDivision(Student.Division.INTRAMURAL);
 
             student.setBirthday(new GregorianCalendar().getTime());
@@ -476,9 +469,9 @@ public class CreateDB {
         }
 
         public Student.AdditionalStudentData getRandomAdditionalData(Student student) {
-            Student.AdditionalStudentData additionalData = new Student.AdditionalStudentData();
-            Passport passport = new Passport(student);
-            String address = "Российская Федерация, г. Саратов, ул. Астраханская, д. 77, кв. 13";
+            final Student.AdditionalStudentData additionalData = new Student.AdditionalStudentData();
+            final Passport passport = new Passport(student);
+            final String address = "Российская Федерация, г. Саратов, ул. Астраханская, д. 77, кв. 13";
 
             additionalData.setBirthPlace("г. Саратов");
             additionalData.setEducation("Средняя школа");
@@ -504,8 +497,8 @@ public class CreateDB {
             parentDAO.save(additionalData.getFather());
             parentDAO.save(additionalData.getMother());
 
-            PhotoService photoService = new PhotoServiceImpl();
-            Photo photo;
+            final PhotoService photoService = new PhotoServiceImpl();
+            final Photo photo;
             try {
                 photo = photoService.loadFromFile(PHOTO_FILE_NAME);
             } catch (IOException e) {
@@ -522,28 +515,32 @@ public class CreateDB {
         }
 
         public Parent getRandomParent(Person.Sex sexValue) {
-            Parent parent = new Parent();
+            final Parent parent = new Parent();
 
-            int sex = sexValue == Person.Sex.MALE ? 0 : 1;
-            Integer nameIndex = generator.nextInt(firstNames[sex].length);
-
-            parent.setSex(sex == 0 ? Person.Sex.MALE : Person.Sex.FEMALE);
-            parent.setFirstName(firstNames[sex][nameIndex]);
-            parent.setFirstNameDative(firstNamesDative[sex][nameIndex]);
-
-            nameIndex = generator.nextInt(lastNames[sex].length);
-            parent.setLastName(lastNames[sex][nameIndex]);
-            parent.setLastNameDative(lastNamesDative[sex][nameIndex]);
-
-            nameIndex = generator.nextInt(middleNames[sex].length);
-            parent.setMiddleName(middleNames[sex][nameIndex]);
-            parent.setMiddleNameDative(middleNamesDative[sex][nameIndex]);
-
-            parent.setBirthday(new GregorianCalendar().getTime());
+            populatePerson(parent, sexValue);
             parent.setPhoneNumbers("02, 03, 89875858888");
             parent.setWorkInfo("ООО \"Машиностроитель\", системный программист");
 
             return parent;
+        }
+
+        private void populatePerson(Person person, final Person.Sex sex) {
+            person.setSex(sex);
+            person.setBirthday(new GregorianCalendar().getTime());
+
+            final int sexNumber = sex == Person.Sex.MALE ? 0 : 1;
+            int nameIndex = generator.nextInt(firstNames[sexNumber].length);
+
+            person.setFirstName(firstNames[sexNumber][nameIndex]);
+            person.setFirstNameDative(firstNamesDative[sexNumber][nameIndex]);
+
+            nameIndex = generator.nextInt(lastNames[sexNumber].length);
+            person.setLastName(lastNames[sexNumber][nameIndex]);
+            person.setLastNameDative(lastNamesDative[sexNumber][nameIndex]);
+
+            nameIndex = generator.nextInt(middleNames[sexNumber].length);
+            person.setMiddleName(middleNames[sexNumber][nameIndex]);
+            person.setMiddleNameDative(middleNamesDative[sexNumber][nameIndex]);
         }
     }
 }

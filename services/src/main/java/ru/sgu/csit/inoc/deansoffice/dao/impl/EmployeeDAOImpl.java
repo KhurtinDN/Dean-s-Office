@@ -20,4 +20,9 @@ public class EmployeeDAOImpl extends BaseDAOImpl<Employee, Long> implements Empl
     public List<Employee> findAllDeans() {
         return findAll(); // todo: need return deans only
     }
+
+    @Override
+    public List<Employee> findAllRectors() {
+        return findAll(); // todo: need return rectors only
+    }
 }

@@ -32,8 +32,8 @@ import ru.sgu.csit.inoc.deansoffice.webui.gxt.admin.client.mvc.events.AdminEvent
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.admin.client.services.FacultyService;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.admin.client.services.SpecialityService;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.admin.client.services.StaffService;
+import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.model.EmployeeModel;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.model.FacultyModel;
-import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.model.PersonModel;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.model.SpecialityModel;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.mvc.events.CommonEvents;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.utils.BaseAsyncCallback;
@@ -48,11 +48,11 @@ import java.util.List;
  * Time: 10:44 PM
  */
 public class FacultyPanel extends ContentPanel {
-    private TextField<String> fullNameTextField = new TextField<String>();
-    private TextField<String> nameTextField = new TextField<String>();
-    private ComboBox<PersonModel> deansComboBox = new ComboBox<PersonModel>();
+    private final TextField<String> fullNameTextField = new TextField<String>();
+    private final TextField<String> nameTextField = new TextField<String>();
+    private final ComboBox<EmployeeModel> deansComboBox = new ComboBox<EmployeeModel>();
 
-    private SpecialitiesGrid specialitiesGrid = new SpecialitiesGrid();
+    private final SpecialitiesGrid specialitiesGrid = new SpecialitiesGrid();
 
     private FacultyModel currentFacultyModel;
 
@@ -70,15 +70,15 @@ public class FacultyPanel extends ContentPanel {
         deansComboBox.setTriggerAction(ComboBox.TriggerAction.ALL);
         deansComboBox.setDisplayField("fullName");
 
-        RpcProxy<List<PersonModel>> proxy = new RpcProxy<List<PersonModel>>() {
+        RpcProxy<List<EmployeeModel>> proxy = new RpcProxy<List<EmployeeModel>>() {
             @Override
-            protected void load(Object loadConfig, AsyncCallback<List<PersonModel>> listAsyncCallback) {
+            protected void load(Object loadConfig, AsyncCallback<List<EmployeeModel>> listAsyncCallback) {
                 StaffService.Util.getInstance().loadDeanList(listAsyncCallback);
             }
         };
 
-        ListLoader<ListLoadResult<PersonModel>> loader = new BaseListLoader<ListLoadResult<PersonModel>>(proxy);
-        deansComboBox.setStore(new ListStore<PersonModel>(loader));
+        ListLoader<ListLoadResult<EmployeeModel>> loader = new BaseListLoader<ListLoadResult<EmployeeModel>>(proxy);
+        deansComboBox.setStore(new ListStore<EmployeeModel>(loader));
     }
 
     @Override
@@ -193,7 +193,7 @@ public class FacultyPanel extends ContentPanel {
             }
         });
 
-        ToolBar specialityGridToolBar = new ToolBar();
+        final ToolBar specialityGridToolBar = new ToolBar();
         specialityGridToolBar.add(addSpecialityButton);
         specialityGridToolBar.add(new SeparatorToolItem());
         specialityGridToolBar.add(editSpecialityButton);

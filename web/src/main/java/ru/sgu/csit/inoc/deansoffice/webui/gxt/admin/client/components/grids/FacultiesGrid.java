@@ -7,10 +7,10 @@ import com.extjs.gxt.ui.client.widget.form.TextField;
 import com.extjs.gxt.ui.client.widget.grid.*;
 import com.google.gwt.user.client.Element;
 import com.google.gwt.user.client.rpc.AsyncCallback;
-import ru.sgu.csit.inoc.deansoffice.webui.gxt.admin.client.services.StaffService;
-import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.model.FacultyModel;
-import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.model.PersonModel;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.admin.client.services.FacultyService;
+import ru.sgu.csit.inoc.deansoffice.webui.gxt.admin.client.services.StaffService;
+import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.model.EmployeeModel;
+import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.model.FacultyModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -84,25 +84,25 @@ public class FacultiesGrid extends Grid<FacultyModel> {
             public Object render(ModelData model, String property, ColumnData config,
                                  int rowIndex, int colIndex, ListStore listStore, Grid grid) {
                 FacultyModel facultyModel = (FacultyModel) model;
-                PersonModel dean = facultyModel.getDean();
+                EmployeeModel dean = facultyModel.getDean();
                 return dean == null ? null : dean.getFullName();
             }
         });
 
-        final ComboBox<PersonModel> deansComboBox = new ComboBox<PersonModel>();
+        final ComboBox<EmployeeModel> deansComboBox = new ComboBox<EmployeeModel>();
         deansComboBox.setAllowBlank(false);
         deansComboBox.setTriggerAction(ComboBox.TriggerAction.ALL);
         deansComboBox.setDisplayField("fullName");
 
-        RpcProxy<List<PersonModel>> proxy = new RpcProxy<List<PersonModel>>() {
+        RpcProxy<List<EmployeeModel>> proxy = new RpcProxy<List<EmployeeModel>>() {
             @Override
-            protected void load(Object loadConfig, AsyncCallback<List<PersonModel>> listAsyncCallback) {
+            protected void load(Object loadConfig, AsyncCallback<List<EmployeeModel>> listAsyncCallback) {
                 StaffService.Util.getInstance().loadDeanList(listAsyncCallback);
             }
         };
 
-        ListLoader<ListLoadResult<PersonModel>> loader = new BaseListLoader<ListLoadResult<PersonModel>>(proxy);
-        deansComboBox.setStore(new ListStore<PersonModel>(loader));
+        ListLoader<ListLoadResult<EmployeeModel>> loader = new BaseListLoader<ListLoadResult<EmployeeModel>>(proxy);
+        deansComboBox.setStore(new ListStore<EmployeeModel>(loader));
 
         deanColumnConfig.setEditor(new CellEditor(deansComboBox));
 

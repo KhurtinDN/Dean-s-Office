@@ -14,6 +14,7 @@ public class AdminEvents {
 
     public static final EventType NavigationPanelReady = new EventType();
 
+    public static final EventType InstituteSettingSelected = new EventType();
     public static final EventType UsersSettingSelected = new EventType();
     public static final EventType StaffSettingSelected = new EventType();
 

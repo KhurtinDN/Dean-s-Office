@@ -1,6 +1,8 @@
 package ru.sgu.csit.inoc.deansoffice.webui.gxt.admin.client.components;
 
-import com.extjs.gxt.ui.client.data.*;
+import com.extjs.gxt.ui.client.data.DataReader;
+import com.extjs.gxt.ui.client.data.ModelData;
+import com.extjs.gxt.ui.client.data.RpcProxy;
 import com.extjs.gxt.ui.client.event.ComponentEvent;
 import com.extjs.gxt.ui.client.store.TreeStore;
 import com.extjs.gxt.ui.client.widget.Component;
@@ -9,9 +11,9 @@ import com.extjs.gxt.ui.client.widget.layout.AccordionLayout;
 import com.extjs.gxt.ui.client.widget.treepanel.TreePanel;
 import com.google.gwt.user.client.Element;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import ru.sgu.csit.inoc.deansoffice.webui.gxt.admin.client.components.utils.Setting;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.admin.client.mvc.events.AdminEvents;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.admin.client.services.AdminService;
-import ru.sgu.csit.inoc.deansoffice.webui.gxt.admin.client.components.utils.Setting;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.model.FacultyModel;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.model.SpecialityModel;
 
@@ -57,9 +59,11 @@ public class NavigationPanel extends ContentPanel {
     private ContentPanel createGeneralSettingsPanel() {
         TreeStore<Setting> generalSettingsTreeStore = new TreeStore<Setting>();
         generalSettingsTreeStore.add(
-                new Setting("Пользователи системы", "users-icon", AdminEvents.UsersSettingSelected), false);
+                new Setting("Учебное заведение", "institution-icon", AdminEvents.InstituteSettingSelected), false);
         generalSettingsTreeStore.add(
-                new Setting("Сотрудники университета", "staff-icon", AdminEvents.StaffSettingSelected), false);
+                new Setting("Сотрудники учебного заведения", "staff-icon", AdminEvents.StaffSettingSelected), false);
+        generalSettingsTreeStore.add(
+                new Setting("Пользователи системы", "users-icon", AdminEvents.UsersSettingSelected), false);
 
         return new SettingsPanel("Основные", generalSettingsTreeStore);
     }
@@ -128,13 +132,13 @@ public class NavigationPanel extends ContentPanel {
             }
         };
 
-        return new SettingsPanel("Структура университета", proxy, reader);
+        return new SettingsPanel("Структура учебного заведения", proxy, reader);
     }
 
     public void reload() {
         for (Component component : getItems()) {
             if (component instanceof SettingsPanel) {
-                ((SettingsPanel)component).reload();
+                ((SettingsPanel) component).reload();
             }
         }
     }

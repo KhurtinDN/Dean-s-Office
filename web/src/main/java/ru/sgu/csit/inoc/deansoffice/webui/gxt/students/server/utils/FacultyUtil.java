@@ -3,8 +3,8 @@ package ru.sgu.csit.inoc.deansoffice.webui.gxt.students.server.utils;
 import ru.sgu.csit.inoc.deansoffice.domain.Employee;
 import ru.sgu.csit.inoc.deansoffice.domain.Faculty;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.server.util.PersonUtil;
+import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.model.EmployeeModel;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.model.FacultyModel;
-import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.model.PersonModel;
 
 /**
  * User: Khurtin Denis ( KhurtinDN (a) gmail.com )
@@ -25,7 +25,7 @@ public class FacultyUtil {
         Employee dean = faculty.getDean();
 
         if (dean != null) {
-            PersonModel deanModel = new PersonModel();
+            EmployeeModel deanModel = new EmployeeModel();
             PersonUtil.populatePersonModelByPerson(deanModel, dean);
 
             facultyModel.setDean(deanModel);

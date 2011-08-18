@@ -10,4 +10,5 @@ import java.util.List;
 public interface EmployeeDAO extends BaseDAO<Employee, Long> {
     Employee findDeanById(Long id);
     List<Employee> findAllDeans();
+    List<Employee> findAllRectors();
 }

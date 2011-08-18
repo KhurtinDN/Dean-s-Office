@@ -31,6 +31,7 @@ public class AdminView extends View {
     private BorderLayoutData centerLayoutData;
 
     private ContentPanel centralPanel;
+    private InstitutePanel institutePanel;
     private UserPanel usersPanel;
     private StaffPanel staffPanel;
     private FacultiesPanel facultiesPanel;
@@ -65,6 +66,8 @@ public class AdminView extends View {
             onStatusBarReady(event);
         } else if (eventType.equals(AdminEvents.NavigationPanelReady)) {
             onNavigationPanelReady(event);
+        } else if (eventType.equals(AdminEvents.InstituteSettingSelected)) {
+            onInstituteSettingSelected();
         } else if (eventType.equals(AdminEvents.UsersSettingSelected)) {
             onUsersSettingSelected();
         } else if (eventType.equals(AdminEvents.StaffSettingSelected)) {
@@ -106,6 +109,13 @@ public class AdminView extends View {
 
         ContentPanel contentPanel = event.getData();
         viewportPanel.add(contentPanel, westLayoutData);
+    }
+
+    private void onInstituteSettingSelected() {
+        if (institutePanel == null) {
+            institutePanel = new InstitutePanel();
+        }
+        setCentralPanel(institutePanel);
     }
 
     private void onUsersSettingSelected() {

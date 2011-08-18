@@ -3,7 +3,7 @@ package ru.sgu.csit.inoc.deansoffice.webui.gxt.admin.client.services;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
-import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.model.PersonModel;
+import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.model.EmployeeModel;
 
 import java.util.List;
 
@@ -15,12 +15,13 @@ import java.util.List;
 @RemoteServiceRelativePath("GWTServices/AdminStaffService")
 public interface StaffService extends RemoteService {
 
-    List<PersonModel> loadStaffList();
-    List<PersonModel> loadDeanList();
+    List<EmployeeModel> loadStaffList();
+    List<EmployeeModel> loadDeanList();
+    List<EmployeeModel> loadRectorList();
 
-    PersonModel create();
-    void update(PersonModel personModel);
-    void delete(List<Long> personIdList);
+    EmployeeModel create();
+    void update(EmployeeModel personModel);
+    void delete(List<Long> employeeIdList);
 
     public static class Util {
         private static final StaffServiceAsync ourInstance = GWT.create(StaffService.class);

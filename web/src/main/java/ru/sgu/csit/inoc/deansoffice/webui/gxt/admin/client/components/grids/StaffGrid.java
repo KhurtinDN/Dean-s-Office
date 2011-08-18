@@ -6,7 +6,7 @@ import com.extjs.gxt.ui.client.widget.form.TextField;
 import com.extjs.gxt.ui.client.widget.grid.*;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.admin.client.services.StaffService;
-import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.model.PersonModel;
+import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.model.EmployeeModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,23 +16,23 @@ import java.util.List;
  * Date: 4/19/11
  * Time: 11:15 AM
  */
-public class StaffGrid extends Grid<PersonModel> {
+public class StaffGrid extends Grid<EmployeeModel> {
     public StaffGrid() {
-        RpcProxy<List<PersonModel>> proxy = new RpcProxy<List<PersonModel>>() {
+        RpcProxy<List<EmployeeModel>> proxy = new RpcProxy<List<EmployeeModel>>() {
             @Override
-            protected void load(Object loadConfig, AsyncCallback<List<PersonModel>> listAsyncCallback) {
+            protected void load(Object loadConfig, AsyncCallback<List<EmployeeModel>> listAsyncCallback) {
                 StaffService.Util.getInstance().loadStaffList(listAsyncCallback);
             }
         };
 
-        ListLoader<ListLoadResult<PersonModel>> loader = new BaseListLoader<ListLoadResult<PersonModel>>(proxy);
+        ListLoader<ListLoadResult<EmployeeModel>> loader = new BaseListLoader<ListLoadResult<EmployeeModel>>(proxy);
 
-        this.store = new ListStore<PersonModel>(loader);
+        this.store = new ListStore<EmployeeModel>(loader);
         this.cm = createColumnModel();
         this.view = new GridView();
         disabledStyle = null;
         baseStyle = "x-grid-panel";
-        setSelectionModel(new GridSelectionModel<PersonModel>());
+        setSelectionModel(new GridSelectionModel<EmployeeModel>());
         disableTextSelection(true);
 
         setBorders(true);

@@ -1,38 +1,89 @@
 package ru.sgu.csit.inoc.deansoffice.webui.gxt.admin.client.components.info;
 
+import com.extjs.gxt.ui.client.Style;
+import com.extjs.gxt.ui.client.data.BaseListLoader;
+import com.extjs.gxt.ui.client.data.ListLoadResult;
+import com.extjs.gxt.ui.client.data.ListLoader;
+import com.extjs.gxt.ui.client.data.RpcProxy;
 import com.extjs.gxt.ui.client.event.*;
 import com.extjs.gxt.ui.client.mvc.Dispatcher;
+import com.extjs.gxt.ui.client.store.ListStore;
 import com.extjs.gxt.ui.client.util.IconHelper;
+import com.extjs.gxt.ui.client.util.Margins;
 import com.extjs.gxt.ui.client.widget.ContentPanel;
+import com.extjs.gxt.ui.client.widget.LayoutContainer;
 import com.extjs.gxt.ui.client.widget.MessageBox;
 import com.extjs.gxt.ui.client.widget.button.Button;
+import com.extjs.gxt.ui.client.widget.form.ComboBox;
+import com.extjs.gxt.ui.client.widget.form.FormPanel;
+import com.extjs.gxt.ui.client.widget.form.TextField;
 import com.extjs.gxt.ui.client.widget.grid.EditorGrid;
 import com.extjs.gxt.ui.client.widget.grid.RowEditor;
 import com.extjs.gxt.ui.client.widget.layout.FitLayout;
+import com.extjs.gxt.ui.client.widget.layout.FormLayout;
+import com.extjs.gxt.ui.client.widget.layout.RowData;
+import com.extjs.gxt.ui.client.widget.layout.RowLayout;
 import com.extjs.gxt.ui.client.widget.toolbar.SeparatorToolItem;
 import com.extjs.gxt.ui.client.widget.toolbar.ToolBar;
 import com.google.gwt.user.client.Element;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.admin.client.components.grids.StaffGrid;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.admin.client.mvc.events.AdminEvents;
+import ru.sgu.csit.inoc.deansoffice.webui.gxt.admin.client.services.AdministrationService;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.admin.client.services.StaffService;
+import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.model.AdministrationModel;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.model.EmployeeModel;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.mvc.events.CommonEvents;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.utils.BaseAsyncCallback;
+import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.utils.FormUtil;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * User: Denis Khurtin ( KhurtinDN (a) gmail.com )
- * Date: 4/15/11
- * Time: 3:11 PM
+ * @author Denis Khurtin
  */
-public class StaffPanel extends ContentPanel {
-    private StaffGrid staffGrid = new StaffGrid();
+public class InstitutePanel extends ContentPanel {
+    private final TextField<String> nameTextField = new TextField<String>();
+    private final ComboBox<EmployeeModel> rectorComboBox = new ComboBox<EmployeeModel>();
 
-    public StaffPanel() {
-        setHeading("Сотрудники университета");
-        setLayout(new FitLayout());
+    private final StaffGrid staffGrid = new StaffGrid();
+
+    private AdministrationModel currentAdministrationModel;
+
+    public InstitutePanel() {
+        setHeading("Учебное заведение");
+        setLayout(new RowLayout(Style.Orientation.VERTICAL));
+
+        nameTextField.setFieldLabel("Имя");
+        nameTextField.setAllowBlank(false);
+
+        rectorComboBox.setFieldLabel("Ректор");
+        rectorComboBox.setTriggerAction(ComboBox.TriggerAction.ALL);
+        rectorComboBox.setDisplayField("fullName");
+
+        RpcProxy<List<EmployeeModel>> proxy = new RpcProxy<List<EmployeeModel>>() {
+            @Override
+            protected void load(Object loadConfig, AsyncCallback<List<EmployeeModel>> listAsyncCallback) {
+                StaffService.Util.getInstance().loadRectorList(listAsyncCallback);
+            }
+        };
+
+        ListLoader<ListLoadResult<EmployeeModel>> loader = new BaseListLoader<ListLoadResult<EmployeeModel>>(proxy);
+        rectorComboBox.setStore(new ListStore<EmployeeModel>(loader));
+    }
+
+    @Override
+    protected void onRender(Element parent, int pos) {
+        super.onRender(parent, pos);
+
+        AdministrationService.Util.getInstance().load(new BaseAsyncCallback<AdministrationModel>() {
+            @Override
+            public void onSuccess(AdministrationModel result) {
+                currentAdministrationModel = result;
+                bind(currentAdministrationModel);
+            }
+        });
 
         final RowEditor<EmployeeModel> rowEditor = new RowEditor<EmployeeModel>();
         rowEditor.setClicksToEdit(EditorGrid.ClicksToEdit.TWO);
@@ -144,15 +195,61 @@ public class StaffPanel extends ContentPanel {
         staffGridToolBar.add(new SeparatorToolItem());
         staffGridToolBar.add(removeStaffButton);
 
+        LayoutContainer nameLayoutContainer = new LayoutContainer(new FormLayout(FormPanel.LabelAlign.TOP));
+        nameLayoutContainer.add(nameTextField, FormUtil.wFormData);
+
+        LayoutContainer rectorsLayoutContainer = new LayoutContainer(new FormLayout(FormPanel.LabelAlign.TOP));
+        rectorsLayoutContainer.add(rectorComboBox, FormUtil.wFormData);
+
+        Button saveButton = new Button("Сохранить", IconHelper.createStyle("saveButton-icon"));
+        saveButton.addSelectionListener(new SelectionListener<ButtonEvent>() {
+            @Override
+            public void componentSelected(ButtonEvent ce) {
+                currentAdministrationModel.setName(nameTextField.getValue());
+                currentAdministrationModel.setRector(rectorComboBox.getValue());
+
+                AdministrationService.Util.getInstance().update(currentAdministrationModel, new BaseAsyncCallback<Void>() {
+                    @Override
+                    public void onSuccess(Void result) {
+                        Dispatcher.forwardEvent(CommonEvents.Info, "Информация успешно изменена!");
+                        Dispatcher.forwardEvent(AdminEvents.FacultyChanged);
+                    }
+                });
+            }
+        });
+
+        Button cancelButton = new Button("Отменить", IconHelper.createStyle("cancelButton-icon"));
+        cancelButton.addSelectionListener(new SelectionListener<ButtonEvent>() {
+            @Override
+            public void componentSelected(ButtonEvent ce) {
+                bind(currentAdministrationModel);
+            }
+        });
+
+        ContentPanel administrationDataPanel = new ContentPanel(new RowLayout(Style.Orientation.HORIZONTAL));
+        administrationDataPanel.setFrame(true);
+        administrationDataPanel.setHeaderVisible(false);
+
+        administrationDataPanel.add(nameLayoutContainer, new RowData(1, 1, new Margins(0, 5, 0, 5)));
+        administrationDataPanel.add(rectorsLayoutContainer, new RowData(300, 1, new Margins(0, 5, 0, 5)));
+
+        administrationDataPanel.addButton(saveButton);
+        administrationDataPanel.addButton(cancelButton);
+
+        ContentPanel staffGridPanel = new ContentPanel(new FitLayout());
+        staffGridPanel.setHeading("Список сотрудников");
+        staffGridPanel.setTopComponent(staffGridToolBar);
+        staffGridPanel.add(staffGrid);
         setTopComponent(staffGridToolBar);
 
-        add(staffGrid);
-    }
-
-    @Override
-    protected void onRender(Element target, int index) {
-        super.onRender(target, index);
+        add(administrationDataPanel, new RowData(1, 100));
+        add(staffGridPanel, new RowData(1, 1));
 
         staffGrid.reload();
+    }
+
+    private void bind(final AdministrationModel administrationModel) {
+        nameTextField.setValue(administrationModel.getName());
+        rectorComboBox.setValue(administrationModel.getRector());
     }
 }

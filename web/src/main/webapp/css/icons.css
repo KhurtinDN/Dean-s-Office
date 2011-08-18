@@ -1,3 +1,7 @@
+.institution-icon {
+    background: url(../icons/institution16x16.png) no-repeat center left !important;
+}
+
 .users-icon {
     background: url(../icons/users16x16.png) no-repeat center left !important;
 }
