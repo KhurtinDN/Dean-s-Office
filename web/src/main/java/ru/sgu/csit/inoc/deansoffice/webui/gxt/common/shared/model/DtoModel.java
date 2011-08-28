@@ -1,6 +1,7 @@
 package ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.model;
 
 import com.extjs.gxt.ui.client.data.BaseModel;
+import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.utils.ObjectUtil;
 
 /**
  * User: Khurtin Denis (KhurtinDN@gmail.com)
@@ -8,13 +9,6 @@ import com.extjs.gxt.ui.client.data.BaseModel;
  * Time: 12:28 PM
  */
 public class DtoModel extends BaseModel {
-
-    public DtoModel() {
-    }
-
-    public DtoModel(Long id) {
-        setId(id);
-    }
 
     public Long getId() {
         return get("id");
@@ -25,20 +19,22 @@ public class DtoModel extends BaseModel {
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
+    public boolean equals(final Object model) {
+        if (this == model) {
             return true;
         }
 
-        if (obj == null) {
+        if (model == null || this.getClass() != model.getClass()) {
             return false;
         }
 
-        if (obj instanceof DtoModel) {
-            DtoModel dtoModel = (DtoModel) obj;
-            return !(getId() == null || dtoModel.getId() == null) && getId().equals(dtoModel.getId());
-        }
+        final DtoModel that = (DtoModel) model;
 
-        return super.equals(obj);
+        return ObjectUtil.equal(this.getId(), that.getId());
+    }
+
+    @Override
+    public int hashCode() {
+        return ObjectUtil.hashCode(getId());
     }
 }

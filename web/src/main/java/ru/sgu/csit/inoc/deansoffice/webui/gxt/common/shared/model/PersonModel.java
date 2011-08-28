@@ -1,23 +1,15 @@
 package ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.model;
 
+import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.utils.ObjectUtil;
+
 import java.io.Serializable;
 import java.util.Date;
 
 /**
- * User: Khurtin Denis (KhurtinDN@gmail.com)
- * Date: 2/8/11
- * Time: 11:03 AM
+ * @author Denis Khurtin
  */
-@SuppressWarnings({"UnusedDeclaration"})
 public class PersonModel extends DtoModel {
-    private Sex sex;
-
-    public PersonModel() {
-    }
-
-    public PersonModel(Long id) {
-        super(id);
-    }
+    private Sex marker;
 
     public String getFullName() {
         return get("fullName");
@@ -124,4 +116,50 @@ public class PersonModel extends DtoModel {
     }
 
     public enum Sex implements Serializable { MALE, FEMALE }
+
+    @Override
+    public boolean equals(final Object model) {
+        if (this == model) {
+            return true;
+        }
+        if (model == null || this.getClass() != model.getClass()) {
+            return false;
+        }
+
+        final PersonModel that = (PersonModel) model;
+
+        return super.equals(that) &&
+                ObjectUtil.equal(this.getFullName(), that.getFullName()) &&
+                ObjectUtil.equal(this.getLastName(), that.getLastName()) &&
+                ObjectUtil.equal(this.getFirstName(), that.getFirstName()) &&
+                ObjectUtil.equal(this.getMiddleName(), that.getMiddleName()) &&
+                ObjectUtil.equal(this.getLastNameGenitive(), that.getLastNameGenitive()) &&
+                ObjectUtil.equal(this.getFirstNameGenitive(), that.getLastNameGenitive()) &&
+                ObjectUtil.equal(this.getMiddleNameGenitive(), that.getMiddleNameGenitive()) &&
+                ObjectUtil.equal(this.getLastNameDative(), that.getLastNameDative()) &&
+                ObjectUtil.equal(this.getFirstNameDative(), that.getFirstNameDative()) &&
+                ObjectUtil.equal(this.getMiddleNameDative(), that.getMiddleNameDative()) &&
+                ObjectUtil.equal(this.getBirthday(), that.getBirthday()) &&
+                ObjectUtil.equal(this.getAddress(), that.getAddress()) &&
+                ObjectUtil.equal(this.getSex(), that.getSex());
+    }
+
+    @Override
+    public int hashCode() {
+        return ObjectUtil.hashCode(
+                super.hashCode(),
+                getFullName(),
+                getLastName(),
+                getFirstName(),
+                getMiddleName(),
+                getLastNameGenitive(),
+                getFirstNameGenitive(),
+                getMiddleNameGenitive(),
+                getLastNameDative(),
+                getFirstNameDative(),
+                getMiddleNameDative(),
+                getBirthday(),
+                getAddress(),
+                getSex());
+    }
 }

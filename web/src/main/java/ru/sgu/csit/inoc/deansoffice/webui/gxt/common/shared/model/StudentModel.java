@@ -1,23 +1,15 @@
 package ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.model;
 
+import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.utils.ObjectUtil;
+
 import java.io.Serializable;
 
 /**
- * User: Khurtin Denis (KhurtinDN@gmail.com)
- * Date: 1/27/11
- * Time: 2:02 PM
+ * @author Denis Khurtin
  */
-@SuppressWarnings({"UnusedDeclaration"})
 public class StudentModel extends PersonModel {
-    private Division division;
-    private StudyForm studyForm;
-
-    public StudentModel() {
-    }
-
-    public StudentModel(Long id) {
-        super(id);
-    }
+    private Division marker1;
+    private StudyForm marker2;
 
     public String getGroupName() {
         return get("groupName");
@@ -78,4 +70,38 @@ public class StudentModel extends PersonModel {
     public enum Division implements Serializable { INTRAMURAL, EXTRAMURAL, EVENINGSTUDY }
 
     public enum StudyForm implements Serializable { BUDGET, COMMERCIAL }
+
+    @Override
+    public boolean equals(Object model) {
+        if (this == model) {
+            return true;
+        }
+        if (model == null || this.getClass() != model.getClass()) {
+            return false;
+        }
+
+        final StudentModel that = (StudentModel) model;
+
+        return super.equals(that) &&
+                ObjectUtil.equal(this.getGroupName(), that.getSpecialityName()) &&
+                ObjectUtil.equal(this.getSpecialityName(), that.getSpecialityName()) &&
+                ObjectUtil.equal(this.getCourse(), that.getCourse()) &&
+                ObjectUtil.equal(this.getStudentIdNumber(), that.getStudentIdNumber()) &&
+                ObjectUtil.equal(this.getDivision(), that.getDivision()) &&
+                ObjectUtil.equal(this.getStudyForm(), that.getStudyForm()) &&
+                ObjectUtil.equal(this.getPhotoId(), that.getPhotoId());
+    }
+
+    @Override
+    public int hashCode() {
+        return ObjectUtil.hashCode(
+                super.hashCode(),
+                getGroupName(),
+                getSpecialityName(),
+                getCourse(),
+                getStudentIdNumber(),
+                getDivision(),
+                getStudyForm(),
+                getPhotoId());
+    }
 }

@@ -1,5 +1,7 @@
 package ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.model;
 
+import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.utils.ObjectUtil;
+
 import java.util.List;
 
 /**
@@ -101,5 +103,47 @@ public class StudentDetailsModel extends StudentModel {
 
     public void setOldAddress(String oldAddress) {
         this.oldAddress = oldAddress;
+    }
+
+    @Override
+    public boolean equals(final Object model) {
+        if (this == model) {
+            return true;
+        }
+        if (model == null || this.getClass() != model.getClass()) {
+            return false;
+        }
+
+        final StudentDetailsModel that = (StudentDetailsModel) model;
+
+        return super.equals(that) &&
+                ObjectUtil.equal(this.getGroup(), that.getGroup()) &&
+                ObjectUtil.equal(this.getSpeciality(), that.getSpeciality()) &&
+                ObjectUtil.equal(this.getBirthplace(), that.getBirthplace()) &&
+                ObjectUtil.equal(this.getEducation(), that.getEducation()) &&
+                ObjectUtil.equal(this.getWorkInfo(), that.getWorkInfo()) &&
+                ObjectUtil.equal(this.getPassports(), that.getPassports()) &&
+                ObjectUtil.equal(this.getMaritalStatus(), that.getMaritalStatus()) &&
+                ObjectUtil.equal(this.getChildrenInfo(), that.getChildrenInfo()) &&
+                ObjectUtil.equal(this.getFather(), that.getFather()) &&
+                ObjectUtil.equal(this.getMother(), that.getMother()) &&
+                ObjectUtil.equal(this.getOldAddress(), that.getOldAddress());
+    }
+
+    @Override
+    public int hashCode() {
+        return ObjectUtil.hashCode(
+                super.hashCode(),
+                getGroup(),
+                getSpeciality(),
+                getBirthplace(),
+                getEducation(),
+                getWorkInfo(),
+                getPassports(),
+                getMaritalStatus(),
+                getChildrenInfo(),
+                getFather(),
+                getMother(),
+                getOldAddress());
     }
 }

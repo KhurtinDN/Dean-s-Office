@@ -1,21 +1,12 @@
 package ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.model;
 
+import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.utils.ObjectUtil;
+
 /**
- * User: Khurtin Denis (KhurtinDN@gmail.com)
- * Date: 1/27/11
- * Time: 2:04 PM
+ * @author Denis Khurtin
  */
-@SuppressWarnings({"UnusedDeclaration"})
 public class SpecialityModel extends DtoModel {
-    private FacultyModel faculty;
-
-    public SpecialityModel() {
-    }
-
-    public SpecialityModel(Long id, String fullName) {
-        setId(id);
-        setFullName(fullName);
-    }
+    private FacultyModel marker;
 
     public String getFullName() {
         return get("fullName");
@@ -55,5 +46,35 @@ public class SpecialityModel extends DtoModel {
 
     public void setCourseCount(Integer courseCount) {
         set("courseCount", courseCount);
+    }
+
+    @Override
+    public boolean equals(final Object model) {
+        if (this == model) {
+            return true;
+        }
+        if (model == null || this.getClass() != model.getClass()) {
+            return false;
+        }
+
+        final SpecialityModel that = (SpecialityModel) model;
+
+        return super.equals(that) &&
+                ObjectUtil.equal(this.getFullName(), that.getFullName()) &&
+                ObjectUtil.equal(this.getName(), that.getName()) &&
+                ObjectUtil.equal(this.getCode(), that.getCode()) &&
+                ObjectUtil.equal(this.getFaculty(), that.getFaculty()) &&
+                ObjectUtil.equal(this.getCourseCount(), that.getFaculty());
+    }
+
+    @Override
+    public int hashCode() {
+        return ObjectUtil.hashCode(
+                super.hashCode(),
+                getFullName(),
+                getName(),
+                getCode(),
+                getFaculty(),
+                getCourseCount());
     }
 }
