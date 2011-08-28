@@ -7,22 +7,16 @@ import com.extjs.gxt.ui.client.mvc.View;
 import com.extjs.gxt.ui.client.widget.Component;
 import com.extjs.gxt.ui.client.widget.ContentPanel;
 import com.extjs.gxt.ui.client.widget.Viewport;
-import com.extjs.gxt.ui.client.widget.form.FormPanel;
 import com.extjs.gxt.ui.client.widget.layout.BorderLayout;
 import com.extjs.gxt.ui.client.widget.layout.BorderLayoutData;
 import com.extjs.gxt.ui.client.widget.layout.FitLayout;
 import com.google.gwt.user.client.ui.RootLayoutPanel;
-import ru.sgu.csit.inoc.deansoffice.webui.gxt.admin.client.components.info.*;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.admin.client.mvc.controllers.AdminController;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.admin.client.mvc.events.AdminEvents;
-import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.model.FacultyModel;
-import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.model.SpecialityModel;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.mvc.events.CommonEvents;
 
 /**
- * User: Denis Khurtin ( KhurtinDN (a) gmail.com )
- * Date: 4/12/11
- * Time: 8:26 PM
+ * @author Denis Khurtin
  */
 public class AdminView extends View {
     private Viewport viewport;
@@ -31,12 +25,6 @@ public class AdminView extends View {
     private BorderLayoutData centerLayoutData;
 
     private ContentPanel centralPanel;
-    private InstitutePanel institutePanel;
-    private UserPanel usersPanel;
-    private StaffPanel staffPanel;
-    private FacultiesPanel facultiesPanel;
-    private FacultyPanel facultyPanel;
-    private SpecialityPanel specialityPanel;
 
     public AdminView(AdminController controller) {
         super(controller);
@@ -53,8 +41,8 @@ public class AdminView extends View {
     }
 
     @Override
-    protected void handleEvent(AppEvent event) {
-        EventType eventType = event.getType();
+    protected void handleEvent(final AppEvent event) {
+        final EventType eventType = event.getType();
 
         if (eventType.equals(CommonEvents.Init)) {
             onInit();
@@ -66,18 +54,8 @@ public class AdminView extends View {
             onStatusBarReady(event);
         } else if (eventType.equals(AdminEvents.NavigationPanelReady)) {
             onNavigationPanelReady(event);
-        } else if (eventType.equals(AdminEvents.InstituteSettingSelected)) {
-            onInstituteSettingSelected();
-        } else if (eventType.equals(AdminEvents.UsersSettingSelected)) {
-            onUsersSettingSelected();
-        } else if (eventType.equals(AdminEvents.StaffSettingSelected)) {
-            onStaffSettingSelected();
-        } else if (eventType.equals(AdminEvents.FacultiesSettingSelected)) {
-            onFacultiesSettingSelected();
-        } else if (eventType.equals(AdminEvents.FacultySettingSelected)) {
-            onFacultySettingSelected(event);
-        } else if (eventType.equals(AdminEvents.SpecialitySettingSelected)) {
-            onSpecialitySettingSelected(event);
+        } else if (eventType.equals(AdminEvents.ShowSettingsPanel)) {
+            setCentralPanel(event.<ContentPanel>getData());
         }
     }
 
@@ -90,7 +68,6 @@ public class AdminView extends View {
     }
 
     private void onUIReady() {
-        setCentralPanel(new FormPanel());
         RootLayoutPanel.get().add(viewport);
     }
 
@@ -103,7 +80,7 @@ public class AdminView extends View {
     }
 
     private void onNavigationPanelReady(AppEvent event) {
-        BorderLayoutData westLayoutData = new BorderLayoutData(Style.LayoutRegion.WEST, 300, 200, 500);
+        final BorderLayoutData westLayoutData = new BorderLayoutData(Style.LayoutRegion.WEST, 300, 200, 500);
         westLayoutData.setCollapsible(true);
         westLayoutData.setSplit(true);
 
@@ -111,51 +88,7 @@ public class AdminView extends View {
         viewportPanel.add(contentPanel, westLayoutData);
     }
 
-    private void onInstituteSettingSelected() {
-        if (institutePanel == null) {
-            institutePanel = new InstitutePanel();
-        }
-        setCentralPanel(institutePanel);
-    }
-
-    private void onUsersSettingSelected() {
-        if (usersPanel == null) {
-            usersPanel = new UserPanel();
-        }
-        setCentralPanel(usersPanel);
-    }
-
-    private void onStaffSettingSelected() {
-        if (staffPanel == null) {
-            staffPanel = new StaffPanel();
-        }
-        setCentralPanel(staffPanel);
-    }
-
-    private void onFacultiesSettingSelected() {
-        if (facultiesPanel == null) {
-            facultiesPanel = new FacultiesPanel();
-        }
-        setCentralPanel(facultiesPanel);
-    }
-
-    private void onFacultySettingSelected(AppEvent event) {
-        if (facultyPanel == null) {
-            facultyPanel = new FacultyPanel();
-        }
-        facultyPanel.bind(event.<FacultyModel>getData());
-        setCentralPanel(facultyPanel);
-    }
-
-    private void onSpecialitySettingSelected(AppEvent event) {
-        if (specialityPanel == null) {
-            specialityPanel = new SpecialityPanel();
-        }
-        specialityPanel.bind(event.<SpecialityModel>getData());
-        setCentralPanel(specialityPanel);
-    }
-
-    private void setCentralPanel(ContentPanel panel) {
+    private void setCentralPanel(final ContentPanel panel) {
         if (panel != centralPanel) {
             if (centralPanel != null) {
                 viewportPanel.remove(centralPanel);

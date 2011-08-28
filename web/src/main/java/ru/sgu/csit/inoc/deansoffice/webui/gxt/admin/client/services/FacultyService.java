@@ -16,8 +16,7 @@ import java.util.List;
 public interface FacultyService extends RemoteService {
     List<FacultyModel> loadFaculties();
 
-    FacultyModel createFaculty();
-    void updateFaculty(FacultyModel facultyModel);
+    FacultyModel saveOrUpdate(FacultyModel employeeModel);
     void deleteFaculties(List<Long> facultyIdList);
 
     public static class Util {

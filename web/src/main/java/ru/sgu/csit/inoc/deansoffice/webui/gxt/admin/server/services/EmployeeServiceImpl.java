@@ -5,26 +5,24 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.sgu.csit.inoc.deansoffice.dao.EmployeeDAO;
 import ru.sgu.csit.inoc.deansoffice.domain.Employee;
-import ru.sgu.csit.inoc.deansoffice.webui.gxt.admin.client.services.StaffService;
+import ru.sgu.csit.inoc.deansoffice.webui.gxt.admin.client.services.EmployeeService;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.admin.server.utils.EmployeeUtil;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.model.EmployeeModel;
 
 import java.util.List;
 
 /**
- * User: Denis Khurtin ( KhurtinDN (a) gmail.com )
- * Date: 4/16/11
- * Time: 11:40 AM
+ * @author Denis Khurtin
  */
 @Service("AdminStaffService")
-public class StaffServiceImpl implements StaffService {
+public class EmployeeServiceImpl implements EmployeeService {
 
     @Autowired
     private EmployeeDAO employeeDAO;
 
     @Override
     public List<EmployeeModel> loadStaffList() {
-        List<Employee> employeeList = employeeDAO.findAll();
+        final List<Employee> employeeList = employeeDAO.findAll();
 
         return EmployeeUtil.convertEmployeeListToEmployeeModelList(employeeList);
     }
@@ -44,31 +42,23 @@ public class StaffServiceImpl implements StaffService {
     }
 
     @Override
-    public EmployeeModel create() {
-        final Employee employee = new Employee();
-
-        employeeDAO.save(employee);
-
-        return EmployeeUtil.convertEmployeeToEmployeeModel(employee);
-    }
-
-    @Override
-    public void update(EmployeeModel employeeModel) {
+    public EmployeeModel saveOrUpdate(EmployeeModel employeeModel) {
         Validate.notNull(employeeModel, "employeeModel is null");
-        Validate.notNull(employeeModel.getId(), "employeeModelId is null");
 
-        final Employee employee = employeeDAO.findById(employeeModel.getId());
+        final Employee employee = new Employee();
 
         EmployeeUtil.populateEmployeeByEmployeeModel(employee, employeeModel);
 
-        employeeDAO.update(employee);
+        employeeDAO.saveOrUpdate(employee);
+
+        return EmployeeUtil.convertEmployeeToEmployeeModel(employee);
     }
 
     @Override
     public void delete(List<Long> employeeIdList) {
         Validate.noNullElements(employeeIdList, "EmployeeId list is null or contains null element.");
 
-        for (Long id : employeeIdList) {
+        for (final Long id : employeeIdList) {
             employeeDAO.deleteById(id);
         }
     }

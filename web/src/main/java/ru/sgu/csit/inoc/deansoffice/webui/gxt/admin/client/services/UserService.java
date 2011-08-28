@@ -4,6 +4,7 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.model.UserModel;
+import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.utils.BaseAsyncCallback;
 
 import java.util.List;
 
@@ -17,8 +18,7 @@ public interface UserService extends RemoteService {
 
     List<UserModel> loadUsers();
 
-    UserModel create();
-    void update(UserModel userModel);
+    UserModel saveOrUpdate(UserModel userModel);
     void delete(List<Long> userIdList);
 
     public static class Util {

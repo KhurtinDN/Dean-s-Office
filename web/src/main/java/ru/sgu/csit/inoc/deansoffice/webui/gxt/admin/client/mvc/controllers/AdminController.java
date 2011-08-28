@@ -18,10 +18,7 @@ public class AdminController extends Controller {
         registerEventTypes(CommonEvents.Init, AdminEvents.UIReady, CommonEvents.Error);
         registerEventTypes(AdminEvents.NavigationPanelReady);
         registerEventTypes(AdminEvents.MenuBarReady, AdminEvents.StatusBarReady);
-        registerEventTypes(AdminEvents.InstituteSettingSelected);
-        registerEventTypes(AdminEvents.UsersSettingSelected, AdminEvents.StaffSettingSelected);
-        registerEventTypes(AdminEvents.FacultiesSettingSelected, AdminEvents.FacultySettingSelected);
-        registerEventTypes(AdminEvents.SpecialitySettingSelected);
+        registerEventTypes(AdminEvents.ShowSettingsPanel);
     }
 
     @Override
@@ -32,7 +29,7 @@ public class AdminController extends Controller {
     }
 
     @Override
-    public void handleEvent(AppEvent event) {
+    public void handleEvent(final AppEvent event) {
         forwardToView(adminView, event);
     }
 }

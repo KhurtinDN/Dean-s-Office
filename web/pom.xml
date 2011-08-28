@@ -118,13 +118,19 @@
                             <goal>generateAsync</goal>
                             <goal>compile</goal>
                             <goal>test</goal>
-                            <!--<goal>i18n</goal>-->
+                            <goal>i18n</goal>
                         </goals>
                     </execution>
                 </executions>
                 <configuration>
                     <runTarget>DeansOffice.html</runTarget>
                     <hostedWebapp>${webappDirectory}</hostedWebapp>
+
+                    <i18nMessagesBundles>
+                        <i18nMessagesBundle>
+                            ru.sgu.csit.inoc.deansoffice.webui.gxt.admin.client.AdminMessages
+                        </i18nMessagesBundle>
+                    </i18nMessagesBundles>
                 </configuration>
             </plugin>
         </plugins>

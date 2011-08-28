@@ -9,7 +9,12 @@ import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.model.EmployeeModel;
  */
 public class AdministrationUtil {
     public static AdministrationModel convertAdministrationModelToAdministration(final Administration administration) {
+        if (administration == null) {
+            return null;
+        }
+
         final AdministrationModel administrationModel = new AdministrationModel();
+        administrationModel.setId(administration.getId());
         administrationModel.setName(administration.getName());
 
         final EmployeeModel rectorModel = EmployeeUtil.convertEmployeeToEmployeeModel(administration.getRector());

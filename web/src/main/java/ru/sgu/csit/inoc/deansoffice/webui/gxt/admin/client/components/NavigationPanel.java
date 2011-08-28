@@ -22,9 +22,7 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * User: Denis Khurtin ( KhurtinDN (a) gmail.com )
- * Date: 4/12/11
- * Time: 2:45 PM
+ * @author Denis Khurtin
  */
 public class NavigationPanel extends ContentPanel {
     public NavigationPanel() {
@@ -60,8 +58,6 @@ public class NavigationPanel extends ContentPanel {
         TreeStore<Setting> generalSettingsTreeStore = new TreeStore<Setting>();
         generalSettingsTreeStore.add(
                 new Setting("Учебное заведение", "institution-icon", AdminEvents.InstituteSettingSelected), false);
-        generalSettingsTreeStore.add(
-                new Setting("Сотрудники учебного заведения", "staff-icon", AdminEvents.StaffSettingSelected), false);
         generalSettingsTreeStore.add(
                 new Setting("Пользователи системы", "users-icon", AdminEvents.UsersSettingSelected), false);
 

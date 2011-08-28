@@ -17,8 +17,7 @@ public interface GroupService extends RemoteService {
 
     List<GroupModel> loadGroups(Long specialityId);
 
-    GroupModel create(Long specialityId);
-    void update(GroupModel groupModel);
+    GroupModel saveOrUpdate(GroupModel groupModel);
     void delete(List<Long> groupIdList);
 
     public static class Util {

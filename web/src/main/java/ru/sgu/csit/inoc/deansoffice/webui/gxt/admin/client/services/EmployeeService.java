@@ -13,20 +13,19 @@ import java.util.List;
  * Time: 11:39 AM
  */
 @RemoteServiceRelativePath("GWTServices/AdminStaffService")
-public interface StaffService extends RemoteService {
+public interface EmployeeService extends RemoteService {
 
     List<EmployeeModel> loadStaffList();
     List<EmployeeModel> loadDeanList();
     List<EmployeeModel> loadRectorList();
 
-    EmployeeModel create();
-    void update(EmployeeModel personModel);
+    EmployeeModel saveOrUpdate(EmployeeModel employeeModel);
     void delete(List<Long> employeeIdList);
 
     public static class Util {
-        private static final StaffServiceAsync ourInstance = GWT.create(StaffService.class);
+        private static final EmployeeServiceAsync ourInstance = GWT.create(EmployeeService.class);
 
-        public static StaffServiceAsync getInstance() {
+        public static EmployeeServiceAsync getInstance() {
             return ourInstance;
         }
     }

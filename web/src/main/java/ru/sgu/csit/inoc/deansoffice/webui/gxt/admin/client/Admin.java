@@ -8,15 +8,17 @@ import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.mvc.controllers.Mess
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.mvc.events.CommonEvents;
 
 /**
- * User: hd ( KhurtinDN (a) gmail.com )
- * Date: 4/9/11
- * Time: 4:36 PM
+ * @author Denis Khurtin
  */
 public class Admin implements EntryPoint {
     public void onModuleLoad() {
-        Dispatcher dispatcher = Dispatcher.get();
+        final Dispatcher dispatcher = Dispatcher.get();
 
         dispatcher.addController(new AdminController());
+        dispatcher.addController(new InstituteController());
+        dispatcher.addController(new UserController());
+        dispatcher.addController(new FacultyController());
+        dispatcher.addController(new SpecialityController());
         dispatcher.addController(new AdminNavigationController());
         dispatcher.addController(new AdminMenuBarController());
         dispatcher.addController(new AdminStatusBarController());

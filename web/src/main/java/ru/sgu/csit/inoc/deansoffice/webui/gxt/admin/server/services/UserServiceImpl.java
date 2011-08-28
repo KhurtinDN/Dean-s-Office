@@ -15,6 +15,7 @@ import java.util.List;
 @Service("AdminUserService")
 public class UserServiceImpl implements UserService {
     private List<UserModel> users = new ArrayList<UserModel>(); // todo: implement
+
     {
         UserModel userModel = new UserModel();
         userModel.setId((long) users.size());
@@ -43,18 +44,22 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserModel create() {
-        UserModel userModel = new UserModel();
-        userModel.setId((long) users.size());
+    public UserModel saveOrUpdate(UserModel userModel) {
+        if (userModel.getId() != null) {
+            users.set(userModel.getId().intValue(), userModel);
+        } else {
+            userModel.setId((long) users.size());
+            users.add(userModel);
+        }
 
-        users.add(userModel);
+        userModel.setFullName(
+                new StringBuilder()
+                        .append(userModel.getLastName()).append(' ')
+                        .append(userModel.getFirstName()).append(' ')
+                        .append(userModel.getMiddleName()).append(' ')
+                        .toString());
 
         return userModel;
-    }
-
-    @Override
-    public void update(UserModel userModel) {
-        users.set(userModel.getId().intValue(), userModel);
     }
 
     @Override

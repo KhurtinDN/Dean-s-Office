@@ -1,5 +1,6 @@
 package ru.sgu.csit.inoc.deansoffice.webui.gxt.admin.server.utils;
 
+import org.apache.commons.lang.Validate;
 import ru.sgu.csit.inoc.deansoffice.domain.Employee;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.server.util.PersonUtil;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.model.EmployeeModel;
@@ -31,7 +32,7 @@ public class EmployeeUtil extends PersonUtil {
 
         final List<EmployeeModel> employeeModelList = new ArrayList<EmployeeModel>(employees.size());
 
-        for (Employee employee : employees) {
+        for (final Employee employee : employees) {
             final EmployeeModel employeeModel = convertEmployeeToEmployeeModel(employee);
             employeeModelList.add(employeeModel);
         }
@@ -40,6 +41,9 @@ public class EmployeeUtil extends PersonUtil {
     }
 
     public static void populateEmployeeByEmployeeModel(final Employee employee, final EmployeeModel employeeModel) {
+        Validate.notNull(employee, "employee is null");
+        Validate.notNull(employeeModel, "employeeModel is null");
+
         populatePersonByPersonModel(employee, employeeModel);
         employee.setDegree(employeeModel.getDegree());
         employee.setPosition(employeeModel.getPosition());

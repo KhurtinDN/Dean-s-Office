@@ -18,8 +18,7 @@ public interface SpecialityService extends RemoteService {
     List<SpecialityModel> loadSpecialities(Long facultyId);
     SpecialityModel loadSpeciality(Long specialityId);
 
-    SpecialityModel createSpeciality(Long facultyId);
-    void updateSpeciality(SpecialityModel specialityModel);
+    SpecialityModel saveOrUpdate(SpecialityModel specialityModel);
     void deleteSpecialities(List<Long> specialityIdList);
 
     public static class Util {

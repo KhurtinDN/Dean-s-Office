@@ -1,5 +1,6 @@
 package ru.sgu.csit.inoc.deansoffice.webui.gxt.common.server.util;
 
+import org.apache.commons.lang.Validate;
 import ru.sgu.csit.inoc.deansoffice.domain.Person;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.model.PersonModel;
 
@@ -9,10 +10,9 @@ import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.model.PersonModel;
  * Time: 3:33 PM
  */
 public class PersonUtil {
-    public static void populatePersonModelByPerson(PersonModel personModel, Person person) {
-        if (personModel == null || person == null) {
-            throw new IllegalArgumentException("Argument must be not null");
-        }
+    public static void populatePersonModelByPerson(final PersonModel personModel, final Person person) {
+        Validate.notNull(person, "person is null");
+        Validate.notNull(personModel, "personModel is null");
 
         personModel.setId(person.getId());
         personModel.setFirstName(person.getFirstName());
@@ -23,10 +23,9 @@ public class PersonUtil {
         personModel.setSex( convertPersonSexToPersonModelSex(person.getSex()));
     }
 
-    public static void populatePersonByPersonModel(Person person, PersonModel personModel) {
-        if (person == null || personModel == null) {
-            throw new IllegalArgumentException("Argument must be not null");
-        }
+    public static void populatePersonByPersonModel(final Person person, final PersonModel personModel) {
+        Validate.notNull(person, "person is null");
+        Validate.notNull(personModel, "personModel is null");
 
         person.setId(personModel.getId());
         person.setFirstName(personModel.getFirstName());

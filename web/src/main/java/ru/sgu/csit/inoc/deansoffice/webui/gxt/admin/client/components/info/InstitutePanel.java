@@ -5,7 +5,10 @@ import com.extjs.gxt.ui.client.data.BaseListLoader;
 import com.extjs.gxt.ui.client.data.ListLoadResult;
 import com.extjs.gxt.ui.client.data.ListLoader;
 import com.extjs.gxt.ui.client.data.RpcProxy;
-import com.extjs.gxt.ui.client.event.*;
+import com.extjs.gxt.ui.client.event.ButtonEvent;
+import com.extjs.gxt.ui.client.event.Listener;
+import com.extjs.gxt.ui.client.event.MessageBoxEvent;
+import com.extjs.gxt.ui.client.event.SelectionListener;
 import com.extjs.gxt.ui.client.mvc.Dispatcher;
 import com.extjs.gxt.ui.client.store.ListStore;
 import com.extjs.gxt.ui.client.util.IconHelper;
@@ -17,8 +20,6 @@ import com.extjs.gxt.ui.client.widget.button.Button;
 import com.extjs.gxt.ui.client.widget.form.ComboBox;
 import com.extjs.gxt.ui.client.widget.form.FormPanel;
 import com.extjs.gxt.ui.client.widget.form.TextField;
-import com.extjs.gxt.ui.client.widget.grid.EditorGrid;
-import com.extjs.gxt.ui.client.widget.grid.RowEditor;
 import com.extjs.gxt.ui.client.widget.layout.FitLayout;
 import com.extjs.gxt.ui.client.widget.layout.FormLayout;
 import com.extjs.gxt.ui.client.widget.layout.RowData;
@@ -27,10 +28,11 @@ import com.extjs.gxt.ui.client.widget.toolbar.SeparatorToolItem;
 import com.extjs.gxt.ui.client.widget.toolbar.ToolBar;
 import com.google.gwt.user.client.Element;
 import com.google.gwt.user.client.rpc.AsyncCallback;
-import ru.sgu.csit.inoc.deansoffice.webui.gxt.admin.client.components.grids.StaffGrid;
+import ru.sgu.csit.inoc.deansoffice.webui.gxt.admin.client.components.dialogs.EmployeeDialog;
+import ru.sgu.csit.inoc.deansoffice.webui.gxt.admin.client.components.grids.EmployeeGrid;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.admin.client.mvc.events.AdminEvents;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.admin.client.services.AdministrationService;
-import ru.sgu.csit.inoc.deansoffice.webui.gxt.admin.client.services.StaffService;
+import ru.sgu.csit.inoc.deansoffice.webui.gxt.admin.client.services.EmployeeService;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.model.AdministrationModel;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.model.EmployeeModel;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.mvc.events.CommonEvents;
@@ -40,6 +42,8 @@ import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.utils.FormUtil;
 import java.util.ArrayList;
 import java.util.List;
 
+import static ru.sgu.csit.inoc.deansoffice.webui.gxt.admin.client.AdminConstants.MESSAGES;
+
 /**
  * @author Denis Khurtin
  */
@@ -47,29 +51,29 @@ public class InstitutePanel extends ContentPanel {
     private final TextField<String> nameTextField = new TextField<String>();
     private final ComboBox<EmployeeModel> rectorComboBox = new ComboBox<EmployeeModel>();
 
-    private final StaffGrid staffGrid = new StaffGrid();
+    private final EmployeeGrid employeeGrid = new EmployeeGrid();
 
     private AdministrationModel currentAdministrationModel;
 
     public InstitutePanel() {
-        setHeading("Учебное заведение");
+        setHeading(MESSAGES.institutionHeading());
         setLayout(new RowLayout(Style.Orientation.VERTICAL));
 
-        nameTextField.setFieldLabel("Имя");
+        nameTextField.setFieldLabel(MESSAGES.name());
         nameTextField.setAllowBlank(false);
 
-        rectorComboBox.setFieldLabel("Ректор");
+        rectorComboBox.setFieldLabel(MESSAGES.rector());
         rectorComboBox.setTriggerAction(ComboBox.TriggerAction.ALL);
         rectorComboBox.setDisplayField("fullName");
 
-        RpcProxy<List<EmployeeModel>> proxy = new RpcProxy<List<EmployeeModel>>() {
+        final RpcProxy<List<EmployeeModel>> proxy = new RpcProxy<List<EmployeeModel>>() {
             @Override
             protected void load(Object loadConfig, AsyncCallback<List<EmployeeModel>> listAsyncCallback) {
-                StaffService.Util.getInstance().loadRectorList(listAsyncCallback);
+                EmployeeService.Util.getInstance().loadRectorList(listAsyncCallback);
             }
         };
 
-        ListLoader<ListLoadResult<EmployeeModel>> loader = new BaseListLoader<ListLoadResult<EmployeeModel>>(proxy);
+        final ListLoader<ListLoadResult<EmployeeModel>> loader = new BaseListLoader<ListLoadResult<EmployeeModel>>(proxy);
         rectorComboBox.setStore(new ListStore<EmployeeModel>(loader));
     }
 
@@ -77,110 +81,54 @@ public class InstitutePanel extends ContentPanel {
     protected void onRender(Element parent, int pos) {
         super.onRender(parent, pos);
 
-        AdministrationService.Util.getInstance().load(new BaseAsyncCallback<AdministrationModel>() {
+        final Button addEmployeeButton = new Button(MESSAGES.add(), IconHelper.createStyle("addButton-icon"));
+        addEmployeeButton.addSelectionListener(new SelectionListener<ButtonEvent>() {
             @Override
-            public void onSuccess(AdministrationModel result) {
-                currentAdministrationModel = result;
-                bind(currentAdministrationModel);
+            public void componentSelected(final ButtonEvent ce) {
+                final EmployeeDialog employeeDialog = new EmployeeDialog();
+                employeeDialog.show();
             }
         });
 
-        final RowEditor<EmployeeModel> rowEditor = new RowEditor<EmployeeModel>();
-        rowEditor.setClicksToEdit(EditorGrid.ClicksToEdit.TWO);
-        rowEditor.addListener(Events.AfterEdit, new Listener<RowEditorEvent>() {
+        final Button editEmployeeButton = new Button(MESSAGES.edit(), IconHelper.createStyle("editButton-icon"));
+        editEmployeeButton.addSelectionListener(new SelectionListener<ButtonEvent>() {
             @Override
-            public void handleEvent(RowEditorEvent rowEditorEvent) {
-                mask("Сохраниние измененного сотрудника");
-
-                final EmployeeModel employeeModel = (EmployeeModel) rowEditorEvent.getRecord().getModel();
-
-                StaffService.Util.getInstance().update(employeeModel, new BaseAsyncCallback<Void>() {
-                    @Override
-                    public void onSuccess(Void result) {
-                        staffGrid.getStore().commitChanges();
-                        unmask();
-                        Dispatcher.forwardEvent(CommonEvents.Info, "Сотрудник успешно изменен!");
-                        Dispatcher.forwardEvent(AdminEvents.StaffChanged);
-                    }
-                });
-            }
-        });
-
-        staffGrid.addPlugin(rowEditor);
-
-        final Button addStaffButton = new Button("Добавить", IconHelper.createStyle("addButton-icon"));
-        addStaffButton.addSelectionListener(new SelectionListener<ButtonEvent>() {
-            @Override
-            public void componentSelected(ButtonEvent ce) {
-                rowEditor.stopEditing(false);
-                mask("Добавление нового сотрудника");
-
-                StaffService.Util.getInstance().create(new BaseAsyncCallback<EmployeeModel>() {
-                    @Override
-                    public void onSuccess(EmployeeModel employeeModel) {
-                        staffGrid.getStore().add(employeeModel);
-                        rowEditor.startEditing(staffGrid.getStore().indexOf(employeeModel), true);
-                        unmask();
-
-                        Dispatcher.forwardEvent(CommonEvents.Info, "Сотрудник успешно добавлен!");
-                        Dispatcher.forwardEvent(AdminEvents.StaffAdded);
-                    }
-                });
-            }
-        });
-
-        final Button editStaffButton = new Button("Редактировать", IconHelper.createStyle("editButton-icon"));
-        editStaffButton.addSelectionListener(new SelectionListener<ButtonEvent>() {
-            @Override
-            public void componentSelected(ButtonEvent ce) {
-
-                final EmployeeModel employeeModel = staffGrid.getSelectionModel().getSelectedItem();
+            public void componentSelected(final ButtonEvent ce) {
+                final EmployeeModel employeeModel = employeeGrid.getSelectionModel().getSelectedItem();
 
                 if (employeeModel == null) {
-                    Dispatcher.forwardEvent(CommonEvents.InfoWithConfirmation, "Выберите, пожалуйста, сотрудника!");
+                    Dispatcher.forwardEvent(CommonEvents.InfoWithConfirmation, MESSAGES.selectEmployeePlease());
                 } else {
-                    rowEditor.startEditing(staffGrid.getStore().indexOf(employeeModel), true);
+                    final EmployeeDialog employeeDialog = new EmployeeDialog(employeeModel);
+                    employeeDialog.show();
                 }
             }
         });
 
-        final Button removeStaffButton = new Button("Удалить", IconHelper.createStyle("removeButton-icon"));
-        removeStaffButton.addSelectionListener(new SelectionListener<ButtonEvent>() {
+        final Button removeEmployeesButton = new Button(MESSAGES.delete(), IconHelper.createStyle("removeButton-icon"));
+        removeEmployeesButton.addSelectionListener(new SelectionListener<ButtonEvent>() {
             @Override
-            public void componentSelected(ButtonEvent ce) {
-                final List<EmployeeModel> staffList = staffGrid.getSelectionModel().getSelectedItems();
+            public void componentSelected(final ButtonEvent ce) {
+                final List<EmployeeModel> employeeList = employeeGrid.getSelectionModel().getSelectedItems();
 
-                if (staffList.isEmpty()) {
-                    Dispatcher.forwardEvent(CommonEvents.InfoWithConfirmation, "Выберите, пожалуйста, сотрудников!");
+                if (employeeList.isEmpty()) {
+                    Dispatcher.forwardEvent(CommonEvents.InfoWithConfirmation, MESSAGES.selectEmployeesPlease());
                 } else {
-                    final List<Long> employeeIdList = new ArrayList<Long>(staffList.size());
+                    final StringBuilder message = new StringBuilder(MESSAGES.deleteEmployeesConfirm());
+                    message.append("<br>").append("<br>");
 
-                    for (EmployeeModel employeeModel : staffList) {
-                        employeeIdList.add(employeeModel.getId());
+                    for (int i = 0; i < employeeList.size(); ++i) {
+                        message.append(i + 1).append(". ").append(employeeList.get(i).getFullName()).append("<br>");
                     }
 
-                    MessageBox.confirm("Удаление сотрудников",
-                            "Вы действително хотите удалить выбранных сотрудников?",
+                    MessageBox.confirm(
+                            MESSAGES.deletingEmployees(),
+                            message.toString(),
                             new Listener<MessageBoxEvent>() {
                                 @Override
                                 public void handleEvent(MessageBoxEvent be) {
                                     if (be.getDialog().yesText.equals(be.getButtonClicked().getText())) {
-                                        rowEditor.stopEditing(false);
-                                        mask("Удаление выбранных сотрудников");
-
-                                        StaffService.Util.getInstance().delete(employeeIdList,
-                                                new BaseAsyncCallback<Void>() {
-                                                    @Override
-                                                    public void onSuccess(Void result) {
-                                                        for (EmployeeModel employeeModel : staffList) {
-                                                            staffGrid.getStore().remove(employeeModel);
-                                                        }
-
-                                                        unmask();
-                                                        Dispatcher.forwardEvent(CommonEvents.Info, "Сотрудники успешно удалены!");
-                                                        Dispatcher.forwardEvent(AdminEvents.StaffDeleted);
-                                                    }
-                                                });
+                                        delete(employeeList);
                                     }
                                 }
                             });
@@ -189,63 +137,107 @@ public class InstitutePanel extends ContentPanel {
         });
 
         final ToolBar staffGridToolBar = new ToolBar();
-        staffGridToolBar.add(addStaffButton);
+        staffGridToolBar.add(addEmployeeButton);
         staffGridToolBar.add(new SeparatorToolItem());
-        staffGridToolBar.add(editStaffButton);
+        staffGridToolBar.add(editEmployeeButton);
         staffGridToolBar.add(new SeparatorToolItem());
-        staffGridToolBar.add(removeStaffButton);
+        staffGridToolBar.add(removeEmployeesButton);
 
-        LayoutContainer nameLayoutContainer = new LayoutContainer(new FormLayout(FormPanel.LabelAlign.TOP));
+        final LayoutContainer nameLayoutContainer = new LayoutContainer(new FormLayout(FormPanel.LabelAlign.TOP));
         nameLayoutContainer.add(nameTextField, FormUtil.wFormData);
 
-        LayoutContainer rectorsLayoutContainer = new LayoutContainer(new FormLayout(FormPanel.LabelAlign.TOP));
+        final LayoutContainer rectorsLayoutContainer = new LayoutContainer(new FormLayout(FormPanel.LabelAlign.TOP));
         rectorsLayoutContainer.add(rectorComboBox, FormUtil.wFormData);
 
-        Button saveButton = new Button("Сохранить", IconHelper.createStyle("saveButton-icon"));
+        final Button saveButton = new Button(MESSAGES.save(), IconHelper.createStyle("saveButton-icon"));
         saveButton.addSelectionListener(new SelectionListener<ButtonEvent>() {
             @Override
-            public void componentSelected(ButtonEvent ce) {
+            public void componentSelected(final ButtonEvent ce) {
+                mask(MESSAGES.saving());
+
                 currentAdministrationModel.setName(nameTextField.getValue());
                 currentAdministrationModel.setRector(rectorComboBox.getValue());
 
-                AdministrationService.Util.getInstance().update(currentAdministrationModel, new BaseAsyncCallback<Void>() {
-                    @Override
-                    public void onSuccess(Void result) {
-                        Dispatcher.forwardEvent(CommonEvents.Info, "Информация успешно изменена!");
-                        Dispatcher.forwardEvent(AdminEvents.FacultyChanged);
-                    }
-                });
+                AdministrationService.Util.getInstance().update(
+                        currentAdministrationModel,
+                        new BaseAsyncCallback<Void>() {
+                            @Override
+                            public void onSuccess(Void result) {
+                                Dispatcher.forwardEvent(CommonEvents.Info, MESSAGES.editInstitutionSuccessMessage());
+                                Dispatcher.forwardEvent(AdminEvents.InstitutionChanged);
+
+                                unmask();
+                            }
+                        });
             }
         });
 
-        Button cancelButton = new Button("Отменить", IconHelper.createStyle("cancelButton-icon"));
+        final Button cancelButton = new Button(MESSAGES.cancel(), IconHelper.createStyle("cancelButton-icon"));
         cancelButton.addSelectionListener(new SelectionListener<ButtonEvent>() {
             @Override
-            public void componentSelected(ButtonEvent ce) {
+            public void componentSelected(final ButtonEvent ce) {
                 bind(currentAdministrationModel);
             }
         });
 
-        ContentPanel administrationDataPanel = new ContentPanel(new RowLayout(Style.Orientation.HORIZONTAL));
-        administrationDataPanel.setFrame(true);
-        administrationDataPanel.setHeaderVisible(false);
+        final ContentPanel administrationPanel = new ContentPanel(new RowLayout(Style.Orientation.HORIZONTAL));
+        administrationPanel.setFrame(true);
+        administrationPanel.setHeaderVisible(false);
 
-        administrationDataPanel.add(nameLayoutContainer, new RowData(1, 1, new Margins(0, 5, 0, 5)));
-        administrationDataPanel.add(rectorsLayoutContainer, new RowData(300, 1, new Margins(0, 5, 0, 5)));
+        administrationPanel.add(nameLayoutContainer, new RowData(1, 1, new Margins(0, 5, 0, 5)));
+        administrationPanel.add(rectorsLayoutContainer, new RowData(300, 1, new Margins(0, 5, 0, 5)));
 
-        administrationDataPanel.addButton(saveButton);
-        administrationDataPanel.addButton(cancelButton);
+        administrationPanel.addButton(saveButton);
+        administrationPanel.addButton(cancelButton);
 
-        ContentPanel staffGridPanel = new ContentPanel(new FitLayout());
-        staffGridPanel.setHeading("Список сотрудников");
+        final ContentPanel staffGridPanel = new ContentPanel(new FitLayout());
+        staffGridPanel.setHeading(MESSAGES.employeeListHeading());
         staffGridPanel.setTopComponent(staffGridToolBar);
-        staffGridPanel.add(staffGrid);
+        staffGridPanel.add(employeeGrid);
         setTopComponent(staffGridToolBar);
 
-        add(administrationDataPanel, new RowData(1, 100));
+        add(administrationPanel, new RowData(1, 100));
         add(staffGridPanel, new RowData(1, 1));
+    }
 
-        staffGrid.reload();
+    public void reload() {
+        mask(MESSAGES.loading());
+
+        AdministrationService.Util.getInstance().load(new BaseAsyncCallback<AdministrationModel>() {
+            @Override
+            public void onSuccess(final AdministrationModel result) {
+                currentAdministrationModel = result;
+                bind(currentAdministrationModel);
+
+                unmask();
+
+                employeeGrid.reload();
+            }
+        });
+    }
+
+    private void delete(final List<EmployeeModel> staffList) {
+        final List<Long> employeeIdList = new ArrayList<Long>(staffList.size());
+
+        for (final EmployeeModel employeeModel : staffList) {
+            employeeIdList.add(employeeModel.getId());
+        }
+
+        mask(MESSAGES.deletingSelectedEmployees());
+
+        EmployeeService.Util.getInstance().delete(employeeIdList, new BaseAsyncCallback<Void>() {
+            @Override
+            public void onSuccess(final Void result) {
+                for (final EmployeeModel employeeModel : staffList) {
+                    employeeGrid.getStore().remove(employeeModel);
+                }
+
+                unmask();
+
+                Dispatcher.forwardEvent(CommonEvents.Info, MESSAGES.deleteEmployeesSuccess());
+                Dispatcher.forwardEvent(AdminEvents.EmployeesDeleted);
+            }
+        });
     }
 
     private void bind(final AdministrationModel administrationModel) {

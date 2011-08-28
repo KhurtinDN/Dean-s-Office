@@ -3,9 +3,7 @@ package ru.sgu.csit.inoc.deansoffice.webui.gxt.admin.client.mvc.events;
 import com.extjs.gxt.ui.client.event.EventType;
 
 /**
- * User: Denis Khurtin ( KhurtinDN (a) gmail.com )
- * Date: 4/12/11
- * Time: 8:23 PM
+ * @author Denis Khurtin
  */
 public class AdminEvents {
     public static final EventType UIReady = new EventType();
@@ -16,11 +14,12 @@ public class AdminEvents {
 
     public static final EventType InstituteSettingSelected = new EventType();
     public static final EventType UsersSettingSelected = new EventType();
-    public static final EventType StaffSettingSelected = new EventType();
 
     public static final EventType FacultiesSettingSelected = new EventType();
     public static final EventType FacultySettingSelected = new EventType();
     public static final EventType SpecialitySettingSelected = new EventType();
+
+    public static final EventType InstitutionChanged = new EventType();
 
     public static final EventType FacultyAdded = new EventType();
     public static final EventType FacultyChanged = new EventType();
@@ -36,9 +35,11 @@ public class AdminEvents {
 
     public static final EventType UserAdded = new EventType();
     public static final EventType UserChanged = new EventType();
-    public static final EventType UserDeleted = new EventType();
+    public static final EventType UsersDeleted = new EventType();
 
-    public static final EventType StaffAdded = new EventType();
-    public static final EventType StaffChanged = new EventType();
-    public static final EventType StaffDeleted = new EventType();
+    public static final EventType EmployeeAdded = new EventType();
+    public static final EventType EmployeeChanged = new EventType();
+    public static final EventType EmployeesDeleted = new EventType();
+
+    public static final EventType ShowSettingsPanel = new EventType();
 }

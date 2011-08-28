@@ -12,12 +12,16 @@ import com.extjs.gxt.ui.client.widget.layout.HBoxLayoutData;
 public class FormUtil {
     public static FormData formData = new FormData();
     public static FormData wFormData = new FormData("100%");
+    public static FormData w5FormData = new FormData("100%");
+    public static FormData w5h5FormData = new FormData("100%");
     public static FormData wh10FormData = new FormData("100%");
     public static FormData h10FormData = new FormData();
     public static FormData wh5FormData = new FormData("100%");
     public static FormData wrFormData = new FormData("100%");
 
     static {
+        w5FormData.setMargins(new Margins(5, 5, 0, 5));
+        w5h5FormData.setMargins(new Margins(5, 5, 5, 5));
         wh10FormData.setMargins(new Margins(0, 0, 10, 0));
         h10FormData.setMargins(new Margins(0, 0, 10, 0));
         wh5FormData.setMargins(new Margins(0, 0, 5, 0));

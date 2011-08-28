@@ -8,7 +8,7 @@ import com.extjs.gxt.ui.client.widget.grid.*;
 import com.google.gwt.user.client.Element;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.admin.client.services.FacultyService;
-import ru.sgu.csit.inoc.deansoffice.webui.gxt.admin.client.services.StaffService;
+import ru.sgu.csit.inoc.deansoffice.webui.gxt.admin.client.services.EmployeeService;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.model.EmployeeModel;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.model.FacultyModel;
 
@@ -16,9 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * User: Denis Khurtin ( KhurtinDN (a) gmail.com )
- * Date: 4/18/11
- * Time: 1:22 PM
+ * @author Denis Khurtin
  */
 public class FacultiesGrid extends Grid<FacultyModel> {
 
@@ -97,7 +95,7 @@ public class FacultiesGrid extends Grid<FacultyModel> {
         RpcProxy<List<EmployeeModel>> proxy = new RpcProxy<List<EmployeeModel>>() {
             @Override
             protected void load(Object loadConfig, AsyncCallback<List<EmployeeModel>> listAsyncCallback) {
-                StaffService.Util.getInstance().loadDeanList(listAsyncCallback);
+                EmployeeService.Util.getInstance().loadDeanList(listAsyncCallback);
             }
         };
 

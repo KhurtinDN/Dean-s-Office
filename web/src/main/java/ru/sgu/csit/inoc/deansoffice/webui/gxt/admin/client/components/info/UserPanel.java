@@ -1,17 +1,19 @@
 package ru.sgu.csit.inoc.deansoffice.webui.gxt.admin.client.components.info;
 
-import com.extjs.gxt.ui.client.event.*;
+import com.extjs.gxt.ui.client.event.ButtonEvent;
+import com.extjs.gxt.ui.client.event.Listener;
+import com.extjs.gxt.ui.client.event.MessageBoxEvent;
+import com.extjs.gxt.ui.client.event.SelectionListener;
 import com.extjs.gxt.ui.client.mvc.Dispatcher;
 import com.extjs.gxt.ui.client.util.IconHelper;
 import com.extjs.gxt.ui.client.widget.ContentPanel;
 import com.extjs.gxt.ui.client.widget.MessageBox;
 import com.extjs.gxt.ui.client.widget.button.Button;
-import com.extjs.gxt.ui.client.widget.grid.EditorGrid;
-import com.extjs.gxt.ui.client.widget.grid.RowEditor;
 import com.extjs.gxt.ui.client.widget.layout.FitLayout;
 import com.extjs.gxt.ui.client.widget.toolbar.SeparatorToolItem;
 import com.extjs.gxt.ui.client.widget.toolbar.ToolBar;
 import com.google.gwt.user.client.Element;
+import ru.sgu.csit.inoc.deansoffice.webui.gxt.admin.client.components.dialogs.UserDialog;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.admin.client.components.grids.UsersGrid;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.admin.client.mvc.events.AdminEvents;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.admin.client.services.UserService;
@@ -22,114 +24,72 @@ import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.utils.BaseAsyncCallb
 import java.util.ArrayList;
 import java.util.List;
 
+import static ru.sgu.csit.inoc.deansoffice.webui.gxt.admin.client.AdminConstants.MESSAGES;
+
 /**
- * User: Denis Khurtin ( KhurtinDN (a) gmail.com )
- * Date: 4/15/11
- * Time: 3:11 PM
+ * @author Denis Khurtin
  */
 public class UserPanel extends ContentPanel {
-    private UsersGrid usersGrid = new UsersGrid();
+    private final UsersGrid usersGrid = new UsersGrid();
 
     public UserPanel() {
         setHeading("Пользователи системы");
         setLayout(new FitLayout());
+    }
 
-        final RowEditor<UserModel> rowEditor = new RowEditor<UserModel>();
-        rowEditor.setClicksToEdit(EditorGrid.ClicksToEdit.TWO);
-        rowEditor.addListener(Events.AfterEdit, new Listener<RowEditorEvent>() {
-            @Override
-            public void handleEvent(RowEditorEvent rowEditorEvent) {
-                mask("Сохраниние измененного пользователя");
+    @Override
+    protected void onRender(Element target, int index) {
+        super.onRender(target, index);
 
-                UserModel userModel = (UserModel) rowEditorEvent.getRecord().getModel();
-
-                UserService.Util.getInstance().update(userModel, new BaseAsyncCallback<Void>() {
-                    @Override
-                    public void onSuccess(Void result) {
-                        usersGrid.getStore().commitChanges();
-                        unmask();
-                        Dispatcher.forwardEvent(CommonEvents.Info, "Пользователь успешно изменен!");
-                        Dispatcher.forwardEvent(AdminEvents.UserChanged);
-                    }
-                });
-            }
-        });
-
-        usersGrid.addPlugin(rowEditor);
-
-        Button addUserButton = new Button("Добавить", IconHelper.createStyle("addButton-icon"));
+        final Button addUserButton = new Button(MESSAGES.add(), IconHelper.createStyle("addButton-icon"));
         addUserButton.addSelectionListener(new SelectionListener<ButtonEvent>() {
             @Override
-            public void componentSelected(ButtonEvent ce) {
-                rowEditor.stopEditing(false);
-                mask("Добавление нового пользователя");
-
-                UserService.Util.getInstance().create(new BaseAsyncCallback<UserModel>() {
-                    @Override
-                    public void onSuccess(UserModel userModel) {
-                        usersGrid.getStore().add(userModel);
-                        rowEditor.startEditing(usersGrid.getStore().indexOf(userModel), true);
-                        unmask();
-
-                        Dispatcher.forwardEvent(CommonEvents.Info, "Пользователь успешно добавлен!");
-                        Dispatcher.forwardEvent(AdminEvents.UserAdded);
-                    }
-                });
+            public void componentSelected(final ButtonEvent ce) {
+                final UserDialog userDialog = new UserDialog();
+                userDialog.show();
             }
         });
 
-        Button editUserButton = new Button("Редактировать", IconHelper.createStyle("editButton-icon"));
+        final Button editUserButton = new Button(MESSAGES.edit(), IconHelper.createStyle("editButton-icon"));
         editUserButton.addSelectionListener(new SelectionListener<ButtonEvent>() {
             @Override
-            public void componentSelected(ButtonEvent ce) {
+            public void componentSelected(final ButtonEvent ce) {
 
-                UserModel userModel = usersGrid.getSelectionModel().getSelectedItem();
+                final UserModel userModel = usersGrid.getSelectionModel().getSelectedItem();
 
                 if (userModel == null) {
-                    Dispatcher.forwardEvent(CommonEvents.InfoWithConfirmation, "Выберите, пожалуйста, пользователя!");
+                    Dispatcher.forwardEvent(CommonEvents.InfoWithConfirmation, MESSAGES.selectUserPlease());
                 } else {
-                    rowEditor.startEditing(usersGrid.getStore().indexOf(userModel), true);
+                    final UserDialog userDialog = new UserDialog(userModel);
+                    userDialog.show();
                 }
             }
         });
 
-        Button removeUserButton = new Button("Удалить", IconHelper.createStyle("removeButton-icon"));
+        final Button removeUserButton = new Button(MESSAGES.delete(), IconHelper.createStyle("removeButton-icon"));
         removeUserButton.addSelectionListener(new SelectionListener<ButtonEvent>() {
             @Override
             public void componentSelected(ButtonEvent ce) {
                 final List<UserModel> userList = usersGrid.getSelectionModel().getSelectedItems();
 
                 if (userList.isEmpty()) {
-                    Dispatcher.forwardEvent(CommonEvents.InfoWithConfirmation, "Выберите, пожалуйста, пользователей!");
+                    Dispatcher.forwardEvent(CommonEvents.InfoWithConfirmation, MESSAGES.selectUsersPlease());
                 } else {
-                    final List<Long> userIdList = new ArrayList<Long>(userList.size());
+                    final StringBuilder message = new StringBuilder(MESSAGES.deleteFacultiesConfirm());
+                    message.append("<br>").append("<br>");
 
-                    for (UserModel userModel : userList) {
-                        userIdList.add(userModel.getId());
+                    for (int i = 0; i < userList.size(); ++i) {
+                        message.append(i + 1).append(". ").append(userList.get(i).getFullName()).append("<br>");
                     }
 
-                    MessageBox.confirm("Удаление пользователей",
-                            "Вы действително хотите удалить выбранных пользователей?",
+                    MessageBox.confirm(
+                            MESSAGES.deletingUsers(),
+                            message.toString(),
                             new Listener<MessageBoxEvent>() {
                                 @Override
                                 public void handleEvent(MessageBoxEvent be) {
                                     if (be.getDialog().yesText.equals(be.getButtonClicked().getText())) {
-                                        rowEditor.stopEditing(false);
-                                        mask("Удаление выбранных пользователей");
-
-                                        UserService.Util.getInstance().delete(userIdList,
-                                                new BaseAsyncCallback<Void>() {
-                                                    @Override
-                                                    public void onSuccess(Void result) {
-                                                        for (UserModel userModel : userList) {
-                                                            usersGrid.getStore().remove(userModel);
-                                                        }
-
-                                                        unmask();
-                                                        Dispatcher.forwardEvent(CommonEvents.Info, "Пользователи успешно удалены!");
-                                                        Dispatcher.forwardEvent(AdminEvents.UserDeleted);
-                                                    }
-                                                });
+                                        delete(userList);
                                     }
                                 }
                             });
@@ -137,22 +97,47 @@ public class UserPanel extends ContentPanel {
             }
         });
 
-        ToolBar userGridToolBar = new ToolBar();
+        final ToolBar userGridToolBar = new ToolBar();
         userGridToolBar.add(addUserButton);
         userGridToolBar.add(new SeparatorToolItem());
         userGridToolBar.add(editUserButton);
         userGridToolBar.add(new SeparatorToolItem());
         userGridToolBar.add(removeUserButton);
 
-        setTopComponent(userGridToolBar);
+        final ContentPanel facultiesGridPanel = new ContentPanel(new FitLayout());
+        facultiesGridPanel.setHeaderVisible(false);
+        facultiesGridPanel.setTopComponent(userGridToolBar);
+        facultiesGridPanel.add(usersGrid);
 
-        add(usersGrid);
+        add(facultiesGridPanel);
     }
 
-    @Override
-    protected void onRender(Element target, int index) {
-        super.onRender(target, index);
+    private void delete(final List<UserModel> userList) {
+        final List<Long> userIdList = new ArrayList<Long>(userList.size());
 
+        for (final UserModel userModel : userList) {
+            userIdList.add(userModel.getId());
+        }
+
+        mask(MESSAGES.deletingSelectedUsers());
+
+        UserService.Util.getInstance().delete(userIdList,
+                new BaseAsyncCallback<Void>() {
+                    @Override
+                    public void onSuccess(final Void result) {
+                        for (final UserModel userModel : userList) {
+                            usersGrid.getStore().remove(userModel);
+                        }
+
+                        unmask();
+
+                        Dispatcher.forwardEvent(CommonEvents.Info, MESSAGES.deleteUsersSuccess());
+                        Dispatcher.forwardEvent(AdminEvents.UsersDeleted);
+                    }
+                });
+    }
+
+    public void reload() {
         usersGrid.reload();
     }
 }
