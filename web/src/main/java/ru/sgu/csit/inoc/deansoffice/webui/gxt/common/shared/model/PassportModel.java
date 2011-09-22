@@ -10,7 +10,7 @@ import java.util.Date;
 public class PassportModel extends PersonModel {
 
     public boolean isActual() {
-        return (Boolean) get("actual");
+        return get("actual") == null ? false : (Boolean) get("actual");
     }
 
     public void setActual(final boolean actual) {
