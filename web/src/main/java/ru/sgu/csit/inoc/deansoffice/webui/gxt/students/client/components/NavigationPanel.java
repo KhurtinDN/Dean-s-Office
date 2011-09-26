@@ -17,6 +17,7 @@ import com.extjs.gxt.ui.client.widget.layout.FitLayout;
 import com.extjs.gxt.ui.client.widget.layout.VBoxLayout;
 import com.extjs.gxt.ui.client.widget.treepanel.TreePanel;
 import com.google.gwt.user.client.Element;
+import com.google.gwt.user.client.ui.AbstractImagePrototype;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.utils.BaseAsyncCallback;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.constants.AppConstants;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.mvc.events.StudentEvents;
@@ -97,10 +98,20 @@ public class NavigationPanel extends ContentPanel {
                 TreeStore<BaseModel> treeStore = new TreeStore<BaseModel>();
                 TreePanel<BaseModel> treePanel = new TreePanel<BaseModel>(treeStore);
                 treePanel.setDisplayProperty("name");
-                treePanel.getStyle().setNodeOpenIcon(IconHelper.createStyle("speciality-icon"));
-                treePanel.getStyle().setNodeCloseIcon(IconHelper.createStyle("speciality-icon"));
-                treePanel.getStyle().setLeafIcon(IconHelper.createStyle("group-icon"));
+                treePanel.setIconProvider(new ModelIconProvider<BaseModel>() {
+                    @Override
+                    public AbstractImagePrototype getIcon(final BaseModel model) {
+                        AbstractImagePrototype imagePrototype = null;
 
+                        if (model instanceof SpecialityModel) {
+                            imagePrototype = IconHelper.createStyle("speciality-icon");
+                        } else if (model instanceof GroupModel) {
+                            imagePrototype = IconHelper.createStyle("group-icon");
+                        }
+
+                        return imagePrototype;
+                    }
+                });
                 treePanel.getSelectionModel().addSelectionChangedListener(studentsPanel == null ?
                         new DefaultSelectionChangedListener(course) :
                         new StudentPanelSelectionChangedListener(studentsPanel, course));
