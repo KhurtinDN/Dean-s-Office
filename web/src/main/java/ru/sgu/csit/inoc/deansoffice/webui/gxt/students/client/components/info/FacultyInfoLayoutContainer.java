@@ -19,7 +19,7 @@ public class FacultyInfoLayoutContainer extends LayoutContainer {
         super.onRender(parent, index);
 
         FieldSet fieldSet = new FieldSet();
-        fieldSet.setHeading("Инфомация о факультете");
+        fieldSet.setHeading("Информация о факультете");
         FormLayout formLayout = new FormLayout();
         formLayout.setLabelWidth(140);
         fieldSet.setLayout(formLayout);
