@@ -12,7 +12,7 @@ public class UserController extends Controller {
     private UserView userView;
 
     public UserController() {
-        registerEventTypes(AdminEvents.UsersSettingSelected);
+        registerEventTypes(AdminEvents.UsersSettingSelected, AdminEvents.ShowSettingsPanel);
         registerEventTypes(AdminEvents.UserAdded, AdminEvents.UserChanged, AdminEvents.UsersDeleted);
     }
 

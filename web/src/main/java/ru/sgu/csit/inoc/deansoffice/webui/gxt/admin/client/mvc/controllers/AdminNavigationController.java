@@ -18,6 +18,7 @@ public class AdminNavigationController extends Controller {
         registerEventTypes(CommonEvents.Init);
         registerEventTypes(AdminEvents.FacultyAdded, AdminEvents.FacultyChanged, AdminEvents.FacultiesDeleted);
         registerEventTypes(AdminEvents.SpecialityAdded, AdminEvents.SpecialityChanged, AdminEvents.SpecialitiesDeleted);
+        registerEventTypes(AdminEvents.GroupAdded, AdminEvents.GroupChanged, AdminEvents.GroupsDeleted);
     }
 
     @Override

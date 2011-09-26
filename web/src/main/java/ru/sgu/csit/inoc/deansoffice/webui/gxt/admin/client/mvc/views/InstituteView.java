@@ -13,6 +13,7 @@ import ru.sgu.csit.inoc.deansoffice.webui.gxt.admin.client.mvc.events.AdminEvent
  */
 public class InstituteView extends View {
     private InstitutePanel institutePanel;
+    private boolean active;
 
     public InstituteView(final InstituteController instituteController) {
         super(instituteController);
@@ -32,11 +33,23 @@ public class InstituteView extends View {
         if (eventType.equals(AdminEvents.InstituteSettingSelected)) {
             Dispatcher.forwardEvent(AdminEvents.ShowSettingsPanel, institutePanel);
             institutePanel.reload();
+        } else if (eventType.equals(AdminEvents.ShowSettingsPanel)) {
+            onShowSettingsPanel(event);
         } else if (eventType.equals(AdminEvents.EmployeeAdded)) {
-            institutePanel.reload();
+            reloadInstitutionPanel();
         } else if (eventType.equals(AdminEvents.EmployeeChanged)) {
-            institutePanel.reload();
+            reloadInstitutionPanel();
         } else if (eventType.equals(AdminEvents.EmployeesDeleted)) {
+            reloadInstitutionPanel();
+        }
+    }
+
+    private void onShowSettingsPanel(final AppEvent event) {
+        active = institutePanel == event.getData();
+    }
+
+    private void reloadInstitutionPanel() {
+        if (active) {
             institutePanel.reload();
         }
     }

@@ -18,6 +18,7 @@ public class AdminEvents {
     public static final EventType FacultiesSettingSelected = new EventType();
     public static final EventType FacultySettingSelected = new EventType();
     public static final EventType SpecialitySettingSelected = new EventType();
+    public static final EventType GroupSettingSelected = new EventType();
 
     public static final EventType InstitutionChanged = new EventType();
 
@@ -32,6 +33,10 @@ public class AdminEvents {
     public static final EventType GroupAdded = new EventType();
     public static final EventType GroupChanged = new EventType();
     public static final EventType GroupsDeleted = new EventType();
+
+    public static final EventType StudentAdded = new EventType();
+    public static final EventType StudentChanged = new EventType();
+    public static final EventType StudentsDeleted = new EventType();
 
     public static final EventType UserAdded = new EventType();
     public static final EventType UserChanged = new EventType();

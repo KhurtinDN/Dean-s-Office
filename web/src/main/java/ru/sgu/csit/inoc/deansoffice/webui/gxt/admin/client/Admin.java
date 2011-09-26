@@ -19,6 +19,7 @@ public class Admin implements EntryPoint {
         dispatcher.addController(new UserController());
         dispatcher.addController(new FacultyController());
         dispatcher.addController(new SpecialityController());
+        dispatcher.addController(new GroupController());
         dispatcher.addController(new AdminNavigationController());
         dispatcher.addController(new AdminMenuBarController());
         dispatcher.addController(new AdminStatusBarController());

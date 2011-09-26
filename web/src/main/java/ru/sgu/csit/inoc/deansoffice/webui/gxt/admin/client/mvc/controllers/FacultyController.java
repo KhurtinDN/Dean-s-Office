@@ -13,6 +13,7 @@ public class FacultyController extends Controller {
 
     public FacultyController() {
         registerEventTypes(AdminEvents.FacultiesSettingSelected, AdminEvents.FacultySettingSelected);
+        registerEventTypes(AdminEvents.ShowSettingsPanel);
         registerEventTypes(AdminEvents.FacultyAdded, AdminEvents.FacultyChanged, AdminEvents.FacultiesDeleted);
         registerEventTypes(AdminEvents.SpecialityAdded, AdminEvents.SpecialityChanged, AdminEvents.SpecialitiesDeleted);
     }

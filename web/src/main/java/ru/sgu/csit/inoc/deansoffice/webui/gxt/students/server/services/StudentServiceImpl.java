@@ -2,10 +2,11 @@ package ru.sgu.csit.inoc.deansoffice.webui.gxt.students.server.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ru.sgu.csit.inoc.deansoffice.dao.*;
-import ru.sgu.csit.inoc.deansoffice.domain.Group;
+import ru.sgu.csit.inoc.deansoffice.dao.AdditionalStudentDataDAO;
+import ru.sgu.csit.inoc.deansoffice.dao.ParentDAO;
+import ru.sgu.csit.inoc.deansoffice.dao.PassportDAO;
+import ru.sgu.csit.inoc.deansoffice.dao.StudentDAO;
 import ru.sgu.csit.inoc.deansoffice.domain.Passport;
-import ru.sgu.csit.inoc.deansoffice.domain.Speciality;
 import ru.sgu.csit.inoc.deansoffice.domain.Student;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.model.StudentDetailsModel;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.model.StudentModel;
@@ -29,10 +30,6 @@ public class StudentServiceImpl implements StudentService {
     private AdditionalStudentDataDAO additionalStudentDataDAO;
     @Autowired
     private ParentDAO parentDAO;
-    @Autowired
-    private SpecialityDAO specialitytDAO;
-    @Autowired
-    private GroupDAO groupDAO;
 
     @Override
     public List<StudentModel> loadStudentList(Long groupId) {
@@ -78,35 +75,5 @@ public class StudentServiceImpl implements StudentService {
         }
 
         studentDAO.update(student);
-    }
-
-    @Override
-    public void saveStudent(StudentModel studentModel) {
-        Student student = new Student(); //studentDAO.findById(studentModel.getId());
-        StudentUtil.populateStudentByStudentModel(student, studentModel);
-
-        if (student.getSpeciality() == null) {
-            List<Speciality> specialities = specialitytDAO.findByShortName(studentModel.getSpecialityName());
-            if (specialities == null || specialities.size() != 1) {
-                throw new RuntimeException("Specialty not specified.");
-            }
-            student.setSpeciality(specialities.get(0));
-        }
-        if (student.getGroup() == null) {
-            List<Group> groups = groupDAO.findByName(studentModel.getGroupName());
-            if (groups == null || groups.size() != 1) {
-                throw new RuntimeException("Group not specified.");
-            }
-            student.setGroup(groups.get(0));
-        }
-
-        studentDAO.save(student);
-    }
-
-    @Override
-    public void deleteStudents(List<Long> studentIdList) {
-        for (Long studentId : studentIdList) {
-            studentDAO.deleteById(studentId);
-        }
     }
 }

@@ -20,9 +20,6 @@ public interface StudentService extends RemoteService {
     StudentDetailsModel loadStudentDetails(Long studentId);
     void saveStudentDetails(StudentDetailsModel studentDetailsModel);
 
-    void saveStudent(StudentModel studentModel);
-    void deleteStudents(List<Long> studentIdList);
-
     public static class Util {
         private static final StudentServiceAsync ourInstance = GWT.create(StudentService.class);
 

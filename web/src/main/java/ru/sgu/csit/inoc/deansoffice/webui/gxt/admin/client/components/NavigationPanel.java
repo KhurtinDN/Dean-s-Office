@@ -15,6 +15,7 @@ import ru.sgu.csit.inoc.deansoffice.webui.gxt.admin.client.components.utils.Sett
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.admin.client.mvc.events.AdminEvents;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.admin.client.services.AdminService;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.model.FacultyModel;
+import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.model.GroupModel;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.model.SpecialityModel;
 
 import java.util.ArrayList;
@@ -29,13 +30,13 @@ public class NavigationPanel extends ContentPanel {
         setHeading("Настройки");
         setLayout(new AccordionLayout() {
             @Override
-            protected void onBeforeExpand(ComponentEvent ce) {
+            protected void onBeforeExpand(final ComponentEvent ce) {
                 super.onBeforeExpand(ce);
 
-                for (Component item : container.getItems()) {
+                for (final Component item : container.getItems()) {
                     if (item instanceof ContentPanel) {
                         ContentPanel contentPanel = (ContentPanel) item;
-                        for (Component component : contentPanel.getItems()) {
+                        for (final Component component : contentPanel.getItems()) {
                             if (component instanceof TreePanel) {
                                 ((TreePanel) component).getSelectionModel().deselectAll();
                             }
@@ -47,7 +48,7 @@ public class NavigationPanel extends ContentPanel {
     }
 
     @Override
-    protected void onRender(Element parent, int pos) {
+    protected void onRender(final Element parent, final int pos) {
         super.onRender(parent, pos);
 
         add(createGeneralSettingsPanel());
@@ -55,7 +56,7 @@ public class NavigationPanel extends ContentPanel {
     }
 
     private ContentPanel createGeneralSettingsPanel() {
-        TreeStore<Setting> generalSettingsTreeStore = new TreeStore<Setting>();
+        final TreeStore<Setting> generalSettingsTreeStore = new TreeStore<Setting>();
         generalSettingsTreeStore.add(
                 new Setting("Учебное заведение", "institution-icon", AdminEvents.InstituteSettingSelected), false);
         generalSettingsTreeStore.add(
@@ -65,31 +66,35 @@ public class NavigationPanel extends ContentPanel {
     }
 
     private ContentPanel createUniversityStructureSettingsPanel() {
-        RpcProxy<List<ModelData>> proxy = new RpcProxy<List<ModelData>>() {
+        final RpcProxy<List<ModelData>> proxy = new RpcProxy<List<ModelData>>() {
             @Override
-            protected void load(Object loadConfig, AsyncCallback<List<ModelData>> settingAsyncCallback) {
+            protected void load(final Object loadConfig, final AsyncCallback<List<ModelData>> settingAsyncCallback) {
                 if (loadConfig == null) {
                     settingAsyncCallback.onSuccess(null);
                 } else if (loadConfig instanceof Setting) {
-                    Setting setting = (Setting) loadConfig;
+                    final Setting setting = (Setting) loadConfig;
 
                     if (setting.getData().equals("faculties")) {
                         AdminService.Util.getInstance().loadFaculties(settingAsyncCallback);
                     } else if (setting.getData() instanceof FacultyModel) {
-                        Long facultyId = ((FacultyModel) setting.getData()).getId();
+                        final Long facultyId = ((FacultyModel) setting.getData()).getId();
 
                         AdminService.Util.getInstance().loadSpecialities(facultyId, settingAsyncCallback);
+                    } else if (setting.getData() instanceof SpecialityModel) {
+                        final Long specialityId = ((SpecialityModel) setting.getData()).getId();
+
+                        AdminService.Util.getInstance().loadGroups(specialityId, settingAsyncCallback);
                     }
                 }
             }
         };
 
-        DataReader<List<Setting>> reader = new DataReader<List<Setting>>() {
+        final DataReader<List<Setting>> reader = new DataReader<List<Setting>>() {
             @SuppressWarnings({"unchecked"})
             @Override
             public List<Setting> read(Object loadConfig, Object data) {
                 if (loadConfig == null) {
-                    Setting facultiesSetting = new Setting("Факультеты", "faculties-icon");
+                    final Setting facultiesSetting = new Setting("Факультеты", "faculties-icon");
                     facultiesSetting.setEventType(AdminEvents.FacultiesSettingSelected);
                     facultiesSetting.setData("faculties");
                     facultiesSetting.setChildren(true);
@@ -98,24 +103,32 @@ public class NavigationPanel extends ContentPanel {
                 }
 
                 if (loadConfig instanceof Setting && data instanceof List) {
-                    Setting setting = (Setting) loadConfig;
+                    final Setting setting = (Setting) loadConfig;
 
-                    List<Setting> settings = new ArrayList<Setting>();
+                    final List<Setting> settings = new ArrayList<Setting>();
 
                     if (setting.getData().equals("faculties")) {
-                        for (FacultyModel facultyModel : (List<FacultyModel>) data) {
-                            Setting facultySetting = new Setting(facultyModel.getName(), "faculty-icon");
+                        for (final FacultyModel facultyModel : (List<FacultyModel>) data) {
+                            final Setting facultySetting = new Setting(facultyModel.getName(), "faculty-icon");
                             facultySetting.setEventType(AdminEvents.FacultySettingSelected);
                             facultySetting.setData(facultyModel);
                             facultySetting.setChildren(true);
                             settings.add(facultySetting);
                         }
                     } else if (setting.getData() instanceof FacultyModel) {
-                        for (SpecialityModel specialityModel : (List<SpecialityModel>) data) {
-                            Setting specialitySetting = new Setting(specialityModel.getName(), "speciality-icon");
+                        for (final SpecialityModel specialityModel : (List<SpecialityModel>) data) {
+                            final Setting specialitySetting = new Setting(specialityModel.getName(), "speciality-icon");
                             specialitySetting.setEventType(AdminEvents.SpecialitySettingSelected);
                             specialitySetting.setData(specialityModel);
+                            specialitySetting.setChildren(true);
                             settings.add(specialitySetting);
+                        }
+                    } else if (setting.getData() instanceof SpecialityModel) {
+                        for (final GroupModel groupModel : (List<GroupModel>) data) {
+                            final Setting groupSetting = new Setting(groupModel.getName(), "group-icon");
+                            groupSetting.setEventType(AdminEvents.GroupSettingSelected);
+                            groupSetting.setData(groupModel);
+                            settings.add(groupSetting);
                         }
                     }
 
@@ -132,7 +145,7 @@ public class NavigationPanel extends ContentPanel {
     }
 
     public void reload() {
-        for (Component component : getItems()) {
+        for (final Component component : getItems()) {
             if (component instanceof SettingsPanel) {
                 ((SettingsPanel) component).reload();
             }

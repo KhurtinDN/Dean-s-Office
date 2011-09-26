@@ -8,8 +8,17 @@ import java.io.Serializable;
  * @author Denis Khurtin
  */
 public class StudentModel extends PersonModel {
-    private Division marker1;
-    private StudyForm marker2;
+    private GroupModel marker1;
+    private Division marker2;
+    private StudyForm marker3;
+
+    public GroupModel getGroup() {
+        return get("group");
+    }
+
+    public void setGroup(final GroupModel groupModel) {
+        set("group", groupModel);
+    }
 
     public String getGroupName() {
         return get("groupName");

@@ -12,34 +12,37 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * User: Khurtin Denis ( KhurtinDN (a) gmail.com )
- * Date: 2/11/11
- * Time: 3:13 PM
+ * @author Khurtin Denis
  */
 public class StudentUtil extends PersonUtil {
+    public static StudentModel convertStudentToStudentModel(Student student) {
+        final StudentModel studentModel = new StudentModel();
+        populatePersonModelByPerson(studentModel, student);
+
+        studentModel.setStudentIdNumber(student.getStudentIdNumber());
+        studentModel.setDivision( convertStudentDivisionToStudentModelDivision(student.getDivision()));
+        studentModel.setStudyForm(convertStudentStudyFormToStudentModelStudyForm(student.getStudyForm()));
+
+        studentModel.setGroupName(student.getGroup().getName());
+        studentModel.setSpecialityName(student.getSpeciality().getName());
+        studentModel.setCourse(student.getGroup().getCourse());
+
+        if (student.getAdditionalData() != null && student.getAdditionalData().getPhoto() != null) {
+            studentModel.setPhotoId(student.getAdditionalData().getPhoto().getId());
+        }
+
+        return studentModel;
+    }
+
     public static List<StudentModel> convertStudentsToStudentModels(List<Student> studentList) {
         if (studentList == null) {
             return null;
         }
 
-        List<StudentModel> studentModelList = new ArrayList<StudentModel>(studentList.size());
+        final List<StudentModel> studentModelList = new ArrayList<StudentModel>(studentList.size());
 
         for (Student student : studentList) {
-            StudentModel studentModel = new StudentModel();
-            populatePersonModelByPerson(studentModel, student);
-
-            studentModel.setStudentIdNumber(student.getStudentIdNumber());
-            studentModel.setDivision( convertStudentDivisionToStudentModelDivision(student.getDivision()));
-            studentModel.setStudyForm(convertStudentStudyFormToStudentModelStudyForm(student.getStudyForm()));
-
-            studentModel.setGroupName(student.getGroup().getName());
-            studentModel.setSpecialityName(student.getSpeciality().getName());
-            studentModel.setCourse(student.getGroup().getCourse());
-
-            if (student.getAdditionalData() != null && student.getAdditionalData().getPhoto() != null) {
-                studentModel.setPhotoId(student.getAdditionalData().getPhoto().getId());
-            }
-
+            final StudentModel studentModel = convertStudentToStudentModel(student);
             studentModelList.add(studentModel);
         }
 
@@ -178,33 +181,6 @@ public class StudentUtil extends PersonUtil {
 
             additionalStudentData.setMother(mother);
         }
-    }
-
-    public static void populateStudentByStudentModel(Student student, StudentModel studentModel) {
-        if (student == null || studentModel == null) {
-            throw new IllegalArgumentException("Arguments must be not null.");
-        }
-
-        student.setFirstName(studentModel.getFirstName());
-        student.setFirstNameGenitive(studentModel.getFirstNameGenitive());
-        student.setFirstNameDative(studentModel.getFirstNameDative());
-
-        student.setLastName(studentModel.getLastName());
-        student.setLastNameGenitive(studentModel.getLastNameGenitive());
-        student.setLastNameDative(studentModel.getLastNameDative());
-
-        student.setMiddleName(studentModel.getMiddleName());
-        student.setMiddleNameGenitive(studentModel.getMiddleNameGenitive());
-        student.setMiddleNameDative(studentModel.getMiddleNameDative());
-
-        Student.AdditionalStudentData additionalStudentData = student.getAdditionalData();
-        if (additionalStudentData == null) {
-            additionalStudentData = new Student.AdditionalStudentData();
-        }
-        student.setAdditionalData(additionalStudentData);
-
-        student.setDivision(convertStudentModelDivisionToStudentDivision(studentModel.getDivision()));
-        student.setStudyForm(convertStudentModelStudyFormStudentStudyForm(studentModel.getStudyForm()));
     }
 
     public static Student.Division convertStudentModelDivisionToStudentDivision(StudentModel.Division division) {

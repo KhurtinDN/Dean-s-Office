@@ -13,6 +13,7 @@ import ru.sgu.csit.inoc.deansoffice.webui.gxt.admin.client.mvc.events.AdminEvent
  */
 public class UserView extends View {
     private UserPanel userPanel;
+    private boolean active;
 
     public UserView(final UserController controller) {
         super(controller);
@@ -31,17 +32,29 @@ public class UserView extends View {
 
         if (eventType.equals(AdminEvents.UsersSettingSelected)) {
             onUsersSettingSelected();
+        } else if (eventType.equals(AdminEvents.ShowSettingsPanel)) {
+            onShowSettingsPanel(event);
         } else if (eventType.equals(AdminEvents.UserAdded)) {
-            userPanel.reload();
+            reloadUserPanel();
         } else if (eventType.equals(AdminEvents.UserChanged)) {
-            userPanel.reload();
+            reloadUserPanel();
         } else if (eventType.equals(AdminEvents.UsersDeleted)) {
-            userPanel.reload();
+            reloadUserPanel();
         }
     }
 
     private void onUsersSettingSelected() {
         Dispatcher.forwardEvent(AdminEvents.ShowSettingsPanel, userPanel);
         userPanel.reload();
+    }
+
+    private void onShowSettingsPanel(final AppEvent event) {
+        active = userPanel == event.getData();
+    }
+
+    private void reloadUserPanel() {
+        if (active) {
+            userPanel.reload();
+        }
     }
 }

@@ -12,7 +12,7 @@ public class SpecialityController extends Controller {
     private SpecialityView specialityView;
 
     public SpecialityController() {
-        registerEventTypes(AdminEvents.SpecialitySettingSelected);
+        registerEventTypes(AdminEvents.SpecialitySettingSelected, AdminEvents.ShowSettingsPanel);
         registerEventTypes(AdminEvents.GroupAdded, AdminEvents.GroupChanged, AdminEvents.GroupsDeleted);
     }
 

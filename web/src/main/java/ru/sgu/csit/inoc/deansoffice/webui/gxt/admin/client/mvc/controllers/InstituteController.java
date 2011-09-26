@@ -12,7 +12,7 @@ public class InstituteController extends Controller {
     private InstituteView instituteView;
 
     public InstituteController() {
-        registerEventTypes(AdminEvents.InstituteSettingSelected);
+        registerEventTypes(AdminEvents.InstituteSettingSelected, AdminEvents.ShowSettingsPanel);
         registerEventTypes(AdminEvents.EmployeeAdded, AdminEvents.EmployeeChanged, AdminEvents.EmployeesDeleted);
     }
 

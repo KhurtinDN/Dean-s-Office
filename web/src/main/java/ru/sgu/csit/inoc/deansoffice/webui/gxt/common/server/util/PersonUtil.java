@@ -5,9 +5,7 @@ import ru.sgu.csit.inoc.deansoffice.domain.Person;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.model.PersonModel;
 
 /**
- * User: Khurtin Denis ( KhurtinDN (a) gmail.com )
- * Date: 2/11/11
- * Time: 3:33 PM
+ * @author Denis Khurtin
  */
 public class PersonUtil {
     public static void populatePersonModelByPerson(final PersonModel personModel, final Person person) {
@@ -15,10 +13,21 @@ public class PersonUtil {
         Validate.notNull(personModel, "personModel is null");
 
         personModel.setId(person.getId());
-        personModel.setFirstName(person.getFirstName());
-        personModel.setMiddleName(person.getMiddleName());
+
         personModel.setLastName(person.getLastName());
+        personModel.setLastNameGenitive(person.getLastNameGenitive());
+        personModel.setLastNameDative(person.getLastNameDative());
+
+        personModel.setFirstName(person.getFirstName());
+        personModel.setFirstNameGenitive(person.getFirstNameGenitive());
+        personModel.setFirstNameDative(person.getFirstNameDative());
+
+        personModel.setMiddleName(person.getMiddleName());
+        personModel.setMiddleNameGenitive(person.getMiddleNameGenitive());
+        personModel.setMiddleNameDative(person.getMiddleNameDative());
+
         personModel.setFullName(person.getLastName() + ' ' + person.getFirstName() + ' ' + person.getMiddleName());
+
         personModel.setBirthday(person.getBirthday());
         personModel.setSex( convertPersonSexToPersonModelSex(person.getSex()));
     }
@@ -28,9 +37,19 @@ public class PersonUtil {
         Validate.notNull(personModel, "personModel is null");
 
         person.setId(personModel.getId());
+
         person.setFirstName(personModel.getFirstName());
-        person.setMiddleName(personModel.getMiddleName());
+        person.setFirstNameGenitive(personModel.getFirstNameGenitive());
+        person.setFirstNameDative(personModel.getFirstNameDative());
+
         person.setLastName(personModel.getLastName());
+        person.setLastNameGenitive(personModel.getLastNameGenitive());
+        person.setLastNameDative(personModel.getLastNameDative());
+
+        person.setMiddleName(personModel.getMiddleName());
+        person.setMiddleNameGenitive(personModel.getMiddleNameGenitive());
+        person.setMiddleNameDative(personModel.getMiddleNameDative());
+
         person.setBirthday(personModel.getBirthday());
         person.setSex( convertPersonModelSexToPersonSex(personModel.getSex()));
     }

@@ -17,6 +17,9 @@ public class FacultyView extends View {
     private FacultiesPanel facultiesPanel;
     private FacultyPanel facultyPanel;
 
+    private boolean facultiesPanelActive;
+    private boolean facultyPanelActive;
+
     public FacultyView(final FacultyController controller) {
         super(controller);
     }
@@ -35,20 +38,22 @@ public class FacultyView extends View {
 
         if (eventType.equals(AdminEvents.FacultiesSettingSelected)) {
             onFacultiesSettingSelected();
+        } else if (eventType.equals(AdminEvents.ShowSettingsPanel)) {
+            onShowSettingsPanel(event);
         } else if (eventType.equals(AdminEvents.FacultySettingSelected)) {
             onFacultySettingSelected(event);
         } else if (eventType.equals(AdminEvents.FacultyAdded)) {
-            facultiesPanel.reload();
+            reloadFacultiesPanel();
         } else if (eventType.equals(AdminEvents.FacultyChanged)) {
-            facultiesPanel.reload();
+            reloadFacultiesPanel();
         } else if (eventType.equals(AdminEvents.FacultiesDeleted)) {
-            facultiesPanel.reload();
+            reloadFacultiesPanel();
         } else if (eventType.equals(AdminEvents.SpecialityAdded)) {
-            facultyPanel.reload();
+            reloadFacultyPanel();
         } else if (eventType.equals(AdminEvents.SpecialityChanged)) {
-            facultyPanel.reload();
+            reloadFacultyPanel();
         } else if (eventType.equals(AdminEvents.SpecialitiesDeleted)) {
-            facultyPanel.reload();
+            reloadFacultyPanel();
         }
     }
 
@@ -60,5 +65,22 @@ public class FacultyView extends View {
     private void onFacultySettingSelected(final AppEvent event) {
         Dispatcher.forwardEvent(AdminEvents.ShowSettingsPanel, facultyPanel);
         facultyPanel.reload(event.<FacultyModel>getData());
+    }
+
+    private void onShowSettingsPanel(final AppEvent event) {
+        facultiesPanelActive = facultiesPanel == event.getData();
+        facultyPanelActive = facultyPanel == event.getData();
+    }
+
+    private void reloadFacultiesPanel() {
+        if (facultiesPanelActive) {
+            facultiesPanel.reload();
+        }
+    }
+
+    private void reloadFacultyPanel() {
+        if (facultyPanelActive) {
+            facultyPanel.reload();
+        }
     }
 }
