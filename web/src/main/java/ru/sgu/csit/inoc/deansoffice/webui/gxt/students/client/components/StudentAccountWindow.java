@@ -12,6 +12,7 @@ import com.extjs.gxt.ui.client.widget.layout.FitData;
 import com.extjs.gxt.ui.client.widget.layout.FitLayout;
 import com.extjs.gxt.ui.client.widget.layout.VBoxLayout;
 import com.extjs.gxt.ui.client.widget.layout.VBoxLayoutData;
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.*;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.utils.BaseAsyncCallback;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.mvc.events.CommonEvents;
@@ -55,7 +56,10 @@ public class StudentAccountWindow extends Window {
         addButton(new Button("Сгенерировать в PDF", new SelectionListener<ButtonEvent>() {
             @Override
             public void componentSelected(ButtonEvent ce) {
-                String url = "../documents/dossier.pdf?studentId=" + studentDetailsModel.getId();
+                final String url = new StringBuilder(GWT.getHostPageBaseURL())
+                        .append("documents/dossier.pdf")
+                        .append("?studentId=").append(studentDetailsModel.getId())
+                        .toString();
                 com.google.gwt.user.client.Window.open(url, "_blank", "");
             }
         }));
