@@ -15,7 +15,7 @@ import java.util.List;
  */
 public class StudentsUtil extends StudentUtil {
 
-    public static List<StudentModel> convertStudentsToStudentModels(List<Student> studentList, Group group) {
+    public static List<StudentModel> convertStudentsToStudentModels(final List<Student> studentList, final Group group) {
         if (studentList == null) {
             return null;
         }
@@ -24,7 +24,7 @@ public class StudentsUtil extends StudentUtil {
 
         final List<StudentModel> studentModelList = new ArrayList<StudentModel>(studentList.size());
 
-        for (Student student : studentList) {
+        for (final Student student : studentList) {
             final StudentModel studentModel = convertStudentToStudentModel(student);
             studentModel.setGroup(groupModel);
             studentModelList.add(studentModel);
@@ -33,16 +33,11 @@ public class StudentsUtil extends StudentUtil {
         return studentModelList;
     }
 
-    public static void populateStudentByStudentModel(Student student, StudentModel studentModel) {
+    public static void populateStudentByStudentModelForSave(final Student student, final StudentModel studentModel) {
         Validate.notNull(student, "student is null");
         Validate.notNull(studentModel, "studentModel is null");
 
-        populatePersonByPersonModel(student, studentModel);
-
-        if (student.getAdditionalData() == null) {
-            Student.AdditionalStudentData additionalStudentData = new Student.AdditionalStudentData();
-            student.setAdditionalData(additionalStudentData);
-        }
+        fillNamesFromPersonModel(student, studentModel);
 
         student.setStudentIdNumber(studentModel.getStudentIdNumber());
         student.setDivision(convertStudentModelDivisionToStudentDivision(studentModel.getDivision()));

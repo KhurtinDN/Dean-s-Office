@@ -29,11 +29,11 @@ public class StudentsServiceImpl implements StudentsService {
     private GroupDAO groupDAO;
 
     @Override
-    public List<StudentModel> loadStudentList(Long groupId) {
+    public List<StudentModel> loadStudentList(final Long groupId) {
         Validate.notNull(groupId, "groupId is null");
 
         final Group group = groupDAO.findById(groupId);
-        List<Student> studentList = studentDAO.findByGroupId(groupId);
+        final List<Student> studentList = studentDAO.findByGroupId(groupId);
 
         return StudentsUtil.convertStudentsToStudentModels(studentList, group);
     }
@@ -41,20 +41,28 @@ public class StudentsServiceImpl implements StudentsService {
     @Override
     public StudentModel saveOrUpdate(final StudentModel studentModel) {
         Validate.notNull(studentModel, "studentModel is null");
+        Validate.notEmpty(studentModel.getGroupName(), "group name is empty");
+        Validate.notEmpty(studentModel.getSpecialityName(), "speciality name is empty");
 
-        final Student student = new Student();
+        final Student student;
 
-        StudentsUtil.populateStudentByStudentModel(student, studentModel);
+        if (studentModel.getId() != null) {
+            student = studentDAO.findById(studentModel.getId());
+        } else {
+            student = new Student();
+        }
+
+        StudentsUtil.populateStudentByStudentModelForSave(student, studentModel);
 
         List<Speciality> specialities = specialityDAO.findByShortName(studentModel.getSpecialityName()); // todo: need find by id
         if (specialities == null || specialities.size() != 1) {
-            throw new RuntimeException("Specialty not specified.");
+            throw new RuntimeException("Specialty name is incorrect.");
         }
         student.setSpeciality(specialities.get(0));
 
         List<Group> groups = groupDAO.findByName(studentModel.getGroupName());  // todo: need find by id
         if (groups == null || groups.size() != 1) {
-            throw new RuntimeException("Group not specified.");
+            throw new RuntimeException("Group name is incorrect.");
         }
         student.setGroup(groups.get(0));
 

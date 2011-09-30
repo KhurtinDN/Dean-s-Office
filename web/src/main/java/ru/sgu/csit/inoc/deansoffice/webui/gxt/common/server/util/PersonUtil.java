@@ -14,6 +14,28 @@ public class PersonUtil {
 
         personModel.setId(person.getId());
 
+        fillNamesFromPerson(personModel, person);
+
+        personModel.setBirthday(person.getBirthday());
+        personModel.setSex( convertPersonSexToPersonModelSex(person.getSex()));
+    }
+
+    public static void populatePersonByPersonModel(final Person person, final PersonModel personModel) {
+        Validate.notNull(person, "person is null");
+        Validate.notNull(personModel, "personModel is null");
+
+        person.setId(personModel.getId());
+
+        fillNamesFromPersonModel(person, personModel);
+
+        person.setBirthday(personModel.getBirthday());
+        person.setSex( convertPersonModelSexToPersonSex(personModel.getSex()));
+    }
+
+    public static void fillNamesFromPerson(final PersonModel personModel, final Person person) {
+        Validate.notNull(person, "person is null");
+        Validate.notNull(personModel, "personModel is null");
+
         personModel.setLastName(person.getLastName());
         personModel.setLastNameGenitive(person.getLastNameGenitive());
         personModel.setLastNameDative(person.getLastNameDative());
@@ -27,16 +49,11 @@ public class PersonUtil {
         personModel.setMiddleNameDative(person.getMiddleNameDative());
 
         personModel.setFullName(person.getLastName() + ' ' + person.getFirstName() + ' ' + person.getMiddleName());
-
-        personModel.setBirthday(person.getBirthday());
-        personModel.setSex( convertPersonSexToPersonModelSex(person.getSex()));
     }
 
-    public static void populatePersonByPersonModel(final Person person, final PersonModel personModel) {
+    public static void fillNamesFromPersonModel(final Person person, final PersonModel personModel) {
         Validate.notNull(person, "person is null");
         Validate.notNull(personModel, "personModel is null");
-
-        person.setId(personModel.getId());
 
         person.setFirstName(personModel.getFirstName());
         person.setFirstNameGenitive(personModel.getFirstNameGenitive());
@@ -49,12 +66,9 @@ public class PersonUtil {
         person.setMiddleName(personModel.getMiddleName());
         person.setMiddleNameGenitive(personModel.getMiddleNameGenitive());
         person.setMiddleNameDative(personModel.getMiddleNameDative());
-
-        person.setBirthday(personModel.getBirthday());
-        person.setSex( convertPersonModelSexToPersonSex(personModel.getSex()));
     }
 
-    public static PersonModel.Sex convertPersonSexToPersonModelSex(Person.Sex sex) {
+    public static PersonModel.Sex convertPersonSexToPersonModelSex(final Person.Sex sex) {
         if (sex == null) {
             return null;
         }
@@ -69,7 +83,7 @@ public class PersonUtil {
         }
     }
 
-    public static Person.Sex convertPersonModelSexToPersonSex(PersonModel.Sex sex) {
+    public static Person.Sex convertPersonModelSexToPersonSex(final PersonModel.Sex sex) {
         if (sex == null) {
             return null;
         }
