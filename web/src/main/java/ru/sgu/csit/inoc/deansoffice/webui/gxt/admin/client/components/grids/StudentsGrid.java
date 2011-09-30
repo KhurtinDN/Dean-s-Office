@@ -1,5 +1,6 @@
 package ru.sgu.csit.inoc.deansoffice.webui.gxt.admin.client.components.grids;
 
+import com.extjs.gxt.ui.client.Style;
 import com.extjs.gxt.ui.client.data.*;
 import com.extjs.gxt.ui.client.store.ListStore;
 import com.extjs.gxt.ui.client.widget.grid.*;
@@ -40,6 +41,8 @@ public class StudentsGrid extends Grid<StudentModel> {
 
         setBorders(true);
         setLoadMask(true);
+
+        this.store.sort("fullName", Style.SortDir.ASC);
         setAutoExpandColumn("fullName");
         setAutoExpandMax(2000);
     }
