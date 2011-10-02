@@ -71,15 +71,27 @@ public class ReferenceServiceImpl extends DocumentServiceImpl implements Referen
         }
         report.addValue("Student.division_rad", division);
 
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
-        Date date = order.getEnrollmentDate();
+        String startDate = "";
+        String endDate = "";
+        String orderNumber = "";
+        String orderDate = "";
 
-        report.addValue("Student.startDate", dateFormat.format(date)); // "01.09.2007"
+        if (order != null) {
+            Date date = order.getEnrollmentDate();
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
 
-        date = order.getReleaseDate();
-        report.addValue("Student.endDate", dateFormat.format(date)); // "01.07.2012"
-        report.addValue("Student.order.number", order.getNumber()); // "22-0107"
-        report.addValue("Student.order.date", dateFormat.format(order.getSignedDate())); // "12.08.2007"
+            startDate = dateFormat.format(date);
+
+            date = order.getReleaseDate();
+            endDate = dateFormat.format(date);
+            orderNumber = order.getNumber();
+            orderDate = dateFormat.format(order.getSignedDate());
+        }
+
+        report.addValue("Student.startDate", startDate); // "01.09.2007"
+        report.addValue("Student.endDate", endDate); // "01.07.2012"
+        report.addValue("Student.order.number", orderNumber); // "22-0107"
+        report.addValue("Student.order.date", orderDate); // "12.08.2007"
 
         String studyForm = "неизвестная";
 
