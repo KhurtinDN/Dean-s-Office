@@ -79,35 +79,20 @@
                 <directory>src/main/resources</directory>
                 <excludes>
                     <exclude>fonts.properties</exclude>
+                    <exclude>ApplicationContext-*</exclude>
                 </excludes>
-            </resource>
-            <resource>
-                <directory>src/main/webapp.filtered</directory>
-                <filtering>true</filtering>
-                <targetPath>${project.build.directory}/${project.build.finalName}</targetPath>
             </resource>
             <resource>
                 <directory>src/main/resources</directory>
                 <filtering>true</filtering>
                 <includes>
                     <include>fonts.properties</include>
+                    <include>ApplicationContext-*</include>
                 </includes>
             </resource>
         </resources>
 
         <plugins>
-            <!--<plugin>-->
-            <!--<groupId>org.apache.maven.plugins</groupId>-->
-            <!--<artifactId>maven-war-plugin</artifactId>-->
-            <!--<configuration>-->
-            <!--<webResources> // todo: filtering webResources not support Intellij Idea 10.5 -->
-            <!--<resource>-->
-            <!--<directory>src/main/webapp.filtered</directory>-->
-            <!--<filtering>true</filtering>-->
-            <!--</resource>-->
-            <!--</webResources>-->
-            <!--</configuration>-->
-            <!--</plugin>-->
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>gwt-maven-plugin</artifactId>

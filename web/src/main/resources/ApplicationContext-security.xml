@@ -7,13 +7,15 @@
        http://www.springframework.org/schema/security
        http://www.springframework.org/schema/security/spring-security.xsd">
 
+    <security:global-method-security secured-annotations="enabled" jsr250-annotations="enabled" />
+
     <security:http auto-config="true" >
         <security:intercept-url pattern="/css/**" filters="none"/>
         <security:intercept-url pattern="/icons/**" filters="none"/>
         <security:intercept-url pattern="/gxt-resources/**" filters="none"/>
         <security:intercept-url pattern="/Login.html*" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
         <security:intercept-url pattern="/login/**" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
-        <security:intercept-url pattern="/**" access="ROLE_USER"/>
+        <security:intercept-url pattern="/**" access="ROLE_ADMIN,ROLE_USER"/>
         <security:form-login login-page="/Login.html" />
         <security:logout logout-success-url="/Login.html" />
     </security:http>
@@ -23,9 +25,7 @@
         <security:authentication-provider>
             <security:password-encoder hash="sha"/>
             <security:user-service>
-                <security:user name="worker"
-                               password="7cbf9f0be27b04cf0717199e2df0c51438f316a2"
-                               authorities="ROLE_USER" />
+                <security:user name="worker" password="${security.password}" authorities="ROLE_USER" />
             </security:user-service>
         </security:authentication-provider>
     </security:authentication-manager>

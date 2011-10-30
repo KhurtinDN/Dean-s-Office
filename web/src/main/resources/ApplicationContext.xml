@@ -7,22 +7,19 @@
                             http://www.springframework.org/schema/context
                             http://www.springframework.org/schema/context/spring-context.xsd">
 
+    <!-- Use @Autowired annotations for property injection -->
+    <context:annotation-config/>
+
+    <!-- Use @Service and @Repository annotations for services and DAO components. -->
+    <context:component-scan base-package="ru.sgu.csit.inoc.deansoffice.dao"/>
+    <context:component-scan base-package="ru.sgu.csit.inoc.deansoffice.services"/>
+    <context:component-scan base-package="ru.sgu.csit.inoc.deansoffice.webui.gxt.students.server.services"/>
+    <context:component-scan base-package="ru.sgu.csit.inoc.deansoffice.webui.gxt.admin.server.services"/>
+
     <!-- In this file we configure Hibernate and transactional behavior -->
     <import resource="ApplicationContext-persistence.xml"/>
 
     <!-- In this file we configure Spring Security -->
     <import resource="ApplicationContext-security.xml"/>
 
-    <!-- Exception translation bean post processor -->
-    <!--<bean class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor"/>-->
-
-    <!-- Use annotations (@Autowired) for property injection -->
-    <context:annotation-config/>
-
-    <!--
-        Spring will find all of our service and DAO components because they
-        have @Service and @Repository annotations. We do not need to configure
-        them in XML
-    -->
-    <context:component-scan base-package="ru.sgu.csit.inoc.deansoffice"/>
 </beans>
