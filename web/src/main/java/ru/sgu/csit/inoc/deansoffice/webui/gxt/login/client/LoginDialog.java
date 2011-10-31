@@ -5,18 +5,17 @@ import com.extjs.gxt.ui.client.event.*;
 import com.extjs.gxt.ui.client.util.KeyNav;
 import com.extjs.gxt.ui.client.widget.Window;
 import com.extjs.gxt.ui.client.widget.button.Button;
+import com.extjs.gxt.ui.client.widget.form.CheckBox;
 import com.extjs.gxt.ui.client.widget.form.FormPanel;
 import com.extjs.gxt.ui.client.widget.form.TextField;
 import com.google.gwt.core.client.GWT;
 
 /**
- * User: hd (KhurtinDN@gmail.com)
- * Date: Nov 3, 2010
- * Time: 6:58:58 AM
+ * @author Denis Khurtin
  */
 public class LoginDialog extends Window {
-    private TextField<String> userNameTextField = new TextField<String>();
-    private FormPanel formPanel = new FormPanel();
+    private final TextField<String> userNameTextField = new TextField<String>();
+    private final FormPanel formPanel = new FormPanel();
 
     public LoginDialog() {
         setHeading("Вход в систему \"Деканат\"");
@@ -40,14 +39,20 @@ public class LoginDialog extends Window {
         userNameTextField.setName("j_username");
         userNameTextField.setFieldLabel("Логин");
 
-        TextField<String> passwordTextField = new TextField<String>();
+        final TextField<String> passwordTextField = new TextField<String>();
         passwordTextField.setAutoWidth(true);
         passwordTextField.setPassword(true);
         passwordTextField.setName("j_password");
         passwordTextField.setFieldLabel("Пароль");
 
+        final CheckBox rememberMeCheckBox = new CheckBox();
+        rememberMeCheckBox.setAutoWidth(true);
+        rememberMeCheckBox.setName("_spring_security_remember_me");
+        rememberMeCheckBox.setBoxLabel("Запомнить меня");
+
         formPanel.add(userNameTextField);
         formPanel.add(passwordTextField);
+        formPanel.add(rememberMeCheckBox);
 
         setButtonAlign(Style.HorizontalAlignment.CENTER);
 
