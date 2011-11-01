@@ -5,19 +5,19 @@ import com.extjs.gxt.ui.client.core.XTemplate;
 import com.extjs.gxt.ui.client.event.ButtonEvent;
 import com.extjs.gxt.ui.client.event.SelectionListener;
 import com.extjs.gxt.ui.client.mvc.Dispatcher;
+import com.extjs.gxt.ui.client.util.Util;
 import com.extjs.gxt.ui.client.widget.*;
-import com.extjs.gxt.ui.client.widget.Window;
 import com.extjs.gxt.ui.client.widget.button.Button;
 import com.extjs.gxt.ui.client.widget.layout.FitData;
 import com.extjs.gxt.ui.client.widget.layout.FitLayout;
 import com.extjs.gxt.ui.client.widget.layout.VBoxLayout;
 import com.extjs.gxt.ui.client.widget.layout.VBoxLayoutData;
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.user.client.*;
-import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.utils.BaseAsyncCallback;
-import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.mvc.events.CommonEvents;
-import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.services.StudentService;
+import com.google.gwt.user.client.Element;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.model.StudentDetailsModel;
+import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.mvc.events.CommonEvents;
+import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.utils.BaseAsyncCallback;
+import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.services.StudentService;
 
 /**
  * User: KhurtinDN ( KhurtinDN@gmail.com )
@@ -112,7 +112,7 @@ public class StudentAccountWindow extends Window {
 
     private String getHeaderTemplate() {
         return new StringBuilder()
-                .append("<img align=\"left\" width=\"100px\" src=\"photos/{photoId}.jpg\" />")
+                .append("<img align=\"left\" width=\"100px\" src=\"{photoUrl}\" />")
                 .append("<h1>Учетная карточка студента</h1>")
                 .append("<div class=\"stFIO\">")
                 .append("<span class=\"stLabel\">ФИО:</span>")
@@ -136,7 +136,7 @@ public class StudentAccountWindow extends Window {
         XTemplate template = XTemplate.create(getHeaderTemplate());
 
         prepareStudentDetail(studentDetailsModel);
-        headerHtml.setHtml(template.applyTemplate(com.extjs.gxt.ui.client.util.Util.getJsObject(studentDetailsModel, 1)));
+        headerHtml.setHtml(template.applyTemplate(Util.getJsObject(studentDetailsModel, 1)));
 
         studentDataForm.addStyleName("studentDataForm");
         studentDataForm.setStudentDetails(studentDetailsModel);
@@ -153,6 +153,7 @@ public class StudentAccountWindow extends Window {
         studentDetailsModel.set("specialityFullName", studentDetailsModel.getSpeciality().getFullName());
         studentDetailsModel.set("specialityName", studentDetailsModel.getSpeciality().getName());
         studentDetailsModel.set("specialityCode", studentDetailsModel.getSpeciality().getCode());
+        studentDetailsModel.set("photoUrl", studentDetailsModel.getPhotoUrl());
     }
 
     @Override
@@ -172,7 +173,7 @@ public class StudentAccountWindow extends Window {
     private class StudentDetailsSaverAsyncCallback extends BaseAsyncCallback<Void> {
         @Override
         public void onSuccess(Void result) {
-            Info.display("Информация", "Информация о студенте обнавлена успешно!");
+            Info.display("Информация", "Информация о студенте обновлена успешно!");
         }
     }
 }

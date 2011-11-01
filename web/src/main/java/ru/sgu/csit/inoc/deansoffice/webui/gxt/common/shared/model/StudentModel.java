@@ -76,6 +76,16 @@ public class StudentModel extends PersonModel {
         set("photoId", photoId);
     }
 
+    public String getPhotoUrl() {
+        if (getPhotoId() != null) {
+            return "photos/" + getPhotoId() + ".jpg";
+        } else if (Sex.FEMALE.equals(getSex())) {
+            return "images/unknown_girl.png";
+        } else {
+            return "images/unknown_man.png";
+        }
+    }
+
     public enum Division implements Serializable { INTRAMURAL, EXTRAMURAL, EVENINGSTUDY }
 
     public enum StudyForm implements Serializable { BUDGET, COMMERCIAL }

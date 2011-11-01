@@ -6,24 +6,24 @@ import com.extjs.gxt.ui.client.mvc.AppEvent;
 import com.extjs.gxt.ui.client.mvc.Dispatcher;
 import com.extjs.gxt.ui.client.util.Margins;
 import com.extjs.gxt.ui.client.util.Padding;
-import com.extjs.gxt.ui.client.widget.*;
+import com.extjs.gxt.ui.client.widget.Label;
+import com.extjs.gxt.ui.client.widget.LayoutContainer;
+import com.extjs.gxt.ui.client.widget.Text;
 import com.extjs.gxt.ui.client.widget.button.Button;
 import com.extjs.gxt.ui.client.widget.form.FieldSet;
 import com.extjs.gxt.ui.client.widget.form.LabelField;
 import com.extjs.gxt.ui.client.widget.layout.*;
-import com.google.gwt.user.client.*;
+import com.google.gwt.user.client.Element;
 import com.google.gwt.user.client.ui.Image;
+import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.model.ReferenceModel;
+import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.model.StudentModel;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.model.util.StudentModelUtil;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.mvc.events.CommonEvents;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.components.StudentAccountWindow;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.mvc.events.StudentEvents;
-import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.model.ReferenceModel;
-import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.model.StudentModel;
 
 /**
- * User: Khurtin Denis (KhurtinDN@gmail.com)
- * Date: 2/3/11
- * Time: 5:43 PM
+ * @author Denis Khurtin
  */
 public class StudentInfoLayoutContainer extends LayoutContainer {
     private StudentModel currentStudentModel;
@@ -41,15 +41,12 @@ public class StudentInfoLayoutContainer extends LayoutContainer {
     protected void onRender(Element parent, int index) {
         super.onRender(parent, index);
 
-//        setLayout(new VBoxLayout(VBoxLayout.VBoxLayoutAlign.STRETCH));
-
         FieldSet infoFieldSet = new FieldSet();
         FormLayout infoFormLayout = new FormLayout();
         infoFormLayout.setLabelWidth(140);
         infoFieldSet.setLayout(infoFormLayout);
         infoFieldSet.setHeading("Информация о студенте");
 
-//        image.setPixelSize(100, 100);
         image.setHeight("100px");
 
         nameLabelField.setName("fullName");
@@ -211,10 +208,10 @@ public class StudentInfoLayoutContainer extends LayoutContainer {
         });
     }
 
-    public void bind(StudentModel studentModel) {
+    public void bind(final StudentModel studentModel) {
         this.currentStudentModel = studentModel;
 
-        image.setUrl("photos/" + studentModel.getPhotoId() + ".jpg");
+        image.setUrl(studentModel.getPhotoUrl());
         nameLabelField.setText(studentModel.getFullName());
         groupNameLabelField.setText(studentModel.getGroupName());
         specialityNameLabelField.setText(studentModel.getSpecialityName());
