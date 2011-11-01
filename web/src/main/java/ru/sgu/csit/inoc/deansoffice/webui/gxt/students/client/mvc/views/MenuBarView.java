@@ -10,6 +10,7 @@ import com.extjs.gxt.ui.client.widget.menu.Menu;
 import com.extjs.gxt.ui.client.widget.menu.MenuBar;
 import com.extjs.gxt.ui.client.widget.menu.MenuBarItem;
 import com.extjs.gxt.ui.client.widget.menu.MenuItem;
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.Window;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.common.shared.mvc.events.CommonEvents;
 import ru.sgu.csit.inoc.deansoffice.webui.gxt.students.client.mvc.controllers.MenuBarController;
@@ -36,7 +37,7 @@ public class MenuBarView extends View {
         fileMenu.add(new MenuItem("Выход", new SelectionListener<MenuEvent>() {
             @Override
             public void componentSelected(MenuEvent ce) {
-                Window.open("j_spring_security_logout", "_self", "");
+                Window.open(GWT.getHostPageBaseURL() + "j_spring_security_logout", "_self", "");
             }
         }));
 
