@@ -4,14 +4,14 @@
 </fonts> -->
 <document
 	 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	 xsi:noNamespaceSchemaLocation="../../../test/resources/document.xsd"
+	 xsi:noNamespaceSchemaLocation="document.xsd"
 	 type="PDF" name="spravka1.pdf" format="A5" orientation="landscape">
 	<table widths="4 30 8 24 8 4 6 7 10 25 5 4 5 13 5 7 15" width="100" align="center" border="0">
 		<tr>
 			<td colspan="6" align="center"><font size="10">
-					<p>Федеральное агентство по образованию
-						Государственное образовательное
-						учреждение
+					<p>Министерство образования и науки РФ
+						Федеральное государственное бюджетное
+						образовательное учреждение
 						высшего профессионального образования
 						«САРАТОВСКИЙ ГОСУДАРСТВЕННЫЙ
 						УНИВЕРСИТЕТ
@@ -74,7 +74,7 @@
 			<td colspan="3" align="center"></td>
 			
 			<td colspan="4" align="center">Справка дана для предоставления</td>
-			<td colspan="13" align="center" border="2"><var name="Purpose" /></td>
+			<td colspan="13" align="center" border="2"><i><var name="Purpose" /></i></td>
 			
 			<td colspan="4" align="center"></td>
 			<td colspan="13" align="center"><font size="8">(по месту требования и др.)</font></td>
