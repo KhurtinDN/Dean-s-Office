@@ -4,12 +4,9 @@ import com.google.common.base.Objects;
 
 import javax.persistence.Entity;
 import java.util.Date;
-import java.util.List;
 
 /**
- * Created by XX (MesheryakovAV)
- * Date: 10.09.2010
- * Time: 8:38:57
+ * The enrollment order.
  */
 @Entity
 public class EnrollmentOrder extends Order {
@@ -63,30 +60,5 @@ public class EnrollmentOrder extends Order {
                 .add("enrollmentDate", enrollmentDate)
                 .add("releaseDate", releaseDate)
                 .toString();
-    }
-
-    public static EnrollmentOrder make(
-            final Long id,
-            final String number,
-            final Date signedDate,
-            final Template template,
-            final OrderState state,
-            final List<Directive> directives,
-            final OrderData data,
-            final Date enrollmentDate,
-            final Date releaseDate) {
-
-        final EnrollmentOrder enrollmentOrder = new EnrollmentOrder();
-        enrollmentOrder.setId(id);
-        enrollmentOrder.setNumber(number);
-        enrollmentOrder.setSignedDate(signedDate);
-        enrollmentOrder.setPrintTemplate(template);
-        enrollmentOrder.setState(state);
-        enrollmentOrder.setDirectives(directives);
-        enrollmentOrder.setData(data);
-        enrollmentOrder.setEnrollmentDate(enrollmentDate);
-        enrollmentOrder.setReleaseDate(releaseDate);
-
-        return enrollmentOrder;
     }
 }

@@ -5,13 +5,13 @@ import com.google.common.base.Objects;
 import javax.persistence.Entity;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.Table;
 
 /**
- * User: MesheryakovAV
- * Date: 28.02.11
- * Time: 12:28
+ * The directive source data.
  */
-@Entity //@MappedSuperclass
+@Entity
+@Table(name = "directive_source_data")
 @Inheritance(strategy=InheritanceType.SINGLE_TABLE)
 public abstract class DirectiveSourceData extends PersistentItem {
     @Override

@@ -6,12 +6,10 @@ import javax.persistence.*;
 import java.util.Date;
 
 /**
- * User: hd (KhurtinDN(a)gmail.com)
- * Date: Aug 27, 2010
- * Time: 12:26:27 PM
+ * This superclass for classes that represent document.
  */
 @MappedSuperclass
-public class Document extends PersistentItem /* implements Report */ {
+public class Document extends PersistentItem {
     private String number;
     private Date signedDate;
 
@@ -77,20 +75,5 @@ public class Document extends PersistentItem /* implements Report */ {
                 .add("signedDate", signedDate)
                 .add("printTemplate", printTemplate)
                 .toString();
-    }
-
-    public static Document make(
-            final Long id,
-            final String number,
-            final Date signedDate,
-            final Template template) {
-
-        final Document document = new Document();
-        document.setId(id);
-        document.setNumber(number);
-        document.setSignedDate(signedDate);
-        document.setPrintTemplate(template);
-
-        return document;
     }
 }

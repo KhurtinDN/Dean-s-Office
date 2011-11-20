@@ -2,17 +2,13 @@ package ru.sgu.csit.inoc.deansoffice.domain;
 
 import com.google.common.base.Objects;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
-import javax.persistence.PrimaryKeyJoinColumn;
+import javax.persistence.*;
 
 /**
- * User: hd (KhurtinDN(a)gmail.com)
- * Date: Aug 27, 2010
- * Time: 11:59:29 AM
+ * The faculty.
  */
 @Entity
+@Table(name = "faculty")
 public class Faculty extends PersistentItem {
     private String fullName;
     private String shortName;
@@ -94,22 +90,5 @@ public class Faculty extends PersistentItem {
                 .add("dean", dean)
                 .add("administration", administration)
                 .toString();
-    }
-
-    public static Faculty make(
-            final Long id,
-            final String fullName,
-            final String shortName,
-            final Employee dean,
-            final Administration administration) {
-
-        final Faculty faculty = new Faculty();
-        faculty.setId(id);
-        faculty.setFullName(fullName);
-        faculty.setShortName(shortName);
-        faculty.setDean(dean);
-        faculty.setAdministration(administration);
-
-        return faculty;
     }
 }

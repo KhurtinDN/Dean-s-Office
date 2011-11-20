@@ -3,14 +3,14 @@ package ru.sgu.csit.inoc.deansoffice.domain;
 import com.google.common.base.Objects;
 
 import javax.persistence.Entity;
+import javax.persistence.Table;
 import java.util.Date;
 
 /**
- * User: MesheryakovAV
- * Date: 04.03.11
- * Time: 10:31
+ * The stipend.
  */
 @Entity
+@Table(name = "stipend")
 public class Stipend extends PersistentItem {
     private StipendType type;
     private Date startDate;
@@ -90,22 +90,5 @@ public class Stipend extends PersistentItem {
                 .add("endDate", endDate)
                 .add("value", value)
                 .toString();
-    }
-
-    public static Stipend make(
-            final Long id,
-            final StipendType type,
-            final Date startDate,
-            final Date endDate,
-            final Integer value) {
-
-        final Stipend stipend = new Stipend();
-        stipend.setId(id);
-        stipend.setType(type);
-        stipend.setStartDate(startDate);
-        stipend.setEndDate(endDate);
-        stipend.setValue(value);
-
-        return stipend;
     }
 }

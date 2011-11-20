@@ -3,13 +3,13 @@ package ru.sgu.csit.inoc.deansoffice.domain;
 import com.google.common.base.Objects;
 
 import javax.persistence.Entity;
+import javax.persistence.Table;
 
 /**
- * Created by XX (MesheryakovAV)
- * Date: 03.09.2010
- * Time: 10:51:53
+ * This class contains information about template location.
  */
 @Entity
+@Table(name = "template")
 public class Template extends PersistentItem {
     private String fileName;
     private TemplType type = TemplType.XML;
@@ -72,18 +72,5 @@ public class Template extends PersistentItem {
                 .add("fileName", fileName)
                 .add("type", type)
                 .toString();
-    }
-
-    public static Template make(
-            final Long id,
-            final String fileName,
-            final TemplType type) {
-
-        final Template template = new Template();
-        template.setId(id);
-        template.setFileName(fileName);
-        template.setType(type);
-
-        return template;
     }
 }

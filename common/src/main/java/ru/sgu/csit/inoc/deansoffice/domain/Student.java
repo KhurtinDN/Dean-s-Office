@@ -6,12 +6,10 @@ import javax.persistence.*;
 import java.util.*;
 
 /**
- * .
- * User: hd (KhurtinDN(a)gmail.com)
- * Date: Aug 27, 2010
- * Time: 11:28:40 AM
+ * The student.
  */
 @Entity
+@Table(name = "student")
 public class Student extends Person {
     /**
      *  This is number of student ticket.
@@ -184,50 +182,9 @@ public class Student extends Person {
                 .toString();
     }
 
-    public static Student make(
-            final Long id,
-            final Date birthday,
-            final Sex sex,
-            final String firstName,
-            final String middleName,
-            final String lastName,
-            final String firstNameDative,
-            final String middleNameDative,
-            final String lastNameDative,
-            final Group group,
-            final Speciality speciality,
-            final Division division,
-            final StudyForm studyForm,
-            final Role role,
-            final EnrollmentOrder enrollmentOrder,
-            final AdditionalStudentData additionalStudentData,
-            final Set<Stipend> stipends) {
-
-        Student student = new Student();
-        student.setId(id);
-        student.setBirthday(birthday);
-        student.setSex(sex);
-        student.setFirstName(firstName);
-        student.setMiddleName(middleName);
-        student.setLastName(lastName);
-        student.setFirstNameDative(firstNameDative);
-        student.setMiddleNameDative(middleNameDative);
-        student.setLastNameDative(lastNameDative);
-        student.setGroup(group);
-        student.setSpeciality(speciality);
-        student.setDivision(division);
-        student.setStudyForm(studyForm);
-        student.setRole(role);
-        student.setEnrollmentOrder(enrollmentOrder);
-        student.setAdditionalData(additionalStudentData);
-        student.setStipends(stipends);
-
-        return student;
-    }
-
     @Entity
+    @Table(name = "additional_student_data")
     public static class AdditionalStudentData extends PersistentItem {
-        //@OneToOne(fetch = FetchType.LAZY)
         @ManyToOne(cascade = CascadeType.MERGE)
         @PrimaryKeyJoinColumn
         private Photo photo;
@@ -236,7 +193,6 @@ public class Student extends Person {
         private String education;
         private String workInfo;
 
-//        @ElementCollection(fetch = FetchType.EAGER)
         @OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
         @OrderColumn(name="passports_index")
         private List<Passport> passports = new ArrayList<Passport>();
@@ -410,37 +366,6 @@ public class Student extends Person {
                     .add("oldAddress", oldAddress)
                     .add("actualAddress", actualAddress)
                     .toString();
-        }
-
-        public static AdditionalStudentData make(
-                final Long id,
-                final Photo photo,
-                final String birthPlace,
-                final String education,
-                final String workInfo,
-                final List<Passport> passports,
-                final String maritalStatus,
-                final String childrenInfo,
-                final Parent father,
-                final Parent mother,
-                final String oldAddress,
-                final String actualAddress) {
-
-            final AdditionalStudentData additionalStudentData = new AdditionalStudentData();
-            additionalStudentData.setId(id);
-            additionalStudentData.setPhoto(photo);
-            additionalStudentData.setBirthPlace(birthPlace);
-            additionalStudentData.setEducation(education);
-            additionalStudentData.setWorkInfo(workInfo);
-            additionalStudentData.setPassports(passports);
-            additionalStudentData.setMaritalStatus(maritalStatus);
-            additionalStudentData.setChildrenInfo(childrenInfo);
-            additionalStudentData.setFather(father);
-            additionalStudentData.setMother(mother);
-            additionalStudentData.setOldAddress(oldAddress);
-            additionalStudentData.setActualAddress(actualAddress);
-
-            return additionalStudentData;
         }
     }
 }

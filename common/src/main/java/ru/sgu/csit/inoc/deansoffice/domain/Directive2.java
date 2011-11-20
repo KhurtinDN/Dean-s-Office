@@ -9,9 +9,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * User: MesheryakovAV
- * Date: 04.03.11
- * Time: 10:38
+ * The directive for social stipend.
  */
 @Entity
 public class Directive2 extends Directive {
@@ -29,21 +27,9 @@ public class Directive2 extends Directive {
                 .toString();
     }
 
-    public static Directive2 make(
-            final Long id,
-            final DirectiveData data,
-            final String type) {
-
-        final Directive2 directive2 = new Directive2();
-        directive2.setId(id);
-        directive2.setData(data);
-        directive2.setType(type);
-
-        return directive2;
-    }
-
     @Entity
     public static class SourceData extends DirectiveSourceData {
+
         @ElementCollection(fetch = FetchType.EAGER)
         private Map<Student, Stipend> students = new HashMap<Student, Stipend>();
 

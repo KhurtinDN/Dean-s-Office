@@ -5,11 +5,10 @@ import com.google.common.base.Objects;
 import javax.persistence.*;
 
 /**
- * User: MesheryakovAV
- * Date: 23.12.10
- * Time: 14:28
+ * This class represent parent of student entity.
  */
 @Entity
+@Table(name = "parent")
 public class Parent extends Person {
     private String address;
 
@@ -74,26 +73,5 @@ public class Parent extends Person {
                 .add("workInfo", workInfo)
                 .add("phoneNumbers", phoneNumbers)
                 .toString();
-    }
-
-    public static Parent make(
-            final Long id,
-            final String firstName,
-            final String middleName,
-            final String lastName,
-            final String address,
-            final String workInfo,
-            final String phoneNumbers) {
-
-        final Parent parent = new Parent();
-        parent.setId(id);
-        parent.setFirstName(firstName);
-        parent.setMiddleName(middleName);
-        parent.setLastName(lastName);
-        parent.setAddress(address);
-        parent.setWorkInfo(workInfo);
-        parent.setPhoneNumbers(phoneNumbers);
-
-        return parent;
     }
 }

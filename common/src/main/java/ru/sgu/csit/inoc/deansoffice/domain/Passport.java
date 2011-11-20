@@ -6,11 +6,10 @@ import javax.persistence.*;
 import java.util.Date;
 
 /**
- * User: MesheryakovAV
- * Date: 23.12.10
- * Time: 14:01
+ * The passport.
  */
 @Entity
+@Table(name = "passport")
 public class Passport extends Person {
     private boolean actual;
     private String series;
@@ -24,7 +23,6 @@ public class Passport extends Person {
     }
 
     public Passport(final Person person) {
-        // ????
         setSex(person.getSex());
 
         setFirstName(person.getFirstName());
@@ -138,42 +136,5 @@ public class Passport extends Person {
                 .add("citizenship", citizenship)
                 .add("address", address)
                 .toString();
-    }
-
-    public static Passport make(
-            final Long id,
-            final Sex sex,
-            final String firstName,
-            final String middleName,
-            final String lastName,
-            final String firstNameDative,
-            final String middleNameDative,
-            final String lastNameDative,
-            final boolean actual,
-            final String series,
-            final String number,
-            final String issuingOrganization,
-            final Date issuedDate,
-            final String citizenship,
-            final String address) {
-
-        final Passport passport = new Passport();
-        passport.setId(id);
-        passport.setSex(sex);
-        passport.setFirstName(firstName);
-        passport.setMiddleName(middleName);
-        passport.setLastName(lastName);
-        passport.setFirstNameDative(firstNameDative);
-        passport.setMiddleNameDative(middleNameDative);
-        passport.setLastNameDative(lastNameDative);
-        passport.setActual(actual);
-        passport.setSeries(series);
-        passport.setNumber(number);
-        passport.setIssuingOrganization(issuingOrganization);
-        passport.setIssuedDate(issuedDate);
-        passport.setCitizenship(citizenship);
-        passport.setAddress(address);
-
-        return passport;
     }
 }

@@ -2,18 +2,13 @@ package ru.sgu.csit.inoc.deansoffice.domain;
 
 import com.google.common.base.Objects;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
-import javax.persistence.PrimaryKeyJoinColumn;
+import javax.persistence.*;
 
 /**
- * .
- * User: hd (KhurtinDN(a)gmail.com)
- * Date: Aug 27, 2010
- * Time: 11:59:03 AM
+ * The speciality.
  */
 @Entity
+@Table(name = "speciality")
 public class Speciality extends PersistentItem {
     private String name;
     private String shortName;
@@ -104,24 +99,5 @@ public class Speciality extends PersistentItem {
                 .add("courseCount", courseCount)
                 .add("faculty", faculty)
                 .toString();
-    }
-
-    public static Speciality make(
-            final Long id,
-            final String name,
-            final String shortName,
-            final String code,
-            final Integer courseCount,
-            final Faculty faculty) {
-
-        final Speciality speciality = new Speciality();
-        speciality.setId(id);
-        speciality.setName(name);
-        speciality.setShortName(shortName);
-        speciality.setCode(code);
-        speciality.setCourseCount(courseCount);
-        speciality.setFaculty(faculty);
-
-        return speciality;
     }
 }

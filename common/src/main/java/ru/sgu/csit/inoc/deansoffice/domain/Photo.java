@@ -3,21 +3,17 @@ package ru.sgu.csit.inoc.deansoffice.domain;
 import com.google.common.base.Objects;
 
 import javax.persistence.Entity;
+import javax.persistence.Table;
 import javax.persistence.Transient;
 
 /**
- * User: MesheryakovAV
- * Date: 23.12.10
- * Time: 13:15
+ * The photo.
  */
 @Entity
+@Table(name = "photo")
 public class Photo extends PersistentItem {
     private String fileName;
-    //@Lob
-    //@Type(type = "org.hibernate.type.BinaryType")//"org.hibernate.type.PrimitiveByteArrayBlobType")
-    //@Column(columnDefinition = "bytea")
-    //@Type(type="org.hibernate.type.PrimitiveByteArrayBlobType")
-    //@Type(type = "org.springframework.orm.hibernate3.support.BlobByteArrayType")
+
     @Transient
     private byte[] data;
 
@@ -68,18 +64,5 @@ public class Photo extends PersistentItem {
                 .add("fileName", fileName)
                 .add("data", data)
                 .toString();
-    }
-
-    public static Photo make(
-            final Long id,
-            final String fileName,
-            final byte[] data) {
-
-        final Photo photo = new Photo();
-        photo.setId(id);
-        photo.setFileName(fileName);
-        photo.setData(data);
-
-        return photo;
     }
 }

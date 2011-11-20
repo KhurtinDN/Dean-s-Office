@@ -9,9 +9,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * User: MesheryakovAV
- * Date: 28.02.11
- * Time: 12:41
+ * The directive for appoint captains.
  */
 @Entity
 public class Directive1 extends Directive {
@@ -32,21 +30,9 @@ public class Directive1 extends Directive {
                 .toString();
     }
 
-    public static Directive1 make(
-            final Long id,
-            final DirectiveData data,
-            final String type) {
-
-        final Directive1 directive1 = new Directive1();
-        directive1.setId(id);
-        directive1.setData(data);
-        directive1.setType(type);
-
-        return directive1;
-    }
-
     @Entity
     public static class SourceData extends DirectiveSourceData {
+
         @ElementCollection(fetch = FetchType.EAGER)
         private Map<Group, Student> captains = new HashMap<Group, Student>();
 
@@ -99,17 +85,6 @@ public class Directive1 extends Directive {
                     .addValue(super.toString())
                     .add("captains", captains)
                     .toString();
-        }
-
-        public static SourceData make(
-                final Long id,
-                final Map<Group, Student> captains) {
-
-            final SourceData sourceData = new SourceData();
-            sourceData.setId(id);
-            sourceData.setCaptains(captains);
-
-            return sourceData;
         }
     }
 }

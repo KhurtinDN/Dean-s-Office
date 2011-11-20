@@ -6,9 +6,7 @@ import javax.persistence.MappedSuperclass;
 import java.util.Date;
 
 /**
- * User: hd (KhurtinDN(a)gmail.com)
- * Date: Aug 27, 2010
- * Time: 11:30:09 AM
+ * The abstract superclass for persons.
  */
 @MappedSuperclass
 public abstract class Person extends PersistentItem {

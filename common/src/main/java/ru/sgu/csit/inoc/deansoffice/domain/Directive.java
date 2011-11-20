@@ -5,11 +5,10 @@ import com.google.common.base.Objects;
 import javax.persistence.*;
 
 /**
- * User: MesheryakovAV
- * Date: 28.02.11
- * Time: 11:29
+ * The abstract directive.
  */
-@Entity //@MappedSuperclass
+@Entity
+@Table(name = "directive")
 @Inheritance(strategy=InheritanceType.SINGLE_TABLE)  // Маппинг наследования - http://docs.jboss.org/hibernate/core/3.6/reference/en-US/html_single/#inheritance
 public abstract class Directive extends PersistentItem {
     public static final String APPOINT_CAPTAINS = "Назначение старост";
@@ -69,6 +68,7 @@ public abstract class Directive extends PersistentItem {
     }
 
     @Entity
+    @Table(name = "directive_data")
     public static class DirectiveData extends PersistentItem {
         private String description = "";
         private String body = "";

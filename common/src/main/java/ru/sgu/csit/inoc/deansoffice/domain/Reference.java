@@ -3,14 +3,14 @@ package ru.sgu.csit.inoc.deansoffice.domain;
 import com.google.common.base.Objects;
 
 import javax.persistence.Entity;
+import javax.persistence.Table;
 import java.util.Date;
 
 /**
- * Created by XX (MesheryakovAV)
- * Date: 07.09.2010
- * Time: 9:18:30
+ * The reference of student.
  */
 @Entity
+@Table(name = "reference")
 public class Reference extends Document {
     private ReferenceType type;
     private ReferenceState state;
@@ -118,32 +118,5 @@ public class Reference extends Document {
                 .add("purpose", purpose)
                 .add("ownerId", ownerId)
                 .toString();
-    }
-
-    public static Reference make(
-            final Long id,
-            final String number,
-            final Date signedDate,
-            final Template printTemplate,
-            final ReferenceType type,
-            final ReferenceState state,
-            final Date registeredDate,
-            final Date issuedDate,
-            final String purpose,
-            final Long ownerId) {
-
-        final Reference reference = new Reference();
-        reference.setId(id);
-        reference.setNumber(number);
-        reference.setSignedDate(signedDate);
-        reference.setPrintTemplate(printTemplate);
-        reference.setType(type);
-        reference.setState(state);
-        reference.setRegisteredDate(registeredDate);
-        reference.setIssuedDate(issuedDate);
-        reference.setPurpose(purpose);
-        reference.setOwnerId(ownerId);
-
-        return reference;
     }
 }

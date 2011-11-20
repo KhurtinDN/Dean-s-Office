@@ -5,9 +5,8 @@ import com.google.common.base.Objects;
 import javax.persistence.*;
 
 /**
- * User: hd (KhurtinDN(a)gmail.com)
- * Date: Aug 27, 2010
- * Time: 11:34:24 AM
+ * The main abstract superclass for persistent entities.
+ * This class contains auto increment id field.
  */
 @MappedSuperclass
 public abstract class PersistentItem {

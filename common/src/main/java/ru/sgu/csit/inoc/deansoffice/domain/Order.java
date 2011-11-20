@@ -7,13 +7,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * User: hd (KhurtinDN(a)gmail.com)
- * Date: Aug 27, 2010
- * Time: 12:28:25 PM
+ * The superclass for orders.
  */
-//@MappedSuperclass
 @Entity
-@Table(name = "`Order`")
+@Table(name = "orders")
 public class Order extends Document {
     private OrderState state;
 
@@ -99,8 +96,10 @@ public class Order extends Document {
     }
 
     @Entity
+    @Table(name = "order_data")
     public static class OrderData extends PersistentItem {
         private String note;
+
         @ManyToOne(cascade = CascadeType.MERGE)
         @PrimaryKeyJoinColumn
         private Employee supervisor;
@@ -172,21 +171,6 @@ public class Order extends Document {
                     .add("supervisor", supervisor)
                     .add("coordinators", coordinators)
                     .toString();
-        }
-
-        public static OrderData make(
-                final Long id,
-                final String note,
-                final Employee supervisor,
-                final List<Employee> coordinators) {
-
-            final OrderData orderData = new OrderData();
-            orderData.setId(id);
-            orderData.setNote(note);
-            orderData.setSupervisor(supervisor);
-            orderData.setCoordinators(coordinators);
-
-            return orderData;
         }
     }
 }

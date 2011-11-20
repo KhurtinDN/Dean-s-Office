@@ -5,12 +5,10 @@ import com.google.common.base.Objects;
 import javax.persistence.*;
 
 /**
- * User: hd (KhurtinDN(a)gmail.com)
- * Date: Aug 27, 2010
- * Time: 11:58:49 AM
+ * The group.
  */
 @Entity
-@Table(name = "`Group`")
+@Table(name = "groups")
 public class Group extends PersistentItem {
     private String name;
     private Integer course;
@@ -77,20 +75,5 @@ public class Group extends PersistentItem {
                 .add("course", course)
                 .add("speciality", speciality)
                 .toString();
-    }
-
-    public static Group make(
-            final Long id,
-            final String name,
-            final Integer course,
-            final Speciality speciality) {
-
-        final Group group = new Group();
-        group.setId(id);
-        group.setName(name);
-        group.setCourse(course);
-        group.setSpeciality(speciality);
-
-        return group;
     }
 }

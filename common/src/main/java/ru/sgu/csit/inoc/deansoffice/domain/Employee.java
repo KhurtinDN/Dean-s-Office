@@ -3,14 +3,13 @@ package ru.sgu.csit.inoc.deansoffice.domain;
 import com.google.common.base.Objects;
 
 import javax.persistence.Entity;
+import javax.persistence.Table;
 
 /**
- * Date: 7/10/11
- * Time: 11:57 AM
- *
- * @author Denis Khurtin
+ * The employee.
  */
 @Entity
+@Table(name = "employee")
 public class Employee extends Person {
     private String degree;
     private String position;
@@ -62,24 +61,5 @@ public class Employee extends Person {
                 .add("degree", degree)
                 .add("position", position)
                 .toString();
-    }
-
-    public static Employee make(
-            final Long id,
-            final String firstName,
-            final String middleName,
-            final String lastName,
-            final String degree,
-            final String position) {
-
-        Employee employee = new Employee();
-        employee.setId(id);
-        employee.setFirstName(firstName);
-        employee.setMiddleName(middleName);
-        employee.setLastName(lastName);
-        employee.setDegree(degree);
-        employee.setPosition(position);
-
-        return employee;
     }
 }

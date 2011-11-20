@@ -2,15 +2,13 @@ package ru.sgu.csit.inoc.deansoffice.domain;
 
 import com.google.common.base.Objects;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
-import javax.persistence.PrimaryKeyJoinColumn;
+import javax.persistence.*;
 
 /**
- * @author Denis Khurtin
+ * This class contains common information about education institution.
  */
 @Entity
+@Table(name = "administration")
 public class Administration extends PersistentItem {
 
     private String name;
@@ -66,18 +64,5 @@ public class Administration extends PersistentItem {
                 .add("name", name)
                 .add("rector", rector)
                 .toString();
-    }
-
-    public static Administration make(
-            final Long id,
-            final String name,
-            final Employee rector) {
-
-        final Administration administration = new Administration();
-        administration.setId(id);
-        administration.setName(name);
-        administration.setRector(rector);
-
-        return administration;
     }
 }
