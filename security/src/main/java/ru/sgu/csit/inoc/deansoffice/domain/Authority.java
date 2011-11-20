@@ -9,7 +9,8 @@ import javax.persistence.*;
 /**
  * The authority class.
  */
-@Entity(name = "authorities")
+@Entity
+@Table(name = "authorities")
 public class Authority implements GrantedAuthority, Comparable<GrantedAuthority> {
 
     @Id
