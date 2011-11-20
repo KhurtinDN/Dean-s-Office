@@ -1,16 +1,15 @@
 package ru.sgu.csit.inoc.deansoffice;
 
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import ru.sgu.csit.inoc.deansoffice.dao.GroupDAO;
 import ru.sgu.csit.inoc.deansoffice.dao.PhotoDAO;
 import ru.sgu.csit.inoc.deansoffice.dao.StudentDAO;
-import ru.sgu.csit.inoc.deansoffice.dao.impl.GroupDAOImpl;
-import ru.sgu.csit.inoc.deansoffice.dao.impl.PhotoDAOImpl;
-import ru.sgu.csit.inoc.deansoffice.dao.impl.StudentDAOImpl;
 import ru.sgu.csit.inoc.deansoffice.domain.Group;
 import ru.sgu.csit.inoc.deansoffice.domain.Reference;
 import ru.sgu.csit.inoc.deansoffice.domain.Student;
@@ -18,13 +17,11 @@ import ru.sgu.csit.inoc.deansoffice.domain.StudentDossier;
 import ru.sgu.csit.inoc.deansoffice.services.PhotoService;
 import ru.sgu.csit.inoc.deansoffice.services.ReferenceService;
 import ru.sgu.csit.inoc.deansoffice.services.StudentDossierService;
-import ru.sgu.csit.inoc.deansoffice.services.impl.PhotoServiceImpl;
 import ru.sgu.csit.inoc.deansoffice.services.impl.StudentDossierServiceImpl;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,17 +30,25 @@ import static junit.framework.Assert.assertTrue;
 /**
  * Unit test for simple App.
  */
+@ContextConfiguration(locations = {"classpath:ApplicationContext.xml"})
+@RunWith(SpringJUnit4ClassRunner.class)
 public class AppTest {
+
     private static final Logger LOGGER = LoggerFactory.getLogger(AppTest.class);
 
-    private static ApplicationContext applicationContext = new ClassPathXmlApplicationContext("ApplicationContext.xml");
-    private static StudentDAO studentDAO = applicationContext.getBean(StudentDAOImpl.class);
-    private static GroupDAO groupDAO = applicationContext.getBean(GroupDAOImpl.class);
-    private static PhotoDAO photoDAO = applicationContext.getBean(PhotoDAOImpl.class);
+    @Autowired
+    private StudentDAO studentDAO;
+    @Autowired
+    private GroupDAO groupDAO;
+    @Autowired
+    private PhotoDAO photoDAO;
+
+    @Autowired
+    private PhotoService photoService;
+    @Autowired
+    private ReferenceService referenceService;
 
     public void /*skip_*/ testPdfGenerate() {
-        PhotoService photoService = new PhotoServiceImpl();
-
         /* // Отладка загрузки фотографий
         Photo photo;
         try {
@@ -66,11 +71,11 @@ public class AppTest {
         Group group = groupDAO.findAll().get(0);
         List<Student> students = studentDAO.findByGroup(group);
         Student student = students.get(students.size() / 2);//new Student();
-        try {
-            photoService.loadData(student.getAdditionalData().getPhoto());
-        } catch (IOException e) {
-            throw new RuntimeException("Photo data not found!!!", e);
-        }
+//        try {
+//            photoService.loadData(student.getAdditionalData().getPhoto());
+//        } catch (IOException e) {
+//            throw new RuntimeException("Photo data not found!!!", e);
+//        }
         //Reference ref = new Reference();
         /*EnrollmentOrder enrolOrder = new EnrollmentOrder();
 
@@ -124,7 +129,6 @@ public class AppTest {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-        ReferenceService referenceService = applicationContext.getBean(ReferenceService.class);
 
         for (Student theStudent : students) {
             if (theStudent.getEnrollmentOrder() != null) {     //
