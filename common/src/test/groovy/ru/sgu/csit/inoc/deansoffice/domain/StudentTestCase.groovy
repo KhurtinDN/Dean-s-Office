@@ -166,6 +166,17 @@ class StudentTestCase {
     }
 
     @Test
+    public void testEqualsWhenContentDiffersInReleaseDate() {
+        final releaseDate1 = new Date(generateId())
+        final releaseDate2 = new Date(generateId())
+
+        final testee1 = new Student(releaseDate: releaseDate1)
+        final testee2 = new Student(releaseDate: releaseDate2)
+
+        testWhenObjectsAreDifferent(testee1, testee2)
+    }
+
+    @Test
     public void testEqualsWhenContentDiffersInAdditionalStudentData() {
         final additionalDate1 = new Student.AdditionalStudentData(id: generateId())
         final additionalDate2 = new Student.AdditionalStudentData(id: generateId())

@@ -107,6 +107,7 @@ public final class DomainTestUtils {
                 studyForm: Student.StudyForm.BUDGET,
                 role: Student.Role.CAPTAIN,
                 enrollmentOrder: makeEnrollmentOrder(),
+                releaseDate: new Date(555L),
                 additionalData: makeAdditionalStudentData(),
                 stipends: makeStipendList())
     }
@@ -165,8 +166,7 @@ public final class DomainTestUtils {
                 state: Order.OrderState.COMPLETED,
                 directives: ImmutableList.<Directive> of(new Directive1()),
                 data: makeOrderData(),
-                enrollmentDate: new Date(444L),
-                releaseDate: new Date(555L))
+                enrollmentDate: new Date(444L))
     }
 
     public static Template makeTemplate() {
