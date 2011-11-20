@@ -5,10 +5,7 @@ import ru.sgu.csit.inoc.deansoffice.dao.AdditionalStudentDataDAO;
 import ru.sgu.csit.inoc.deansoffice.domain.Student;
 
 /**
- * Created by IntelliJ IDEA.
- * User: MesheryakovAV
- * Date: 24.12.10
- * Time: 9:35
+ * @author Alexander Mesheryakov
  */
 @Repository
 public class AdditionalStudentDataDAOImpl extends BaseDAOImpl<Student.AdditionalStudentData, Long> implements AdditionalStudentDataDAO {

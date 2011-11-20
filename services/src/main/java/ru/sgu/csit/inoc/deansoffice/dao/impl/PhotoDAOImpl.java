@@ -5,10 +5,7 @@ import ru.sgu.csit.inoc.deansoffice.dao.PhotoDAO;
 import ru.sgu.csit.inoc.deansoffice.domain.Photo;
 
 /**
- * Created by IntelliJ IDEA.
- * User: MesheryakovAV
- * Date: 24.12.10
- * Time: 9:30
+ * @author Alexander Mesheryakov
  */
 @Repository
 public class PhotoDAOImpl extends BaseDAOImpl<Photo, Long> implements PhotoDAO {

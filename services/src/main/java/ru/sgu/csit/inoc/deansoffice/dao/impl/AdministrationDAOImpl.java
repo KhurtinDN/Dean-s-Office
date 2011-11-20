@@ -1,19 +1,25 @@
 package ru.sgu.csit.inoc.deansoffice.dao.impl;
 
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import ru.sgu.csit.inoc.deansoffice.dao.AdministrationDAO;
 import ru.sgu.csit.inoc.deansoffice.domain.Administration;
 
 import java.util.List;
 
 /**
- * @author Denis Khurtin
+ * The DAO for administration entities.
+ *
+ * @author Alexander Mesheryakov, Denis Khurtin
  */
 @Repository
 public class AdministrationDAOImpl extends BaseDAOImpl<Administration, Long> implements AdministrationDAO {
+
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
     @Override
     public Administration load() {
-        List<Administration> administrationList = findAll();
+        final List<Administration> administrationList = findAll();
 
         Administration administration;
 

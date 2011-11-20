@@ -6,10 +6,7 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * Created by IntelliJ IDEA.
- * User: MesheryakovAV
- * Date: 04.03.11
- * Time: 11:07
+ * @author Alexander Mesheryakov
  */
 public interface StipendDAO extends BaseDAO<Stipend, Long> {
     List<Stipend> findByAllParam(Stipend.StipendType type, Date startDate, Date endDate, Integer value);

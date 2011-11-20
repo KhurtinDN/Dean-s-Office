@@ -5,10 +5,7 @@ import ru.sgu.csit.inoc.deansoffice.dao.Directive2DAO;
 import ru.sgu.csit.inoc.deansoffice.domain.Directive2;
 
 /**
- * Created by IntelliJ IDEA.
- * User: MesheryakovAV
- * Date: 04.03.11
- * Time: 12:35
+ * @author Alexander Mesheryakov
  */
 @Repository
 public class Directive2DAOImpl extends BaseDAOImpl<Directive2, Long> implements Directive2DAO {

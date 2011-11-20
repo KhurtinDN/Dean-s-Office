@@ -5,10 +5,7 @@ import ru.sgu.csit.inoc.deansoffice.dao.Directive1DAO;
 import ru.sgu.csit.inoc.deansoffice.domain.Directive1;
 
 /**
- * Created by IntelliJ IDEA.
- * User: MesheryakovAV
- * Date: 03.03.11
- * Time: 12:51
+ * @author Alexander Mesheryakov
  */
 @Repository
 public class Directive1DAOImpl extends BaseDAOImpl<Directive1, Long> implements Directive1DAO {

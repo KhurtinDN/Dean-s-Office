@@ -5,12 +5,8 @@ import ru.sgu.csit.inoc.deansoffice.dao.SourceData1DAO;
 import ru.sgu.csit.inoc.deansoffice.domain.Directive1;
 
 /**
- * Created by IntelliJ IDEA.
- * User: MesheryakovAV
- * Date: 03.03.11
- * Time: 13:25
+ * @author Alexander Mesheryakov
  */
 @Repository
-public class SourceData1DAOImpl extends BaseDAOImpl<Directive1.SourceData, Long>
-        implements SourceData1DAO {
+public class SourceData1DAOImpl extends BaseDAOImpl<Directive1.SourceData, Long> implements SourceData1DAO {
 }

@@ -17,13 +17,8 @@
 
     <!-- Configure a Hibernate SessionFactory -->
     <bean id="sessionFactory" class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
-        <!-- <property name="lobHandler" ref="defaultLobHandler" /> -->
         <property name="dataSource" ref="dataSource"/>
-        <property name="packagesToScan">
-            <list>
-                <value>ru.sgu.csit.inoc.deansoffice.domain</value>
-            </list>
-        </property>
+        <property name="packagesToScan" value="ru.sgu.csit.inoc.deansoffice.domain"/>
         <property name="hibernateProperties">
             <props>
                 <prop key="hibernate.dialect">${database.dialect}</prop>
@@ -35,51 +30,12 @@
         </property>
     </bean>
 
-    <bean id="defaultLobHandler" class="org.springframework.jdbc.support.lob.DefaultLobHandler">
-        <property name="wrapAsLob" value="true" />
-        <property name="streamAsLob" value="true" />
-    </bean>
+    <!-- Configure transaction demarcation and attributes by annotation -->
+    <tx:annotation-driven transaction-manager="txManager"/>
 
-    <!-- Transaction manager for a single Hibernate SessionFactory (alternative to JTA) -->
-    <bean id="transactionManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+    <!-- Define transaction manager and inject session factory to it -->
+    <bean id="txManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
-
-    <bean id="hibernateInterceptor" class="org.springframework.orm.hibernate3.HibernateInterceptor">
-        <property name="sessionFactory" ref="sessionFactory"/>
-    </bean>
-
-    <bean id="baseServiceProxy" class="org.springframework.aop.framework.ProxyFactoryBean" abstract="true">
-        <property name="interceptorNames">
-            <list>
-                <value>hibernateInterceptor</value>
-            </list>
-        </property>
-    </bean>
-
-    <!-- Apply transactions to all methods in our service layer. -->
-    <tx:advice id="txAdvice" transaction-manager="transactionManager">
-        <!-- the transactional semantics... -->
-        <tx:attributes>
-            <tx:method name="save*" propagation="REQUIRES_NEW"/>
-            <tx:method name="edit*" propagation="REQUIRES_NEW"/>
-            <tx:method name="update*" propagation="REQUIRES_NEW"/>
-            <tx:method name="add*" propagation="REQUIRES_NEW"/>
-            <tx:method name="delete*" propagation="REQUIRES_NEW"/>
-            <tx:method name="create*" propagation="REQUIRES_NEW"/>
-            <tx:method name="remove*" propagation="REQUIRES_NEW"/>
-            <tx:method name="reorder*" propagation="REQUIRES_NEW"/>
-            <tx:method name="change*" propagation="REQUIRES_NEW"/>
-            <tx:method name="batchUpdate" propagation="REQUIRES_NEW"/>
-            <!-- all other methods are read-only -->
-            <tx:method name="*" read-only="true"/>
-        </tx:attributes>
-    </tx:advice>
-
-    <!--<aop:config>
-        <aop:pointcut id="serviceMethods"
-                      expression="execution(* ru.sgu.csit.inoc.deansoffice.web.*.*(..))"/>
-        <aop:advisor advice-ref="txAdvice" pointcut-ref="serviceMethods"/>
-    </aop:config>-->
 
 </beans>

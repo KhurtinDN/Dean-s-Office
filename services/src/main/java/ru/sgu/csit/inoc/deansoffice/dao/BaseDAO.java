@@ -4,17 +4,16 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
- * .
- * User: hd (KhurtinDN(a)gmail.com)
- * Date: Sep 11, 2010
- * Time: 10:36:13 AM
+ * The generic base DAO superclass for other DAO classes.
+ *
+ * @author Alexander Mesheryakov, Denis Khurtin
  */
 public interface BaseDAO<T, ID extends Serializable> {
+    T findById(ID id);
+    List<T> findAll();
     ID save(T entity);
     void saveOrUpdate(T entity);
     void update(T transientObject);
     void delete(T persistentObject);
     boolean deleteById(ID id);
-    T findById(ID id);
-    List<T> findAll();
 }

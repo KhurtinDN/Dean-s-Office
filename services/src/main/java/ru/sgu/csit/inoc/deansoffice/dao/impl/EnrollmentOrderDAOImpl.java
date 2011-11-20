@@ -6,10 +6,7 @@ import ru.sgu.csit.inoc.deansoffice.domain.EnrollmentOrder;
 import ru.sgu.csit.inoc.deansoffice.domain.Order;
 
 /**
- * .
- * User: hd (KhurtinDN(a)gmail.com)
- * Date: Sep 7, 2010
- * Time: 10:56:51 AM
+ * @author Alexander Mesheryakov, Denis Khurtin
  */
 @Repository
 public class EnrollmentOrderDAOImpl extends BaseDAOImpl<EnrollmentOrder, Long> implements EnrollmentOrderDAO {

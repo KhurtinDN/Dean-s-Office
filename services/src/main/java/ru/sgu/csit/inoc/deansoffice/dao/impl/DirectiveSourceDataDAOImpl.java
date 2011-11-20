@@ -5,12 +5,8 @@ import ru.sgu.csit.inoc.deansoffice.dao.DirectiveSourceDataDAO;
 import ru.sgu.csit.inoc.deansoffice.domain.DirectiveSourceData;
 
 /**
- * Created by IntelliJ IDEA.
- * User: MesheryakovAV
- * Date: 03.03.11
- * Time: 12:51
+ * @author Alexander Mesheryakov
  */
 @Repository
-public class DirectiveSourceDataDAOImpl extends BaseDAOImpl<DirectiveSourceData, Long>
-        implements DirectiveSourceDataDAO {
+public class DirectiveSourceDataDAOImpl extends BaseDAOImpl<DirectiveSourceData, Long> implements DirectiveSourceDataDAO {
 }

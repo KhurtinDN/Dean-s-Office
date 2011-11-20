@@ -5,10 +5,7 @@ import ru.sgu.csit.inoc.deansoffice.dao.OrderDAO;
 import ru.sgu.csit.inoc.deansoffice.domain.Order;
 
 /**
- * Created by IntelliJ IDEA.
- * User: MesheryakovAV
- * Date: 03.03.11
- * Time: 12:48
+ * @author Alexander Mesheryakov
  */
 @Repository
 public class OrderDAOImpl extends BaseDAOImpl<Order, Long> implements OrderDAO {

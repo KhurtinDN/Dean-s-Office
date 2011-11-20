@@ -6,10 +6,7 @@ import ru.sgu.csit.inoc.deansoffice.domain.Speciality;
 import java.util.List;
 
 /**
- * .
- * User: hd (KhurtinDN(a)gmail.com)
- * Date: Sep 7, 2010
- * Time: 9:58:57 AM
+ * @author Alexander Mesheryakov, Denis Khurtin
  */
 public interface SpecialityDAO extends BaseDAO<Speciality, Long> {
     List<Speciality> findByName(String name);
