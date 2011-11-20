@@ -24,6 +24,10 @@
             <groupId>ru.sgu.csit.inoc</groupId>
             <artifactId>services</artifactId>
         </dependency>
+        <dependency>
+            <groupId>ru.sgu.csit.inoc</groupId>
+            <artifactId>security</artifactId>
+        </dependency>
 
         <dependency>
             <groupId>javax.servlet</groupId>
