@@ -1,6 +1,7 @@
 package ru.sgu.csit.inoc.deansoffice;
 
 import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import ru.sgu.csit.inoc.deansoffice.dao.*;
@@ -32,19 +33,24 @@ public class CreateDB {
     private EmployeeDAO employeeDAO = applicationContext.getBean(EmployeeDAO.class);
     private DirectiveDAO directiveDAO = applicationContext.getBean(DirectiveDAO.class);
 
+    private UserDAO userDAO = applicationContext.getBean(UserDAO.class);
+    private AuthorityDAO authorityDAO = applicationContext.getBean(AuthorityDAO.class);
+
     private final Generator generator = new Generator();
 
     private static final Integer COUNT_STUDENTS_IN_GROUP = 10;
     private static final String PHOTO_FILE_NAME = "/home/hd/temp/photo.jpg";
 
     public static void main(String[] args) {
-        CreateDB createDB = new CreateDB();
+        final CreateDB createDB = new CreateDB();
 
         createDB.createFaculty();
 //        createDB.createSpecialitiesAndGroups();
         createDB.createSpecialities();
         createDB.createGroups();
         createDB.createStudents();
+
+        createDB.createUser();
     }
 
     private void createFaculty() {
@@ -387,6 +393,24 @@ public class CreateDB {
             }
         }
 
+    }
+
+    private void createUser() {
+        final Authority authority = new Authority("ROLE_USER");
+
+        authorityDAO.save(authority);
+
+        final User user = new User();
+        user.setName("God");
+        user.setUsername("root");
+        user.setPassword("b1b3773a05c0ed0176787a4f1574ff0075f7521e"); // qwerty
+        user.setAccountNonExpired(true);
+        user.setAccountNonLocked(true);
+        user.setCredentialsNonExpired(true);
+        user.setEnabled(true);
+        user.setAuthorities(Sets.newHashSet(authority));
+
+        userDAO.saveOrUpdate(user);
     }
 
     private class Generator {
