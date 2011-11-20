@@ -32,7 +32,8 @@ public class Student extends Person {
     @PrimaryKeyJoinColumn
     private EnrollmentOrder enrollmentOrder;
 
-    //@OneToOne(fetch = FetchType.LAZY)
+    private Date releaseDate;
+
     @OneToOne(cascade = CascadeType.ALL)
     private AdditionalStudentData additionalData;
 
@@ -83,8 +84,24 @@ public class Student extends Person {
         return enrollmentOrder;
     }
 
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(final Role role) {
+        this.role = role;
+    }
+
     public void setEnrollmentOrder(final EnrollmentOrder enrollmentOrder) {
         this.enrollmentOrder = enrollmentOrder;
+    }
+
+    public Date getReleaseDate() {
+        return releaseDate;
+    }
+
+    public void setReleaseDate(final Date releaseDate) {
+        this.releaseDate = releaseDate;
     }
 
     @OneToOne(cascade = CascadeType.ALL)
@@ -94,14 +111,6 @@ public class Student extends Person {
 
     public void setAdditionalData(final AdditionalStudentData additionalData) {
         this.additionalData = additionalData;
-    }
-
-    public Role getRole() {
-        return role;
-    }
-
-    public void setRole(final Role role) {
-        this.role = role;
     }
 
     public Set<Stipend> getStipends() {
@@ -147,6 +156,7 @@ public class Student extends Person {
                 Objects.equal(this.studyForm, that.studyForm) &&
                 Objects.equal(this.role, that.role) &&
                 Objects.equal(this.enrollmentOrder, that.enrollmentOrder) &&
+                Objects.equal(this.releaseDate, that.releaseDate) &&
                 Objects.equal(this.additionalData, that.additionalData) &&
                 Objects.equal(this.stipends, that.stipends);
     }
@@ -162,6 +172,7 @@ public class Student extends Person {
                 studyForm,
                 role,
                 enrollmentOrder,
+                releaseDate,
                 additionalData,
                 stipends);
     }
@@ -177,6 +188,7 @@ public class Student extends Person {
                 .add("studyForm", studyForm)
                 .add("role", role)
                 .add("enrollmentOrder", enrollmentOrder)
+                .add("releaseDate", releaseDate)
                 .add("additionalData", additionalData)
                 .add("stipends", stipends)
                 .toString();

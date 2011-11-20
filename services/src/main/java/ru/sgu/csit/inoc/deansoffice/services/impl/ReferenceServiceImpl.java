@@ -82,8 +82,7 @@ public class ReferenceServiceImpl extends DocumentServiceImpl implements Referen
 
             startDate = dateFormat.format(date);
 
-            date = order.getReleaseDate();
-            endDate = dateFormat.format(date);
+            endDate = dateFormat.format(student.getReleaseDate());
             orderNumber = order.getNumber();
             orderDate = dateFormat.format(order.getSignedDate());
         }

@@ -1,13 +1,12 @@
 package ru.sgu.csit.inoc.deansoffice.dao.impl;
 
 import org.hibernate.SessionFactory;
-import org.hibernate.criterion.DetachedCriteria;
-import org.hibernate.criterion.SimpleExpression;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import ru.sgu.csit.inoc.deansoffice.dao.BaseDAO;
+import ru.sgu.csit.inoc.deansoffice.domain.PersistentItem;
 
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
@@ -18,7 +17,7 @@ import java.util.List;
  *
  * @author Alexander Mesheryakov, Denis Khurtin
  */
-public class BaseDAOImpl<T, ID extends Serializable> extends HibernateDaoSupport implements BaseDAO<T, ID> {
+public class BaseDAOImpl<T extends PersistentItem, ID extends Serializable> extends HibernateDaoSupport implements BaseDAO<T, ID> {
     @Autowired
     public void initSessionFactory(SessionFactory sessionFactory) {
         setSessionFactory(sessionFactory);
@@ -28,21 +27,11 @@ public class BaseDAOImpl<T, ID extends Serializable> extends HibernateDaoSupport
         return (Class) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
     }
 
-    protected DetachedCriteria createCriteriaForPersistentClass(SimpleExpression... expressions) {
-        DetachedCriteria criteria = DetachedCriteria.forClass(getPersistentClass());
-
-        for (SimpleExpression expression : expressions) {
-            criteria.add(expression);
-        }
-
-        return criteria;
-    }
-
     @Transactional(readOnly = true)
     @Override
     @SuppressWarnings("unchecked")
     public T findById(ID id) {
-        return (T) getHibernateTemplate().load(getPersistentClass(), id);
+        return (T) getHibernateTemplate().get(getPersistentClass(), id);
 
     }
 

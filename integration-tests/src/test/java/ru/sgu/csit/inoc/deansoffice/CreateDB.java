@@ -381,6 +381,7 @@ public class CreateDB {
                 student.setGroup(group);
                 student.setSpeciality(group.getSpeciality());
                 student.setEnrollmentOrder(orders.get(group.getCourse() - 1));
+                student.setReleaseDate(new GregorianCalendar(2016 - group.getCourse(), Calendar.JULY, 1).getTime());
 
                 studentDAO.save(student);
             }
@@ -429,7 +430,6 @@ public class CreateDB {
                     + generator.nextInt(10) + generator.nextInt(10));
             enrolOrder.setSignedDate(new GregorianCalendar().getTime());
             enrolOrder.setEnrollmentDate(new GregorianCalendar(2011 - course, Calendar.SEPTEMBER, 1).getTime());
-            enrolOrder.setReleaseDate(new GregorianCalendar(2016 - course, Calendar.JULY, 1).getTime());
 
             return enrolOrder;
         }

@@ -11,7 +11,6 @@ import java.util.Date;
 @Entity
 public class EnrollmentOrder extends Order {
     private Date enrollmentDate;
-    private Date releaseDate;
 
     public Date getEnrollmentDate() {
         return enrollmentDate;
@@ -19,14 +18,6 @@ public class EnrollmentOrder extends Order {
 
     public void setEnrollmentDate(final Date enrollmentDate) {
         this.enrollmentDate = enrollmentDate;
-    }
-
-    public Date getReleaseDate() {
-        return releaseDate;
-    }
-
-    public void setReleaseDate(final Date releaseDate) {
-        this.releaseDate = releaseDate;
     }
 
     @Override
@@ -41,16 +32,14 @@ public class EnrollmentOrder extends Order {
         final EnrollmentOrder that = (EnrollmentOrder) o;
 
         return super.equals(that) &&
-                Objects.equal(this.enrollmentDate, that.enrollmentDate) &&
-                Objects.equal(this.releaseDate, that.releaseDate);
+                Objects.equal(this.enrollmentDate, that.enrollmentDate);
     }
 
     @Override
     public int hashCode() {
         return Objects.hashCode(
                 super.hashCode(),
-                enrollmentDate,
-                releaseDate);
+                enrollmentDate);
     }
 
     @Override
@@ -58,7 +47,6 @@ public class EnrollmentOrder extends Order {
         return Objects.toStringHelper(this)
                 .addValue(super.toString())
                 .add("enrollmentDate", enrollmentDate)
-                .add("releaseDate", releaseDate)
                 .toString();
     }
 }

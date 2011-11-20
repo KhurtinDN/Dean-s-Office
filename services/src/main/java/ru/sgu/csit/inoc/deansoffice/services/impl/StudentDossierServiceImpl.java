@@ -74,8 +74,7 @@ public class StudentDossierServiceImpl extends DocumentServiceImpl implements St
         report.addValue("Student.startDate", dateFormat.format(date)); // "01.09.2007"
         report.addValue("Student.startYear", dateFormatYear.format(date));
 
-        date = order.getReleaseDate();
-        report.addValue("Student.endDate", dateFormat.format(date)); // "01.07.2012"
+        report.addValue("Student.endDate", dateFormat.format(student.getReleaseDate())); // "01.07.2012"
         report.addValue("Student.order.number", order.getNumber()); // "22-0107"
         report.addValue("Student.order.date", dateFormat.format(order.getSignedDate())); // "12.08.2007"
 
