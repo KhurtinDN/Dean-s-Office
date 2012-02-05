@@ -163,6 +163,7 @@ public class ReferenceServiceImpl extends DocumentServiceImpl implements Referen
         Reference reference = new Reference();
         reference.setType(type);
         reference.setOwnerId(ownerId);
+        reference.setPurpose("по месту требования");
         return reference;
     }
 
