@@ -1,0 +1,22 @@
+<configuration>
+
+    <appender name="LOGFILE" class="ch.qos.logback.core.FileAppender">
+        <file>jbehave.log</file>
+        <append>true</append>
+        <prudent>true</prudent>
+        <encoder>
+            <Pattern>%date %level [%thread] %logger{10} [%file:%line] %msg%n</Pattern>
+        </encoder>
+    </appender>
+
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <Pattern>%date %level [%thread] %logger{10} [%file:%line] %msg%n</Pattern>
+        </encoder>
+    </appender>
+
+    <root>
+        <level value="info"/>
+        <appender-ref ref="LOGFILE"/>
+    </root>
+</configuration>
