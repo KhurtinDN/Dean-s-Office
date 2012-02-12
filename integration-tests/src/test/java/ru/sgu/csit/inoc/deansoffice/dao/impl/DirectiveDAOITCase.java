@@ -20,8 +20,8 @@ import java.util.List;
  */
 @ContextConfiguration(locations = {"classpath:ApplicationContext.xml"})
 @RunWith(SpringJUnit4ClassRunner.class)
-public class DirectiveDAOImplTest {
-    private static final Logger LOGGER = LoggerFactory.getLogger(DirectiveDAOImplTest.class);
+public class DirectiveDAOITCase {
+    private static final Logger LOGGER = LoggerFactory.getLogger(DirectiveDAOITCase.class);
 
     private List<Directive> directives;
 

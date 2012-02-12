@@ -22,8 +22,8 @@ import static junit.framework.Assert.assertTrue;
  */
 @ContextConfiguration(locations = {"classpath:ApplicationContext.xml"})
 @RunWith(SpringJUnit4ClassRunner.class)
-public class FacultyDAOImplTest {
-    private static final Logger LOGGER = LoggerFactory.getLogger(FacultyDAOImplTest.class);
+public class FacultyDAOITCase {
+    private static final Logger LOGGER = LoggerFactory.getLogger(FacultyDAOITCase.class);
 
     @Autowired
     private FacultyDAO facultyDAO;

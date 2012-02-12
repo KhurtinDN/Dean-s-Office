@@ -24,39 +24,39 @@ import static org.junit.Assert.assertTrue;
  */
 @ContextConfiguration(locations = {"classpath:ApplicationContext.xml"})
 @RunWith(SpringJUnit4ClassRunner.class)
-public class RegisterTest {
+public class RegisterITCase {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(RegisterTest.class);
-
-    @Autowired
-    GroupDAO groupDAO;
+    private static final Logger LOGGER = LoggerFactory.getLogger(RegisterITCase.class);
 
     @Autowired
-    StudentDAO studentDAO;
+    private GroupDAO groupDAO;
 
     @Autowired
-    OrderDAO orderDAO;
+    private StudentDAO studentDAO;
 
     @Autowired
-    OrderDataDAO orderDataDAO;
+    private OrderDAO orderDAO;
 
     @Autowired
-    DirectiveDAO directiveDAO;
+    private OrderDataDAO orderDataDAO;
 
     @Autowired
-    DirectiveSourceDataDAO directiveSourceDataDAO;
+    private DirectiveDAO directiveDAO;
 
     @Autowired
-    Directive1DAO directive1DAO;
+    private DirectiveSourceDataDAO directiveSourceDataDAO;
 
     @Autowired
-    DirectiveDataDAO directiveDataDAO;
+    private Directive1DAO directive1DAO;
 
     @Autowired
-    SourceData1DAO sourceData1DAO;
+    private DirectiveDataDAO directiveDataDAO;
 
     @Autowired
-    EmployeeDAO employeeDAO;
+    private SourceData1DAO sourceData1DAO;
+
+    @Autowired
+    private EmployeeDAO employeeDAO;
 
     private static List<Employee> leaders = Lists.newArrayList();
     //private static Register register;

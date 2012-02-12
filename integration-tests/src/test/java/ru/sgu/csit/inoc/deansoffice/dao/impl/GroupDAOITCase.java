@@ -25,8 +25,8 @@ import static junit.framework.Assert.assertTrue;
  */
 @ContextConfiguration(locations = {"classpath:ApplicationContext.xml"})
 @RunWith(SpringJUnit4ClassRunner.class)
-public class GroupDAOImplTest {
-    private static final Logger LOGGER = LoggerFactory.getLogger(GroupDAOImplTest.class);
+public class GroupDAOITCase {
+    private static final Logger LOGGER = LoggerFactory.getLogger(GroupDAOITCase.class);
 
     @Autowired
     private GroupDAO groupDAO;

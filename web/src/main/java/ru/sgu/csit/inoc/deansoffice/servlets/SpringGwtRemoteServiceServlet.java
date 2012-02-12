@@ -2,7 +2,8 @@ package ru.sgu.csit.inoc.deansoffice.servlets;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
@@ -22,7 +23,7 @@ import com.google.gwt.user.server.rpc.RemoteServiceServlet;
  */
 public class SpringGwtRemoteServiceServlet extends RemoteServiceServlet {
 
-	private static final Logger LOG = Logger.getLogger(SpringGwtRemoteServiceServlet.class);
+	private static final Logger LOG = LoggerFactory.getLogger(SpringGwtRemoteServiceServlet.class);
 
 	@Override
 	public void init() {

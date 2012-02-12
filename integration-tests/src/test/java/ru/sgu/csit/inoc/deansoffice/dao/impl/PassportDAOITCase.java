@@ -22,8 +22,8 @@ import java.util.List;
  */
 @ContextConfiguration(locations = {"classpath:ApplicationContext.xml"})
 @RunWith(SpringJUnit4ClassRunner.class)
-public class PassportDAOImplTest {
-    private static final Logger LOGGER = LoggerFactory.getLogger(PassportDAOImplTest.class);
+public class PassportDAOITCase {
+    private static final Logger LOGGER = LoggerFactory.getLogger(PassportDAOITCase.class);
 
     @Autowired
     private GroupDAO groupDAO;
