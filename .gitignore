@@ -1,0 +1,14 @@
+*.iml
+*.ipr
+*.iws
+*.swp
+*~
+*.log
+log
+
+target
+*/target
+*/*/target
+*/build
+
+*.ipr.*
