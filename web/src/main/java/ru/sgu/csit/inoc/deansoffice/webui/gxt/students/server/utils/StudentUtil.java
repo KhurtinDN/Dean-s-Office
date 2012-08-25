@@ -140,6 +140,7 @@ public class StudentUtil extends PersonUtil {
         Student.AdditionalStudentData additionalStudentData = student.getAdditionalData();
         if (additionalStudentData == null) {
             additionalStudentData = new Student.AdditionalStudentData();
+            student.setAdditionalData(additionalStudentData);
         }
         additionalStudentData.setBirthPlace(studentDetailsModel.getBirthplace());
         additionalStudentData.setEducation(studentDetailsModel.getEducation());
